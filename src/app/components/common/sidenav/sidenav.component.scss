@@ -1,0 +1,52 @@
+@import "../../../../theme/vars.scss";
+.sidenav{
+  min-width: 200px;
+  min-height: 100%;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  .layout{
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-size: medium;
+    flex-grow: 1;
+    margin-top: 10px;
+    background: $menu-item-bg;
+    margin-top: 10px;
+    color: $titleLogo;
+    width: 100%;
+    &:hover{
+      background: $menu-item-hover;
+    }
+  }
+  .layout.active {
+    background: $menu-item-hover;
+  }
+  mat-icon {
+    margin: 0 15px 0 5px;
+  }
+}
+
+.nav-sub-item {
+  cursor: pointer;
+  padding: 10px;
+  padding-left: 15%;
+  font-size: medium;
+}
+
+.hidden {
+  display: flex;
+  flex-direction: column;
+  // .nav-sub-item:hover {
+  //   background: #e91e63;
+  //   color: white;
+  // }
+}
+
+.hideMenu {
+  display: none;
+}

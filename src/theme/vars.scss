@@ -1,0 +1,133 @@
+$primary-font-color: #474545;
+$secondary-font-color: #fff;
+$primary-background-color: #005e9d;
+$primary-font-family: "Myriad Pro Regular";
+$primary-shadow: 0px 2px 5px 0px rgb(0 0 0 / 20%);
+$secondary-font-family: Arial, Helvetica, sans-serif;
+$toolbar-bg: #EDEDED;
+$titleLogo: #37501e;
+$menu-item-bg:#EDEDED;
+$menu-item-hover: #F78C8C;
+
+.dm-btn-primary {
+  background-color: $primary-background-color;
+  color: $secondary-font-color;
+  padding: 10px 0;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  width: 170px;
+}
+
+.dm-btn-secondary {
+  @extend .dm-btn-primary;
+  background-color: $secondary-font-color;
+  color: $primary-background-color;
+  border: 1px solid $primary-background-color;
+}
+
+.dm-btn-disable {
+  @extend .dm-btn-primary;
+  background-color: #0000001f;
+  color: #00000042;
+}
+/** table design **/
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 22px !important;
+  background: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.dm-product-list-section {
+  padding: 10px;
+  background-color: $secondary-font-color;
+}
+.dm-product-table {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-right: 10px;
+}
+.dm-table-row {
+  border: 1px solid #000;
+  box-shadow: $primary-shadow;
+  color: #000;
+  background-color: $secondary-font-color;
+}
+
+.dm-table-cell {
+  color: #000;
+  font-size: 16px;
+  padding: 30px 20px;
+  border-bottom: none;
+  .image-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    p {
+      width: 260px;
+      text-align: left;
+    }
+  }
+  // img {
+  //   width: 69px;
+  //   height: 54px;
+  //   margin: 10px;
+  // }
+  a {
+    color: #005e9d;
+    padding: 0 10px;
+    text-decoration: none;
+  }
+}
+
+.product-name-cell {
+  width: 450px;
+}
+
+.dm-table-header {
+  color: #000;
+  background-color: #ececec;
+  border-radius: 10px;
+  border-bottom: none;
+  th {
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+  }
+  .dm-header-table-cell {
+    border-bottom: none;
+  }
+}
+
+.dm-table-pagination {
+  color: #818181;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  button {
+    color: #818181;
+  }
+}
+.dm-flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.dm-no-records {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}

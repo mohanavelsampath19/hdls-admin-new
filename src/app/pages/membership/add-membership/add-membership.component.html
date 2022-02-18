@@ -1,0 +1,43 @@
+<section id="hdls-newmembership-container">
+    <h3>Add New Membership | Membership Information</h3>
+    <div class="new-membership-form-container"> 
+        <form [formGroup]="newMembership">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Membership Title *</mat-label>
+                    <input matInput formControlName="title" type="text" name="title" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Product Description *</mat-label>
+                    <textarea matInput formControlName="description" type="text" name="description"></textarea>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Properties</mat-label>
+                    <mat-select>
+                      <mat-option value="property1">Property 1</mat-option>
+                      <mat-option value="property2">Property 2</mat-option>
+                      <mat-option value="property3">Property 3</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>E-vouchers</mat-label>
+                    <mat-select formControlName="evouchers" multiple>
+                      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div> 
+            
+          
+            <div>
+                    <button mat-raised-button class="hdls-cancel-btn">Cancel</button>
+                    <button mat-raised-button color="primary" class="hdls-nxt-btn">Next</button>
+            </div>
+</form>
+    </div>           
+</section>

@@ -1,0 +1,202 @@
+<section id="hdls-membership-container">
+    <div id="dm-tenent-product-list">
+        <div class="products-list">
+          <div class="category-button">
+            <a
+              id="basic"
+              class="add-button"
+              [ngClass]="{ 'selected-item': selectedCategory === 'all' }"
+              (click)="getSelectedFilter('all')"
+            >
+              All
+            </a>
+            <a
+              id="basic"
+              class="add-button"
+              [ngClass]="{ 'selected-item': selectedCategory === 'live' }"
+              (click)="getSelectedFilter('live')"
+            >
+              Live<span>({{ productDetails.categoryCounts.live }})</span>
+            </a>
+            <a
+              id="basic"
+              class="add-button"
+              [ngClass]="{ 'selected-item': selectedCategory === 'in_active' }"
+              (click)="getSelectedFilter('in_active')"
+            >
+              Inactive<span>({{ productDetails.categoryCounts.in_active }})</span>
+            </a>
+            <a
+              id="basic"
+              class="add-button"
+              [ngClass]="{ 'selected-item': selectedCategory === 'draft' }"
+              (click)="getSelectedFilter('draft')"
+            >
+              Draft<span>({{ productDetails.categoryCounts.draft }})</span>
+            </a>
+            <a
+              id="basic"
+              class="add-button"
+              [ngClass]="{ 'selected-item': selectedCategory === 'deleted' }"
+              (click)="getSelectedFilter('deleted')"
+            >
+              Deleted<span>({{ productDetails.categoryCounts.deleted }})</span>
+            </a>
+          </div>
+          <div class="dm-product-list-section">
+            <!-- <app-search-field></app-search-field> -->
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              class="dm-product-table"
+              matTableExporter
+           
+            >
+              <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+              <!-- Position Column -->
+      
+              <ng-container matColumnDef="product_name">
+                <th
+                  mat-header-cell
+                  class="dm-header-table-cell"
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  Product Name
+                </th>
+                <td
+                  mat-cell
+                  class="dm-table-cell product-name-cell"
+                  *matCellDef="let element"
+                >
+                  <div *ngIf="!element.loading" class="dm-product-thumbnail">
+                    <img [src]="element.thumbnail" />
+                  </div>
+                  <p *ngIf="!element.loading" class="dm-product-name-desc">
+                    {{ element.product_name }}
+                  </p>
+                  <div *ngIf="element.loading" class="loading-data"></div>
+                </td>
+              </ng-container>
+      
+              <!-- Name Column -->
+              <!-- <ng-container matColumnDef="sku">
+                <th mat-header-cell class="dm-header-table-cell" *matHeaderCellDef mat-sort-header>
+                  SKU
+                </th>
+                <td mat-cell class="dm-table-cell" *matCellDef="let element">
+                  {{ element.sku }}
+                </td>
+              </ng-container> -->
+      
+              <!-- Weight Column -->
+              <ng-container matColumnDef="original_price">
+                <th
+                  mat-header-cell
+                  class="dm-header-table-cell"
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  Original Price
+                </th>
+                <td mat-cell class="dm-table-cell" *matCellDef="let element">
+                  <div *ngIf="!element.loading && element.variants">
+                    {{ element.variants.products[0].original_price }}
+                  </div>
+                  <div *ngIf="element.loading" class="loading-data"></div>
+                </td>
+              </ng-container>
+      
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="sales_price">
+                <th
+                  mat-header-cell
+                  class="dm-header-table-cell"
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  Selling Price
+                </th>
+                <td mat-cell class="dm-table-cell" *matCellDef="let element">
+                  <div *ngIf="!element.loading && element.variants">
+                    {{ element.variants.products[0].sale_price }}
+                  </div>
+                  <div *ngIf="element.loading" class="loading-data"></div>
+                </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="tenant_name">
+                <th
+                  mat-header-cell
+                  class="dm-header-table-cell"
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  Tenant Name
+                </th>
+                <td mat-cell class="dm-table-cell" *matCellDef="let element">
+                  {{ element.tenant_name }}
+                </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="tenant_id">
+                <th
+                  mat-header-cell
+                  class="dm-header-table-cell"
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  Tenant ID
+                </th>
+                <td mat-cell class="dm-table-cell" *matCellDef="let element">
+                  {{ element.tenant_id }}
+                </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="status">
+                <th
+                  mat-header-cell
+                  class="dm-header-table-cell"
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  Status
+                </th>
+                <td mat-cell class="dm-table-cell" *matCellDef="let element">
+                  <div *ngIf="!element.loading">
+                    {{ element.is_active | productstatus }}
+                  </div>
+                  <div *ngIf="element.loading" class="loading-data"></div>
+                </td>
+              </ng-container>
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumns"
+                class="dm-table-header"
+              ></tr>
+              <tr
+                mat-row
+                class="dm-table-row"
+                *matRowDef="let row; columns: displayedColumns"
+              ></tr>
+            </table>
+            <table>
+              
+              <tr *ngIf="!dataSource.data.length">
+                <td class="dm-no-records">No Records Found!</td>
+              </tr>
+            </table>
+            <mat-paginator
+              [pageSizeOptions]="[5, 10, 20]"
+              showFirstLastButtons
+              aria-label="Select page of periodic elements"
+              (page)="changePage($event)"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+      
+</section>

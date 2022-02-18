@@ -1,0 +1,25 @@
+@import "../../../../theme/vars.scss";
+.example-spacer {
+  flex: 1 1 auto;
+}
+mat-icon {
+  padding: 8px;
+  cursor: pointer;
+}
+.title {
+  cursor: pointer;
+  color: $titleLogo;
+}
+.htls-menu-icon{
+  color: $titleLogo;
+}
+.merchant {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+mat-toolbar {
+ background:$toolbar-bg;
+  // background: #EDEDED;
+  color: $secondary-font-color;
+}
