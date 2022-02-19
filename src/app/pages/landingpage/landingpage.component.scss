@@ -1,3 +1,8 @@
 .hdls-content-container{
     min-height: 93vh;
 }
+
+.hdls-content-main-container {
+    width: calc(80% - 201px);
+    margin: 0 auto;
+}

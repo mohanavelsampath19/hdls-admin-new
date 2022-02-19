@@ -37,5 +37,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include angular-material-typography($typography);
 
-
-
