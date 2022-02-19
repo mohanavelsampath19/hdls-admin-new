@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { MembershipService } from 'src/app/services/membership/membership.service';
+import { MemberShip, MembershipService } from 'src/app/services/membership/membership.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
+import { Loading } from 'src/app/services/utilities/helper_models';
 
 @Component({
   selector: 'app-membership',
@@ -14,65 +15,64 @@ import { MatDialog } from '@angular/material/dialog';
 export class MembershipComponent implements OnInit {
 
   selectedCategory: string = 'all';
-  productDetails: any = {
+  memberShipFilters: any = {
     categoryCounts: {
       live: '',
       in_active: '',
       draft: '',
       deleted: '',
     },
-    productList: [],
+    membershipList: [],
   };
-  totalProductList: Array<any> = [];
+  totalMembershipList: Array<MemberShip> = [];
+  skeletonList: Array<Loading> = [{isLoading:true},{isLoading:true},{isLoading:true},{isLoading:true},]
   @ViewChild(MatPaginator) paginator?: MatPaginator;
-  
+
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
-    // 'product_thumbnail',
-    'product_name',
-    'original_price',
-    'sales_price',
-    'tenant_name',
-    'tenant_id',
-    'status'
+    'membership_name',
+    'price',
+    'stock',
+    'status',
+    'action',
   ];
-  dataSource = new MatTableDataSource(this.totalProductList);
+  dataSource:any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
   constructor(
-    private _adminService: MembershipService,
+    private _memberShipService: MembershipService,
     public dialog: MatDialog,
     private _router: Router
-  ) {     
+  ) {
   }
 
   ngOnInit(): void {
-    this.getProductList();
+    this.getMembershipList();
   }
 
   getSelectedFilter = (value: string) => {
     this.selectedCategory = value;
     this.pageSize = 5;
     this.pageOffset = 0;
-    this.getProductList();
+    this.getMembershipList();
   };
 
   getSearchInput(searchValue: any) {
     let searchText = searchValue.toLowerCase();
     if (searchText === '') {
-      this.dataSource = new MatTableDataSource(this.totalProductList);
+      this.dataSource = new MatTableDataSource(this.totalMembershipList);
     } else {
-      let filteredProducts;
-      filteredProducts = this.totalProductList.filter((list) => {
+      let filteredResults;
+      filteredResults = this.totalMembershipList.filter((list) => {
         let getValues = Object.values(list).toString().toLowerCase();
         return getValues.includes(searchText);
       });
-      this.dataSource = new MatTableDataSource(filteredProducts);
+      this.dataSource = new MatTableDataSource(filteredResults);
     }
   }
 
-  getProductList() {
-    this.updateLoaderData();
+  getMembershipList() {
+    this.onFirstLoad();
     let getCategory = 1;
     switch (this.selectedCategory) {
       case 'live':
@@ -91,87 +91,32 @@ export class MembershipComponent implements OnInit {
         getCategory = 1;
         break;
     }
-    let getProductDetails = {
-      pageSize: this.pageSize,
-      pageOffset: this.pageOffset,
-      category: getCategory,
-      allProducts: this.selectedCategory === 'all' ? true : false
-    };
-    // this._adminService
-    //   .getAllMyProducts({ ...getProductDetails })
-    //   .subscribe((res: any) => {
-    //     res.response.map((product: any) => {
-    //       product.variants =
-    //         typeof product.variants === 'string'
-    //           ? JSON.parse(product.variants)
-    //           : product.variants;
-    //     });
-    //     if (res && res.status === 0) {
-    //       this.productDetails = {
-    //         categoryCounts: {
-    //           live: res.productCount.live,
-    //           in_active: res.productCount.in_active,
-    //           draft: res.productCount.draft,
-    //           deleted: res.productCount.deleted,
-    //         },
-    //         productList: [],
-    //       };
-    //       if (this.selectedCategory === 'all') {
-    //         this.paginator.length = res.productCount.productTotalCount;
-    //       } else {
-    //         this.paginator.length = res.productCount[this.selectedCategory];
-    //       }
-    //       this.totalProductList = res.response;
-    //       console.log(this.totalProductList);
-    //       this.updateImage();
-    //     }
-    //   });
+
+    this._memberShipService.getAllMembership().subscribe((memberShipArray:MemberShip[]) => {
+      this.dataSource = new MatTableDataSource(memberShipArray);
+    })
+   
   }
 
-  ngAfterViewInit() {
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  // }
+
+
+
+  onFirstLoad() {
+    this.dataSource = new MatTableDataSource(this.skeletonList);
     // this.dataSource.paginator = this.paginator;
   }
 
-
-
-  deleteProduct() {
-    this.dialog.closeAll();
-  }
-  updateLoaderData() {
-    this.totalProductList = [
-      {
-        loading: true,
-      },
-      {
-        loading: true,
-      },
-      {
-        loading: true,
-      },
-      {
-        loading: true,
-      },
-    ];
-
-    this.dataSource = new MatTableDataSource(this.totalProductList);
-    // this.dataSource.paginator = this.paginator;
-  }
   updateImage() {
-    this.dataSource = new MatTableDataSource(this.totalProductList);
+    this.dataSource = new MatTableDataSource(this.totalMembershipList);
   }
+
   changePage(e: any) {
     console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
-    this.getProductList();
+    this.getMembershipList();
   }
-
-  editProduct(event: any, id: any) {
-    event.preventDefault();
-    console.log(id);
-    this._router.navigate(['/tenant/edit-product'], {
-      queryParams: { id: id },
-    });
-  }
-
 }
