@@ -1,5 +1,5 @@
 <section id="hdls-newmembership-container">
-    <h3>Add New Membership | Membership Information</h3>
+    <h3 class="hdls-breadcrumb-title">Add New Membership | Membership Information</h3>
     <div class="new-membership-form-container"> 
         <form [formGroup]="newMembership">
             <div>
@@ -25,9 +25,9 @@
                   </mat-form-field>
             </div>
             <div>
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill" >
                     <mat-label>E-vouchers</mat-label>
-                    <mat-select formControlName="evouchers" multiple>
+                    <mat-select  multiple formControlName="evouchers">
                       <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -36,7 +36,7 @@
           
             <div>
                     <button mat-raised-button class="hdls-cancel-btn">Cancel</button>
-                    <button mat-raised-button color="primary" class="hdls-nxt-btn">Next</button>
+                    <button mat-raised-button color="primary" class="hdls-nxt-btn">Submit</button>
             </div>
 </form>
     </div>           

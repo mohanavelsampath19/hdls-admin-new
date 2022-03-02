@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { InventoryComponent } from './pages/inventory/inventory.component';
 import { LandingpageComponent } from './pages/landingpage/landingpage.component';
 import { LoginComponent } from './pages/login/login.component';
 
@@ -16,6 +17,10 @@ const routes: Routes = [
         path:'membership',
         loadChildren: () =>import('./modules/membership/membership.module').then((m) => m.MembershipModule)
       },
+      {
+        path:'inventory',
+        component: InventoryComponent
+      }
     ]
   }, 
   {

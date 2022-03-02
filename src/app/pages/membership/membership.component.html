@@ -1,4 +1,27 @@
 <section id="hdls-membership-container">
+
+  <div class="hdls-header-search-section">
+    <div class="hdls-search-section">
+      <form class="hdls-search-field">
+        <input
+          type="text"
+          
+          matInput
+          placeholder="Search"
+        />
+        <span>
+          <a href="#" >
+            <img src="../../../assets/images/search.png" alt="Search" />
+          </a>
+        </span>
+      </form>
+    </div>
+    <a class="add-button" routerLink="/membership/add-membership">
+      <span>Add Membership</span>
+      <img src="../../../assets/images/plus.png" alt="Add membership" />
+    </a>
+  </div>
+  
   <div id="hdls-membership-list">
     <div class="category-button">
       <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'all' }"

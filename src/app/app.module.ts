@@ -29,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProductstatusPipe } from './filters/productstatus.pipe';
 import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
+import { InventoryComponent } from './pages/inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AddMembershipComponent } from './pages/membership/add-membership/add-me
     LoginComponent,
     LandingpageComponent,
     AddMembershipComponent,
+    InventoryComponent,
     
   ],
   imports: [

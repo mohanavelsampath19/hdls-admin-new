@@ -12,7 +12,7 @@ export class AddMembershipComponent implements OnInit {
     title: new FormControl(),
     description: new FormControl(),
     property:new FormControl(),
-    vouchers:new FormControl(),
+    evouchers:new FormControl(),
     cancel:new FormControl(),
     next:new FormControl()
   })

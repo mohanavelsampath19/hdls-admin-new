@@ -1,5 +1,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import url('https://fonts.googleapis.com/css2?family=Proza+Libre:wght@400;700&display=swap');
 
 
 @import "~@angular/material/theming";
@@ -37,3 +38,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include angular-material-typography($typography);
 
+.hdls-breadcrumb-title {
+  font-family: "Proza Libre", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #010101e0;
+}
