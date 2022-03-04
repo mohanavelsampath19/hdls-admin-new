@@ -30,6 +30,7 @@ import { ProductstatusPipe } from './filters/productstatus.pipe';
 import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
+import { HotelsComponent } from './pages/hotels/hotels.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { InventoryComponent } from './pages/inventory/inventory.component';
     LandingpageComponent,
     AddMembershipComponent,
     InventoryComponent,
-    
+    HotelsComponent
   ],
   imports: [
     BrowserModule,

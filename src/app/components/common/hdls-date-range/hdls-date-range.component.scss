@@ -1,0 +1,38 @@
+@import '../../../../theme/vars.scss';
+
+.date-range {
+  .date-input {
+    border: 1px solid #e5e5e5;
+    input {
+      font-size: 13px;
+    }
+  }
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep .mat-form-field-appearance-fill {
+  background-color: #fff !important;
+}
+
+::ng-deep .mat-form-field-flex {
+  background-color: #fff !important;
+  padding-top: 5px !important;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center !important;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+::ng-deep .mat-form-field-infix {
+  border-top: 0;
+  width: 170px !important;
+}

@@ -4,6 +4,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { LandingpageComponent } from './pages/landingpage/landingpage.component';
 import { LoginComponent } from './pages/login/login.component';
+import { HotelsComponent} from './pages/hotels/hotels.component';
 
 const routes: Routes = [
   {
@@ -20,14 +21,18 @@ const routes: Routes = [
       {
         path:'inventory',
         component: InventoryComponent
+      },
+      {
+        path: 'hotels',
+        component: HotelsComponent
       }
     ]
-  }, 
+  },
   {
     path:'login',
     component: LoginComponent
   },
-  
+
   // {
   //   path: 'membership',
   //   loadChildren: () => import('./modules/membership/membership.module').then(member => member.MembershipModule)

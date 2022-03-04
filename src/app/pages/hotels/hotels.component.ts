@@ -6,11 +6,12 @@ import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 
 @Component({
-  selector: 'app-inventory',
-  templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.scss']
+  selector: 'app-hotels',
+  templateUrl: './hotels.component.html',
+  styleUrls: ['./hotels.component.scss']
 })
-export class InventoryComponent implements OnInit {
+export class HotelsComponent implements OnInit {
+
   selectedCategory: string = 'all';
   memberShipFilters: any = {
     categoryCounts: {
@@ -27,10 +28,10 @@ export class InventoryComponent implements OnInit {
 
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
-    'property_name',
-    'property_id',
-    'total_rooms',
-    'total_outlet',
+    'name',
+    'type',
+    'price',
+    'quantity',
     'status',
     'action',
   ];
