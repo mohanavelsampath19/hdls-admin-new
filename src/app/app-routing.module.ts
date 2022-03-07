@@ -5,6 +5,7 @@ import { InventoryComponent } from './pages/inventory/inventory.component';
 import { LandingpageComponent } from './pages/landingpage/landingpage.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HotelsComponent} from './pages/hotels/hotels.component';
+import { AddRoomComponent } from './pages/add-room/add-room.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: 'hotels',
         component: HotelsComponent
+      },
+      {
+        path: 'add-room',
+        component: AddRoomComponent
       }
     ]
   },

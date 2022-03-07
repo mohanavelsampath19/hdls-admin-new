@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +31,10 @@ import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { HotelsComponent } from './pages/hotels/hotels.component';
+import { AddRoomComponent } from './pages/add-room/add-room.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,8 @@ import { HotelsComponent } from './pages/hotels/hotels.component';
     LandingpageComponent,
     AddMembershipComponent,
     InventoryComponent,
-    HotelsComponent
+    HotelsComponent,
+    AddRoomComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +74,10 @@ import { HotelsComponent } from './pages/hotels/hotels.component';
     MatButtonModule,
     MatChipsModule,
     MatSlideToggleModule,
+    AngularEditorModule,
+    MatRadioModule,
+    MatDialogModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
