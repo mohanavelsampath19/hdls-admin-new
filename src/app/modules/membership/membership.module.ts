@@ -11,7 +11,7 @@ import { ProductstatusPipe } from 'src/app/filters/productstatus.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddVouchersComponent } from '../../pages/membership/add-vouchers/add-vouchers.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -25,13 +25,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { VouchersComponent } from '../../pages/vouchers/vouchers.component';
 
 @NgModule({
   declarations: [
     MembershipComponent,
     ProductstatusPipe,
-    AddVouchersComponent
+    AddVouchersComponent,
+    VouchersComponent,
   ],
   imports: [
     CommonModule,
@@ -64,8 +65,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatChipsModule,
     MatSlideToggleModule,
   ],
-  bootstrap: [
-    MembershipComponent
-  ]
+  // bootstrap: [MembershipComponent],
 })
-export class MembershipModule { }
+export class MembershipModule {}
