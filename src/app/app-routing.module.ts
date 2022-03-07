@@ -7,6 +7,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HotelsComponent } from './pages/hotels/hotels.component';
 import { AddVouchersComponent } from './pages/membership/add-vouchers/add-vouchers.component';
 import { PointsystemComponent } from './pages/pointsystem/pointsystem.component';
+import { AddRoomComponent } from './pages/add-room/add-room.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
         path: 'points',
         component: PointsystemComponent,
       },
+      {
+        path: 'add-room',
+        component: AddRoomComponent
+      }
     ],
   },
   {
