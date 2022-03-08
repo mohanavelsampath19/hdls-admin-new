@@ -93,7 +93,7 @@
       >
         <ng-container matColumnDef="property_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Membership Name
+            Property Name
           </th>
           <td mat-cell *matCellDef="let element">
             <p *ngIf="!element.loading">
@@ -104,7 +104,7 @@
         </ng-container>
 
         <ng-container matColumnDef="property_id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.loading">
               {{ element.property_id }}
@@ -115,7 +115,7 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="total_rooms">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Rooms</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.loading">
               {{ element.total_rooms }}
@@ -125,7 +125,7 @@
         </ng-container>
 
         <ng-container matColumnDef="total_outlet">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Outlet</th>
           <td mat-cell *matCellDef="let element">
             {{ element.total_outlet }}
           </td>

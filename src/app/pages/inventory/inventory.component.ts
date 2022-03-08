@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { InventoryService } from 'src/app/services/inventory/inventory.service';
+import { InventoryService, Inventorys } from 'src/app/services/inventory/inventory.service';
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 
@@ -19,9 +19,9 @@ export class InventoryComponent implements OnInit {
       draft: '',
       deleted: '',
     },
-    membershipList: [],
+    inventoryList: [],
   };
-  totalMembershipList: Array<MemberShip> = [];
+  totalInventoryList: Array<Inventorys> = [];
   skeletonList: Array<Loading> = [{isLoading:true},{isLoading:true},{isLoading:true},{isLoading:true},]
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
@@ -34,7 +34,7 @@ export class InventoryComponent implements OnInit {
     'status',
     'action',
   ];
-  dataSource:any = new MatTableDataSource(this.totalMembershipList);
+  dataSource:any = new MatTableDataSource(this.totalInventoryList);
   pageSize: number = 5;
   pageOffset: number = 0;
   constructor(private _inventoryService:InventoryService) { }
@@ -52,10 +52,10 @@ export class InventoryComponent implements OnInit {
   getSearchInput(searchValue: any) {
     let searchText = searchValue.toLowerCase();
     if (searchText === '') {
-      this.dataSource = new MatTableDataSource(this.totalMembershipList);
+      this.dataSource = new MatTableDataSource(this.totalInventoryList);
     } else {
       let filteredResults;
-      filteredResults = this.totalMembershipList.filter((list) => {
+      filteredResults = this.totalInventoryList.filter((list) => {
         let getValues = Object.values(list).toString().toLowerCase();
         return getValues.includes(searchText);
       });
@@ -84,9 +84,9 @@ export class InventoryComponent implements OnInit {
         break;
     }
 
-    // this._inventoryService.getAllMembership().subscribe((memberShipArray:MemberShip[]) => {
-    //   this.dataSource = new MatTableDataSource(memberShipArray);
-    // })
+    this._inventoryService.getMyInventoryList().subscribe((inventoryArray:Inventorys[]) => {
+      this.dataSource = new MatTableDataSource(inventoryArray);
+    })
 
   }
 
@@ -102,7 +102,7 @@ export class InventoryComponent implements OnInit {
   }
 
   updateImage() {
-    this.dataSource = new MatTableDataSource(this.totalMembershipList);
+    this.dataSource = new MatTableDataSource(this.totalInventoryList);
   }
 
   changePage(e: any) {
