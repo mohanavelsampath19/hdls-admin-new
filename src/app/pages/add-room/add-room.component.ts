@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input,  } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -20,25 +20,23 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-add-room',
   templateUrl: './add-room.component.html',
-  styleUrls: ['./add-room.component.scss']
+  styleUrls: ['./add-room.component.scss'],
 })
 export class AddRoomComponent implements OnInit {
-
   shippingCategory: string = 'free';
   variantFormGroup: FormGroup = this._formBuilder.group({
     variantList: this._formBuilder.array([]),
   });
   addOnBlur = true;
   variantArr: any[] = [];
-  roomPrice:any []= [];
+  roomPrice: any[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  firstFormGroup: any = this._formBuilder.group({
-  });
-  secondFormGroup: any = this._formBuilder.group({});;
-  specFormGroup: any = this._formBuilder.group({});;
-  thirdFormGroup: any = this._formBuilder.group({});;
+  firstFormGroup: any = this._formBuilder.group({});
+  secondFormGroup: any = this._formBuilder.group({});
+  specFormGroup: any = this._formBuilder.group({});
+  thirdFormGroup: any = this._formBuilder.group({});
   isEditable = false;
-  toppings: any = this._formBuilder.group({});;
+  toppings: any = this._formBuilder.group({});
 
   currentStep: any = 0;
   progressBarValue: number = 4;
@@ -135,29 +133,29 @@ export class AddRoomComponent implements OnInit {
     },
   ];
   displayColumns = ['sno', 'specname', 'specval', 'delete'];
-  adults:any = 0;
-  childrens:any = 0;
+  adults: any = 0;
+  childrens: any = 0;
   specDataSource = new BehaviorSubject<AbstractControl[]>([]);
   composedVariantList: Array<any> = [];
   removeFirstVariant: Array<any> = [];
   specRows: FormArray = this._formBuilder.array([]);
   constructor(
     private _formBuilder: FormBuilder,
-   // private _productService: ProductService,
+    // private _productService: ProductService,
     public _dialog: MatDialog,
     private _route: Router
   ) {}
 
-  removevalue(i:any){
-    this.roomPrice.splice(i,1);
+  removevalue(i: any) {
+    this.roomPrice.splice(i, 1);
   }
 
-  addvalue(){
-    this.roomPrice.push({value: ""});
+  addvalue() {
+    this.roomPrice.push({ value: '' });
   }
 
-  ngOnChanges(){
-    console.log(this.roomPrice, '---room price ---')
+  ngOnChanges() {
+    console.log(this.roomPrice, '---room price ---');
   }
 
   ngOnInit() {
@@ -171,7 +169,7 @@ export class AddRoomComponent implements OnInit {
       room_size: ['', Validators.required],
       points: ['', Validators.required],
       restrictions: ['', Validators.required],
-      room_price: ['', Validators.required]
+      room_price: ['', Validators.required],
     });
     this.secondFormGroup = this._formBuilder.group({});
 
@@ -307,6 +305,7 @@ export class AddRoomComponent implements OnInit {
   };
 
   getCurrentStep = (stepno: number) => {
+    console.log('check', stepno, this.firstFormGroup.valid);
     if (this.firstFormGroup.valid) {
       switch (stepno) {
         case 1:
@@ -314,10 +313,12 @@ export class AddRoomComponent implements OnInit {
           this.progressBarValue = 20;
           break;
         case 2:
+          console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 40;
           break;
         case 3:
+          console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 60;
           break;
@@ -470,15 +471,15 @@ export class AddRoomComponent implements OnInit {
     }
   }
   getShippingType(event: any) {}
-  addItem(category:any){
-    if(category === 'adults') {
+  addItem(category: any) {
+    if (category === 'adults') {
       this.adults++;
     } else {
       this.childrens++;
     }
   }
-  removeItem(category:any){
-    if(category === 'adults') {
+  removeItem(category: any) {
+    if (category === 'adults') {
       this.adults--;
     } else {
       this.childrens--;

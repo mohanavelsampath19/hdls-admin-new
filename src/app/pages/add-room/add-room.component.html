@@ -57,68 +57,73 @@
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Bed Type<span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="bed_type">
-            <mat-option value="1">Laptop</mat-option>
-            <mat-option value="2">Mobile</mat-option>
-            <mat-option value="3">Desktop</mat-option>
+            <mat-option value="1">single bedroom</mat-option>
+            <mat-option value="2">Double bedroom</mat-option>
+            <mat-option value="3">extra bedroom</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Room Quantity<span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="room_quantity">
-            <mat-option value="1">Laptop</mat-option>
-            <mat-option value="2">Mobile</mat-option>
-            <mat-option value="3">Desktop</mat-option>
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
           </mat-select>
         </mat-form-field>
         <div>
-        <div class="product-details-card-description-inner-counter">
-          <h3>Adults</h3>
-          <span
-            ><button
-              (click)="removeItem('adults')"
-              class="product-details-card-description-inner-counter-button"
-            >
-              -
-            </button></span
-          >
-          <span
-            class="product-details-card-description-inner-counter-value"
-            >{{adults}}</span
-          >
-          <span
-            ><button
-              (click)="addItem('adults')"
-              class="product-details-card-description-inner-counter-button"
-            >
-              +
-            </button></span
-          >
+          <div class="product-details-card-description-inner-counter">
+            <h3>Adults<span class="required">*</span></h3>
+            <div class="span-container">
+              <span
+                ><button
+                  (click)="removeItem('adults')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  -
+                </button></span
+              >
+              <span
+                class="product-details-card-description-inner-counter-value"
+                >{{ adults }}</span
+              >
+              <span
+                ><button
+                  (click)="addItem('adults')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  +
+                </button></span
+              >
+            </div>
+          </div>
+          <div class="product-details-card-description-inner-counter">
+            <h3>Children<span class="required">*</span></h3>
+            <div class="span-container">
+              <span
+                ><button
+                  (click)="removeItem('childrens')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  -
+                </button></span
+              >
+              <span
+                class="product-details-card-description-inner-counter-value"
+                >{{ childrens }}</span
+              >
+              <span
+                ><button
+                  (click)="addItem('childrens')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  +
+                </button></span
+              >
+            </div>
+          </div>
         </div>
-        <div class="product-details-card-description-inner-counter">
-          <h3>Children</h3>
-          <span
-            ><button
-              (click)="removeItem('childrens')"
-              class="product-details-card-description-inner-counter-button"
-            >
-              -
-            </button></span
-          >
-          <span
-            class="product-details-card-description-inner-counter-value"
-            >{{childrens}}</span
-          >
-          <span
-            ><button
-              (click)="addItem('childrens')"
-              class="product-details-card-description-inner-counter-button"
-            >
-              +
-            </button></span
-          >
-        </div>
-      </div>
         <section class="example-section" [formGroup]="toppings">
+          <h4>Include</h4>
           <mat-checkbox
             formControlName="flammable"
             class="dm-checkbox"
@@ -141,9 +146,9 @@
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Room Facilities<span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="room_facilities">
-            <mat-option value="1">Laptop</mat-option>
-            <mat-option value="2">Mobile</mat-option>
-            <mat-option value="3">Desktop</mat-option>
+            <mat-option value="1">Default</mat-option>
+            <mat-option value="2">Facility 1</mat-option>
+            <mat-option value="3">Facility 2</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="dm-form-field" appearance="fill">
@@ -152,7 +157,7 @@
             matInput
             formControlName="room_size"
             class="dm-form-input"
-            placeholder="Room Size"
+            placeholder="Room dimensions"
             required
           />
           <p
@@ -170,21 +175,50 @@
           <input type="text" [(ngModel)]="roomPrice.value" formControlName="room_price"  name="value{{i}}">
           <button (click)="removevalue(i)">Remove</button>
         </div> -->
-        <button (click)="addvalue()">ADD</button>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Primary Room Price (RM)<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="room_price"
+            class="dm-form-input-width"
+            placeholder="Room Price"
+            required
+          />
+
+          <button
+            class="product-details-card-description-inner-counter-button-height"
+            (click)="addvalue()"
+          >
+            +
+          </button>
+
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.room_price.invalid &&
+              (firstFormGroup.controls.room_price.dirty ||
+                firstFormGroup.controls.room_price.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the room price
+          </p>
+        </mat-form-field>
+
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Points<span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="points">
-            <mat-option value="1">Laptop</mat-option>
-            <mat-option value="2">Mobile</mat-option>
-            <mat-option value="3">Desktop</mat-option>
+            <mat-option value="1">Default</mat-option>
+            <mat-option value="2">Double Points</mat-option>
+            <mat-option value="3">Public Points</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Restrictions<span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="restrictions">
-            <mat-option value="1">Laptop</mat-option>
-            <mat-option value="2">Mobile</mat-option>
-            <mat-option value="3">Desktop</mat-option>
+            <mat-option value="1">Public Holiday</mat-option>
+            <mat-option value="2">Weekends</mat-option>
+            <mat-option value="3">Selected Dates</mat-option>
           </mat-select>
         </mat-form-field>
         <!-- <mat-form-field class="dm-form-field" appearance="fill">
@@ -259,7 +293,7 @@
             }"
             (click)="getCurrentStep(3)"
           >
-            Next
+            save
           </button>
         </div>
       </form>

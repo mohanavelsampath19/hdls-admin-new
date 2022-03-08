@@ -46,7 +46,7 @@ import { PointsystemModule } from './modules/pointsystem/pointsystem.module';
     AddMembershipComponent,
     InventoryComponent,
     HotelsComponent,
-    AddRoomComponent
+    AddRoomComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,9 +79,9 @@ import { PointsystemModule } from './modules/pointsystem/pointsystem.module';
     MatRadioModule,
     MatDialogModule,
     HttpClientModule,
-    PointsystemModule
+    PointsystemModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
