@@ -24,11 +24,15 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AddRoomComponent implements OnInit {
   shippingCategory: string = 'free';
+  priceFormGroup: FormGroup = this._formBuilder.group({
+    priceList: this._formBuilder.array([]),
+  });
   variantFormGroup: FormGroup = this._formBuilder.group({
     variantList: this._formBuilder.array([]),
   });
   addOnBlur = true;
   variantArr: any[] = [];
+  priceArr: any[] = [];
   roomPrice: any[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   firstFormGroup: any = this._formBuilder.group({});
@@ -305,7 +309,6 @@ export class AddRoomComponent implements OnInit {
   };
 
   getCurrentStep = (stepno: number) => {
-    console.log('check', stepno, this.firstFormGroup.valid);
     if (this.firstFormGroup.valid) {
       switch (stepno) {
         case 1:
@@ -321,6 +324,7 @@ export class AddRoomComponent implements OnInit {
           console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 60;
+
           break;
         case 4:
           this.currentStep = stepno;
