@@ -25,25 +25,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { HdlsDateRangeComponent } from '../../components/common/hdls-date-range/hdls-date-range.component';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    SidenavComponent,
-    HdlsDateRangeComponent
-  ],
+  declarations: [HeaderComponent, SidenavComponent, HdlsDateRangeComponent],
   imports: [
     CommonModule,
     RouterModule,
     MatIconModule,
     MatToolbarModule,
     MatDatepickerModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
-  exports:[
+  exports: [
     HeaderComponent,
     SidenavComponent,
     HdlsDateRangeComponent,
     MatDatepickerModule,
-    MatFormFieldModule
-  ]
+    MatFormFieldModule,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

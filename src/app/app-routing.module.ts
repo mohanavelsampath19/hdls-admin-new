@@ -4,38 +4,52 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { LandingpageComponent } from './pages/landingpage/landingpage.component';
 import { LoginComponent } from './pages/login/login.component';
-import { HotelsComponent} from './pages/hotels/hotels.component';
+import { HotelsComponent } from './pages/hotels/hotels.component';
+import { AddVouchersComponent } from './pages/membership/add-vouchers/add-vouchers.component';
+import { PointsystemComponent } from './pages/pointsystem/pointsystem.component';
 import { AddRoomComponent } from './pages/add-room/add-room.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LandingpageComponent,
-    children:[
+    children: [
       {
-        path:'dashboard',
-        component:DashboardComponent
-      },{
-        path:'membership',
-        loadChildren: () =>import('./modules/membership/membership.module').then((m) => m.MembershipModule)
+        path: 'dashboard',
+        component: DashboardComponent,
       },
       {
         path:'inventory',
         loadChildren: () =>import('./modules/inventory/inventory.module').then((m) => m.InventoryModule)
       },
       {
+        path: 'membership',
+        loadChildren: () =>
+          import('./modules/membership/membership.module').then(
+            (m) => m.MembershipModule
+          ),
+      },
+      {
         path: 'hotels',
-        component: HotelsComponent
+        component: HotelsComponent,
+      },
+      {
+        path: 'vouchers',
+        component: AddVouchersComponent,
+      },
+      {
+        path: 'points',
+        component: PointsystemComponent,
       },
       {
         path: 'add-room',
         component: AddRoomComponent
       }
-    ]
+    ],
   },
   {
-    path:'login',
-    component: LoginComponent
+    path: 'login',
+    component: LoginComponent,
   },
 
   // {
@@ -46,6 +60,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

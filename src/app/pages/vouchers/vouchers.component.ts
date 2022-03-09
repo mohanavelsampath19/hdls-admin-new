@@ -1,19 +1,18 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import {
   MemberShip,
   MembershipService,
 } from 'src/app/services/membership/membership.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-
 import { Loading } from 'src/app/services/utilities/helper_models';
 
 @Component({
-  selector: 'app-pointsystem',
-  templateUrl: './pointsystem.component.html',
-  styleUrls: ['./pointsystem.component.scss'],
+  selector: 'app-vouchers',
+  templateUrl: './vouchers.component.html',
+  styleUrls: ['./vouchers.component.scss'],
 })
-export class PointsystemComponent implements OnInit {
+export class VouchersComponent implements OnInit {
   selectedCategory: string = 'all';
   memberShipFilters: any = {
     categoryCounts: {
@@ -47,8 +46,7 @@ export class PointsystemComponent implements OnInit {
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
-
-  constructor(private __membershipService: MembershipService) {}
+  constructor(private _membershipService: MembershipService) {}
 
   ngOnInit(): void {
     this.getPropertyList();

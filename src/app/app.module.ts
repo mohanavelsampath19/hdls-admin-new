@@ -35,6 +35,7 @@ import { AddRoomComponent } from './pages/add-room/add-room.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { PointsystemModule } from './modules/pointsystem/pointsystem.module';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { HttpClientModule } from '@angular/common/http';
     LandingpageComponent,
     AddMembershipComponent,
     HotelsComponent,
-    AddRoomComponent
+    AddRoomComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,9 +77,10 @@ import { HttpClientModule } from '@angular/common/http';
     AngularEditorModule,
     MatRadioModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    PointsystemModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
