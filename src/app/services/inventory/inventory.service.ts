@@ -8,21 +8,21 @@ export class InventoryService {
 
   getAllInventorySubject: BehaviorSubject<Inventorys[]> = new BehaviorSubject([
     {
-      property_name: 'taj hotel',
+      property_name: 'Taj hotel',
       property_id: 1,
       total_rooms: 10,
       total_outlet: 2,
       status: 'Active'
     },
     {
-      property_name: 'taj hotel',
+      property_name: 'ITC',
       property_id: 1,
       total_rooms: 10,
       total_outlet: 2,
       status: 'Active'
     },
     {
-      property_name: 'taj hotel',
+      property_name: 'Oberai',
       property_id: 1,
       total_rooms: 10,
       total_outlet: 2,

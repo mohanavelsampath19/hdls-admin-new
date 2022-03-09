@@ -29,7 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProductstatusPipe } from './filters/productstatus.pipe';
 import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
-import { InventoryComponent } from './pages/inventory/inventory.component';
+//import { InventoryComponent } from './pages/inventory/inventory.component';
 import { HotelsComponent } from './pages/hotels/hotels.component';
 import { AddRoomComponent } from './pages/add-room/add-room.component';
 import { MatRadioModule } from '@angular/material/radio';
@@ -43,7 +43,6 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     LandingpageComponent,
     AddMembershipComponent,
-    InventoryComponent,
     HotelsComponent,
     AddRoomComponent
   ],

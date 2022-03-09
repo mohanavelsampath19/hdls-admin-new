@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       {
         path:'inventory',
-        component: InventoryComponent
+        loadChildren: () =>import('./modules/inventory/inventory.module').then((m) => m.InventoryModule)
       },
       {
         path: 'hotels',

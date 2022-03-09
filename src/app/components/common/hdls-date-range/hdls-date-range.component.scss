@@ -2,7 +2,7 @@
 
 .date-range {
   .date-input {
-    border: 1px solid #e5e5e5;
+    border: 1px solid $toolbar-bg;
     input {
       font-size: 13px;
     }
@@ -14,11 +14,11 @@
 }
 
 ::ng-deep .mat-form-field-appearance-fill {
-  background-color: #fff !important;
+  background-color: $secondary-font-color!important;
 }
 
 ::ng-deep .mat-form-field-flex {
-  background-color: #fff !important;
+  background-color: $secondary-font-color!important;
   padding-top: 5px !important;
   display: flex !important;
   flex-direction: row;

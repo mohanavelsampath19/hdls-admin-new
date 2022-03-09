@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
-import { MemberShip } from 'src/app/services/membership/membership.service';
+import { HotelsService, HotelDetails } from '../../services/hotels/hotels.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 
 @Component({
@@ -20,9 +20,9 @@ export class HotelsComponent implements OnInit {
       draft: '',
       deleted: '',
     },
-    membershipList: [],
+    hotelsList: [],
   };
-  totalMembershipList: Array<MemberShip> = [];
+  totalHotelsList: Array<HotelDetails> = [];
   skeletonList: Array<Loading> = [{isLoading:true},{isLoading:true},{isLoading:true},{isLoading:true},]
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
@@ -35,10 +35,10 @@ export class HotelsComponent implements OnInit {
     'status',
     'action',
   ];
-  dataSource:any = new MatTableDataSource(this.totalMembershipList);
+  dataSource:any = new MatTableDataSource(this.totalHotelsList);
   pageSize: number = 5;
   pageOffset: number = 0;
-  constructor(private _inventoryService:InventoryService) { }
+  constructor(private _hotelService:HotelsService) { }
   ngOnInit(): void {
     this.getPropertyList();
   }
@@ -53,10 +53,10 @@ export class HotelsComponent implements OnInit {
   getSearchInput(searchValue: any) {
     let searchText = searchValue.toLowerCase();
     if (searchText === '') {
-      this.dataSource = new MatTableDataSource(this.totalMembershipList);
+      this.dataSource = new MatTableDataSource(this.totalHotelsList);
     } else {
       let filteredResults;
-      filteredResults = this.totalMembershipList.filter((list) => {
+      filteredResults = this.totalHotelsList.filter((list) => {
         let getValues = Object.values(list).toString().toLowerCase();
         return getValues.includes(searchText);
       });
@@ -85,9 +85,9 @@ export class HotelsComponent implements OnInit {
         break;
     }
 
-    // this._inventoryService.getAllMembership().subscribe((memberShipArray:MemberShip[]) => {
-    //   this.dataSource = new MatTableDataSource(memberShipArray);
-    // })
+    this._hotelService.getMyHotelsList().subscribe((hotelArray:HotelDetails[]) => {
+      this.dataSource = new MatTableDataSource(hotelArray);
+    })
 
   }
 
@@ -103,7 +103,7 @@ export class HotelsComponent implements OnInit {
   }
 
   updateImage() {
-    this.dataSource = new MatTableDataSource(this.totalMembershipList);
+    this.dataSource = new MatTableDataSource(this.totalHotelsList);
   }
 
   changePage(e: any) {

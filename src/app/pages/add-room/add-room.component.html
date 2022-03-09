@@ -34,14 +34,14 @@
             Please fill the room name
           </p>
         </mat-form-field>
-        <div class="dm-form-field p-10">
+        <mat-form-field class="dm-form-field p-10" appearance="fill">
           <h4>Room Descriptions<span class="required">*</span></h4>
-          <angular-editor
+          <textarea
+          matInput
             id="productDescriptionEditor"
             formControlName="room_description"
-            [config]="editorConfig"
           >
-          </angular-editor>
+          </textarea>
 
           <p
             class="dm-error"
@@ -53,7 +53,7 @@
           >
             Please fill the description
           </p>
-        </div>
+        </mat-form-field>
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Bed Type<span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="bed_type">
