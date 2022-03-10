@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventoryComponent } from '../../pages/inventory/inventory.component';
-//import { AddPropertyComponent } from '../../pages/inventory/add-property/add-property.component';
+import { AddPropertyComponent } from '../../pages/inventory/add-property/add-property.component';
 import {InventoryRoutingModule} from './inventory.routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,6 +30,7 @@ import {MatRadioModule} from '@angular/material/radio';
 @NgModule({
   declarations: [
     InventoryComponent,
+    AddPropertyComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +61,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
-    MatRadioModule
+    MatRadioModule,
   ]
 })
 export class InventoryModule { }

@@ -34,8 +34,8 @@ export class BookingsComponent implements OnInit {
   displayedColumns: string[] = [
     'property_name',
     'property_id',
-    'total_rooms',
-    'total_outlet',
+    'room_type',
+    'no_of_rooms',
     'status',
     'action',
   ];
