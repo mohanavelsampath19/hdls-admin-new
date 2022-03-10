@@ -36,6 +36,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { PointsystemModule } from './modules/pointsystem/pointsystem.module';
+import { BookingsComponent } from './pages/bookings/bookings.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { PointsystemModule } from './modules/pointsystem/pointsystem.module';
     InventoryComponent,
     HotelsComponent,
     AddRoomComponent,
+    BookingsComponent,
   ],
   imports: [
     BrowserModule,
