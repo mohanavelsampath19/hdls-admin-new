@@ -44,6 +44,30 @@
       width: 99%;
       border-radius: 5px;
     }
+
+    .dm-form-input-width {
+      height: 40px;
+      border: 1px solid #e5e5e5;
+      background-color: #fff;
+      padding-left: 5px;
+      width: 30%;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .product-details-card-description-inner-counter-button-height {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(#fff, #f9f9f9);
+      display: inline-block;
+      border: 1px solid #c2c2c2;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 50%;
+      padding-top: 1px;
+      line-height: 1;
+      color: $primary-background-color;
+    }
     .dm-form-select {
       border-radius: 5px;
       border: 1px solid #ddd;
@@ -74,6 +98,19 @@
         }
       }
     }
+    .product-details-card-description-inner-counter-button {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(#fff, #f9f9f9);
+      display: inline-block;
+      border: 1px solid #c2c2c2;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 50%;
+      padding-top: 1px;
+      line-height: 1;
+      color: $primary-background-color;
+    }
   }
   .dm-radio-field {
     margin-left: 10px;
@@ -84,26 +121,44 @@
     }
   }
   .dm-stepper {
+    .adult-children-conatiner {
+      display: flex;
+      flex-direction: row;
+    }
     //  background-color: transparent;
     .product-details-card-description-inner-counter {
       grid-row: 2;
       grid-column: 1/2;
-      .product-details-card-description-inner-counter-button {
-        width: 28px;
-        height: 28px;
-        background: linear-gradient(#fff, #f9f9f9);
-        display: inline-block;
-        border: 1px solid #c2c2c2;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 50%;
-        padding-top: 1px;
-        line-height: 1;
-        color: $primary-background-color;
+      margin-left: 14px;
+      margin-bottom: 20px;
+      h3 {
+        color: #818181 !important;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
       }
-      .product-details-card-description-inner-counter-value {
-        margin-left: 10px;
-        margin-right: 10px;
+      .required {
+        color: #f44336;
+        padding-left: 5px;
+      }
+      .span-container {
+        margin-bottom: 15px;
+        .product-details-card-description-inner-counter-button {
+          width: 28px;
+          height: 28px;
+          background: linear-gradient(#fff, #f9f9f9);
+          display: inline-block;
+          border: 1px solid #c2c2c2;
+          cursor: pointer;
+          font-size: 16px;
+          border-radius: 50%;
+          padding-top: 1px;
+          line-height: 1;
+          color: $primary-background-color;
+        }
+        .product-details-card-description-inner-counter-value {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
       }
     }
     .dm-add-product-input {
@@ -114,6 +169,7 @@
     .example-section {
       margin-left: 13px;
       color: #818181 !important;
+      margin-bottom: 20px;
       h4 {
         color: #818181 !important;
         font-family: Arial, Helvetica, sans-serif;
@@ -124,6 +180,51 @@
         margin: 10px;
         font-size: 16px;
         color: #818181 !important;
+      }
+    }
+    .dm-form-field-timings {
+      margin-left: 13px;
+      margin-bottom: 20px;
+      h4 {
+        color: #818181 !important;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+        .required {
+          color: #f44336;
+          padding-left: 5px;
+        }
+      }
+      .checkin-checkout {
+        display: flex;
+        flex-direction: row;
+        color: #f44336;
+        gap: 20px;
+        .check-in {
+          width: 150px;
+          .dm-form-input {
+            height: 40px;
+            border: 1px solid #e5e5e5;
+            background-color: #fff;
+            padding-left: 5px;
+            width: 99%;
+            border-radius: 5px;
+          }
+        }
+        .check-out {
+          width: 150px;
+          .dm-form-input {
+            height: 40px;
+            border: 1px solid #e5e5e5;
+            background-color: #fff;
+            padding-left: 5px;
+            width: 99%;
+            border-radius: 5px;
+          }
+        }
+      }
+      .dm-error {
+        color: #f44336;
+        margin-top: 10px;
       }
     }
   }

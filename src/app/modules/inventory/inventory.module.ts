@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventoryComponent } from '../../pages/inventory/inventory.component';
 import { AddPropertyComponent } from '../../pages/inventory/add-property/add-property.component';
-import {InventoryRoutingModule} from './inventory.routing.module';
+import { InventoryRoutingModule } from './inventory.routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -25,13 +25,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { ProductstatusPipe } from 'src/app/filters/productstatus.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
-  declarations: [
-    InventoryComponent,
-    AddPropertyComponent
-  ],
+  declarations: [InventoryComponent, AddPropertyComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -62,6 +60,7 @@ import {MatRadioModule} from '@angular/material/radio';
     ReactiveFormsModule,
     FormsModule,
     MatRadioModule,
-  ]
+    NgxMaterialTimepickerModule,
+  ],
 })
-export class InventoryModule { }
+export class InventoryModule {}

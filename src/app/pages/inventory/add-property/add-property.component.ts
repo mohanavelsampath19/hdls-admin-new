@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input,  } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -20,25 +20,24 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-add-property',
   templateUrl: './add-property.component.html',
-  styleUrls: ['./add-property.component.scss']
+  styleUrls: ['./add-property.component.scss'],
 })
 export class AddPropertyComponent implements OnInit {
-
   shippingCategory: string = 'free';
   variantFormGroup: FormGroup = this._formBuilder.group({
     variantList: this._formBuilder.array([]),
   });
   addOnBlur = true;
   variantArr: any[] = [];
-  roomPrice:any []= [];
+  roomPrice: any[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  firstFormGroup: any = this._formBuilder.group({
-  });
-  secondFormGroup: any = this._formBuilder.group({});;
-  specFormGroup: any = this._formBuilder.group({});;
-  thirdFormGroup: any = this._formBuilder.group({});;
+  firstFormGroup: any = this._formBuilder.group({});
+  secondFormGroup: any = this._formBuilder.group({});
+  specFormGroup: any = this._formBuilder.group({});
+  thirdFormGroup: any = this._formBuilder.group({});
   isEditable = false;
-  toppings: any = this._formBuilder.group({});;
+  toppings: any = this._formBuilder.group({});
+  facilities: any = this._formBuilder.group({});
 
   currentStep: any = 0;
   progressBarValue: number = 4;
@@ -135,29 +134,29 @@ export class AddPropertyComponent implements OnInit {
     },
   ];
   displayColumns = ['sno', 'specname', 'specval', 'delete'];
-  adults:any = 0;
-  childrens:any = 0;
+  adults: any = 0;
+  childrens: any = 0;
   specDataSource = new BehaviorSubject<AbstractControl[]>([]);
   composedVariantList: Array<any> = [];
   removeFirstVariant: Array<any> = [];
   specRows: FormArray = this._formBuilder.array([]);
   constructor(
     private _formBuilder: FormBuilder,
-   // private _productService: ProductService,
+    // private _productService: ProductService,
     public _dialog: MatDialog,
     private _route: Router
   ) {}
 
-  removevalue(i:any){
-    this.roomPrice.splice(i,1);
+  removevalue(i: any) {
+    this.roomPrice.splice(i, 1);
   }
 
-  addvalue(){
-    this.roomPrice.push({value: ""});
+  addvalue() {
+    this.roomPrice.push({ value: '' });
   }
 
-  ngOnChanges(){
-    console.log(this.roomPrice, '---room price ---')
+  ngOnChanges() {
+    console.log(this.roomPrice, '---room price ---');
   }
 
   ngOnInit() {
@@ -167,11 +166,11 @@ export class AddPropertyComponent implements OnInit {
       bed_type: ['', Validators.required],
       room_quantity: ['', Validators.required],
       adults: [0, Validators.required],
-      room_facilities: [''],
+      // room_facilities: [''],
       room_size: ['', Validators.required],
       points: ['', Validators.required],
       restrictions: ['', Validators.required],
-      room_price: ['', Validators.required]
+      room_price: ['', Validators.required],
     });
     this.secondFormGroup = this._formBuilder.group({});
 
@@ -184,6 +183,17 @@ export class AddPropertyComponent implements OnInit {
       battery: false,
       none: false,
     });
+
+    this.facilities = this._formBuilder.group({
+      breakFast: false,
+      ac: false,
+      wifi: false,
+      geyser: false,
+      power_backup: false,
+      elevator: false,
+      room_service: false,
+    });
+
     this.thirdFormGroup = this._formBuilder.group({
       packageWeight: ['', Validators.required],
       width: ['', Validators.required],
@@ -470,15 +480,15 @@ export class AddPropertyComponent implements OnInit {
     }
   }
   getShippingType(event: any) {}
-  addItem(category:any){
-    if(category === 'adults') {
+  addItem(category: any) {
+    if (category === 'adults') {
       this.adults++;
     } else {
       this.childrens++;
     }
   }
-  removeItem(category:any){
-    if(category === 'adults') {
+  removeItem(category: any) {
+    if (category === 'adults') {
       this.adults--;
     } else {
       this.childrens--;

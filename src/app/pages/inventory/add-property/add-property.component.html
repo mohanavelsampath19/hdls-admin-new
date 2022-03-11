@@ -14,7 +14,7 @@
         #myform="ngForm"
       >
         <mat-form-field class="dm-form-field" appearance="fill">
-          <h4>Property Title<span class="required">*</span></h4>
+          <h4>Property Name<span class="required">*</span></h4>
           <input
             matInput
             formControlName="room_name"
@@ -34,10 +34,22 @@
             Please fill the property name
           </p>
         </mat-form-field>
-        <mat-form-field class="dm-form-field p-10" appearance="fill">
+
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Property Type<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="bed_type">
+            <mat-option value="1">Guesthouse</mat-option>
+            <mat-option value="2">Hostel</mat-option>
+            <mat-option value="3">Hotel</mat-option>
+            <mat-option value="3">Motel</mat-option>
+            <mat-option value="3">Resort</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Property Descriptions<span class="required">*</span></h4>
           <textarea
-          matInput
+            matInput
             id="productDescriptionEditor"
             formControlName="room_description"
           >
@@ -54,25 +66,18 @@
             Please fill the description
           </p>
         </mat-form-field>
-        <mat-form-field class="dm-form-field" appearance="fill">
-          <h4>Bed Type<span class="required">*</span></h4>
-          <mat-select class="dm-form-select" formControlName="bed_type">
-            <mat-option value="1">single bedroom</mat-option>
-            <mat-option value="2">Double bedroom</mat-option>
-            <mat-option value="3">extra bedroom</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="dm-form-field" appearance="fill">
-          <h4>Room Quantity<span class="required">*</span></h4>
+
+        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Cancellation policy <span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="room_quantity">
-            <mat-option value="1">1</mat-option>
-            <mat-option value="2">2</mat-option>
-            <mat-option value="3">3</mat-option>
+            <mat-option value="1">Flexible</mat-option>
+            <mat-option value="2">Moderate</mat-option>
+            <mat-option value="3">Strict</mat-option>
           </mat-select>
-        </mat-form-field>
-        <div>
+        </mat-form-field> -->
+        <div class="adult-children-conatiner">
           <div class="product-details-card-description-inner-counter">
-            <h3>Adults<span class="required">*</span></h3>
+            <h3>Available Rooms<span class="required">*</span></h3>
             <div class="span-container">
               <span
                 ><button
@@ -97,7 +102,7 @@
             </div>
           </div>
           <div class="product-details-card-description-inner-counter">
-            <h3>Children<span class="required">*</span></h3>
+            <h3>Maximum Accomidation<span class="required">*</span></h3>
             <div class="span-container">
               <span
                 ><button
@@ -122,37 +127,91 @@
             </div>
           </div>
         </div>
-        <section class="example-section" [formGroup]="toppings">
-          <h4>Include</h4>
+        <section class="example-section" [formGroup]="facilities">
+          <h4>Facilities Available</h4>
           <mat-checkbox
-            formControlName="flammable"
+            formControlName="breakFast"
             class="dm-checkbox"
             color="primary"
             >BreakFast</mat-checkbox
           >
           <mat-checkbox
-            formControlName="liquid"
+            formControlName="wifi"
             class="dm-checkbox"
             color="primary"
-            >Smoking Room</mat-checkbox
+            >Free wi-fi</mat-checkbox
           >
+          <mat-checkbox formControlName="ac" class="dm-checkbox" color="primary"
+            >AC</mat-checkbox
+          >
+
           <mat-checkbox
-            formControlName="battery"
+            formControlName="geyser"
             class="dm-checkbox"
             color="primary"
-            >Extra Bed</mat-checkbox
+            >Geyser</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="power_backup"
+            class="dm-checkbox"
+            color="primary"
+            >Power Backup</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="elevator"
+            class="dm-checkbox"
+            color="primary"
+            >Elevator</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="room_service"
+            class="dm-checkbox"
+            color="primary"
+            >24 Hours Room Service</mat-checkbox
           >
         </section>
-        <mat-form-field class="dm-form-field" appearance="fill">
-          <h4>Room Facilities<span class="required">*</span></h4>
+        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Room Checkin & Checkout Timing<span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="room_facilities">
-            <mat-option value="1">Default</mat-option>
-            <mat-option value="2">Facility 1</mat-option>
-            <mat-option value="3">Facility 2</mat-option>
+            <mat-option value="1">9.00- 21.00</mat-option>
+            <mat-option value="2">10.00-22.00</mat-option>
+            <mat-option value="3">Anytime</mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+
+        <div class="dm-form-field-timings" appearance="fill">
+          <h4>Check-in & Check-out Timing<span class="required">*</span></h4>
+          <div class="checkin-checkout">
+            <div class="check-in">
+              <input
+                class="dm-form-input"
+                placeholder="check-in"
+                aria-label="24hr format"
+                [ngxTimepicker]="checkin"
+                [format]="12"
+                readonly
+              />
+              <ngx-material-timepicker #checkin></ngx-material-timepicker>
+            </div>
+            <div class="check-out">
+              <input
+                class="dm-form-input"
+                placeholder="check-out"
+                aria-label="24hr format"
+                [ngxTimepicker]="checkout"
+                [format]="12"
+                readonly
+              />
+              <ngx-material-timepicker #checkout></ngx-material-timepicker>
+            </div>
+          </div>
+        </div>
+
         <mat-form-field class="dm-form-field" appearance="fill">
-          <h4>Room Size<span class="required">*</span></h4>
+          <h4>Front Desk Number<span class="required">*</span></h4>
           <input
             matInput
             formControlName="room_size"
@@ -176,7 +235,7 @@
           <button (click)="removevalue(i)">Remove</button>
         </div> -->
         <mat-form-field class="dm-form-field" appearance="fill">
-          <h4>Primary Room Price (RM)<span class="required">*</span></h4>
+          <h4>Property Images<span class="required">*</span></h4>
           <input
             matInput
             formControlName="room_price"
@@ -201,7 +260,7 @@
               myform.submitted
             "
           >
-            Please fill the room price
+            Please upload property images.
           </p>
         </mat-form-field>
 
