@@ -9,11 +9,11 @@ import {
 } from '@angular/forms';
 //import { ProductService } from 'src/app/services/api/product/product.service';
 import { MatDialog } from '@angular/material/dialog';
-//import { InfoPopupComponent } from '../../common/info-popup/info-popup.component';
+import { InfoPopupComponent } from '../../../components/common/info-popup/info-popup.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
-
+import { InventoryService } from '../../../services/inventory/inventory.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
@@ -144,7 +144,8 @@ export class AddPropertyComponent implements OnInit {
     private _formBuilder: FormBuilder,
     // private _productService: ProductService,
     public _dialog: MatDialog,
-    private _route: Router
+    private _route: Router,
+    private _inventoryService: InventoryService
   ) {}
 
   removevalue(i: any) {
@@ -155,19 +156,13 @@ export class AddPropertyComponent implements OnInit {
     this.roomPrice.push({ value: '' });
   }
 
-  ngOnChanges() {
-    console.log(this.roomPrice, '---room price ---');
-  }
-
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
-      room_name: ['', Validators.required],
-      room_description: ['', Validators.required],
-      bed_type: ['', Validators.required],
-      room_quantity: ['', Validators.required],
+      property_name: ['', Validators.required],
+      property_description: ['', Validators.required],
+      property_type: ['', Validators.required],
       adults: [0, Validators.required],
-      // room_facilities: [''],
-      room_size: ['', Validators.required],
+      front_end_desk: ['', Validators.required],
       points: ['', Validators.required],
       restrictions: ['', Validators.required],
       room_price: ['', Validators.required],
@@ -214,7 +209,6 @@ export class AddPropertyComponent implements OnInit {
   }
 
   createProduct = () => {
-    console.log(this.selectedIndex, 'index');
     let specObj: any = this.specFormGroup.value.specLists;
     let variantObj = {
       variants: this.variantList.value,
@@ -237,84 +231,22 @@ export class AddPropertyComponent implements OnInit {
       variantObj
     );
 
-    // this._productService
-    //   .addProduct({
-    //     ...this.firstFormGroup.value,
-    //     ...this.thirdFormGroup.value,
-    //     ...this.checkForCoverImage,
-    //     ...this.toppings.value,
-    //     specObj,
-    //     variantObj,
-    //     tenant_id: myTenantObj.tenant_id,
-    //   })
-    //   .subscribe(
-    //     (productResponse: any) => {
-    //       if (productResponse && productResponse.status === 0) {
-    //         const dialogRef = this._dialog.open(InfoPopupComponent, {
-    //           data: {
-    //             popupText: 'Product created successfully',
-    //           },
-    //         });
-    //         const getDialogRef =
-    //           dialogRef.componentInstance.closePopup.subscribe(() => {
-    //             this._dialog.closeAll();
-    //             this.firstFormGroup.reset();
-    //             this.secondFormGroup.reset();
-    //             this.thirdFormGroup.reset();
-    //             this.currentStep = 1;
-    //             this.progressBarValue = 5;
-    //             this._route.navigate(['/tenant/products']);
-    //           });
-    //         dialogRef.afterClosed().subscribe(() => {
-    //           getDialogRef.unsubscribe();
-    //         });
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
   };
 
-  draftProduct = () => {
-    this.currentStep = 1;
-    let myTenantObj = JSON.parse(localStorage.getItem('tenant_details') || '');
-    // this._productService
-    //   .draftProduct({
-    //     ...this.firstFormGroup.value,
-    //     ...this.thirdFormGroup.value,
-    //     ...this.checkForCoverImage,
-    //     ...this.toppings.value,
-    //     tenant_id: myTenantObj.tenant_id,
-    //   })
-    //   .subscribe(
-    //     (productResponse: any) => {
-    //       if (productResponse && productResponse.status === 0) {
-    //         const dialogRef = this._dialog.open(InfoPopupComponent, {
-    //           data: {
-    //             popupText: 'Product drafted successfully',
-    //           },
-    //         });
-    //         const getDialogRef =
-    //           dialogRef.componentInstance.closePopup.subscribe(() => {
-    //             this._dialog.closeAll();
-    //             this.firstFormGroup.reset();
-    //             this.secondFormGroup.reset();
-    //             this.thirdFormGroup.reset();
-    //             this.currentStep = 1;
-    //             this.progressBarValue = 5;
-    //             this._route.navigate(['/tenant/products']);
-    //           });
-    //         dialogRef.afterClosed().subscribe(() => {
-    //           getDialogRef.unsubscribe();
-    //         });
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-  };
+  saveProperty = () => {
+    console.log(this.firstFormGroup.valid, '---va', this.firstFormGroup.value);
+    this._inventoryService.addProperty(this.firstFormGroup.value).subscribe((res:any) => {
+      if(res && res.status === 1) {
+        const dialogRef = this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Property created successfully',
+          },
+        });
+        dialogRef.afterClosed().subscribe(() => {
+        });
+      }
+    })
+  }
 
   getCurrentStep = (stepno: number) => {
     if (this.firstFormGroup.valid) {
@@ -353,14 +285,6 @@ export class AddPropertyComponent implements OnInit {
       this.checkForCoverImage.validationCheck = false;
     }
   }
-  // updateDiscount() {
-  //   let original_price: any = this.firstFormGroup.value.original_price;
-  //   let sale_price: any = this.firstFormGroup.value.sales_price;
-  //   let differentPer =
-  //     (parseInt(original_price) - parseInt(sale_price)) / (original_price / 100);
-  //   this.firstFormGroup.controls.discount_percentage.setValue(differentPer);
-
-  // }
   get specList() {
     return this.specFormGroup.get('specLists') as FormArray;
   }

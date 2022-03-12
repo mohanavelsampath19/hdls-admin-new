@@ -198,15 +198,9 @@ export class AddRoomComponent implements OnInit {
     this.variantFormGroup.valueChanges.subscribe((val) => {
       this.composeVariantTable();
     });
-    // this.thirdFormGroup.controls['shippingType'].valueChanges.subscribe(
-    //   (value) => {
-    //     this.shippingCategory = value;
-    //   }
-    // );
   }
 
   createProduct = () => {
-    console.log(this.selectedIndex, 'index');
     let specObj: any = this.specFormGroup.value.specLists;
     let variantObj = {
       variants: this.variantList.value,
@@ -221,91 +215,6 @@ export class AddRoomComponent implements OnInit {
       return modifiedObj;
     });
     let myTenantObj = JSON.parse(localStorage.getItem('tenant_details') || '');
-    console.log(
-      this.firstFormGroup.value,
-      this.thirdFormGroup.value,
-      this.checkForCoverImage,
-      specObj,
-      variantObj
-    );
-
-    // this._productService
-    //   .addProduct({
-    //     ...this.firstFormGroup.value,
-    //     ...this.thirdFormGroup.value,
-    //     ...this.checkForCoverImage,
-    //     ...this.toppings.value,
-    //     specObj,
-    //     variantObj,
-    //     tenant_id: myTenantObj.tenant_id,
-    //   })
-    //   .subscribe(
-    //     (productResponse: any) => {
-    //       if (productResponse && productResponse.status === 0) {
-    //         const dialogRef = this._dialog.open(InfoPopupComponent, {
-    //           data: {
-    //             popupText: 'Product created successfully',
-    //           },
-    //         });
-    //         const getDialogRef =
-    //           dialogRef.componentInstance.closePopup.subscribe(() => {
-    //             this._dialog.closeAll();
-    //             this.firstFormGroup.reset();
-    //             this.secondFormGroup.reset();
-    //             this.thirdFormGroup.reset();
-    //             this.currentStep = 1;
-    //             this.progressBarValue = 5;
-    //             this._route.navigate(['/tenant/products']);
-    //           });
-    //         dialogRef.afterClosed().subscribe(() => {
-    //           getDialogRef.unsubscribe();
-    //         });
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-  };
-
-  draftProduct = () => {
-    this.currentStep = 1;
-    let myTenantObj = JSON.parse(localStorage.getItem('tenant_details') || '');
-    // this._productService
-    //   .draftProduct({
-    //     ...this.firstFormGroup.value,
-    //     ...this.thirdFormGroup.value,
-    //     ...this.checkForCoverImage,
-    //     ...this.toppings.value,
-    //     tenant_id: myTenantObj.tenant_id,
-    //   })
-    //   .subscribe(
-    //     (productResponse: any) => {
-    //       if (productResponse && productResponse.status === 0) {
-    //         const dialogRef = this._dialog.open(InfoPopupComponent, {
-    //           data: {
-    //             popupText: 'Product drafted successfully',
-    //           },
-    //         });
-    //         const getDialogRef =
-    //           dialogRef.componentInstance.closePopup.subscribe(() => {
-    //             this._dialog.closeAll();
-    //             this.firstFormGroup.reset();
-    //             this.secondFormGroup.reset();
-    //             this.thirdFormGroup.reset();
-    //             this.currentStep = 1;
-    //             this.progressBarValue = 5;
-    //             this._route.navigate(['/tenant/products']);
-    //           });
-    //         dialogRef.afterClosed().subscribe(() => {
-    //           getDialogRef.unsubscribe();
-    //         });
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
   };
 
   getCurrentStep = (stepno: number) => {
@@ -348,14 +257,6 @@ export class AddRoomComponent implements OnInit {
       this.checkForCoverImage.validationCheck = false;
     }
   }
-  // updateDiscount() {
-  //   let original_price: any = this.firstFormGroup.value.original_price;
-  //   let sale_price: any = this.firstFormGroup.value.sales_price;
-  //   let differentPer =
-  //     (parseInt(original_price) - parseInt(sale_price)) / (original_price / 100);
-  //   this.firstFormGroup.controls.discount_percentage.setValue(differentPer);
-
-  // }
   get specList() {
     return this.specFormGroup.get('specLists') as FormArray;
   }

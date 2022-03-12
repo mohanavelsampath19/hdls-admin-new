@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { InventoryService } from 'src/app/services/inventory/inventory.service';
+import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 
@@ -43,17 +43,17 @@ export class BookingsComponent implements OnInit {
   pageSize: number = 5;
   pageOffset: number = 0;
 
-  constructor(private _inventoryService: InventoryService) {}
+  constructor(private _bookingService: BookingsService) {}
 
   ngOnInit(): void {
-    this.getPropertyList();
+    this.getBookingHistory();
   }
 
   getSelectedFilter = (value: string) => {
     this.selectedCategory = value;
     this.pageSize = 5;
     this.pageOffset = 0;
-    this.getPropertyList();
+    this.getBookingHistory();
   };
 
   getSearchInput(searchValue: any) {
@@ -70,7 +70,7 @@ export class BookingsComponent implements OnInit {
     }
   }
 
-  getPropertyList() {
+  getBookingHistory() {
     this.onFirstLoad();
     let getCategory = 1;
     switch (this.selectedCategory) {
@@ -91,9 +91,9 @@ export class BookingsComponent implements OnInit {
         break;
     }
 
-    // this._inventoryService.getAllMembership().subscribe((memberShipArray:MemberShip[]) => {
-    //   this.dataSource = new MatTableDataSource(memberShipArray);
-    // })
+    this._bookingService.getBookingHistory(1).subscribe((res:any) => {
+      this.dataSource = new MatTableDataSource(res.response.bookingHistory);
+    })
   }
 
   // ngAfterViewInit() {
@@ -113,7 +113,7 @@ export class BookingsComponent implements OnInit {
     console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
-    this.getPropertyList();
+    this.getBookingHistory();
   }
 
   getDateRange(daterange: any) {

@@ -84,8 +84,10 @@ export class InventoryComponent implements OnInit {
         break;
     }
 
-    this._inventoryService.getMyInventoryList().subscribe((inventoryArray:Inventorys[]) => {
-      this.dataSource = new MatTableDataSource(inventoryArray);
+    this._inventoryService.getMyInventoryList().subscribe((res:any) => {
+      if(res && res.status === 1) {
+        this.dataSource = new MatTableDataSource(res.response);
+      }
     })
 
   }

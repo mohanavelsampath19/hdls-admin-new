@@ -63,11 +63,11 @@
       >
         <ng-container matColumnDef="property_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Property Name
+            Booking Id
           </th>
           <td mat-cell *matCellDef="let element">
             <p *ngIf="!element.loading">
-              {{ element.property_name }}
+              {{ element.bookingid }}
             </p>
             <div *ngIf="element.loading" class="loading-data"></div>
           </td>
@@ -109,8 +109,7 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
           <td mat-cell *matCellDef="let element">
-            <a href="#">Edit</a>
-            <a href="#">Delete</a>
+            <a href="#">Action</a>
           </td>
         </ng-container>
 

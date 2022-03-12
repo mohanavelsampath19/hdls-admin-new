@@ -23,9 +23,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { HdlsDateRangeComponent } from '../../components/common/hdls-date-range/hdls-date-range.component';
+import { InfoPopupComponent} from '../../components/common/info-popup/info-popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [HeaderComponent, SidenavComponent, HdlsDateRangeComponent],
+  declarations: [HeaderComponent, SidenavComponent, HdlsDateRangeComponent,InfoPopupComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -33,6 +35,7 @@ import { HdlsDateRangeComponent } from '../../components/common/hdls-date-range/
     MatToolbarModule,
     MatDatepickerModule,
     MatFormFieldModule,
+    MatDialogModule
   ],
   exports: [
     HeaderComponent,
@@ -40,6 +43,7 @@ import { HdlsDateRangeComponent } from '../../components/common/hdls-date-range/
     HdlsDateRangeComponent,
     MatDatepickerModule,
     MatFormFieldModule,
+    InfoPopupComponent
   ],
 })
 export class SharedModule {}
