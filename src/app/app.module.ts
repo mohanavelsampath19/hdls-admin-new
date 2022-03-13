@@ -37,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { PointsystemModule } from './modules/pointsystem/pointsystem.module';
 import { BookingsComponent } from './pages/bookings/bookings.component';
+import { EditRoomComponent } from './pages/edit-room/edit-room.component';
 // import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { BookingsComponent } from './pages/bookings/bookings.component';
     HotelsComponent,
     AddRoomComponent,
     BookingsComponent,
+    EditRoomComponent,
   ],
   imports: [
     BrowserModule,

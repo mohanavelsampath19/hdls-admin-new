@@ -1,0 +1,775 @@
+<div class="dm-add-product-section">
+  <h2>Edit Room <span class="dm-border"></span>Room Information</h2>
+  <mat-progress-bar
+    mode="determinate"
+    value="{{ progressBarValue }}"
+    class="dm-progress-bar"
+  ></mat-progress-bar>
+
+  <mat-stepper linear #stepper class="dm-stepper dm-tenant-add-product-stepper">
+    <mat-step [stepControl]="firstFormGroup">
+      <form
+        [formGroup]="firstFormGroup"
+        (submit)="getCurrentStep(2)"
+        #myform="ngForm"
+      >
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Room Title<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="room_name"
+            class="dm-form-input"
+            placeholder="Room Title"
+            required
+          />
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.room_name.invalid &&
+              (firstFormGroup.controls.room_name.dirty ||
+                firstFormGroup.controls.room_name.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the room name
+          </p>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field p-10" appearance="fill">
+          <h4>Room Descriptions<span class="required">*</span></h4>
+          <textarea
+            matInput
+            id="productDescriptionEditor"
+            formControlName="room_description"
+          >
+          </textarea>
+
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.room_description.invalid &&
+              (firstFormGroup.controls.room_description.dirty ||
+                firstFormGroup.controls.room_description.touched)
+            "
+          >
+            Please fill the description
+          </p>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Bed Type<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="bed_type">
+            <mat-option value="1">single bedroom</mat-option>
+            <mat-option value="2">Double bedroom</mat-option>
+            <mat-option value="3">extra bedroom</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Room Quantity<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="room_quantity">
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="adult-children-conatiner">
+          <div class="product-details-card-description-inner-counter">
+            <h3>Adults<span class="required">*</span></h3>
+            <div class="span-container">
+              <span
+                ><button
+                  (click)="removeItem('adults')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  -
+                </button></span
+              >
+              <span
+                class="product-details-card-description-inner-counter-value"
+                >{{ adults }}</span
+              >
+              <span
+                ><button
+                  (click)="addItem('adults')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  +
+                </button></span
+              >
+            </div>
+          </div>
+          <div class="product-details-card-description-inner-counter">
+            <h3>Children<span class="required">*</span></h3>
+            <div class="span-container">
+              <span
+                ><button
+                  (click)="removeItem('childrens')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  -
+                </button></span
+              >
+              <span
+                class="product-details-card-description-inner-counter-value"
+                >{{ childrens }}</span
+              >
+              <span
+                ><button
+                  (click)="addItem('childrens')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  +
+                </button></span
+              >
+            </div>
+          </div>
+        </div>
+        <section class="example-section" [formGroup]="toppings">
+          <h4>Include</h4>
+          <mat-checkbox
+            formControlName="flammable"
+            class="dm-checkbox"
+            color="primary"
+            >BreakFast</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="liquid"
+            class="dm-checkbox"
+            color="primary"
+            >Smoking Room</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="battery"
+            class="dm-checkbox"
+            color="primary"
+            >Extra Bed</mat-checkbox
+          >
+        </section>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Room Facilities<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="room_facilities">
+            <mat-option value="1">Default</mat-option>
+            <mat-option value="2">Facility 1</mat-option>
+            <mat-option value="3">Facility 2</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Room Size<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="room_size"
+            class="dm-form-input"
+            placeholder="Room dimensions"
+            required
+          />
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.room_size.invalid &&
+              (firstFormGroup.controls.room_size.dirty ||
+                firstFormGroup.controls.room_size.touched)
+            "
+          >
+            Please fill the room size
+          </p>
+        </mat-form-field>
+        <!-- <div *ngFor="let value of roomPrice; let i = index">
+          <input type="text" [(ngModel)]="roomPrice.value" formControlName="room_price"  name="value{{i}}">
+          <button (click)="removevalue(i)">Remove</button>
+        </div> -->
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Primary Room Price (RM)<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="room_price"
+            class="dm-form-input-width"
+            placeholder="Room Price"
+            required
+          />
+
+          <button
+            class="product-details-card-description-inner-counter-button-height"
+            (click)="addvalue()"
+          >
+            +
+          </button>
+
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.room_price.invalid &&
+              (firstFormGroup.controls.room_price.dirty ||
+                firstFormGroup.controls.room_price.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the room price
+          </p>
+        </mat-form-field>
+
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Points<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="points">
+            <mat-option value="1">Default</mat-option>
+            <mat-option value="2">Double Points</mat-option>
+            <mat-option value="3">Public Points</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Restrictions<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="restrictions">
+            <mat-option value="1">Public Holiday</mat-option>
+            <mat-option value="2">Weekends</mat-option>
+            <mat-option value="3">Selected Dates</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Colour</h4>
+          <input matInput formControlName="colour" class="dm-form-input" placeholder="Colour" required />
+          <p class="dm-error" *ngIf="
+              firstFormGroup.controls.colour.invalid &&
+              (firstFormGroup.controls.colour.dirty ||
+                firstFormGroup.controls.colour.touched)
+            ">
+            Please fill the color
+          </p>
+        </mat-form-field> -->
+        <!-- <mat-form-field class="dm-form-field" appearance="fill"> -->
+        <!-- <h4>Original Price <span>*</span></h4>
+          <input matInput formControlName="original_price" class="dm-form-input" placeholder="Original Price"
+            required />
+          <p class="dm-error" *ngIf="
+              firstFormGroup.controls.original_price.invalid &&
+              (firstFormGroup.controls.original_price.dirty ||
+                firstFormGroup.controls.original_price.touched)
+            ">
+            Please fill the Price
+          </p> -->
+        <!-- </mat-form-field> -->
+        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Sale Price <span>*</span></h4>
+          <input matInput formControlName="sales_price" class="dm-form-input" placeholder="Sale Price" required
+            (change)="updateDiscount()" />
+          <p class="dm-error" *ngIf="
+              firstFormGroup.controls.sales_price.invalid &&
+              (firstFormGroup.controls.sales_price.dirty ||
+                firstFormGroup.controls.sales_price.touched)
+            ">
+            Please fill the Price
+          </p>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Discount %</h4>
+          <input matInput formControlName="discount_percentage" class="dm-form-input" placeholder="Discount %"
+            readonly />
+        </mat-form-field> -->
+
+        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Inside Box<span>*</span></h4>
+          <input matInput formControlName="insideBox" class="dm-form-input" placeholder="Inside box" required />
+          <p class="dm-error" *ngIf="
+              firstFormGroup.controls.insideBox.invalid &&
+              (firstFormGroup.controls.insideBox.dirty ||
+                firstFormGroup.controls.insideBox.touched)
+            ">
+            Please fill the inside box
+          </p>
+        </mat-form-field> -->
+        <div>
+          <button mat-button matStepperNext class="dm-btn-secondary">
+            Cancel
+          </button>
+          <!-- <button mat-button matStepperNext color="primary" [ngClass]="{
+              'dm-btn-primary': firstFormGroup.valid,
+              'dm-btn-disable': !firstFormGroup.valid
+            }" (click)="getCurrentStep(2)" [disabled]="!firstFormGroup.valid">
+            Next
+          </button> -->
+          <button
+            mat-button
+            matStepperNext
+            color="primary"
+            [ngClass]="{
+              'dm-btn-primary': firstFormGroup.valid,
+              'dm-btn-disable': !firstFormGroup.valid
+            }"
+            (click)="getCurrentStep(3)"
+          >
+            save
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <!-- <app-add-product-image
+          (checkForImages)="checkForFormImage($event)"
+        ></app-add-product-image> -->
+        <div>
+          <button
+            mat-button
+            matStepperPrevious
+            class="dm-btn-secondary"
+            (click)="getCurrentStep(1)"
+          >
+            Back
+          </button>
+          <!-- <button mat-button matStepperNext [ngClass]="{
+              'dm-btn-primary': checkForCoverImage.validationCheck,
+              'dm-btn-disable': !checkForCoverImage.validationCheck
+            }" (click)="getCurrentStep(3)" [disabled]="!checkForCoverImage.validationCheck">
+            Next
+          </button> -->
+          <button
+            mat-button
+            matStepperNext
+            (click)="getCurrentStep(3)"
+            [disabled]="!checkForCoverImage.validationCheck"
+            [ngClass]="{
+              'dm-btn-primary': checkForCoverImage.validationCheck,
+              'dm-btn-disable': !checkForCoverImage.validationCheck
+            }"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="specFormGroup">
+      <form [formGroup]="specFormGroup">
+        <h3 class="spec-header">Product Specifications</h3>
+        <div class="button-container">
+          <button
+            (click)="addSpecification()"
+            mat-raised-button
+            color="primary"
+          >
+            Add Specs
+          </button>
+        </div>
+        <div class="table-container">
+          <table
+            mat-table
+            [dataSource]="specDataSource"
+            formArrayName="specLists"
+          >
+            <!-- Row definitions -->
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; let i = index; columns: displayColumns"
+            ></tr>
+
+            <!-- Column definitions -->
+            <ng-container matColumnDef="sno">
+              <th mat-header-cell *matHeaderCellDef>Sno</th>
+              <td
+                mat-cell
+                *matCellDef="let row; let index = index"
+                [formGroupName]="index"
+              >
+                {{ index + 1 }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="specname">
+              <th mat-header-cell *matHeaderCellDef>From</th>
+              <td
+                mat-cell
+                *matCellDef="let row; let index = index"
+                [formGroupName]="index"
+              >
+                <p>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Specification</mat-label>
+                    <input
+                      matInput
+                      placeholder="specification"
+                      formControlName="specname"
+                      required
+                    />
+                  </mat-form-field>
+                </p>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="specval">
+              <th mat-header-cell *matHeaderCellDef>To</th>
+              <td
+                mat-cell
+                *matCellDef="let row; let index = index"
+                [formGroupName]="index"
+              >
+                <p>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Content</mat-label>
+                    <input
+                      matInput
+                      placeholder="Content"
+                      formControlName="specval"
+                      required
+                    />
+                  </mat-form-field>
+                </p>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef>delete</th>
+              <td
+                mat-cell
+                *matCellDef="let row; let index = index"
+                [formGroupName]="index"
+              >
+                <button
+                  mat-mini-fab
+                  color="primary"
+                  aria-label="Delete Specifications"
+                  (click)="removeSpecification(index)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+          </table>
+        </div>
+        <div>
+          <button
+            mat-button
+            matStepperPrevious
+            class="dm-btn-secondary"
+            (click)="getCurrentStep(2)"
+          >
+            Back
+          </button>
+
+          <button
+            mat-button
+            matStepperNext
+            (click)="getCurrentStep(4)"
+            class="dm-btn-disable"
+            [ngClass]="{
+              'dm-btn-primary': specRows.length > 0 && specFormGroup.valid,
+              'dm-btn-disable': specRows.length === 0 || !specFormGroup.valid
+            }"
+            [disabled]="specRows.length === 0 || !specFormGroup.valid"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="variantFormGroup">
+      <h3 class="spec-header">Product Variant</h3>
+
+      <div class="button-container">
+        <button (click)="addVariant()" mat-raised-button color="primary">
+          Add variant
+        </button>
+      </div>
+      <form [formGroup]="variantFormGroup">
+        <div formArrayName="variantList">
+          <div
+            *ngFor="let variant of variantList.controls; let i = index"
+            [formGroupName]="i"
+            class="variantContainer"
+          >
+            <div>
+              <div class="">
+                <!-- <mat-form-field appearance="fill"> -->
+                <!-- <div>Variant Name</div> -->
+                <div class="variantControl">
+                  <!-- <input placeholder="Variant name" formControlName="variantName" required> -->
+                  <mat-form-field appearance="fill">
+                    <mat-label>Variant Name</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      formControlName="variantName"
+                      name="variantName"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+                <button
+                  mat-mini-fab
+                  color="warning"
+                  aria-label="Add Type"
+                  (click)="removeVariant(i)"
+                  class="varRemoveBtn"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <!-- </mat-form-field> -->
+              </div>
+            </div>
+            <div>
+              <div class="variTypeDesc">
+                <div class="variTypeDescTitle">Variant Options</div>
+                <div class="variTypeDescButton">
+                  <button
+                    mat-mini-fab
+                    color="primary"
+                    aria-label="Add Type"
+                    (click)="add(i)"
+                  >
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="variTypesList" formArrayName="variantTypes">
+                <div
+                  class="variPlaceHolder"
+                  *ngFor="
+                    let vari of getControls(i).controls;
+                    let varIndex = index
+                  "
+                  formGroupName="{{ varIndex }}"
+                >
+                  <div class="varTypeControl">
+                    <input
+                      type="text"
+                      formControlName="variantItem"
+                      name="variantItem"
+                      required
+                    />
+                  </div>
+                  <button
+                    mat-mini-fab
+                    color="accent"
+                    aria-label="Add Type"
+                    (click)="remove(i, varIndex)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div></div>
+          </div>
+        </div>
+      </form>
+
+      <div class="composedVariantList">
+        <h3>Final Variant list</h3>
+        <table class="composedVariantList">
+          <tr>
+            <th *ngFor="let variant of variantFormGroup.value.variantList">
+              {{ variant.variantName }}
+            </th>
+            <th>Original price</th>
+            <th>Selling price</th>
+            <th>Quantity</th>
+            <th>Availability</th>
+          </tr>
+          <ng-container *ngIf="variantFormGroup.value.variantList.length > 0">
+            <tr *ngFor="let primVar of composedVariantList">
+              <ng-container *ngFor="let vari of removeFirstVariant">
+                <!-- <td *ngIf="primVar[vari.variantName]==variantFormGroup.value.variantList[0].variantName"
+                      [attr.rowspan]="2">
+                      {{primVar[vari.variantName]}}
+                    </td> -->
+                <td>
+                  {{ primVar[vari.variantName] }}
+                </td>
+              </ng-container>
+              <td>
+                MYR
+                <input
+                  type="text"
+                  [(ngModel)]="primVar.original_price"
+                  name="original_price"
+                  placeholder="original_price"
+                  required
+                />
+              </td>
+              <td>
+                MYR
+                <input
+                  type="text"
+                  [(ngModel)]="primVar.sale_price"
+                  name="sale_price"
+                  placeholder="Sale Price"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  [(ngModel)]="primVar.quantity"
+                  name="quantity"
+                  placeholder="Quantity"
+                  required
+                />
+              </td>
+              <td>
+                <mat-slide-toggle [(ngModel)]="primVar.availability"
+                  >{{ primVar.availability == true ? "Yes" : "No" }}
+                </mat-slide-toggle>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+
+      <button
+        mat-button
+        matStepperPrevious
+        class="dm-btn-secondary"
+        (click)="getCurrentStep(3)"
+      >
+        Back
+      </button>
+      <!-- <button mat-button matStepperNext [ngClass]="{
+                                                            'dm-btn-primary': checkForCoverImage.validationCheck,
+                                                            'dm-btn-disable': !checkForCoverImage.validationCheck
+                                                          }" (click)="getCurrentStep(4)" [disabled]="!checkForCoverImage.validationCheck">
+                                      Next
+                                    </button> -->
+      <button
+        mat-button
+        matStepperNext
+        (click)="getCurrentStep(5)"
+        [ngClass]="{
+          'dm-btn-primary': variantList.length > 0 && variantFormGroup.valid,
+          'dm-btn-disable': variantList.length === 0 || !variantFormGroup.valid
+        }"
+        [disabled]="variantList.length === 0 || !variantFormGroup.valid"
+      >
+        Next
+      </button>
+    </mat-step>
+
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>
+            Package Weight<span>(Kg)</span><span class="required">*</span>
+          </h4>
+          <input
+            matInput
+            class="dm-form-input"
+            placeholder="Please choose your package weight"
+            required
+            formControlName="packageWeight"
+          />
+        </mat-form-field>
+        <div class="dm-form-field dm-radio-field">
+          <h4>Shipping Type<span class="required">*</span></h4>
+          <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="dm-form-field"
+            name="shippingType"
+            formControlName="shippingType"
+          >
+            <mat-radio-button class="dm-radio" value="free" color="primary">
+              Free Shipping
+            </mat-radio-button>
+            <mat-radio-button class="dm-radio" value="paid" color="primary">
+              Paid Shipping
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <mat-form-field
+          class="dm-form-field"
+          appearance="fill"
+          *ngIf="shippingCategory === 'paid'"
+        >
+          <h4>
+            Shipping Charges<span>(RM)</span><span class="required">*</span>
+          </h4>
+          <input
+            matInput
+            class="dm-form-input"
+            placeholder="Please enter the shipping charges"
+            formControlName="shipping_charges"
+          />
+        </mat-form-field>
+
+        <div class="Product-Dimensions-feild" appearance="fill">
+          <h4>
+            Product Dimensions <span>(Cm)</span> <span class="required">*</span>
+          </h4>
+          <div class="Product-Dimensions-input-feild">
+            <mat-form-field class="dm-product-dimension">
+              <input
+                matInput
+                formControlName="width"
+                class="dm-form-input"
+                placeholder="width"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field class="dm-product-dimension">
+              <input
+                matInput
+                formControlName="height"
+                class="dm-form-input"
+                placeholder="Height"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field class="dm-product-dimension">
+              <input
+                matInput
+                formControlName="length"
+                class="dm-form-input"
+                placeholder="Length"
+                required
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <section class="example-section" [formGroup]="toppings">
+          <h4>Product Type</h4>
+          <mat-checkbox
+            formControlName="flammable"
+            class="dm-checkbox"
+            color="primary"
+            >Flammable</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="liquid"
+            class="dm-checkbox"
+            color="primary"
+            >Liquid</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="battery"
+            class="dm-checkbox"
+            color="primary"
+            >Battery</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="none"
+            class="dm-checkbox"
+            color="primary"
+            >None</mat-checkbox
+          >
+        </section>
+        <div>
+          <button
+            mat-button
+            matStepperPrevious
+            class="dm-btn-secondary"
+            (click)="getCurrentStep(2)"
+          >
+            Back
+          </button>
+          <button
+            mat-button
+            color="primary"
+            class="dm-btn-primary"
+            [ngClass]="{
+              'dm-btn-primary': thirdFormGroup.valid,
+              'dm-btn-disable': !thirdFormGroup.valid
+            }"
+            (click)="createProduct()"
+            [disabled]="!thirdFormGroup.valid"
+          >
+            Finish
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>
