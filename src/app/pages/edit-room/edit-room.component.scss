@@ -1,21 +1,21 @@
 @import "../../../theme/vars.scss";
 
-.dm-add-product-section {
+.hdls-add-product-section {
   width: 100%;
   h2 {
     color: #818181;
     font-family: Arial, Helvetica, sans-serif;
   }
 
-  .dm-border {
+  .hdls-border {
     border: 1px solid #818181;
     margin: 0 10px;
   }
-  .dm-progress-bar {
+  .hdls-progress-bar {
     height: 20px;
     border-radius: 10px;
   }
-  .dm-form-field {
+  .hdls-form-field {
     display: block !important;
     h4 {
       color: #818181 !important;
@@ -26,7 +26,7 @@
         padding-left: 5px;
       }
     }
-    .dm-error {
+    .hdls-error {
       color: #f44336;
       margin-top: 10px;
     }
@@ -36,7 +36,7 @@
     .mat-form-field-wrapper {
       background: transparent;
     }
-    .dm-form-input {
+    .hdls-form-input {
       height: 40px;
       border: 1px solid #e5e5e5;
       background-color: #fff;
@@ -45,7 +45,7 @@
       border-radius: 5px;
     }
 
-    .dm-form-input-width {
+    .hdls-form-input-width {
       height: 40px;
       border: 1px solid #e5e5e5;
       background-color: #fff;
@@ -68,7 +68,7 @@
       line-height: 1;
       color: $primary-background-color;
     }
-    .dm-form-select {
+    .hdls-form-select {
       border-radius: 5px;
       border: 1px solid #ddd;
       height: 25px;
@@ -77,11 +77,11 @@
       padding-left: 5px;
       padding-right: 5px;
     }
-    .dm-form-textarea {
-      @extend .dm-form-input;
+    .hdls-form-textarea {
+      @extend .hdls-form-input;
       min-height: 180px;
     }
-    .dm-product-dimension {
+    .hdls-product-dimension {
       display: flex;
       flex-direction: column;
       width: 450px;
@@ -112,15 +112,15 @@
       color: $primary-background-color;
     }
   }
-  .dm-radio-field {
+  .hdls-radio-field {
     margin-left: 10px;
-    .dm-radio {
+    .hdls-radio {
       padding-right: 10px;
       font-size: 16px;
       color: #818181 !important;
     }
   }
-  .dm-stepper {
+  .hdls-stepper {
     .adult-children-conatiner {
       display: flex;
       flex-direction: row;
@@ -162,7 +162,7 @@
         }
       }
     }
-    .dm-add-product-input {
+    .hdls-add-product-input {
       font-size: 16px;
       border: 1px solid rgb(143, 141, 141);
       height: 20px;
@@ -175,7 +175,7 @@
         font-family: Arial, Helvetica, sans-serif;
         font-size: 18px;
       }
-      .dm-checkbox {
+      .hdls-checkbox {
         // margin-left: 10px;
         margin: 10px;
         font-size: 16px;
@@ -183,7 +183,7 @@
       }
     }
   }
-  .dm-tenant-add-product-stepper {
+  .hdls-tenant-add-product-stepper {
     height: 80vh;
     overflow-y: auto;
   }
@@ -205,12 +205,12 @@
   .Product-Dimensions-input-feild {
     display: flex;
     flex-direction: row;
-    .dm-error {
+    .hdls-error {
       color: #f44336;
       margin-top: 10px;
     }
 
-    .dm-form-input {
+    .hdls-form-input {
       height: 40px;
       border: 1px solid #e5e5e5;
       background-color: #fff;
@@ -219,7 +219,7 @@
       border-radius: 5px;
     }
 
-    .dm-product-dimension {
+    .hdls-product-dimension {
       display: flex;
       flex-direction: row;
       // width: 450px;

@@ -1,29 +1,33 @@
-<div class="dm-add-product-section">
-  <h2>Edit Property <span class="dm-border"></span>Property Information</h2>
+<div class="hdls-add-product-section">
+  <h2>Edit Property <span class="hdls-border"></span>Property Information</h2>
   <mat-progress-bar
     mode="determinate"
     value="{{ progressBarValue }}"
-    class="dm-progress-bar"
+    class="hdls-progress-bar"
   ></mat-progress-bar>
 
-  <mat-stepper linear #stepper class="dm-stepper dm-tenant-add-product-stepper">
+  <mat-stepper
+    linear
+    #stepper
+    class="hdls-stepper hdls-tenant-add-product-stepper"
+  >
     <mat-step [stepControl]="firstFormGroup">
       <form
         [formGroup]="firstFormGroup"
         (submit)="getCurrentStep(2)"
         #myform="ngForm"
       >
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Property Name<span class="required">*</span></h4>
           <input
             matInput
             formControlName="room_name"
-            class="dm-form-input"
+            class="hdls-form-input"
             placeholder="Room Title"
             required
           />
           <p
-            class="dm-error"
+            class="hdls-error"
             *ngIf="
               firstFormGroup.controls.room_name.invalid &&
               (firstFormGroup.controls.room_name.dirty ||
@@ -35,9 +39,9 @@
           </p>
         </mat-form-field>
 
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Property Type<span class="required">*</span></h4>
-          <mat-select class="dm-form-select" formControlName="bed_type">
+          <mat-select class="hdls-form-select" formControlName="bed_type">
             <mat-option value="1">Guesthouse</mat-option>
             <mat-option value="2">Hostel</mat-option>
             <mat-option value="3">Hotel</mat-option>
@@ -46,7 +50,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Property Descriptions<span class="required">*</span></h4>
           <textarea
             matInput
@@ -56,7 +60,7 @@
           </textarea>
 
           <p
-            class="dm-error"
+            class="hdls-error"
             *ngIf="
               firstFormGroup.controls.room_description.invalid &&
               (firstFormGroup.controls.room_description.dirty ||
@@ -67,9 +71,9 @@
           </p>
         </mat-form-field>
 
-        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+        <!-- <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Cancellation policy <span class="required">*</span></h4>
-          <mat-select class="dm-form-select" formControlName="room_quantity">
+          <mat-select class="hdls-form-select" formControlName="room_quantity">
             <mat-option value="1">Flexible</mat-option>
             <mat-option value="2">Moderate</mat-option>
             <mat-option value="3">Strict</mat-option>
@@ -131,63 +135,66 @@
           <h4>Facilities Available</h4>
           <mat-checkbox
             formControlName="breakFast"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >BreakFast</mat-checkbox
           >
           <mat-checkbox
             formControlName="wifi"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >Free wi-fi</mat-checkbox
           >
-          <mat-checkbox formControlName="ac" class="dm-checkbox" color="primary"
+          <mat-checkbox
+            formControlName="ac"
+            class="hdls-checkbox"
+            color="primary"
             >AC</mat-checkbox
           >
 
           <mat-checkbox
             formControlName="geyser"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >Geyser</mat-checkbox
           >
 
           <mat-checkbox
             formControlName="power_backup"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >Power Backup</mat-checkbox
           >
 
           <mat-checkbox
             formControlName="elevator"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >Elevator</mat-checkbox
           >
 
           <mat-checkbox
             formControlName="room_service"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >24 Hours Room Service</mat-checkbox
           >
         </section>
-        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+        <!-- <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Room Checkin & Checkout Timing<span class="required">*</span></h4>
-          <mat-select class="dm-form-select" formControlName="room_facilities">
+          <mat-select class="hdls-form-select" formControlName="room_facilities">
             <mat-option value="1">9.00- 21.00</mat-option>
             <mat-option value="2">10.00-22.00</mat-option>
             <mat-option value="3">Anytime</mat-option>
           </mat-select>
         </mat-form-field> -->
 
-        <div class="dm-form-field-timings" appearance="fill">
+        <div class="hdls-form-field-timings" appearance="fill">
           <h4>Check-in & Check-out Timing<span class="required">*</span></h4>
           <div class="checkin-checkout">
             <div class="check-in">
               <input
-                class="dm-form-input"
+                class="hdls-form-input"
                 placeholder="check-in"
                 aria-label="24hr format"
                 [ngxTimepicker]="checkin"
@@ -198,7 +205,7 @@
             </div>
             <div class="check-out">
               <input
-                class="dm-form-input"
+                class="hdls-form-input"
                 placeholder="check-out"
                 aria-label="24hr format"
                 [ngxTimepicker]="checkout"
@@ -210,17 +217,17 @@
           </div>
         </div>
 
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Front Desk Number<span class="required">*</span></h4>
           <input
             matInput
             formControlName="room_size"
-            class="dm-form-input"
+            class="hdls-form-input"
             placeholder="Room dimensions"
             required
           />
           <p
-            class="dm-error"
+            class="hdls-error"
             *ngIf="
               firstFormGroup.controls.room_size.invalid &&
               (firstFormGroup.controls.room_size.dirty ||
@@ -234,12 +241,12 @@
           <input type="text" [(ngModel)]="roomPrice.value" formControlName="room_price"  name="value{{i}}">
           <button (click)="removevalue(i)">Remove</button>
         </div> -->
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Property Images<span class="required">*</span></h4>
           <input
             matInput
             formControlName="room_price"
-            class="dm-form-input-width"
+            class="hdls-form-input-width"
             placeholder="Room Price"
             required
           />
@@ -252,7 +259,7 @@
           </button>
 
           <p
-            class="dm-error"
+            class="hdls-error"
             *ngIf="
               firstFormGroup.controls.room_price.invalid &&
               (firstFormGroup.controls.room_price.dirty ||
@@ -264,26 +271,26 @@
           </p>
         </mat-form-field>
 
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Points<span class="required">*</span></h4>
-          <mat-select class="dm-form-select" formControlName="points">
+          <mat-select class="hdls-form-select" formControlName="points">
             <mat-option value="1">Default</mat-option>
             <mat-option value="2">Double Points</mat-option>
             <mat-option value="3">Public Points</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Restrictions<span class="required">*</span></h4>
-          <mat-select class="dm-form-select" formControlName="restrictions">
+          <mat-select class="hdls-form-select" formControlName="restrictions">
             <mat-option value="1">Public Holiday</mat-option>
             <mat-option value="2">Weekends</mat-option>
             <mat-option value="3">Selected Dates</mat-option>
           </mat-select>
         </mat-form-field>
-        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+        <!-- <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Colour</h4>
-          <input matInput formControlName="colour" class="dm-form-input" placeholder="Colour" required />
-          <p class="dm-error" *ngIf="
+          <input matInput formControlName="colour" class="hdls-form-input" placeholder="Colour" required />
+          <p class="hdls-error" *ngIf="
               firstFormGroup.controls.colour.invalid &&
               (firstFormGroup.controls.colour.dirty ||
                 firstFormGroup.controls.colour.touched)
@@ -291,11 +298,11 @@
             Please fill the color
           </p>
         </mat-form-field> -->
-        <!-- <mat-form-field class="dm-form-field" appearance="fill"> -->
+        <!-- <mat-form-field class="hdls-form-field" appearance="fill"> -->
         <!-- <h4>Original Price <span>*</span></h4>
-          <input matInput formControlName="original_price" class="dm-form-input" placeholder="Original Price"
+          <input matInput formControlName="original_price" class="hdls-form-input" placeholder="Original Price"
             required />
-          <p class="dm-error" *ngIf="
+          <p class="hdls-error" *ngIf="
               firstFormGroup.controls.original_price.invalid &&
               (firstFormGroup.controls.original_price.dirty ||
                 firstFormGroup.controls.original_price.touched)
@@ -303,11 +310,11 @@
             Please fill the Price
           </p> -->
         <!-- </mat-form-field> -->
-        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+        <!-- <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Sale Price <span>*</span></h4>
-          <input matInput formControlName="sales_price" class="dm-form-input" placeholder="Sale Price" required
+          <input matInput formControlName="sales_price" class="hdls-form-input" placeholder="Sale Price" required
             (change)="updateDiscount()" />
-          <p class="dm-error" *ngIf="
+          <p class="hdls-error" *ngIf="
               firstFormGroup.controls.sales_price.invalid &&
               (firstFormGroup.controls.sales_price.dirty ||
                 firstFormGroup.controls.sales_price.touched)
@@ -315,16 +322,16 @@
             Please fill the Price
           </p>
         </mat-form-field>
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Discount %</h4>
-          <input matInput formControlName="discount_percentage" class="dm-form-input" placeholder="Discount %"
+          <input matInput formControlName="discount_percentage" class="hdls-form-input" placeholder="Discount %"
             readonly />
         </mat-form-field> -->
 
-        <!-- <mat-form-field class="dm-form-field" appearance="fill">
+        <!-- <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Inside Box<span>*</span></h4>
-          <input matInput formControlName="insideBox" class="dm-form-input" placeholder="Inside box" required />
-          <p class="dm-error" *ngIf="
+          <input matInput formControlName="insideBox" class="hdls-form-input" placeholder="Inside box" required />
+          <p class="hdls-error" *ngIf="
               firstFormGroup.controls.insideBox.invalid &&
               (firstFormGroup.controls.insideBox.dirty ||
                 firstFormGroup.controls.insideBox.touched)
@@ -337,8 +344,8 @@
             Cancel
           </button>
           <!-- <button mat-button matStepperNext color="primary" [ngClass]="{
-              'dm-btn-primary': firstFormGroup.valid,
-              'dm-btn-disable': !firstFormGroup.valid
+              'hdls-btn-primary': firstFormGroup.valid,
+              'hdls-btn-disable': !firstFormGroup.valid
             }" (click)="getCurrentStep(2)" [disabled]="!firstFormGroup.valid">
             Next
           </button> -->
@@ -366,14 +373,14 @@
           <button
             mat-button
             matStepperPrevious
-            class="dm-btn-secondary"
+            class="hdls-btn-secondary"
             (click)="getCurrentStep(1)"
           >
             Back
           </button>
           <!-- <button mat-button matStepperNext [ngClass]="{
-              'dm-btn-primary': checkForCoverImage.validationCheck,
-              'dm-btn-disable': !checkForCoverImage.validationCheck
+              'hdls-btn-primary': checkForCoverImage.validationCheck,
+              'hdls-btn-disable': !checkForCoverImage.validationCheck
             }" (click)="getCurrentStep(3)" [disabled]="!checkForCoverImage.validationCheck">
             Next
           </button> -->
@@ -383,8 +390,8 @@
             (click)="getCurrentStep(3)"
             [disabled]="!checkForCoverImage.validationCheck"
             [ngClass]="{
-              'dm-btn-primary': checkForCoverImage.validationCheck,
-              'dm-btn-disable': !checkForCoverImage.validationCheck
+              'hdls-btn-primary': checkForCoverImage.validationCheck,
+              'hdls-btn-disable': !checkForCoverImage.validationCheck
             }"
           >
             Next
@@ -493,7 +500,7 @@
           <button
             mat-button
             matStepperPrevious
-            class="dm-btn-secondary"
+            class="hdls-btn-secondary"
             (click)="getCurrentStep(2)"
           >
             Back
@@ -503,10 +510,10 @@
             mat-button
             matStepperNext
             (click)="getCurrentStep(4)"
-            class="dm-btn-disable"
+            class="hdls-btn-disable"
             [ngClass]="{
-              'dm-btn-primary': specRows.length > 0 && specFormGroup.valid,
-              'dm-btn-disable': specRows.length === 0 || !specFormGroup.valid
+              'hdls-btn-primary': specRows.length > 0 && specFormGroup.valid,
+              'hdls-btn-disable': specRows.length === 0 || !specFormGroup.valid
             }"
             [disabled]="specRows.length === 0 || !specFormGroup.valid"
           >
@@ -672,14 +679,14 @@
       <button
         mat-button
         matStepperPrevious
-        class="dm-btn-secondary"
+        class="hdls-btn-secondary"
         (click)="getCurrentStep(3)"
       >
         Back
       </button>
       <!-- <button mat-button matStepperNext [ngClass]="{
-                                                            'dm-btn-primary': checkForCoverImage.validationCheck,
-                                                            'dm-btn-disable': !checkForCoverImage.validationCheck
+                                                            'hdls-btn-primary': checkForCoverImage.validationCheck,
+                                                            'hdls-btn-disable': !checkForCoverImage.validationCheck
                                                           }" (click)="getCurrentStep(4)" [disabled]="!checkForCoverImage.validationCheck">
                                       Next
                                     </button> -->
@@ -688,8 +695,9 @@
         matStepperNext
         (click)="getCurrentStep(5)"
         [ngClass]="{
-          'dm-btn-primary': variantList.length > 0 && variantFormGroup.valid,
-          'dm-btn-disable': variantList.length === 0 || !variantFormGroup.valid
+          'hdls-btn-primary': variantList.length > 0 && variantFormGroup.valid,
+          'hdls-btn-disable':
+            variantList.length === 0 || !variantFormGroup.valid
         }"
         [disabled]="variantList.length === 0 || !variantFormGroup.valid"
       >
@@ -699,36 +707,36 @@
 
     <mat-step [stepControl]="thirdFormGroup">
       <form [formGroup]="thirdFormGroup">
-        <mat-form-field class="dm-form-field" appearance="fill">
+        <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>
             Package Weight<span>(Kg)</span><span class="required">*</span>
           </h4>
           <input
             matInput
-            class="dm-form-input"
+            class="hdls-form-input"
             placeholder="Please choose your package weight"
             required
             formControlName="packageWeight"
           />
         </mat-form-field>
-        <div class="dm-form-field dm-radio-field">
+        <div class="hdls-form-field hdls-radio-field">
           <h4>Shipping Type<span class="required">*</span></h4>
           <mat-radio-group
             aria-labelledby="example-radio-group-label"
-            class="dm-form-field"
+            class="hdls-form-field"
             name="shippingType"
             formControlName="shippingType"
           >
-            <mat-radio-button class="dm-radio" value="free" color="primary">
+            <mat-radio-button class="hdls-radio" value="free" color="primary">
               Free Shipping
             </mat-radio-button>
-            <mat-radio-button class="dm-radio" value="paid" color="primary">
+            <mat-radio-button class="hdls-radio" value="paid" color="primary">
               Paid Shipping
             </mat-radio-button>
           </mat-radio-group>
         </div>
         <mat-form-field
-          class="dm-form-field"
+          class="hdls-form-field"
           appearance="fill"
           *ngIf="shippingCategory === 'paid'"
         >
@@ -737,7 +745,7 @@
           </h4>
           <input
             matInput
-            class="dm-form-input"
+            class="hdls-form-input"
             placeholder="Please enter the shipping charges"
             formControlName="shipping_charges"
           />
@@ -748,29 +756,29 @@
             Product Dimensions <span>(Cm)</span> <span class="required">*</span>
           </h4>
           <div class="Product-Dimensions-input-feild">
-            <mat-form-field class="dm-product-dimension">
+            <mat-form-field class="hdls-product-dimension">
               <input
                 matInput
                 formControlName="width"
-                class="dm-form-input"
+                class="hdls-form-input"
                 placeholder="width"
                 required
               />
             </mat-form-field>
-            <mat-form-field class="dm-product-dimension">
+            <mat-form-field class="hdls-product-dimension">
               <input
                 matInput
                 formControlName="height"
-                class="dm-form-input"
+                class="hdls-form-input"
                 placeholder="Height"
                 required
               />
             </mat-form-field>
-            <mat-form-field class="dm-product-dimension">
+            <mat-form-field class="hdls-product-dimension">
               <input
                 matInput
                 formControlName="length"
-                class="dm-form-input"
+                class="hdls-form-input"
                 placeholder="Length"
                 required
               />
@@ -781,25 +789,25 @@
           <h4>Product Type</h4>
           <mat-checkbox
             formControlName="flammable"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >Flammable</mat-checkbox
           >
           <mat-checkbox
             formControlName="liquid"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >Liquid</mat-checkbox
           >
           <mat-checkbox
             formControlName="battery"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >Battery</mat-checkbox
           >
           <mat-checkbox
             formControlName="none"
-            class="dm-checkbox"
+            class="hdls-checkbox"
             color="primary"
             >None</mat-checkbox
           >
@@ -808,7 +816,7 @@
           <button
             mat-button
             matStepperPrevious
-            class="dm-btn-secondary"
+            class="hdls-btn-secondary"
             (click)="getCurrentStep(2)"
           >
             Back
@@ -816,10 +824,10 @@
           <button
             mat-button
             color="primary"
-            class="dm-btn-primary"
+            class="hdls-btn-primary"
             [ngClass]="{
-              'dm-btn-primary': thirdFormGroup.valid,
-              'dm-btn-disable': !thirdFormGroup.valid
+              'hdls-btn-primary': thirdFormGroup.valid,
+              'hdls-btn-disable': !thirdFormGroup.valid
             }"
             (click)="createProduct()"
             [disabled]="!thirdFormGroup.valid"

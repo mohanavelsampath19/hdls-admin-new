@@ -23,9 +23,16 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { HdlsDateRangeComponent } from '../../components/common/hdls-date-range/hdls-date-range.component';
+import { DeleteModalComponent } from '../../components/common/delete-modal/delete-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [HeaderComponent, SidenavComponent, HdlsDateRangeComponent],
+  declarations: [
+    HeaderComponent,
+    SidenavComponent,
+    HdlsDateRangeComponent,
+    DeleteModalComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -33,6 +40,7 @@ import { HdlsDateRangeComponent } from '../../components/common/hdls-date-range/
     MatToolbarModule,
     MatDatepickerModule,
     MatFormFieldModule,
+    MatDialogModule,
   ],
   exports: [
     HeaderComponent,
