@@ -22,23 +22,37 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
+import { HdlsDateRangeComponent } from '../../components/common/hdls-date-range/hdls-date-range.component';
+import { InfoPopupComponent} from '../../components/common/info-popup/info-popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteModalComponent } from '../../components/common/delete-modal/delete-modal.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    HdlsDateRangeComponent,
+    DeleteModalComponent,
+    InfoPopupComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     MatIconModule,
+    HttpClientModule,
     MatToolbarModule,
-    HttpClientModule
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatDialogModule,
   ],
-  exports:[
+  exports: [
     HeaderComponent,
-    SidenavComponent
-  ]
+    SidenavComponent,
+    HdlsDateRangeComponent,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    InfoPopupComponent
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

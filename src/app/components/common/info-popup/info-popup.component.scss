@@ -1,0 +1,19 @@
+@import '../../../../theme/vars.scss';
+
+.dm-delete-dialog {
+  min-height: 200px;
+  width: 450px;
+  h3 {
+    text-align: center;
+  }
+  .dm-close-icon {
+    float: right;
+  }
+  .dm-popup-content {
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+  }
+}
