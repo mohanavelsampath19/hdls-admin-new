@@ -36,7 +36,12 @@ export class InventoryComponent implements OnInit {
   dataSource:any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
-  constructor(private _inventoryService:InventoryService) { }
+  constructor(private _inventoryService:InventoryService) { 
+    this._inventoryService.currentInventory.subscribe((currentInventory)=>{
+      console.log(currentInventory);
+    });
+    this._inventoryService.getMyInventoryList()
+  }
   ngOnInit(): void {
     this.getMembershipList();
   }
@@ -83,9 +88,9 @@ export class InventoryComponent implements OnInit {
         break;
     }
 
-    this._inventoryService.getAllMembership().subscribe((memberShipArray:MemberShip[]) => {
-      this.dataSource = new MatTableDataSource(memberShipArray);
-    })
+    // this._inventoryService.getAllMembership().subscribe((memberShipArray:MemberShip[]) => {
+    //   this.dataSource = new MatTableDataSource(memberShipArray);
+    // })
    
   }
 

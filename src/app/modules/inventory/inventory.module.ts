@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventoryComponent } from '../../pages/inventory/inventory.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -9,7 +10,8 @@ import { InventoryComponent } from '../../pages/inventory/inventory.component';
     InventoryComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ]
 })
 export class InventoryModule { }
