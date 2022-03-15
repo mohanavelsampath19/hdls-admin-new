@@ -26,6 +26,7 @@ import { HdlsDateRangeComponent } from '../../components/common/hdls-date-range/
 import { InfoPopupComponent} from '../../components/common/info-popup/info-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../components/common/delete-modal/delete-modal.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { DeleteModalComponent } from '../../components/common/delete-modal/delet
     CommonModule,
     RouterModule,
     MatIconModule,
+    HttpClientModule,
     MatToolbarModule,
     MatDatepickerModule,
     MatFormFieldModule,

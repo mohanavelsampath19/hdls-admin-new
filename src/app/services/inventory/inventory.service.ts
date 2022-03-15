@@ -8,33 +8,18 @@ import { environment } from 'src/environments/environment';
 })
 export class InventoryService {
 
-  getAllInventorySubject: BehaviorSubject<Inventorys[]> = new BehaviorSubject([
-    {
-      property_name: 'Taj hotel',
-      property_id: 1,
-      total_rooms: 10,
-      total_outlet: 2,
-      status: 'Active'
-    },
-    {
-      property_name: 'ITC',
-      property_id: 1,
-      total_rooms: 10,
-      total_outlet: 2,
-      status: 'Active'
-    },
-    {
-      property_name: 'Oberai',
-      property_id: 1,
-      total_rooms: 10,
-      total_outlet: 2,
-      status: 'Active'
-    }
-  ]);
-  constructor(private _http: HttpClient) { }
+  getAllInventoryList: any = [];
+  currentInventory:Subject<any> = new BehaviorSubject([]);
+  constructor(private _http:HttpClient) { }
+  
+  
+  updateMyInventory(id:number){
+    this.currentInventory.next(this.getAllInventoryList[id]);
+  }
   getMyInventoryList(){
-    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist', {
-
+    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist',{}).subscribe((apiRes:any)=>{
+      this.getAllInventoryList = apiRes.response;
+      this.currentInventory.next(this.getAllInventoryList[0]);
     })
   }
 

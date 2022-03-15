@@ -9,7 +9,7 @@ import {
 } from 'src/app/services/inventory/inventory.service';
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
@@ -47,11 +47,17 @@ export class InventoryComponent implements OnInit {
   dataSource: any = new MatTableDataSource(this.totalInventoryList);
   pageSize: number = 5;
   pageOffset: number = 0;
+
   constructor(
     private _inventoryService: InventoryService,
     public dialog: MatDialog,
     private _router: Router
-  ) {}
+  ) {
+    this._inventoryService.currentInventory.subscribe((currentInventory)=>{
+      console.log(currentInventory);
+    });
+    this._inventoryService.getMyInventoryList()
+  }
   ngOnInit(): void {
     this.getPropertyList();
   }
@@ -98,11 +104,11 @@ export class InventoryComponent implements OnInit {
         break;
     }
 
-    this._inventoryService.getMyInventoryList().subscribe((res:any) => {
-      if(res && res.status === 1) {
-        this.dataSource = new MatTableDataSource(res.response);
-      }
-    })
+    // this._inventoryService.getMyInventoryList().subscribe((res:any) => {
+    //   if(res && res.status === 1) {
+    //     this.dataSource = new MatTableDataSource(res.response);
+    //   }
+    // })
 
   }
 
