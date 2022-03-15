@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { HotelsService, HotelDetails } from '../../services/hotels/hotels.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotels',
@@ -40,11 +40,11 @@ export class HotelsComponent implements OnInit {
   pageSize: number = 5;
   pageOffset: number = 0;
   hotelId:number=0;
-  constructor(private _hotelService:HotelsService, private _router: ActivatedRoute) { }
+  constructor(private _hotelService:HotelsService, private _activatedRouter: ActivatedRoute, private _route: Router) { }
   ngOnInit(): void {
-    this._router.queryParams.subscribe((res) => {
-      if(res && res.name) {
-        this.hotelId = res.name;
+    this._activatedRouter.queryParams.subscribe((res) => {
+      if(res && res.id) {
+        this.hotelId = res.id;
       }
     })
     this.getPropertyList(this.hotelId);
@@ -153,4 +153,9 @@ export class HotelsComponent implements OnInit {
     event.preventDefault();
  //   this.getSearchInput.emit(this.searchValue);
   };
+
+  gotoLink(event: Event) {
+    event.preventDefault();
+    this._route.navigate(['/add-room'], { queryParams: { id: this.hotelId } });
+  }
 }

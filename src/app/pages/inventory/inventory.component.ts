@@ -9,6 +9,7 @@ import {
 } from 'src/app/services/inventory/inventory.service';
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
@@ -48,7 +49,8 @@ export class InventoryComponent implements OnInit {
   pageOffset: number = 0;
   constructor(
     private _inventoryService: InventoryService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _router: Router
   ) {}
   ngOnInit(): void {
     this.getPropertyList();
@@ -190,5 +192,9 @@ export class InventoryComponent implements OnInit {
     // dialogRef.afterClosed().subscribe(() => {
     //   getDialogRef.unsubscribe();
     // });
+  }
+  gotoLink(event: Event, id:any) {
+    event.preventDefault();
+    this._router.navigate(['/hotels'], { queryParams: { id: id } });
   }
 }

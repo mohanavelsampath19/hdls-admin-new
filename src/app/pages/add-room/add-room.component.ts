@@ -7,14 +7,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-//import { ProductService } from 'src/app/services/api/product/product.service';
+import { RoomsService } from '../../services/rooms/rooms.service';
 import { MatDialog } from '@angular/material/dialog';
-//import { InfoPopupComponent } from '../../common/info-popup/info-popup.component';
+import { InfoPopupComponent } from '../../components/common/info-popup/info-popup.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -143,11 +143,13 @@ export class AddRoomComponent implements OnInit {
   composedVariantList: Array<any> = [];
   removeFirstVariant: Array<any> = [];
   specRows: FormArray = this._formBuilder.array([]);
+  hotelId:number=0;
   constructor(
     private _formBuilder: FormBuilder,
-    // private _productService: ProductService,
+    private _roomsService: RoomsService,
     public _dialog: MatDialog,
-    private _route: Router
+    private _route: Router,
+    private _activatedRouter: ActivatedRoute
   ) {}
 
   removevalue(i: any) {
@@ -164,9 +166,9 @@ export class AddRoomComponent implements OnInit {
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
-      room_name: ['', Validators.required],
-      room_description: ['', Validators.required],
-      bed_type: ['', Validators.required],
+      roomtitle: ['', Validators.required],
+      roomsdesc: ['', Validators.required],
+      bedtype: ['', Validators.required],
       room_quantity: ['', Validators.required],
       adults: [0, Validators.required],
       room_facilities: [''],
@@ -198,6 +200,11 @@ export class AddRoomComponent implements OnInit {
     this.variantFormGroup.valueChanges.subscribe((val) => {
       this.composeVariantTable();
     });
+    this._activatedRouter.queryParams.subscribe((res) => {
+      if(res && res.id) {
+        this.hotelId = res.id;
+      }
+    })
   }
 
   createProduct = () => {
@@ -249,6 +256,32 @@ export class AddRoomComponent implements OnInit {
       }
     }
   };
+
+  saveRoom() {
+    let roomDetails = {
+      hotelid: this.hotelId,
+      ...this.firstFormGroup.value
+    }
+    this._roomsService.addRoomService(roomDetails).subscribe((res:any) => {
+      if(res && res.status === 1) {
+        const dialogRef = this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Room created successfully',
+          },
+        });
+        dialogRef.afterClosed().subscribe(() => {
+        });
+      } else {
+        const dialogRef = this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Please try again later',
+          },
+        });
+        dialogRef.afterClosed().subscribe(() => {
+        });
+      }
+    })
+  }
   checkForFormImage(checkForStatus: imageValidation) {
     this.checkForCoverImage = checkForStatus;
     if (checkForStatus) {

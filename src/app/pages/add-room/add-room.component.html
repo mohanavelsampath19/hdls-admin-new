@@ -17,7 +17,7 @@
           <h4>Room Title<span class="required">*</span></h4>
           <input
             matInput
-            formControlName="room_name"
+            formControlName="roomtitle"
             class="dm-form-input"
             placeholder="Room Title"
             required
@@ -25,9 +25,9 @@
           <p
             class="dm-error"
             *ngIf="
-              firstFormGroup.controls.room_name.invalid &&
-              (firstFormGroup.controls.room_name.dirty ||
-                firstFormGroup.controls.room_name.touched) &&
+              firstFormGroup.controls.roomtitle.invalid &&
+              (firstFormGroup.controls.roomtitle.dirty ||
+                firstFormGroup.controls.roomtitle.touched) &&
               myform.submitted
             "
           >
@@ -39,16 +39,16 @@
           <textarea
           matInput
             id="productDescriptionEditor"
-            formControlName="room_description"
+            formControlName="roomsdesc"
           >
           </textarea>
 
           <p
             class="dm-error"
             *ngIf="
-              firstFormGroup.controls.room_description.invalid &&
-              (firstFormGroup.controls.room_description.dirty ||
-                firstFormGroup.controls.room_description.touched)
+              firstFormGroup.controls.roomsdesc.invalid &&
+              (firstFormGroup.controls.roomsdesc.dirty ||
+                firstFormGroup.controls.roomsdesc.touched)
             "
           >
             Please fill the description
@@ -56,7 +56,7 @@
         </mat-form-field>
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Bed Type<span class="required">*</span></h4>
-          <mat-select class="dm-form-select" formControlName="bed_type">
+          <mat-select class="dm-form-select" formControlName="bedtype">
             <mat-option value="1">single bedroom</mat-option>
             <mat-option value="2">Double bedroom</mat-option>
             <mat-option value="3">extra bedroom</mat-option>
@@ -223,13 +223,12 @@
           </button>
           <button
             mat-button
-            matStepperNext
             color="primary"
             [ngClass]="{
               'dm-btn-primary': firstFormGroup.valid,
               'dm-btn-disable': !firstFormGroup.valid
             }"
-            (click)="getCurrentStep(3)"
+            (click)="saveRoom()"
           >
             save
           </button>
