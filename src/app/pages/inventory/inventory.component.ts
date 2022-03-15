@@ -1,14 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { InventoryService, Inventorys } from 'src/app/services/inventory/inventory.service';
+import { DeleteModalComponent } from 'src/app/components/common/delete-modal/delete-modal.component';
+import {
+  InventoryService,
+  Inventorys,
+} from 'src/app/services/inventory/inventory.service';
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.scss']
+  styleUrls: ['./inventory.component.scss'],
 })
 export class InventoryComponent implements OnInit {
   selectedCategory: string = 'all';
@@ -22,7 +27,12 @@ export class InventoryComponent implements OnInit {
     inventoryList: [],
   };
   totalInventoryList: Array<Inventorys> = [];
-  skeletonList: Array<Loading> = [{isLoading:true},{isLoading:true},{isLoading:true},{isLoading:true},]
+  skeletonList: Array<Loading> = [
+    { isLoading: true },
+    { isLoading: true },
+    { isLoading: true },
+    { isLoading: true },
+  ];
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
   // @ViewChild(MatSort) sort: MatSort;
@@ -34,10 +44,13 @@ export class InventoryComponent implements OnInit {
     'status',
     'action',
   ];
-  dataSource:any = new MatTableDataSource(this.totalInventoryList);
+  dataSource: any = new MatTableDataSource(this.totalInventoryList);
   pageSize: number = 5;
   pageOffset: number = 0;
-  constructor(private _inventoryService:InventoryService) { }
+  constructor(
+    private _inventoryService: InventoryService,
+    public dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     this.getPropertyList();
   }
@@ -96,8 +109,6 @@ export class InventoryComponent implements OnInit {
   //   this.dataSource.paginator = this.paginator;
   // }
 
-
-
   onFirstLoad() {
     this.dataSource = new MatTableDataSource(this.skeletonList);
     // this.dataSource.paginator = this.paginator;
@@ -119,7 +130,7 @@ export class InventoryComponent implements OnInit {
       daterange.start === 'Invalid date' &&
       daterange.end === 'Invalid date'
     ) {
-     // this.getProductList();
+      // this.getProductList();
     } else if (daterange.start !== '' && daterange.end !== '') {
       // let myTenantObj = JSON.parse(
       //   localStorage.getItem('tenant_details') || ''
@@ -138,11 +149,47 @@ export class InventoryComponent implements OnInit {
 
   getSearchDetails = (event: Event) => {
     event.preventDefault();
-   // this.searchValue = (event.target as HTMLInputElement).value;
+    // this.searchValue = (event.target as HTMLInputElement).value;
   };
 
   setSearchValue = (event: Event) => {
     event.preventDefault();
- //   this.getSearchInput.emit(this.searchValue);
+    //   this.getSearchInput.emit(this.searchValue);
   };
+
+  openDeleteDialog(event: Event, deleteid: any, status: any) {
+    event.preventDefault();
+    const dialogRef = this.dialog.open(DeleteModalComponent, {});
+    // const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
+    //   (data) => {
+    //     if (data === 'delete') {
+    //       this.tenantService
+    //         .getDeleteProduct(deleteid, status)
+    //         .subscribe((res: any) => {
+    //           this.getProductList();
+    //           const dialogRef = this.dialog.open(InfoPopupComponent, {
+    //             data: {
+    //               popupText: 'Product Deleted successfully',
+    //             },
+    //           });
+    //           const getDialogRef =
+    //             dialogRef.componentInstance.closePopup.subscribe(() => {
+    //               this.dialog.closeAll();
+    //             });
+    //         });
+    //     }
+    //   },
+    //   (error) => {
+    //     alert(error);
+    //     this.dialog.open(InfoPopupComponent, {
+    //       data: {
+    //         popupText: 'Something went wrong. Please try again later',
+    //       },
+    //     });
+    //   }
+    // );
+    // dialogRef.afterClosed().subscribe(() => {
+    //   getDialogRef.unsubscribe();
+    // });
+  }
 }

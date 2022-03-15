@@ -1,3 +1,4 @@
+import { EditRoomComponent } from './pages/edit-room/edit-room.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -20,8 +21,11 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path:'inventory',
-        loadChildren: () =>import('./modules/inventory/inventory.module').then((m) => m.InventoryModule)
+        path: 'inventory',
+        loadChildren: () =>
+          import('./modules/inventory/inventory.module').then(
+            (m) => m.InventoryModule
+          ),
       },
       {
         path: 'membership',
@@ -45,6 +49,10 @@ const routes: Routes = [
       {
         path: 'add-room',
         component: AddRoomComponent,
+      },
+      {
+        path: 'edit-room',
+        component: EditRoomComponent,
       },
       {
         path: 'bookings',

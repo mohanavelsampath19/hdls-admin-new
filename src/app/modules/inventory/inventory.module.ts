@@ -27,9 +27,14 @@ import { ProductstatusPipe } from 'src/app/filters/productstatus.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { EditPropertyComponent } from 'src/app/pages/inventory/edit-property/edit-property.component';
 
 @NgModule({
-  declarations: [InventoryComponent, AddPropertyComponent],
+  declarations: [
+    InventoryComponent,
+    AddPropertyComponent,
+    EditPropertyComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
