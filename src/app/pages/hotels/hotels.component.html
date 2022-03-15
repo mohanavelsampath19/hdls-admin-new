@@ -82,9 +82,7 @@
         matTableExporter
       >
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Room Name
-          </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Room Name</th>
           <td mat-cell *matCellDef="let element">
             <p *ngIf="!element.loading">
               {{ element.name }}
@@ -115,7 +113,9 @@
         </ng-container>
 
         <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Room Quantity</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Room Quantity
+          </th>
           <td mat-cell *matCellDef="let element">
             {{ element.quantity }}
           </td>
@@ -129,7 +129,7 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
           <td mat-cell *matCellDef="let element">
-            <a href="#">Edit</a>
+            <a href="#" routerLink="/edit-room">Edit</a>
             <a href="#">Delete</a>
           </td>
         </ng-container>
