@@ -69,14 +69,6 @@
       <a
         id="basic"
         class="add-button"
-        [ngClass]="{ 'selected-item': selectedCategory === 'draft' }"
-        (click)="getSelectedFilter('draft')"
-      >
-        Draft<span><!-- TODO--></span>
-      </a>
-      <a
-        id="basic"
-        class="add-button"
         [ngClass]="{ 'selected-item': selectedCategory === 'deleted' }"
         (click)="getSelectedFilter('deleted')"
       >
@@ -91,24 +83,23 @@
         [dataSource]="dataSource"
         matTableExporter
       >
+      <ng-container matColumnDef="property_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="!element.loading">
+            {{ element.hotel_id }}
+          </div>
+          <div *ngIf="element.loading" class="loading-data"></div>
+        </td>
+      </ng-container>
         <ng-container matColumnDef="property_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Property Name
           </th>
           <td mat-cell *matCellDef="let element">
             <p *ngIf="!element.loading">
-              {{ element.hotelname }}
+              <a href="#">{{ element.hotelname }}</a>
             </p>
-            <div *ngIf="element.loading" class="loading-data"></div>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="property_id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-          <td mat-cell *matCellDef="let element">
-            <div *ngIf="!element.loading">
-              {{ element.hotel_id }}
-            </div>
             <div *ngIf="element.loading" class="loading-data"></div>
           </td>
         </ng-container>
@@ -121,15 +112,6 @@
               {{ element.total_rooms }}
             </div>
             <div *ngIf="element.loading" class="loading-data"></div>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="total_outlet">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Total Outlet
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.total_outlet }}
           </td>
         </ng-container>
         <ng-container matColumnDef="status">

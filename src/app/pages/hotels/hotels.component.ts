@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { HotelsService, HotelDetails } from '../../services/hotels/hotels.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hotels',
@@ -38,16 +39,22 @@ export class HotelsComponent implements OnInit {
   dataSource:any = new MatTableDataSource(this.totalHotelsList);
   pageSize: number = 5;
   pageOffset: number = 0;
-  constructor(private _hotelService:HotelsService) { }
+  hotelId:number=0;
+  constructor(private _hotelService:HotelsService, private _router: ActivatedRoute) { }
   ngOnInit(): void {
-    this.getPropertyList();
+    this._router.queryParams.subscribe((res) => {
+      if(res && res.name) {
+        this.hotelId = res.name;
+      }
+    })
+    this.getPropertyList(this.hotelId);
   }
 
   getSelectedFilter = (value: string) => {
     this.selectedCategory = value;
     this.pageSize = 5;
     this.pageOffset = 0;
-    this.getPropertyList();
+    this.getPropertyList(this.hotelId);
   };
 
   getSearchInput(searchValue: any) {
@@ -64,7 +71,7 @@ export class HotelsComponent implements OnInit {
     }
   }
 
-  getPropertyList() {
+  getPropertyList(hotel_name:number) {
     this.onFirstLoad();
     let getCategory = 1;
     switch (this.selectedCategory) {
@@ -85,8 +92,10 @@ export class HotelsComponent implements OnInit {
         break;
     }
 
-    this._hotelService.getMyHotelsList().subscribe((hotelArray:HotelDetails[]) => {
-      this.dataSource = new MatTableDataSource(hotelArray);
+    this._hotelService.getRoomList(this.hotelId).subscribe((res:any) => {
+      if(res && res.status === 1) {
+        this.dataSource = new MatTableDataSource(res.response);
+      }
     })
 
   }
@@ -110,7 +119,7 @@ export class HotelsComponent implements OnInit {
     console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
-    this.getPropertyList();
+    this.getPropertyList(this.hotelId);
   }
 
   getDateRange(daterange: any) {

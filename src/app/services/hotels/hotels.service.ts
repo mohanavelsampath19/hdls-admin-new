@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,9 +30,17 @@ export class HotelsService {
       status: 'Active'
     }
   ]);
-  constructor() { }
-  getMyHotelsList(){
-    return this.getAllHotelSubject;
+  constructor(private _http: HttpClient) { }
+  getMyHotelsList(hotel_name:any){
+    return this._http.post(environment.baseUrl + 'api/rooms/getroomdetails', {
+      roomid: hotel_name
+    })
+  }
+
+  getRoomList(hotel_id:number) {
+    return this._http.post(environment.baseUrl + 'api/rooms/getroomslist', {
+      hotel_id: hotel_id
+    })
   }
 }
 

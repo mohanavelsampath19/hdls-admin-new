@@ -37,10 +37,9 @@ export class InventoryComponent implements OnInit {
 
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
-    'property_name',
     'property_id',
+    'property_name',
     'total_rooms',
-    'total_outlet',
     'status',
     'action',
   ];
