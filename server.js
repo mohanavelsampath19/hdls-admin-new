@@ -6,18 +6,16 @@ function requireHTTPS(req, res, next) {
     next();
 }
 const express = require('express');
-const app = express();
 const path = require('path');
 
-// app.use(requireHTTPS);
+const app = express();
 
-// app.use(express.static('./dist/hdls-admin-ui'));
-app.use(express.static(__dirname + '/dist/hdls-admin-ui'));
+// Serve only the static files form the dist directory
+app.use(express.static('./dist/hdls-admin-ui'));
 
-app.get('/*', function(req,res) {
-res.sendFile(path.join(__dirname + '/dist/hdls-admin-ui/index.html'));
-});
+app.get('/*', (req, res) =>
+    res.sendFile('index.html', {root: 'dist/hdls-admin-ui/'}),
+);
 
-app.listen(process.env.PORT || 8080,()=>{
-    console.log("Server listening on Port",process.env.PORT || 8080);
-});
+// Start the app by listening on the default Heroku port
+app.listen(process.env.PORT || 8080);
