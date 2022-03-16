@@ -12,9 +12,10 @@ const app = express();
 
 app.use(express.static('./dist/hdls-admin-ui'));
 
-app.get('/*', function(req, res) {
-    res.sendFile('index.html', {root: 'dist/hdls-admin-ui'});
-});
+app.get('*', function (req, res) {
+    const index = path.join(__dirname, 'build', 'index.html');
+    res.sendFile(index);
+  });
 app.listen(process.env.PORT || 8080,()=>{
     console.log("Server listening on Port",process.env.PORT || 8080);
 });
