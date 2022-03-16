@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -17,8 +18,10 @@ export class SidenavComponent implements OnInit {
     bookings:false,
     inventory:false
   }
-  constructor( private _router: Router) {}
-  ngOnInit() {}
+  constructor( private _router: Router, private _inventory:InventoryService) {}
+  ngOnInit() {
+
+  }
   logout(event: any) {
     event.preventDefault();
     // this._cookieService.deleteAll();
@@ -45,5 +48,7 @@ export class SidenavComponent implements OnInit {
     this.myMenu[active] = true;
     this._router.navigate([routerLink]);
   }
-
+  update(index:number){
+    this._inventory.updateMyInventory(index);
+  }
 }

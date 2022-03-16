@@ -1,0 +1,282 @@
+<div class="dm-add-product-section">
+  <h2>Add Property <span class="dm-border"></span>Property Information</h2>
+  <mat-progress-bar
+    mode="determinate"
+    value="{{ progressBarValue }}"
+    class="dm-progress-bar"
+  ></mat-progress-bar>
+
+  <mat-stepper linear #stepper class="dm-stepper dm-tenant-add-product-stepper">
+    <mat-step [stepControl]="firstFormGroup">
+      <form
+        [formGroup]="firstFormGroup"
+        (submit)="saveProperty()"
+        #myform="ngForm"
+      >
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Property Name<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="property_name"
+            class="dm-form-input"
+            placeholder="Property Title"
+            required
+          />
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.property_name.invalid &&
+              (firstFormGroup.controls.property_name.dirty ||
+                firstFormGroup.controls.property_name.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the property name
+          </p>
+        </mat-form-field>
+
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Property Type<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="property_type">
+            <mat-option value="1">Guesthouse</mat-option>
+            <mat-option value="2">Hostel</mat-option>
+            <mat-option value="3">Hotel</mat-option>
+            <mat-option value="3">Motel</mat-option>
+            <mat-option value="3">Resort</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Property Descriptions<span class="required">*</span></h4>
+          <textarea
+            matInput
+            id="productDescriptionEditor"
+            formControlName="property_description"
+          >
+          </textarea>
+
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.property_description.invalid &&
+              (firstFormGroup.controls.property_description.dirty ||
+                firstFormGroup.controls.property_description.touched)
+            "
+          >
+            Please fill the description
+          </p>
+        </mat-form-field>
+        <div class="adult-children-conatiner">
+          <div class="product-details-card-description-inner-counter">
+            <h3>Available Rooms<span class="required">*</span></h3>
+            <div class="span-container">
+              <span
+                ><button
+                  (click)="removeItem('adults')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  -
+                </button></span
+              >
+              <span
+                class="product-details-card-description-inner-counter-value"
+                >{{ adults }}</span
+              >
+              <span
+                ><button
+                  (click)="addItem('adults')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  +
+                </button></span
+              >
+            </div>
+          </div>
+          <div class="product-details-card-description-inner-counter">
+            <h3>Maximum Accomidation<span class="required">*</span></h3>
+            <div class="span-container">
+              <span
+                ><button
+                  (click)="removeItem('childrens')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  -
+                </button></span
+              >
+              <span
+                class="product-details-card-description-inner-counter-value"
+                >{{ childrens }}</span
+              >
+              <span
+                ><button
+                  (click)="addItem('childrens')"
+                  class="product-details-card-description-inner-counter-button"
+                >
+                  +
+                </button></span
+              >
+            </div>
+          </div>
+        </div>
+        <section class="example-section" [formGroup]="facilities">
+          <h4>Facilities Available</h4>
+          <mat-checkbox
+            formControlName="breakFast"
+            class="dm-checkbox"
+            color="primary"
+            >BreakFast</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="wifi"
+            class="dm-checkbox"
+            color="primary"
+            >Free wi-fi</mat-checkbox
+          >
+          <mat-checkbox formControlName="ac" class="dm-checkbox" color="primary"
+            >AC</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="geyser"
+            class="dm-checkbox"
+            color="primary"
+            >Geyser</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="power_backup"
+            class="dm-checkbox"
+            color="primary"
+            >Power Backup</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="elevator"
+            class="dm-checkbox"
+            color="primary"
+            >Elevator</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="room_service"
+            class="dm-checkbox"
+            color="primary"
+            >24 Hours Room Service</mat-checkbox
+          >
+        </section>
+
+        <div class="dm-form-field-timings" appearance="fill">
+          <h4>Check-in & Check-out Timing<span class="required">*</span></h4>
+          <div class="checkin-checkout">
+            <div class="check-in">
+              <input
+                class="dm-form-input"
+                placeholder="check-in"
+                aria-label="24hr format"
+                [ngxTimepicker]="checkin"
+                [format]="12"
+                readonly
+              />
+              <ngx-material-timepicker #checkin></ngx-material-timepicker>
+            </div>
+            <div class="check-out">
+              <input
+                class="dm-form-input"
+                placeholder="check-out"
+                aria-label="24hr format"
+                [ngxTimepicker]="checkout"
+                [format]="12"
+                readonly
+              />
+              <ngx-material-timepicker #checkout></ngx-material-timepicker>
+            </div>
+          </div>
+        </div>
+
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Front Desk Number<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="front_end_desk"
+            class="dm-form-input"
+            placeholder="Front end desk"
+            required
+          />
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.front_end_desk.invalid &&
+              (firstFormGroup.controls.front_end_desk.dirty ||
+                firstFormGroup.controls.front_end_desk.touched)
+            "
+          >
+            Please fill the room size
+          </p>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Property Images<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="room_price"
+            class="dm-form-input-width"
+            placeholder="Room Price"
+            required
+          />
+
+          <button
+            class="product-details-card-description-inner-counter-button-height"
+            (click)="addvalue()"
+          >
+            +
+          </button>
+
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.room_price.invalid &&
+              (firstFormGroup.controls.room_price.dirty ||
+                firstFormGroup.controls.room_price.touched) &&
+              myform.submitted
+            "
+          >
+            Please upload property images.
+          </p>
+        </mat-form-field>
+
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Points<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="points">
+            <mat-option value="1">Default</mat-option>
+            <mat-option value="2">Double Points</mat-option>
+            <mat-option value="3">Public Points</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Restrictions<span class="required">*</span></h4>
+          <mat-select class="dm-form-select" formControlName="restrictions">
+            <mat-option value="1">Public Holiday</mat-option>
+            <mat-option value="2">Weekends</mat-option>
+            <mat-option value="3">Selected Dates</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext class="dm-btn-secondary">
+            Cancel
+          </button>
+          <button
+            mat-button
+            matStepperNext
+            color="primary"
+            [ngClass]="{
+              'dm-btn-primary': firstFormGroup.valid,
+              'dm-btn-disable': !firstFormGroup.valid
+            }"
+            (click)="saveProperty()"
+          >
+            save
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>

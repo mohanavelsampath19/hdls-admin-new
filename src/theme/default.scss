@@ -4,13 +4,45 @@
 
 // primary, accent and warn palettes
 
-$HDLS-Admin-theme-primary: mat-palette($mat-indigo);
+// $HDLS-Admin-theme-primary: mat-palette($mat-indigo);
+$HDLS-Admin-theme-primary: (
+  50: #F78C8C,
+  100: #F78C8C,
+  200: #F78C8C,
+  300: #F78C8C,
+  400: #F78C8C,
+  500: #F78C8C,
+  600: #F78C8C,
+  700: #F78C8C,
+  800: #F78C8C,
+  900: #F78C8C,
+  A100: #F78C8C,
+  A200: #F78C8C,
+  A400: #F78C8C,
+  A700: #F78C8C,
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
 $HDLS-Admin-theme-accent: mat-palette($mat-pink, A200, A100, A400);
 $HDLS-Admin-theme-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $HDLS-Admin-theme: mat-light-theme(
-  $HDLS-Admin-theme-primary,
+  mat-palette($HDLS-Admin-theme-primary),
   $HDLS-Admin-theme-accent,
   $HDLS-Admin-theme-warn
 );

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +29,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProductstatusPipe } from './filters/productstatus.pipe';
 import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
-
+//import { InventoryComponent } from './pages/inventory/inventory.component';
+import { HotelsComponent } from './pages/hotels/hotels.component';
+import { AddRoomComponent } from './pages/add-room/add-room.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import { PointsystemModule } from './modules/pointsystem/pointsystem.module';
+import { BookingsComponent } from './pages/bookings/bookings.component';
+import { EditRoomComponent } from './pages/edit-room/edit-room.component';
+// import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +46,10 @@ import { AddMembershipComponent } from './pages/membership/add-membership/add-me
     LoginComponent,
     LandingpageComponent,
     AddMembershipComponent,
-    
+    HotelsComponent,
+    AddRoomComponent,
+    BookingsComponent,
+    EditRoomComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,8 +78,14 @@ import { AddMembershipComponent } from './pages/membership/add-membership/add-me
     MatButtonModule,
     MatChipsModule,
     MatSlideToggleModule,
+    AngularEditorModule,
+    MatRadioModule,
+    MatDialogModule,
+    HttpClientModule,
+    PointsystemModule,
+    // NgxMaterialTimepickerModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -4,15 +4,16 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin: 10px 0;
+    margin-bottom: 20px;
     a {
       width: 120px;
       padding: 15px;
       font-size: 16px;
-      border: none;
-      box-shadow: $primary-shadow;
-      background-color: transparent;
+      border: 1px solid #ccc;
+      // box-shadow: $primary-shadow;
+      background-color: #fff;
       color: #818181;
       cursor: pointer;
       border-radius: 5px;
@@ -21,5 +22,54 @@
     .selected-item {
       background-color: $primary-background-color;
       color: $secondary-font-color;
+    }
+  }
+
+  .hdls-search-section {
+    width: 380px;
+    margin: 10px 0;
+    background-color: $secondary-font-color;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    .hdls-search-field {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 5px 10px;
+      input {
+        border: none;
+        height: 30px;
+        width: 100%;
+        padding-left: 5px;
+        font-size: 20px;
+        &:hover,
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .hdls-header-search-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    flex-basis: 50%;
+    .add-button {
+      height: 47px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: $primary-background-color;
+      color: #fff;
+      font-size: 18px;
+      margin: 0 10px;
+      padding: 1px 25px;
+      border-radius: 5px;
+      border: none;
+      text-decoration: none;
+      span {
+        margin-right: 10px;
+      }
     }
   }
