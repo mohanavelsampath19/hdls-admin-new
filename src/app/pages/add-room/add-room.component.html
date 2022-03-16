@@ -64,7 +64,7 @@
         </mat-form-field>
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Room Quantity<span class="required">*</span></h4>
-          <mat-select class="dm-form-select" formControlName="room_quantity">
+          <mat-select class="dm-form-select" formControlName="totalrooms">
             <mat-option value="1">1</mat-option>
             <mat-option value="2">2</mat-option>
             <mat-option value="3">3</mat-option>
@@ -155,7 +155,7 @@
           <h4>Room Size<span class="required">*</span></h4>
           <input
             matInput
-            formControlName="room_size"
+            formControlName="roomsize"
             class="dm-form-input"
             placeholder="Room dimensions"
             required
@@ -163,9 +163,9 @@
           <p
             class="dm-error"
             *ngIf="
-              firstFormGroup.controls.room_size.invalid &&
-              (firstFormGroup.controls.room_size.dirty ||
-                firstFormGroup.controls.room_size.touched)
+              firstFormGroup.controls.roomsize.invalid &&
+              (firstFormGroup.controls.roomsize.dirty ||
+                firstFormGroup.controls.roomsize.touched)
             "
           >
             Please fill the room size
@@ -175,7 +175,7 @@
           <h4>Primary Room Price (RM)<span class="required">*</span></h4>
           <input
             matInput
-            formControlName="room_price"
+            formControlName="price"
             class="dm-form-input-width"
             placeholder="Room Price"
             required
@@ -191,9 +191,9 @@
           <p
             class="dm-error"
             *ngIf="
-              firstFormGroup.controls.room_price.invalid &&
-              (firstFormGroup.controls.room_price.dirty ||
-                firstFormGroup.controls.room_price.touched) &&
+              firstFormGroup.controls.price.invalid &&
+              (firstFormGroup.controls.price.dirty ||
+                firstFormGroup.controls.price.touched) &&
               myform.submitted
             "
           >

@@ -169,13 +169,13 @@ export class AddRoomComponent implements OnInit {
       roomtitle: ['', Validators.required],
       roomsdesc: ['', Validators.required],
       bedtype: ['', Validators.required],
-      room_quantity: ['', Validators.required],
+      totalrooms: ['', Validators.required],
       adults: [0, Validators.required],
       room_facilities: [''],
-      room_size: ['', Validators.required],
+      roomsize: ['', Validators.required],
       points: ['', Validators.required],
       restrictions: ['', Validators.required],
-      room_price: ['', Validators.required],
+      price: ['', Validators.required],
     });
     this.secondFormGroup = this._formBuilder.group({});
 
