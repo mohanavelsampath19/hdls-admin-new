@@ -11,8 +11,8 @@ export class InventoryService {
   getAllInventoryList: any = [];
   currentInventory:Subject<any> = new BehaviorSubject([]);
   constructor(private _http:HttpClient) { }
-  
-  
+
+
   updateMyInventory(id:number){
     this.currentInventory.next(this.getAllInventoryList[id]);
   }
@@ -21,6 +21,10 @@ export class InventoryService {
       this.getAllInventoryList = apiRes.response;
       this.currentInventory.next(this.getAllInventoryList[0]);
     })
+  }
+
+  getInventoryList(){
+    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist',{})
   }
 
   addProperty(property_details:any) {

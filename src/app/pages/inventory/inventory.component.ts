@@ -56,7 +56,9 @@ export class InventoryComponent implements OnInit {
     this._inventoryService.currentInventory.subscribe((currentInventory)=>{
       console.log(currentInventory);
     });
-    this._inventoryService.getMyInventoryList()
+    this._inventoryService.getInventoryList().subscribe((res:any)=> {
+      this.dataSource = new MatTableDataSource(res.response);
+    })
   }
   ngOnInit(): void {
     this.getPropertyList();
