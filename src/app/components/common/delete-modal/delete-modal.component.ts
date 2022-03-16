@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-modal',
@@ -7,7 +8,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 })
 export class DeleteModalComponent implements OnInit {
   onDelete = new EventEmitter();
-  constructor() {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {}
 

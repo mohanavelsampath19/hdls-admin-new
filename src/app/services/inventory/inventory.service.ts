@@ -26,6 +26,9 @@ export class InventoryService {
   getInventoryList(){
     return this._http.get(environment.baseUrl + 'api/hotel/gethotellist',{})
   }
+  deleteHotel(hotelId:number){
+    return this._http.post(environment.baseUrl + 'api/hotel/deletehotel',{hotelId:hotelId});
+  }
 
   addProperty(property_details:any) {
     return this._http.post(environment.baseUrl + 'api/rooms/addproperty', property_details)
