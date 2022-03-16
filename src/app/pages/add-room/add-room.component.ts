@@ -269,6 +269,7 @@ export class AddRoomComponent implements OnInit {
             popupText: 'Room created successfully',
           },
         });
+        this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
         dialogRef.afterClosed().subscribe(() => {
         });
       } else {
