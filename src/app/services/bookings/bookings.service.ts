@@ -11,4 +11,11 @@ export class BookingsService {
   getBookingHistory() {
     return this._http.get(environment.baseUrl + 'api/booking/getbookinglist',{});
   }
+
+  changeBookingStatus(bookingid:any,status:any, ) {
+    return this._http.post(environment.baseUrl + 'api/booking/bookingstatuschange', {
+      bookingid,
+      status
+    })
+  }
 }

@@ -27,6 +27,7 @@ import { InfoPopupComponent} from '../../components/common/info-popup/info-popup
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../components/common/delete-modal/delete-modal.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmationModalComponent } from '../../components/common/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     SidenavComponent,
     HdlsDateRangeComponent,
     DeleteModalComponent,
-    InfoPopupComponent
+    InfoPopupComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     CommonModule,

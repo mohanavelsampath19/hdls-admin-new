@@ -1,0 +1,21 @@
+<mat-dialog-content class="mat-typography dm-delete-dialog">
+  <h3>Please confirm the bookings</h3>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button color="primary" class="dm-btn-primary"
+  [mat-dialog-close]="true"
+  cdkFocusInitial
+  (click)="changeBookingStatus('rejected')">
+    Reject
+  </button>
+  <button
+    class="dm-btn-primary"
+    mat-button
+    color="primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    (click)="changeBookingStatus('accepted')"
+  >
+    Accept
+  </button>
+</mat-dialog-actions>

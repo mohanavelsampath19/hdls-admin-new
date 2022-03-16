@@ -4,7 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
+import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
@@ -44,7 +46,7 @@ export class BookingsComponent implements OnInit {
   pageSize: number = 5;
   pageOffset: number = 0;
 
-  constructor(private _bookingService: BookingsService) {}
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getBookingHistory();
@@ -137,6 +139,41 @@ export class BookingsComponent implements OnInit {
       //     }
       //   });
     }
+  }
+
+  openDeleteDialog(event: Event, deleteid: any) {
+    event.preventDefault();
+    const dialogRef = this._dialog.open(ConfirmationModalComponent, {});
+    const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
+      (data) => {
+        if (data) {
+          let status = (data === 'accepted') ? 1 : 0;
+          this._bookingService.changeBookingStatus(deleteid, status).subscribe((res:any)=> {
+            if(res && res.status === 1) {
+              const dialogRef = this._dialog.open(InfoPopupComponent, {
+                data: {
+                  popupText: 'Booking status updated successfully',
+                },
+              });
+              this.getBookingHistory();
+              dialogRef.afterClosed().subscribe(() => {
+              });
+            } else {
+              const dialogRef = this._dialog.open(InfoPopupComponent, {
+                data: {
+                  popupText: 'Please try again later',
+                },
+              });
+              dialogRef.afterClosed().subscribe(() => {
+              });
+            }
+          })
+        }
+      }
+    );
+    dialogRef.afterClosed().subscribe(() => {
+      getDialogRef.unsubscribe();
+    });
   }
 
   getSearchDetails = (event: Event) => {
