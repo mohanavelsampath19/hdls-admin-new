@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "HDLS-Admin-UI": {
+    "hdls-admin-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
