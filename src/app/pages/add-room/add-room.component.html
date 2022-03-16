@@ -10,7 +10,7 @@
     <mat-step [stepControl]="firstFormGroup">
       <form
         [formGroup]="firstFormGroup"
-        (submit)="getCurrentStep(2)"
+        (submit)="saveRoom()"
         #myform="ngForm"
       >
         <mat-form-field class="dm-form-field" appearance="fill">
