@@ -17,14 +17,14 @@ export class InventoryService {
     this.currentInventory.next(this.getAllInventoryList[id]);
   }
   getMyInventoryList(){
-    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist',{}).subscribe((apiRes:any)=>{
+    return this._http.get(environment.baseUrl + 'api/hotel/gethotellist',{}).subscribe((apiRes:any)=>{
       this.getAllInventoryList = apiRes.response;
       this.currentInventory.next(this.getAllInventoryList[0]);
     })
   }
 
   getInventoryList(){
-    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist',{})
+    return this._http.get(environment.baseUrl + 'api/hotel/gethotellist',{})
   }
 
   addProperty(property_details:any) {

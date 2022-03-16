@@ -66,20 +66,20 @@
             Booking Id
           </th>
           <td mat-cell *matCellDef="let element">
-            <p *ngIf="!element.loading">
+            <p *ngIf="!element.isLoading">
               {{ element.bookingid }}
             </p>
-            <div *ngIf="element.loading" class="loading-data"></div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="property_id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Hotel Name</th>
           <td mat-cell *matCellDef="let element">
-            <div *ngIf="!element.loading">
-              {{ element.property_id }}
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
             </div>
-            <div *ngIf="element.loading" class="loading-data"></div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
 
@@ -87,22 +87,47 @@
         <ng-container matColumnDef="room_type">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Room Type</th>
           <td mat-cell *matCellDef="let element">
-            <div *ngIf="!element.loading">
-              {{ element.total_rooms }}
+            <div *ngIf="!element.isLoading">
+              {{ element?.rooms?.roomtitle }}
             </div>
-            <div *ngIf="element.loading" class="loading-data"></div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="customername">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Room Type</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.customers?.firstname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.amount }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.status }}
+            <div *ngIf="!element.isLoading">
+              {{ element?.status==1 ? 'Approved':'Pending'  }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
           <td mat-cell *matCellDef="let element">
-            <a href="#">Action</a>
+            <div *ngIf="!element.isLoading">
+              <a href="#">Action</a>
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+            
           </td>
         </ng-container>
 

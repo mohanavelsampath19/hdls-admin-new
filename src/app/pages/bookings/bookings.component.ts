@@ -35,6 +35,8 @@ export class BookingsComponent implements OnInit {
     'property_name',
     'property_id',
     'room_type',
+    'customername',
+    'amount',
     'status',
     'action',
   ];
@@ -90,7 +92,7 @@ export class BookingsComponent implements OnInit {
         break;
     }
 
-    this._bookingService.getBookingHistory(1).subscribe((res:any) => {
+    this._bookingService.getBookingHistory().subscribe((res:any) => {
       this.dataSource = new MatTableDataSource(res.response.bookingHistory);
     })
   }

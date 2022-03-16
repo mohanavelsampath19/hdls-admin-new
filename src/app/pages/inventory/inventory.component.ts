@@ -41,7 +41,9 @@ export class InventoryComponent implements OnInit {
     'property_id',
     'property_name',
     'total_rooms',
-    'status',
+    'city',
+    'poc',
+    'phone',
     'action',
   ];
   dataSource: any = new MatTableDataSource(this.totalInventoryList);
