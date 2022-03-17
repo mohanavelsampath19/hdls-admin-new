@@ -10,6 +10,7 @@ import {
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 import { Router, ActivatedRoute } from '@angular/router';
+import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 
 @Component({
   selector: 'app-inventory',
@@ -55,12 +56,7 @@ export class InventoryComponent implements OnInit {
     public dialog: MatDialog,
     private _router: Router
   ) {
-    this._inventoryService.currentInventory.subscribe((currentInventory)=>{
-      console.log(currentInventory);
-    });
-    this._inventoryService.getInventoryList().subscribe((res:any)=> {
-      this.dataSource = new MatTableDataSource(res.response);
-    })
+    this.initializeHotelList();
   }
   ngOnInit(): void {
     this.getPropertyList();
@@ -170,41 +166,49 @@ export class InventoryComponent implements OnInit {
 
   openDeleteDialog(event: Event, deleteid: any, status: any) {
     event.preventDefault();
-    const dialogRef = this.dialog.open(DeleteModalComponent, {});
-    // const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
-    //   (data) => {
-    //     if (data === 'delete') {
-    //       this.tenantService
-    //         .getDeleteProduct(deleteid, status)
-    //         .subscribe((res: any) => {
-    //           this.getProductList();
-    //           const dialogRef = this.dialog.open(InfoPopupComponent, {
-    //             data: {
-    //               popupText: 'Product Deleted successfully',
-    //             },
-    //           });
-    //           const getDialogRef =
-    //             dialogRef.componentInstance.closePopup.subscribe(() => {
-    //               this.dialog.closeAll();
-    //             });
-    //         });
-    //     }
-    //   },
-    //   (error) => {
-    //     alert(error);
-    //     this.dialog.open(InfoPopupComponent, {
-    //       data: {
-    //         popupText: 'Something went wrong. Please try again later',
-    //       },
-    //     });
-    //   }
-    // );
-    // dialogRef.afterClosed().subscribe(() => {
-    //   getDialogRef.unsubscribe();
-    // });
+    const dialogRef = this.dialog.open(DeleteModalComponent, {data:{productName:'Hotel'}});
+    const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
+      (data) => {
+        if (data === 'delete') {
+          this._inventoryService
+            .deleteHotel(deleteid)
+            .subscribe((res: any) => {
+              this.initializeHotelList();
+              const dialogInfoRef = this.dialog.open(InfoPopupComponent, {
+                data: {
+                  popupText: 'Hotel Deleted successfully',
+                },
+              });
+              const getInfoDialogRef =
+              dialogInfoRef.componentInstance.closePopup.subscribe(() => {
+                  this.dialog.closeAll();
+                });
+            });
+        }
+      },
+      (error) => {
+        alert(error);
+        this.dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Something went wrong. Please try again later',
+          },
+        });
+      }
+    );
+    dialogRef.afterClosed().subscribe(() => {
+      getDialogRef.unsubscribe();
+    });
   }
   gotoLink(event: Event, id:any) {
     event.preventDefault();
     this._router.navigate(['/hotels'], { queryParams: { id: id } });
+  }
+  initializeHotelList(){
+    this._inventoryService.currentInventory.subscribe((currentInventory)=>{
+      console.log(currentInventory);
+    });
+    this._inventoryService.getInventoryList().subscribe((res:any)=> {
+      this.dataSource = new MatTableDataSource(res.response);
+    })
   }
 }
