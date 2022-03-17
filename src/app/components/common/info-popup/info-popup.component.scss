@@ -8,6 +8,9 @@
   }
   .dm-close-icon {
     float: right;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
   }
   .dm-popup-content {
     min-height: 200px;

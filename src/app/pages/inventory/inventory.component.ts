@@ -50,7 +50,7 @@ export class InventoryComponent implements OnInit {
   dataSource: any = new MatTableDataSource(this.totalInventoryList);
   pageSize: number = 5;
   pageOffset: number = 0;
-
+  propertyList: any=[];
   constructor(
     private _inventoryService: InventoryService,
     public dialog: MatDialog,
@@ -209,6 +209,11 @@ export class InventoryComponent implements OnInit {
     });
     this._inventoryService.getInventoryList().subscribe((res:any)=> {
       this.dataSource = new MatTableDataSource(res.response);
+      this.propertyList = res.response;
     })
+  }
+
+  redirectTo(event:any) {
+    this._router.navigate(['/hotels'], { queryParams: { id: event.value } });
   }
 }

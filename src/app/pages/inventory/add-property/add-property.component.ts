@@ -17,6 +17,7 @@ import { InventoryService } from '../../../services/inventory/inventory.service'
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
+
 @Component({
   selector: 'app-add-property',
   templateUrl: './add-property.component.html',
@@ -38,7 +39,7 @@ export class AddPropertyComponent implements OnInit {
   isEditable = false;
   toppings: any = this._formBuilder.group({});
   facilities: any = this._formBuilder.group({});
-
+  checkin:any='';
   currentStep: any = 0;
   progressBarValue: number = 4;
   checkForCoverImage: imageValidation = {
@@ -161,11 +162,12 @@ export class AddPropertyComponent implements OnInit {
       property_name: ['', Validators.required],
       property_description: ['', Validators.required],
       property_type: ['', Validators.required],
-      adults: [0, Validators.required],
+      availablerooms: [0, Validators.required],
       front_end_desk: ['', Validators.required],
       points: ['', Validators.required],
       restrictions: ['', Validators.required],
-      room_price: ['', Validators.required],
+      point_of_contact: ['', Validators.required],
+      city: ['', Validators.required],
     });
     this.secondFormGroup = this._formBuilder.group({});
 
@@ -223,19 +225,13 @@ export class AddPropertyComponent implements OnInit {
       return modifiedObj;
     });
     let myTenantObj = JSON.parse(localStorage.getItem('tenant_details') || '');
-    console.log(
-      this.firstFormGroup.value,
-      this.thirdFormGroup.value,
-      this.checkForCoverImage,
-      specObj,
-      variantObj
-    );
-
   };
 
   saveProperty = () => {
-    console.log(this.firstFormGroup.valid, '---va', this.firstFormGroup.value);
-    this._inventoryService.addProperty(this.firstFormGroup.value).subscribe((res:any) => {
+    let property = {
+      ...this.firstFormGroup.value,
+    }
+    this._inventoryService.addProperty(property).subscribe((res:any) => {
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
@@ -243,6 +239,7 @@ export class AddPropertyComponent implements OnInit {
           },
         });
         dialogRef.afterClosed().subscribe(() => {
+          this._route.navigate(['/inventory'])
         });
       }
     })

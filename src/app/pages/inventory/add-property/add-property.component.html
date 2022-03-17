@@ -1,16 +1,15 @@
 <div class="dm-add-product-section">
   <h2>Add Property <span class="dm-border"></span>Property Information</h2>
-  <mat-progress-bar
+  <!-- <mat-progress-bar
     mode="determinate"
     value="{{ progressBarValue }}"
     class="dm-progress-bar"
-  ></mat-progress-bar>
+  ></mat-progress-bar> -->
 
   <mat-stepper linear #stepper class="dm-stepper dm-tenant-add-product-stepper">
     <mat-step [stepControl]="firstFormGroup">
       <form
         [formGroup]="firstFormGroup"
-        (submit)="saveProperty()"
         #myform="ngForm"
       >
         <mat-form-field class="dm-form-field" appearance="fill">
@@ -52,6 +51,8 @@
             matInput
             id="productDescriptionEditor"
             formControlName="property_description"
+            rows="5"
+            class="hdls-text-area"
           >
           </textarea>
 
@@ -66,58 +67,6 @@
             Please fill the description
           </p>
         </mat-form-field>
-        <div class="adult-children-conatiner">
-          <div class="product-details-card-description-inner-counter">
-            <h3>Available Rooms<span class="required">*</span></h3>
-            <div class="span-container">
-              <span
-                ><button
-                  (click)="removeItem('adults')"
-                  class="product-details-card-description-inner-counter-button"
-                >
-                  -
-                </button></span
-              >
-              <span
-                class="product-details-card-description-inner-counter-value"
-                >{{ adults }}</span
-              >
-              <span
-                ><button
-                  (click)="addItem('adults')"
-                  class="product-details-card-description-inner-counter-button"
-                >
-                  +
-                </button></span
-              >
-            </div>
-          </div>
-          <div class="product-details-card-description-inner-counter">
-            <h3>Maximum Accomidation<span class="required">*</span></h3>
-            <div class="span-container">
-              <span
-                ><button
-                  (click)="removeItem('childrens')"
-                  class="product-details-card-description-inner-counter-button"
-                >
-                  -
-                </button></span
-              >
-              <span
-                class="product-details-card-description-inner-counter-value"
-                >{{ childrens }}</span
-              >
-              <span
-                ><button
-                  (click)="addItem('childrens')"
-                  class="product-details-card-description-inner-counter-button"
-                >
-                  +
-                </button></span
-              >
-            </div>
-          </div>
-        </div>
         <section class="example-section" [formGroup]="facilities">
           <h4>Facilities Available</h4>
           <mat-checkbox
@@ -164,7 +113,6 @@
             >24 Hours Room Service</mat-checkbox
           >
         </section>
-
         <div class="dm-form-field-timings" appearance="fill">
           <h4>Check-in & Check-out Timing<span class="required">*</span></h4>
           <div class="checkin-checkout">
@@ -176,6 +124,7 @@
                 [ngxTimepicker]="checkin"
                 [format]="12"
                 readonly
+
               />
               <ngx-material-timepicker #checkin></ngx-material-timepicker>
             </div>
@@ -192,14 +141,53 @@
             </div>
           </div>
         </div>
-
         <mat-form-field class="dm-form-field" appearance="fill">
-          <h4>Front Desk Number<span class="required">*</span></h4>
+          <h4>City<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="city"
+            class="dm-form-input"
+            placeholder="City"
+            required
+          />
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.city.invalid &&
+              (firstFormGroup.controls.city.dirty ||
+                firstFormGroup.controls.city.touched)
+            "
+          >
+            Please fill the city
+          </p>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Point of Contact<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="point_of_contact"
+            class="dm-form-input"
+            placeholder="Point of contact"
+            required
+          />
+          <p
+            class="dm-error"
+            *ngIf="
+              firstFormGroup.controls.point_of_contact.invalid &&
+              (firstFormGroup.controls.point_of_contact.dirty ||
+                firstFormGroup.controls.point_of_contact.touched)
+            "
+          >
+            Please fill the point of contact
+          </p>
+        </mat-form-field>
+        <mat-form-field class="dm-form-field" appearance="fill">
+          <h4>Contact<span class="required">*</span></h4>
           <input
             matInput
             formControlName="front_end_desk"
             class="dm-form-input"
-            placeholder="Front end desk"
+            placeholder="Contact"
             required
           />
           <p
@@ -210,39 +198,9 @@
                 firstFormGroup.controls.front_end_desk.touched)
             "
           >
-            Please fill the room size
+            Please fill the contact number
           </p>
         </mat-form-field>
-        <mat-form-field class="dm-form-field" appearance="fill">
-          <h4>Property Images<span class="required">*</span></h4>
-          <input
-            matInput
-            formControlName="room_price"
-            class="dm-form-input-width"
-            placeholder="Room Price"
-            required
-          />
-
-          <button
-            class="product-details-card-description-inner-counter-button-height"
-            (click)="addvalue()"
-          >
-            +
-          </button>
-
-          <p
-            class="dm-error"
-            *ngIf="
-              firstFormGroup.controls.room_price.invalid &&
-              (firstFormGroup.controls.room_price.dirty ||
-                firstFormGroup.controls.room_price.touched) &&
-              myform.submitted
-            "
-          >
-            Please upload property images.
-          </p>
-        </mat-form-field>
-
         <mat-form-field class="dm-form-field" appearance="fill">
           <h4>Points<span class="required">*</span></h4>
           <mat-select class="dm-form-select" formControlName="points">

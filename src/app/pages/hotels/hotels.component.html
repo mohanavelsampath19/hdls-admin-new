@@ -126,13 +126,13 @@
             {{ element.inactive === 1 ? 'Active' : 'Inactive'}}
           </td>
         </ng-container>
-        <ng-container matColumnDef="action">
+        <!-- <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
           <td mat-cell *matCellDef="let element">
             <a href="#" routerLink="/edit-room">Edit</a>
             <a href="#">Delete</a>
           </td>
-        </ng-container>
+        </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr
