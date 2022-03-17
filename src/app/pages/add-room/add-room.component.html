@@ -1,16 +1,15 @@
 <div class="dm-add-product-section">
   <h2>Add Room <span class="dm-border"></span>Room Information</h2>
-  <mat-progress-bar
+  <!-- <mat-progress-bar
     mode="determinate"
     value="{{ progressBarValue }}"
     class="dm-progress-bar"
-  ></mat-progress-bar>
+  ></mat-progress-bar> -->
 
   <mat-stepper linear #stepper class="dm-stepper dm-tenant-add-product-stepper">
     <mat-step [stepControl]="firstFormGroup">
       <form
         [formGroup]="firstFormGroup"
-        (submit)="saveRoom()"
         #myform="ngForm"
       >
         <mat-form-field class="dm-form-field" appearance="fill">
@@ -180,14 +179,12 @@
             placeholder="Room Price"
             required
           />
-
-          <button
+          <!-- <button
             class="product-details-card-description-inner-counter-button-height"
             (click)="addvalue()"
           >
             +
-          </button>
-
+          </button> -->
           <p
             class="dm-error"
             *ngIf="

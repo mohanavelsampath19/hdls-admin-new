@@ -1,5 +1,5 @@
 <mat-dialog-content class="mat-typography dm-delete-dialog">
-  <mat-icon class="dm-close-icon" (click)="closeModalPopup()">close</mat-icon>
+  <button mat-button class="dm-close-icon" [mat-dialog-close]="true"><mat-icon (click)="closeModalPopup()">close</mat-icon></button>
   <div class="dm-popup-content">
     {{ data.popupText }}
   </div>

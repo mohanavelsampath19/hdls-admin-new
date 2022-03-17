@@ -165,7 +165,6 @@ export class AddPropertyComponent implements OnInit {
       front_end_desk: ['', Validators.required],
       points: ['', Validators.required],
       restrictions: ['', Validators.required],
-      room_price: ['', Validators.required],
     });
     this.secondFormGroup = this._formBuilder.group({});
 
@@ -234,7 +233,6 @@ export class AddPropertyComponent implements OnInit {
   };
 
   saveProperty = () => {
-    console.log(this.firstFormGroup.valid, '---va', this.firstFormGroup.value);
     this._inventoryService.addProperty(this.firstFormGroup.value).subscribe((res:any) => {
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
@@ -243,6 +241,7 @@ export class AddPropertyComponent implements OnInit {
           },
         });
         dialogRef.afterClosed().subscribe(() => {
+          this._route.navigate(['/inventory'])
         });
       }
     })
