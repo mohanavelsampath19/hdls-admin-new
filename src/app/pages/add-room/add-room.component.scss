@@ -26,6 +26,11 @@
         padding-left: 5px;
       }
     }
+    .hdls-text-area {
+      border: 1px solid #ddd;
+      min-height: 50px;
+      resize: none;
+    }
     .dm-error {
       color: #f44336;
       margin-top: 10px;

@@ -51,6 +51,8 @@
             matInput
             id="productDescriptionEditor"
             formControlName="property_description"
+            rows="5"
+            class="hdls-text-area"
           >
           </textarea>
 
@@ -65,58 +67,6 @@
             Please fill the description
           </p>
         </mat-form-field>
-        <div class="adult-children-conatiner">
-          <div class="product-details-card-description-inner-counter">
-            <h3>Available Rooms<span class="required">*</span></h3>
-            <div class="span-container">
-              <span
-                ><button
-                  (click)="removeItem('adults')"
-                  class="product-details-card-description-inner-counter-button"
-                >
-                  -
-                </button></span
-              >
-              <span
-                class="product-details-card-description-inner-counter-value"
-                >{{ adults }}</span
-              >
-              <span
-                ><button
-                  (click)="addItem('adults')"
-                  class="product-details-card-description-inner-counter-button"
-                >
-                  +
-                </button></span
-              >
-            </div>
-          </div>
-          <!-- <div class="product-details-card-description-inner-counter">
-            <h3>Maximum Accomodation<span class="required">*</span></h3>
-            <div class="span-container">
-              <span
-                ><button
-                  (click)="removeItem('childrens')"
-                  class="product-details-card-description-inner-counter-button"
-                >
-                  -
-                </button></span
-              >
-              <span
-                class="product-details-card-description-inner-counter-value"
-                >{{ childrens }}</span
-              >
-              <span
-                ><button
-                  (click)="addItem('childrens')"
-                  class="product-details-card-description-inner-counter-button"
-                >
-                  +
-                </button></span
-              >
-            </div>
-          </div> -->
-        </div>
         <section class="example-section" [formGroup]="facilities">
           <h4>Facilities Available</h4>
           <mat-checkbox
