@@ -34,7 +34,6 @@ export class HotelsComponent implements OnInit {
     'price',
     'quantity',
     'status',
-    'action',
   ];
   dataSource:any = new MatTableDataSource(this.totalHotelsList);
   pageSize: number = 5;

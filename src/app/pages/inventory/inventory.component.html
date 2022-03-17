@@ -127,7 +127,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Point of Contact</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element?.poc }}
+              {{ element?.pointofcontact }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -135,9 +135,9 @@
         <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact</th>
           <td mat-cell *matCellDef="let element">
-            
+
             <div *ngIf="!element.isLoading">
-              {{ element?.phone }}
+              {{ element?.frontdesknumber }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -154,7 +154,7 @@
               >
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
-            
+
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
