@@ -54,10 +54,21 @@
             Membership Name
           </th>
           <td mat-cell *matCellDef="let element">
-            <p *ngIf="!element.loading">
-              {{ element.membership_name }}
-            </p>
-            <div *ngIf="element.loading" class="loading-data"></div>
+            <div *ngIf="!element.isLoading">
+              {{ element.membershipname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="membership_desc">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Membership description
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element.membershipdesc }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
 
@@ -66,10 +77,10 @@
             Price
           </th>
           <td mat-cell *matCellDef="let element">
-            <div *ngIf="!element.loading">
-              {{ element.price }}
+            <div *ngIf="!element.isLoading">
+              {{ element.amount }}
             </div>
-            <div *ngIf="element.loading" class="loading-data"></div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
 
@@ -79,19 +90,22 @@
             Stock
           </th>
           <td mat-cell *matCellDef="let element">
-            <div *ngIf="!element.loading">
-              {{ element.stock }}
+            <div *ngIf="!element.isLoading">
+              {{ element.stocks }}
             </div>
-            <div *ngIf="element.loading" class="loading-data"></div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Status
+            Vouchers count
           </th>
           <td mat-cell *matCellDef="let element">
-            {{ element.status }}
+            <div *ngIf="!element.isLoading">
+              {{ element.vouchersList.length }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="action">
@@ -99,7 +113,13 @@
             Action
           </th>
           <td mat-cell *matCellDef="let element">
-            Delete
+            <div *ngIf="!element.isLoading">
+              <a href="#">View</a>
+              <a href="#">Edit</a>
+              <a (click)="deleteMembership(element)">Delete</a>
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+            
           </td>
         </ng-container>
 

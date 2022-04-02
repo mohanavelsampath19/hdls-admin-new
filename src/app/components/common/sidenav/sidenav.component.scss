@@ -15,19 +15,33 @@
     font-size: medium;
     flex-grow: 1;
     margin-top: 10px;
-    background: $menu-item-bg;
+    // background: $menu-item-bg;
     margin-top: 10px;
     color: $titleLogo;
     width: 100%;
     &:hover{
       background: $menu-item-hover;
+      color: #fff;
     }
   }
   .layout.active {
     background: $menu-item-hover;
+    color: #fff;
   }
   mat-icon {
     margin: 0 15px 0 5px;
+  }
+  .expansionPanel{
+    width: 100%;
+    // margin-top: 15px;
+  }
+  mat-expansion-panel{
+    width: 100%;
+    background: #fff;
+    box-shadow: none;
+    .mat-expansion-panel-header{
+      padding:0px 16px;
+    }
   }
 }
 

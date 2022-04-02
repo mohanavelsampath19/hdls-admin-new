@@ -5,6 +5,7 @@ import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { HotelsService, HotelDetails } from '../../services/hotels/hotels.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RoomsService } from 'src/app/services/rooms/rooms.service';
 
 @Component({
   selector: 'app-hotels',
@@ -39,14 +40,14 @@ export class HotelsComponent implements OnInit {
   pageSize: number = 5;
   pageOffset: number = 0;
   hotelId:number=0;
-  constructor(private _hotelService:HotelsService, private _activatedRouter: ActivatedRoute, private _route: Router) { }
+  constructor(private _hotelService:HotelsService, private _activatedRouter: ActivatedRoute, private _route: Router, private _roomService:RoomsService) { 
+    this._activatedRouter.queryParams.subscribe((data:any)=>{
+      this.hotelId = data.id;
+      this.getPropertyList(data.id);
+    });
+  }
   ngOnInit(): void {
-    this._activatedRouter.queryParams.subscribe((res) => {
-      if(res && res.id) {
-        this.hotelId = res.id;
-      }
-    })
-    this.getPropertyList(this.hotelId);
+    
   }
 
   getSelectedFilter = (value: string) => {
@@ -91,9 +92,10 @@ export class HotelsComponent implements OnInit {
         break;
     }
 
-    this._hotelService.getRoomList(this.hotelId).subscribe((res:any) => {
+    this._roomService.getRoomList(this.hotelId).subscribe((res:any) => {
       if(res && res.status === 1) {
         this.dataSource = new MatTableDataSource(res.response);
+        this.dataSource.paginator = this.paginator;
       }
     })
 

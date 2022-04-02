@@ -1,7 +1,7 @@
 <app-header (toggleSideBarForMe)="sideBarToggler()"></app-header>
 <mat-drawer-container>
   <mat-drawer mode="side" [opened]="sideBarOpen">
-    <app-sidenav></app-sidenav>
+    <app-sidenav (routeToLink)="goToLink($event)"></app-sidenav>
   </mat-drawer>
   <mat-drawer-content class="hdls-content-container">
     <div class="hdls-content-main-container">

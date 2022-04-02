@@ -31,7 +31,21 @@ export class InventoryService {
   }
 
   addProperty(property_details:any) {
-    return this._http.post(environment.baseUrl + 'api/rooms/addproperty', property_details)
+    let formData = this.makeFormData(property_details);
+    return this._http.post(environment.baseUrl + 'api/rooms/addproperty', formData);
+  }
+  makeFormData(propertyDetails:any){
+    let formKeys = Object.keys(propertyDetails);
+    let formValues:any = Object.values(propertyDetails);
+    let formData = new FormData();
+    formKeys.forEach((formItem:any,i)=>{
+      if(formItem == 'logo'){
+        formData.append('coverImage', formValues[i], formValues[i].name);
+      }else{
+        formData.append(formItem, formValues[i]);
+      }
+    });
+    return formData;
   }
 }
 

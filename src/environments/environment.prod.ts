@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://hdls.herokuapp.com/'
+  baseUrl: 'http://myfuturefood.com.my:8000/',
+  imageUrl: 'http://myfuturefood.com.my:8000/upload'
 };

@@ -6,6 +6,7 @@ import { MemberShip, MembershipService } from 'src/app/services/membership/membe
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { Loading } from 'src/app/services/utilities/helper_models';
+import { DeleteModalComponent } from 'src/app/components/common/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-membership',
@@ -31,6 +32,7 @@ export class MembershipComponent implements OnInit {
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
     'membership_name',
+    'membership_desc',
     'price',
     'stock',
     'status',
@@ -41,7 +43,7 @@ export class MembershipComponent implements OnInit {
   pageOffset: number = 0;
   constructor(
     private _memberShipService: MembershipService,
-    public dialog: MatDialog,
+    public _dialog: MatDialog,
     private _router: Router
   ) {
   }
@@ -92,8 +94,15 @@ export class MembershipComponent implements OnInit {
         break;
     }
 
-    this._memberShipService.getAllMembership().subscribe((memberShipArray:MemberShip[]) => {
-      this.dataSource = new MatTableDataSource(memberShipArray);
+    this._memberShipService.getAllMembership().subscribe((memberShipRes:any) => {
+      memberShipRes.response.forEach((membership:any)=>{
+        membership.evouchers = JSON.parse(membership.evouchers);
+        membership.vouchersTitle = membership.vouchersList.map((member:any)=>member.voucherstitle);
+        console.log(membership.vouchersTitle)
+      });
+      
+      this.dataSource = new MatTableDataSource(memberShipRes.response);
+      this.dataSource.paginator = this.paginator;
     })
    
   }
@@ -118,5 +127,21 @@ export class MembershipComponent implements OnInit {
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
     this.getMembershipList();
+  }
+  deleteMembership(deleteMembership:any){
+    const dialogRef = this._dialog.open(DeleteModalComponent, {
+      data: {
+        productName:deleteMembership.membershipname+' Membership'
+      },
+      
+    });
+    dialogRef.afterClosed().subscribe((desc:any) => {
+      if(desc === true){
+        this._memberShipService.deleteMembership(deleteMembership.membershipid).subscribe((deleteRes:any)=>{
+          console.log(deleteRes);
+          this.getMembershipList();
+        })
+      }
+    });
   }
 }

@@ -66,6 +66,8 @@ import { EditPropertyComponent } from 'src/app/pages/inventory/edit-property/edi
     FormsModule,
     MatRadioModule,
     NgxMaterialTimepickerModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
 })
 export class InventoryModule {}

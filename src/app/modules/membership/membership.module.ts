@@ -9,7 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { ProductstatusPipe } from 'src/app/filters/productstatus.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AddVouchersComponent } from '../../pages/membership/add-vouchers/add-vouchers.component';
+import { AddVouchersComponent } from '../../pages/vouchers/add-vouchers/add-vouchers.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,8 +31,6 @@ import { VouchersComponent } from '../../pages/vouchers/vouchers.component';
   declarations: [
     MembershipComponent,
     ProductstatusPipe,
-    AddVouchersComponent,
-    VouchersComponent,
   ],
   imports: [
     CommonModule,

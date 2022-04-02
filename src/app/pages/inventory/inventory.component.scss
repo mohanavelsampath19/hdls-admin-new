@@ -1,5 +1,21 @@
 @import "../../../theme/vars.scss";
 
+.hdls-product-table .mat-cell{
+  padding: 0px;
+  text-align: left;
+}
+.hdls-product-table{
+  .loading-data{
+    margin-bottom: 0;
+    width: 70%;
+  }
+  .mat-header-row th{
+    text-align: left;
+  }
+  .addressContent{
+    width: 150px;
+  }
+}
 .category-button {
     display: flex;
     flex-direction: row;
@@ -51,7 +67,7 @@
       align-items: center;
       flex-grow: 1;
       flex-basis: 50%;
-        .dm-search-field {
+        .hdls-search-field {
           display: flex;
           flex-direction: row;
           align-items: center;
@@ -108,3 +124,15 @@
   ::ng-deep .mat-form-field-wrapper {
     width: 100%;
   }
+.property-logo{
+  width: 150px;
+  img{
+    width: 100%;
+  }
+}
+.property-content{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  line-height: 0px;
+}

@@ -31,13 +31,15 @@ import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
 //import { InventoryComponent } from './pages/inventory/inventory.component';
 import { HotelsComponent } from './pages/hotels/hotels.component';
-import { AddRoomComponent } from './pages/add-room/add-room.component';
+import { AddRoomComponent } from './pages/hotels/add-room/add-room.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { PointsystemModule } from './modules/pointsystem/pointsystem.module';
 import { BookingsComponent } from './pages/bookings/bookings.component';
-import { EditRoomComponent } from './pages/edit-room/edit-room.component';
+import { EditRoomComponent } from './pages/hotels/edit-room/edit-room.component';
+import { VouchersComponent } from './pages/vouchers/vouchers.component';
+import { AddVouchersComponent } from './pages/vouchers/add-vouchers/add-vouchers.component';
 // import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { EditRoomComponent } from './pages/edit-room/edit-room.component';
     AddRoomComponent,
     BookingsComponent,
     EditRoomComponent,
+    AddVouchersComponent,
+    VouchersComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,6 @@ import { EditRoomComponent } from './pages/edit-room/edit-room.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatInputModule,
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,

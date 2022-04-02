@@ -1,7 +1,7 @@
 <section id="hdls-membership-container">
   <div class="search-section">
     <div class="add-product">
-      <form (submit)="setSearchValue($event)" class="dm-search-field">
+      <form (submit)="setSearchValue($event)" class="hdls-search-field">
         <input
           type="text"
           (change)="getSearchDetails($event)"
@@ -150,7 +150,7 @@
         [pageSizeOptions]="[5, 10, 20]"
         showFirstLastButtons
         aria-label="Select page of periodic elements"
-        (page)="changePage($event)"
+        
       >
       </mat-paginator>
     </div>

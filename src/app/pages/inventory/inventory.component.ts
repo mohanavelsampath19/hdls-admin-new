@@ -11,6 +11,7 @@ import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-inventory',
@@ -39,12 +40,14 @@ export class InventoryComponent implements OnInit {
 
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
-    'property_id',
+    // 'property_id',
     'property_name',
     'total_rooms',
+    'address',
     'city',
     'poc',
     'phone',
+    'created_at',
     'action',
   ];
   dataSource: any = new MatTableDataSource(this.totalInventoryList);
@@ -125,12 +128,12 @@ export class InventoryComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.totalInventoryList);
   }
 
-  changePage(e: any) {
-    console.log(e);
-    this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
-    this.pageSize = e.pageSize;
-    this.getPropertyList();
-  }
+  // changePage(e: any) {
+  //   console.log(e);
+  //   this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
+  //   this.pageSize = e.pageSize;
+  //   this.getPropertyList();
+  // }
 
   getDateRange(daterange: any) {
     if (
@@ -208,7 +211,15 @@ export class InventoryComponent implements OnInit {
       console.log(currentInventory);
     });
     this._inventoryService.getInventoryList().subscribe((res:any)=> {
+      res.response.forEach((property:any)=>{
+        property.logo = environment.imageUrl+"/"+property.logo;
+        property.roomCount = property.rooms.reduce(function(acc:number,item:any){ 
+          return acc = acc+item.totalrooms;
+        },0);
+      });
+      console.log(res.response);
       this.dataSource = new MatTableDataSource(res.response);
+      this.dataSource.paginator = this.paginator;
       this.propertyList = res.response;
     })
   }

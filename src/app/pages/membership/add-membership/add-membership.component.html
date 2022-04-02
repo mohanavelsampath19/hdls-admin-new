@@ -17,10 +17,8 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Properties</mat-label>
-                    <mat-select>
-                      <mat-option value="property1">Property 1</mat-option>
-                      <mat-option value="property2">Property 2</mat-option>
-                      <mat-option value="property3">Property 3</mat-option>
+                    <mat-select formControlName="property">
+                      <mat-option [value]="inventory.hotel_id" *ngFor="let inventory of inventoryList">{{inventory.hotelname}}</mat-option>
                     </mat-select>
                   </mat-form-field>
             </div>
@@ -28,16 +26,27 @@
                 <mat-form-field appearance="fill" >
                     <mat-label>E-vouchers</mat-label>
                     <mat-select  multiple formControlName="evouchers">
-                      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                      <mat-option *ngFor="let voucher of vouchersList" [value]="voucher.vouchersid">{{voucher.voucherstitle}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-            </div> 
-            
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Stocks *</mat-label>
+                    <input matInput formControlName="stocks" type="number" name="stocks" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Membership Price (RM)*</mat-label>
+                    <input matInput formControlName="amount" type="number" name="amount" />
+                </mat-form-field>
+            </div>
           
             <div>
-                    <button mat-raised-button class="hdls-cancel-btn">Cancel</button>
-                    <button mat-raised-button color="primary" class="hdls-nxt-btn">Submit</button>
+                <button mat-raised-button class="hdls-cancel-btn" (click)="backToMembership()">Cancel</button>
+                <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="savemembership()">Submit</button>
             </div>
-</form>
+        </form>
     </div>           
 </section>

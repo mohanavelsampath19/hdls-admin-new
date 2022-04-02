@@ -141,6 +141,9 @@ export class AddPropertyComponent implements OnInit {
   composedVariantList: Array<any> = [];
   removeFirstVariant: Array<any> = [];
   specRows: FormArray = this._formBuilder.array([]);
+  myCoverImageCheck:boolean = false;
+  coverImage:any;
+  logo:any;
   constructor(
     private _formBuilder: FormBuilder,
     // private _productService: ProductService,
@@ -162,12 +165,15 @@ export class AddPropertyComponent implements OnInit {
       property_name: ['', Validators.required],
       property_description: ['', Validators.required],
       property_type: ['', Validators.required],
-      availablerooms: [0, Validators.required],
+      // availablerooms: [0, Validators.required],
       front_end_desk: ['', Validators.required],
-      points: ['', Validators.required],
-      restrictions: ['', Validators.required],
+      // points: ['', Validators.required],
+      address:[''],
       point_of_contact: ['', Validators.required],
       city: ['', Validators.required],
+      state: ['', Validators.required],
+      country:['', Validators.required],
+      logo:['']
     });
     this.secondFormGroup = this._formBuilder.group({});
 
@@ -230,8 +236,10 @@ export class AddPropertyComponent implements OnInit {
   saveProperty = () => {
     let property = {
       ...this.firstFormGroup.value,
-    }
-    this._inventoryService.addProperty(property).subscribe((res:any) => {
+      logo:this.logo,
+    };
+    this._inventoryService.addProperty(property)
+    .subscribe((res:any) => {
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
@@ -414,6 +422,16 @@ export class AddPropertyComponent implements OnInit {
     } else {
       this.childrens--;
     }
+  }
+  goToLink(routerLink:string){
+    this._route.navigate([routerLink]);
+  }
+  coverFileChange(event:any){
+    var reader = new FileReader();
+    this.myCoverImageCheck = true;
+    reader.onload = e => this.coverImage = reader.result;
+    this.logo = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]);
   }
 }
 

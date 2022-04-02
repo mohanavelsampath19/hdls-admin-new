@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8000/'
+  baseUrl: 'http://myfuturefood.com.my:8000/',
+  imageUrl: 'http://myfuturefood.com.my:8000/upload'
 };
 
 /*

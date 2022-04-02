@@ -15,6 +15,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // import our custom theme                // 👈 changed
 @import "./theme/default.scss";                   // 👈 changed
 @import "./theme/green.scss";
+@import "./theme/vars.scss";
 // import custom component themes         // 👈 changed
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -62,4 +63,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .hdls-no-records-detail {
   padding: 10px 20px;
+}
+.mat-drawer-container{
+  background: #fff;
+}
+.m-b-10{
+  margin-bottom: 10px;
+}
+.p-l-10{
+  padding-left: 10px;
 }

@@ -1,15 +1,15 @@
 $primary-font-color: #474545;
 $secondary-font-color: #fff;
-$primary-background-color: #F78C8C;
+$primary-background-color: #3f51b5;
 $primary-font-family: "Myriad Pro Regular";
 $primary-shadow: 0px 2px 5px 0px rgb(0 0 0 / 20%);
 $secondary-font-family: Arial, Helvetica, sans-serif;
 $toolbar-bg: #ededed;
 $titleLogo: #37501e;
 $menu-item-bg: #ededed;
-$menu-item-hover: #f78c8c;
+$menu-item-hover: #3f51b5;
 
-.dm-btn-primary {
+.hdls-btn-primary {
   background-color: $primary-background-color;
   color: $secondary-font-color;
   padding: 10px 0;
@@ -21,15 +21,15 @@ $menu-item-hover: #f78c8c;
   width: 170px;
 }
 
-.dm-btn-secondary {
-  @extend .dm-btn-primary;
+.hdls-btn-secondary {
+  @extend .hdls-btn-primary;
   background-color: $secondary-font-color;
   color: $primary-background-color;
   border: 1px solid $primary-background-color;
 }
 
-.dm-btn-disable {
-  @extend .dm-btn-primary;
+.hdls-btn-disable {
+  @extend .hdls-btn-primary;
   background-color: #0000001f;
   color: #00000042;
 }
@@ -128,4 +128,7 @@ th.mat-sort-header-sorted {
   text-align: center;
   font-size: 14px;
   font-weight: bold;
+}
+.p-10{
+  padding: 10px;
 }

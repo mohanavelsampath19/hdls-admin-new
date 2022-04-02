@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { DeleteModalComponent } from 'src/app/components/common/delete-modal/delete-modal.component';
 import {
   MemberShip,
   MembershipService,
@@ -30,7 +32,7 @@ export class VouchersComponent implements OnInit {
     { isLoading: true },
     { isLoading: true },
   ];
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatPaginator) paginator: any;
 
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
@@ -46,7 +48,7 @@ export class VouchersComponent implements OnInit {
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
-  constructor(private _membershipService: MembershipService) {}
+  constructor(private _membershipService: MembershipService,private _dialog:MatDialog) {}
 
   ngOnInit(): void {
     this.getPropertyList();
@@ -70,6 +72,7 @@ export class VouchersComponent implements OnInit {
         return getValues.includes(searchText);
       });
       this.dataSource = new MatTableDataSource(filteredResults);
+      
     }
   }
 
@@ -94,9 +97,11 @@ export class VouchersComponent implements OnInit {
         break;
     }
 
-    // this._inventoryService.getAllMembership().subscribe((memberShipArray:MemberShip[]) => {
-    //   this.dataSource = new MatTableDataSource(memberShipArray);
-    // })
+    this._membershipService.getVouchers().subscribe((vouchersRes:any) => {
+      this.dataSource = new MatTableDataSource(vouchersRes.response);
+      this.paginator.length = vouchersRes.response.length;
+      this.dataSource.paginator = this.paginator;
+    })
   }
 
   // ngAfterViewInit() {
@@ -150,4 +155,18 @@ export class VouchersComponent implements OnInit {
     event.preventDefault();
     //   this.getSearchInput.emit(this.searchValue);
   };
+  deleteVouchers(voucher_id:number, vouchertitle:string){
+    
+      const dialogRef = this._dialog.open(DeleteModalComponent, {
+        data: {
+          productName:vouchertitle,
+          popupText: 'Are you sure you want to Delete the Voucher',
+          voucherId:voucher_id
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((data:any) => {
+        console.log(data);
+      });
+  }
 }

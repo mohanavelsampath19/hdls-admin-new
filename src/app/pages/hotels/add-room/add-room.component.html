@@ -1,0 +1,240 @@
+<div class="hdls-add-product-section">
+  <h2>Add Room <span class="hdls-border"></span>Room Information</h2>
+  <!-- <mat-progress-bar
+    mode="determinate"
+    value="{{ progressBarValue }}"
+    class="hdls-progress-bar"
+  ></mat-progress-bar> -->
+
+  <mat-stepper linear #stepper class="hdls-stepper hdls-tenant-add-product-stepper">
+    <mat-step [stepControl]="firstFormGroup">
+      <form
+        [formGroup]="firstFormGroup"
+        #myform="ngForm"
+        novalidate
+      >
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Room Title<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="roomtitle"
+            class="hdls-form-input"
+            placeholder="Room Title"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.roomtitle.invalid &&
+              (firstFormGroup.controls.roomtitle.dirty ||
+                firstFormGroup.controls.roomtitle.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the room name
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Room Descriptions<span class="required">*</span></h4>
+          <textarea
+            matInput
+            id="productDescriptionEditor"
+            formControlName="roomsdesc"
+            rows="5"
+            class="hdls-text-area"
+          >
+          </textarea>
+
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.roomsdesc.invalid &&
+              (firstFormGroup.controls.roomsdesc.dirty ||
+                firstFormGroup.controls.roomsdesc.touched)
+            "
+          >
+            Please fill the description
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Bed Type<span class="required">*</span></h4>
+          <mat-select class="hdls-form-select" formControlName="bedtype">
+            <mat-option value="single">single bedroom</mat-option>
+            <mat-option value="double">Double bedroom</mat-option>
+            <mat-option value="extra">extra bedroom</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Room Quantity<span class="required">*</span></h4>
+          <mat-select class="hdls-form-select" formControlName="totalrooms">
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="adult-children-conatiner">
+          <mat-form-field class="hdls-form-field" appearance="fill">
+            <h4>Number of guests<span class="required">*</span></h4>
+            <input
+              matInput
+              type="number"
+              formControlName="numberofguest"
+              class="hdls-form-input"
+              name="numberofguest"
+              placeholder="Number of guest"
+              required
+            />
+            <p
+              class="hdls-error"
+              *ngIf="
+                firstFormGroup.controls.numberofguest.invalid &&
+                (firstFormGroup.controls.numberofguest.dirty ||
+                  firstFormGroup.controls.numberofguest.touched) &&
+                myform.submitted
+              "
+            >
+              Please fill the Number of guest
+            </p>
+          </mat-form-field>
+        </div>
+        
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Room Facilities<span class="required">*</span></h4>
+          <mat-select class="hdls-form-select" formControlName="room_facilities">
+            <mat-option value="breakfast"></mat-option>
+            <mat-option value="facility1">Facility 1</mat-option>
+            <mat-option value="facility2">Facility 2</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Room Size<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="roomsize"
+            class="hdls-form-input"
+            placeholder="Room dimensions"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.roomsize.invalid &&
+              (firstFormGroup.controls.roomsize.dirty ||
+                firstFormGroup.controls.roomsize.touched)
+            "
+          >
+            Please fill the room size
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Primary Room Price (RM)<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="price"
+            class="hdls-form-input-width"
+            placeholder="Room Price"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.price.invalid &&
+              (firstFormGroup.controls.price.dirty ||
+                firstFormGroup.controls.price.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the room price
+          </p>
+        </mat-form-field>
+
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Points<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="points"
+            class="hdls-form-input"
+            placeholder="Points"
+            type="number"
+            min="100"
+            required
+          />
+        </mat-form-field>
+        <div class="example-section" [formGroup]="includes">
+          <h4>Facilities Includes</h4>
+          <mat-checkbox
+            formControlName="breakfast"
+            class="hdls-checkbox"
+            color="primary"
+            >BreakFast</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="smokingRoom"
+            class="hdls-checkbox"
+            color="primary"
+            >Smoking Room</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="extrabed"
+            class="hdls-checkbox"
+            color="primary"
+            >Extra Bed</mat-checkbox
+          >
+        </div>
+        <div class="form-group p-10">
+          <h4>Room Images *</h4>
+          <button (click)="addImageWithType()" mat-raised-button color="primary" class="btn btn-primary">Add Image</button>
+          <div class="addRoomImageContainer">
+            <form>
+            <div ngModelGroup="addImages">
+              <div *ngFor="let image of addImages;let i = index" class="addRoomImageCard" >
+                <div class="m-b-10">
+                  <div class="hdls-form-field" appearance="fill">
+                    <input
+                      matInput
+                      class="hdls-form-input"
+                      placeholder="Room Type"
+                      type="text"
+                      [(ngModel)]="image.type"
+                      name="imageType"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="m-b-10">
+                  <div class="hdls-form-field" appearance="fill">
+                    <input type="file" [(ngModel)]="image.files" multiple name="files[]" (change)="roomImageFileChange(i,$event)"/>
+                  </div>
+                  <div *ngIf="image.fileList" class="myRoomImage-container">
+                    <div class="myRoomImage-item" *ngFor="let myRoomImage of image.fileList">
+                      <img [src]="myRoomImage" alt="Room images" >
+                    </div>
+                  </div>
+                </div>
+                <button mat-raised-button color="warning" (click)="removeImage(index)"><mat-icon>delete</mat-icon></button>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+        
+        <div>
+          <button mat-button matStepperNext class="hdls-btn-secondary" (click)="goToLink('/inventory')">
+            Cancel
+          </button>
+          <button
+            mat-button
+            color="primary"
+            [ngClass]="{
+              'hdls-btn-primary': firstFormGroup.valid,
+              'hdls-btn-disable': !firstFormGroup.valid
+            }"
+            (click)="saveRoom()"
+          >
+            save
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>

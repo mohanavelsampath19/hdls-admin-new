@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 
@@ -18,7 +18,14 @@ export class SidenavComponent implements OnInit {
     bookings:false,
     inventory:false
   }
-  constructor( private _router: Router, private _inventory:InventoryService) {}
+  inventoryList:any=[];
+  @Output () routeToLink:EventEmitter<any> = new EventEmitter();
+  constructor( private _router: Router, private _inventory:InventoryService) {
+    this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
+      this.inventoryList = inventoryList.response;
+    });
+    
+  }
   ngOnInit() {
 
   }
@@ -41,12 +48,24 @@ export class SidenavComponent implements OnInit {
       this.selectedMenu = menuname;
     }
   };
-  goToLink(routerLink:any,active:string){
+  goToLink(routerLink:any,active:string,queryParam?:string){
     Object.keys(this.myMenu).forEach((item)=>{
       this.myMenu[item] = false;
     })
     this.myMenu[active] = true;
-    this._router.navigate([routerLink]);
+    if(queryParam){
+      let routeObj = {
+        routerLink: routerLink,
+        queryParam:queryParam
+      };
+      this.routeToLink.emit(routeObj);
+    }else{
+      let routeObj = {
+        routerLink: routerLink,
+        queryParam:queryParam
+      };
+      this.routeToLink.emit(routeObj);
+    }
   }
   update(index:number){
     this._inventory.updateMyInventory(index);

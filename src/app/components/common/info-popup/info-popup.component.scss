@@ -1,18 +1,18 @@
 @import '../../../../theme/vars.scss';
 
-.dm-delete-dialog {
+.hdls-delete-dialog {
   min-height: 200px;
   width: 450px;
   h3 {
     text-align: center;
   }
-  .dm-close-icon {
+  .hdls-close-icon {
     float: right;
     border: none;
     background-color: #fff;
     cursor: pointer;
   }
-  .dm-popup-content {
+  .hdls-popup-content {
     min-height: 200px;
     display: flex;
     justify-content: center;

@@ -28,6 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../components/common/delete-modal/delete-modal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationModalComponent } from '../../components/common/confirmation-modal/confirmation-modal.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ConfirmationModalComponent } from '../../components/common/confirmation
     MatDatepickerModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatExpansionModule
   ],
   exports: [
     HeaderComponent,
