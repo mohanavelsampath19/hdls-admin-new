@@ -4,6 +4,7 @@ import { AddMembershipComponent } from 'src/app/pages/membership/add-membership/
 import { AddVouchersComponent } from 'src/app/pages/vouchers/add-vouchers/add-vouchers.component';
 import { MembershipComponent } from 'src/app/pages/membership/membership.component';
 import { VouchersComponent } from 'src/app/pages/vouchers/vouchers.component';
+import { EditMembershipComponent } from 'src/app/pages/membership/edit-membership/edit-membership.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
     path: 'add-vouchers',
     component: AddVouchersComponent,
   },
+  {
+    path:'edit-membership/:id',
+    component:EditMembershipComponent
+  }
 ];
 
 @NgModule({

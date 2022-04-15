@@ -103,7 +103,7 @@
           </th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element.vouchersList.length }}
+              {{ element.evouchers.length }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -114,8 +114,8 @@
           </th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              <a href="#">View</a>
-              <a href="#">Edit</a>
+              <!-- <a href="#">View</a> -->
+              <a routerLink="edit-membership/{{element.membershipid}}" >Edit</a>
               <a (click)="deleteMembership(element)">Delete</a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>

@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { Loading } from 'src/app/services/utilities/helper_models';
 import { DeleteModalComponent } from 'src/app/components/common/delete-modal/delete-modal.component';
+import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 
 @Component({
   selector: 'app-membership',
@@ -97,21 +98,54 @@ export class MembershipComponent implements OnInit {
     this._memberShipService.getAllMembership().subscribe((memberShipRes:any) => {
       memberShipRes.response.forEach((membership:any)=>{
         membership.evouchers = JSON.parse(membership.evouchers);
-        membership.vouchersTitle = membership.vouchersList.map((member:any)=>member.voucherstitle);
-        console.log(membership.vouchersTitle)
+        // membership.vouchersTitle = membership.vouchersList.map((member:any)=>{ if(member && member.voucherstitle){ return member.voucherstitle;}} );
+        // console.log(membership.vouchersTitle)
       });
       
       this.dataSource = new MatTableDataSource(memberShipRes.response);
       this.dataSource.paginator = this.paginator;
     })
-   
   }
 
   // ngAfterViewInit() {
   //   this.dataSource.paginator = this.paginator;
   // }
 
-
+  openDeleteDialog(event: Event, deleteid: any, status: any) {
+    event.preventDefault();
+    const dialogRef = this._dialog.open(DeleteModalComponent, {data:{productName:'Membership'}});
+    const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
+      (data) => {
+        if (data === 'delete') {
+          this._memberShipService
+            .deleteMembership(deleteid)
+            .subscribe((res: any) => {
+              this.getMembershipList();
+              const dialogInfoRef = this._dialog.open(InfoPopupComponent, {
+                data: {
+                  popupText: 'Membership Deleted successfully',
+                },
+              });
+              const getInfoDialogRef = dialogInfoRef.componentInstance.closePopup.subscribe(() => {
+                  this._dialog.closeAll();
+                  this.getMembershipList();
+                });
+            });
+        }
+      },
+      (error) => {
+        alert(error);
+        this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Something went wrong. Please try again later',
+          },
+        });
+      }
+    );
+    dialogRef.afterClosed().subscribe(() => {
+      getDialogRef.unsubscribe();
+    });
+  }
 
   onFirstLoad() {
     this.dataSource = new MatTableDataSource(this.skeletonList);

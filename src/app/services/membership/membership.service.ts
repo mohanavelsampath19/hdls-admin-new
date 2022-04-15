@@ -36,11 +36,12 @@ export class MembershipService {
 
   constructor(private _http:HttpClient) { }
 
-  getAllMembership() {
-    return this._http.get(environment.baseUrl+ 'api/membership/getmembership');
-  }
-  deleteMembership(membershipid:number){
-    return this._http.post(environment.baseUrl+ 'api/membership/deletemembership',{membershipid:membershipid});
+  getAllMembership(membershipid?:number) {
+    if(membershipid){
+      return this._http.get(environment.baseUrl+ 'api/membership/getmembership?membershipid='+membershipid);
+    }else{
+      return this._http.get(environment.baseUrl+ 'api/membership/getmembership');
+    }
   }
   addVouchers(voucherDetails:any) {
     let formData = this.makeFormData(voucherDetails);
@@ -49,7 +50,12 @@ export class MembershipService {
   addMembership(membershipDetails:any){
     return this._http.post(environment.baseUrl+ 'api/membership/creatememberships',{...membershipDetails});
   }
-  
+  updateMembership(membershipDetails:any){
+    return this._http.post(environment.baseUrl+ 'api/membership/updatememberships',{...membershipDetails});
+  }
+  deleteMembership(membershipid:number){
+    return this._http.post(environment.baseUrl+ 'api/membership/deletemembership',{membershipid:membershipid});
+  }
   getVouchers(){
     return this._http.get(environment.baseUrl + 'api/vouchers/getvouchers');
   }
