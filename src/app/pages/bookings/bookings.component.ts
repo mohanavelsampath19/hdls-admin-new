@@ -96,6 +96,7 @@ export class BookingsComponent implements OnInit {
 
     this._bookingService.getBookingHistory().subscribe((res:any) => {
       this.dataSource = new MatTableDataSource(res.response.bookingHistory);
+       this.dataSource.paginator = this.paginator;
     })
   }
 

@@ -66,12 +66,16 @@
         </mat-form-field>
         <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Room Quantity<span class="required">*</span></h4>
-          <mat-select class="hdls-form-select" formControlName="totalrooms">
-            <mat-option value="1">1</mat-option>
-            <mat-option value="2">2</mat-option>
-            <mat-option value="3">3</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <input
+              matInput
+              type="number"
+              formControlName="totalrooms"
+              class="hdls-form-input"
+              name="totalrooms"
+              placeholder="Number of rooms"
+              required
+            />
+          </mat-form-field>
         <div class="adult-children-conatiner">
           <mat-form-field class="hdls-form-field" appearance="fill">
             <h4>Number of guests<span class="required">*</span></h4>
@@ -100,10 +104,10 @@
         
         <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Room Facilities<span class="required">*</span></h4>
-          <mat-select class="hdls-form-select" formControlName="room_facilities">
-            <mat-option value="breakfast"></mat-option>
-            <mat-option value="facility1">Facility 1</mat-option>
-            <mat-option value="facility2">Facility 2</mat-option>
+          <mat-select class="hdls-form-select" formControlName="room_facilities" multiple>
+            <mat-option value="breakfast">BreakFast</mat-option>
+            <mat-option value="smokingroom">Smoking Room</mat-option>
+            <mat-option value="extrabed">Extra Bed</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="hdls-form-field" appearance="fill">
@@ -160,27 +164,7 @@
             required
           />
         </mat-form-field>
-        <div class="example-section" [formGroup]="includes">
-          <h4>Facilities Includes</h4>
-          <mat-checkbox
-            formControlName="breakfast"
-            class="hdls-checkbox"
-            color="primary"
-            >BreakFast</mat-checkbox
-          >
-          <mat-checkbox
-            formControlName="smokingRoom"
-            class="hdls-checkbox"
-            color="primary"
-            >Smoking Room</mat-checkbox
-          >
-          <mat-checkbox
-            formControlName="extrabed"
-            class="hdls-checkbox"
-            color="primary"
-            >Extra Bed</mat-checkbox
-          >
-        </div>
+        
         <div class="form-group p-10">
           <h4>Room Images *</h4>
           <button (click)="addImageWithType()" mat-raised-button color="primary" class="btn btn-primary">Add Image</button>
@@ -202,12 +186,19 @@
                   </div>
                 </div>
                 <div class="m-b-10">
-                  <div class="hdls-form-field" appearance="fill">
-                    <input type="file" [(ngModel)]="image.files" multiple name="files[]" (change)="roomImageFileChange(i,$event)"/>
+                  <div class="hdls-form-field">
+                    <input type="file" [(ngModel)]="image.files" name="files[]" (change)="roomImageFileChange(i,$event)" class="myRoominputfile" #f>
                   </div>
-                  <div *ngIf="image.fileList" class="myRoomImage-container">
-                    <div class="myRoomImage-item" *ngFor="let myRoomImage of image.fileList">
-                      <img [src]="myRoomImage" alt="Room images" >
+                  
+                  <div class="myRoomImage-container">
+                    
+                    <ng-template [ngIf]="image.fileList && image.fileList.length>0">
+                      <div class="myRoomImage-item" *ngFor="let myRoomImage of image.fileList">
+                        <img [src]="myRoomImage" alt="Room images" >
+                      </div>
+                    </ng-template>
+                    <div class="myRoomImage-item addImageBtn" (click)="addImagetoIndex(i,$event,f)">
+                      Add Image
                     </div>
                   </div>
                 </div>

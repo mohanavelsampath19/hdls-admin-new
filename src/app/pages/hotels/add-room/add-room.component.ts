@@ -26,7 +26,6 @@ export class AddRoomComponent implements OnInit {
   firstFormGroup: any = this._formBuilder.group({});
   isEditable = false;
   currentStep: any = 0;
-  includes: any = this._formBuilder.group({});
   progressBarValue: number = 4;
   checkForCoverImage: imageValidation = {
     validationCheck: false,
@@ -78,11 +77,7 @@ export class AddRoomComponent implements OnInit {
       price: ['', Validators.required],
       numberofguest:['',Validators.required]
     });
-    this.includes = this._formBuilder.group({
-      breakfast: false,
-      smokingRoom: false,
-      extrabed: false
-    });    
+
     this._activatedRouter.queryParams.subscribe((res) => {
       if(res && res.id) {
         this.hotelId = res.id;
@@ -94,7 +89,7 @@ export class AddRoomComponent implements OnInit {
       bedtype:'Single bedroom',
       totalrooms:'4',
       adults:4,
-      room_facilities:'Default',
+      room_facilities:[],
       roomsize:'10',
       points:400,
       price:1400
@@ -194,19 +189,17 @@ export class AddRoomComponent implements OnInit {
   roomImageFileChange(index:number,event:any){
     let fileList = event.target.files;
     let modifiedList = this.pushToFileList(index,fileList);
+    this.addImages[index].fileUpload = modifiedList[0].fileList;
     for(let i=0;i<modifiedList.length;i++){
       let reader = new FileReader();
       this.myRoomImageCheck = true;
       reader.onload = e => {
         if(this.addImages[index].fileList){
-          this.addImages[index].fileList.push(reader.result);
-          this.addImages[index].fileUpload.push(modifiedList[i].fileList[0]);
+          this.addImages[index].fileList.push(reader.result); 
         }
         else{
           this.addImages[index].fileList = [];
           this.addImages[index].fileList.push(reader.result);
-          this.addImages[index].fileUpload = [];
-          this.addImages[index].fileUpload.push(modifiedList[i].fileList[0]);
         }
       };
       reader.readAsDataURL(fileList[i]);
@@ -228,7 +221,7 @@ export class AddRoomComponent implements OnInit {
   pushToFileList(index:number,fileList:any){
     if(!this.roomList[index] || this.roomList[index].fileList.length==0){
       this.roomList[index] = {fileList:[]};
-      this.roomList[index].fileList.push(fileList);
+      this.roomList[index].fileList.push(fileList[0]);
     }else{
       for(let i=0;i<fileList.length;i++){
         let checkExist = this.roomList[index].fileList.filter((item:any)=>item.name==fileList[i].name && item.size);
@@ -238,6 +231,9 @@ export class AddRoomComponent implements OnInit {
       }
     }
     return this.roomList;
+  }
+  addImagetoIndex(i:number,event:any,f:any){
+    f.click();
   }
 }
 
