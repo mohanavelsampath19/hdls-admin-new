@@ -42,6 +42,8 @@ import { VouchersComponent } from './pages/vouchers/vouchers.component';
 import { AddVouchersComponent } from './pages/vouchers/add-vouchers/add-vouchers.component';
 import { EditMembershipComponent } from './pages/membership/edit-membership/edit-membership.component';
 // import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +58,7 @@ import { EditMembershipComponent } from './pages/membership/edit-membership/edit
     AddVouchersComponent,
     VouchersComponent,
     EditMembershipComponent,
+    EditVouchersComponent
   ],
   imports: [
     BrowserModule,

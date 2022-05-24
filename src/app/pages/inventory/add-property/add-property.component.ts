@@ -47,7 +47,11 @@ export class AddPropertyComponent implements OnInit {
     coverImage: [],
     featureImage: [],
   };
-
+  addImages:any=[];
+  addImageType:any = [];
+  myRoomImageCheck:boolean = false;
+  myRoomImageList:any = [];
+  roomList:any=[];
   @Input()
   selectedIndex: any;
   editorConfig: AngularEditorConfig = {
@@ -432,6 +436,47 @@ export class AddPropertyComponent implements OnInit {
     reader.onload = e => this.coverImage = reader.result;
     this.logo = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
+  }
+  addImageWithType(){
+    this.addImages.push({type:'',files:[]});
+  }
+  addImagetoIndex(i:number,event:any,f:any){
+    f.click();
+  }
+  roomImageFileChange(index:number,event:any){
+    let fileList = event.target.files;
+    let modifiedList = this.pushToFileList(index,fileList);
+    this.addImages[index].fileUpload = modifiedList[0].fileList;
+    for(let i=0;i<modifiedList.length;i++){
+      let reader = new FileReader();
+      this.myRoomImageCheck = true;
+      reader.onload = e => {
+        if(this.addImages[index].fileList){
+          this.addImages[index].fileList.push(reader.result);
+        }
+        else{
+          this.addImages[index].fileList = [];
+          this.addImages[index].fileList.push(reader.result);
+        }
+      };
+      reader.readAsDataURL(fileList[i]);
+    }
+    console.log(this.addImages[index]);
+  }
+
+  pushToFileList(index:number,fileList:any){
+    if(!this.roomList[index] || this.roomList[index].fileList.length==0){
+      this.roomList[index] = {fileList:[]};
+      this.roomList[index].fileList.push(fileList[0]);
+    }else{
+      for(let i=0;i<fileList.length;i++){
+        let checkExist = this.roomList[index].fileList.filter((item:any)=>item.name==fileList[i].name && item.size);
+        if(checkExist.length==0){
+          this.roomList[index].fileList.push(fileList[i]);
+        }
+      }
+    }
+    return this.roomList;
   }
 }
 

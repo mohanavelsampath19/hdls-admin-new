@@ -147,11 +147,11 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              <a href="#">Edit</a>
-              <a href="#">Delete</a>
+              <a routerLink="/edit-vouchers">Edit</a>
+              <a (click)="deleteVouchers(element, 'vouchers')">Delete</a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
-            
+
           </td>
         </ng-container>
 

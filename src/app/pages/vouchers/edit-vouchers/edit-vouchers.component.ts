@@ -7,11 +7,11 @@ import { MembershipService } from 'src/app/services/membership/membership.servic
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 
 @Component({
-  selector: 'app-add-vouchers',
-  templateUrl: './add-vouchers.component.html',
-  styleUrls: ['./add-vouchers.component.scss']
+  selector: 'app-edit-vouchers',
+  templateUrl: './edit-vouchers.component.html',
+  styleUrls: ['./edit-vouchers.component.scss']
 })
-export class AddVouchersComponent implements OnInit {
+export class EditVouchersComponent implements OnInit {
   isDiscounted:boolean = false;
   newVoucherForm:FormGroup = new FormGroup({
     title: new FormControl(),
@@ -30,6 +30,8 @@ export class AddVouchersComponent implements OnInit {
     evouchersellingprice:new FormControl(),
   })
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
+
   hotelId: any;
   isRoomBenefit:boolean = false;
   isFB:boolean = false;

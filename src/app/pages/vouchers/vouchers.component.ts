@@ -72,7 +72,7 @@ export class VouchersComponent implements OnInit {
         return getValues.includes(searchText);
       });
       this.dataSource = new MatTableDataSource(filteredResults);
-      
+
     }
   }
 
@@ -156,7 +156,6 @@ export class VouchersComponent implements OnInit {
     //   this.getSearchInput.emit(this.searchValue);
   };
   deleteVouchers(voucher_id:number, vouchertitle:string){
-    
       const dialogRef = this._dialog.open(DeleteModalComponent, {
         data: {
           productName:vouchertitle,

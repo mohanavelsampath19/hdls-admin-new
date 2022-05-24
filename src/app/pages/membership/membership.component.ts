@@ -96,12 +96,12 @@ export class MembershipComponent implements OnInit {
     }
 
     this._memberShipService.getAllMembership().subscribe((memberShipRes:any) => {
-      memberShipRes.response.forEach((membership:any)=>{
+      memberShipRes.response && memberShipRes.response.forEach((membership:any)=>{
         membership.evouchers = JSON.parse(membership.evouchers);
         // membership.vouchersTitle = membership.vouchersList.map((member:any)=>{ if(member && member.voucherstitle){ return member.voucherstitle;}} );
         // console.log(membership.vouchersTitle)
       });
-      
+
       this.dataSource = new MatTableDataSource(memberShipRes.response);
       this.dataSource.paginator = this.paginator;
     })
@@ -167,7 +167,7 @@ export class MembershipComponent implements OnInit {
       data: {
         productName:deleteMembership.membershipname+' Membership'
       },
-      
+
     });
     dialogRef.afterClosed().subscribe((desc:any) => {
       if(desc === true){
