@@ -21,11 +21,11 @@ export class EditMembershipComponent implements OnInit {
     amount: new FormControl(),
     stocks: new FormControl()
   });
-  
+
   inventoryList:any;
   vouchersList:any;
   membershipDetail:any;
-  constructor(private _activatedRoute:ActivatedRoute, private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) { 
+  constructor(private _activatedRoute:ActivatedRoute, private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) {
     this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
       this.inventoryList = inventoryList.response;
     });
@@ -33,6 +33,7 @@ export class EditMembershipComponent implements OnInit {
       this.vouchersList = vouchersRes.response;
     });
     this._activatedRoute.params.subscribe((param:any)=>{
+      console.log(param.id, '--id')
       this._membership.getAllMembership(param.id).subscribe((membershipDetails:any)=>{
         this.membershipDetail = membershipDetails.response;
         this.editMembership.patchValue({
@@ -45,7 +46,7 @@ export class EditMembershipComponent implements OnInit {
         })
       })
     });
-    
+
   }
 
   ngOnInit(): void {
@@ -65,5 +66,5 @@ export class EditMembershipComponent implements OnInit {
   backToMembership(){
     this._route.navigate(['/membership']);
   }
-  
+
 }

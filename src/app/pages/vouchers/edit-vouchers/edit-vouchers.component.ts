@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 import { MembershipService } from 'src/app/services/membership/membership.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
@@ -43,7 +43,7 @@ export class EditVouchersComponent implements OnInit {
   coverImage:any;
   logo:any;
 
-  constructor(private _vouchers:MembershipService, private _dialog:MatDialog, private _route:Router, private _roomService:RoomsService) {
+  constructor(private _vouchers:MembershipService, private _dialog:MatDialog, private _route:Router, private _roomService:RoomsService, private _activateRoute: ActivatedRoute) {
     this._roomService.getRoomList().subscribe((roomRes:any)=>{
       this.myRoomList = roomRes.response;
       console.log(this.myRoomList);
@@ -54,6 +54,31 @@ export class EditVouchersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._activateRoute.params.subscribe((param:any)=>{
+      let id = param?.id;
+    this._vouchers.getVoucherDetails(parseInt(id)).subscribe((res:any) => {
+
+      if(res && res.response) {
+        this.newVoucherForm.patchValue({
+          title: res?.response?.voucherstitle,
+          description: res?.response?.voucherdesc,
+          category:res?.response?.category,
+          roomType:res?.response?.roomtype,
+          benefittype:res?.response?.benefittype,
+          discounttype:res?.response?.discounttype,
+          discount:res?.response?.discount,
+          evoucherQuantity:res?.response?.quantity,
+          isthereanyblockoutdates:res?.response?.blockoutdays,
+          tranferable:res?.response?.transfer,
+          evoucheractualprice:res?.response?.actualprice,
+          evoucherpoints:res?.response?.points,
+          wanttogroupupexistingvoucher:res?.response?.grouping,
+          evouchersellingprice:res?.response?.sellingprice,
+        })
+      }
+    })
+  });
+
   }
   saveVoucher(){
     console.log(this.newVoucherForm.value);

@@ -65,7 +65,7 @@ const routes: Routes = [
         component: BookingsComponent,
       },
       {
-        path: 'edit-vouchers',
+        path: 'edit-vouchers/:id',
         component: EditVouchersComponent
       }
     ],

@@ -16,7 +16,7 @@ const routes: Routes = [
     component: AddPropertyComponent,
   },
   {
-    path: 'edit-property',
+    path: 'edit-property/:id',
     component: EditPropertyComponent,
   },
   {

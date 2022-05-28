@@ -5,7 +5,7 @@
       <form class="hdls-search-field">
         <input
           type="text"
-          
+
           matInput
           placeholder="Search"
         />
@@ -21,7 +21,7 @@
       <img src="../../../assets/images/plus.png" alt="Add membership" />
     </a>
   </div>
-  
+
   <div id="hdls-membership-list">
     <div class="category-button">
       <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'all' }"
@@ -35,10 +35,6 @@
       <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'in_active' }"
         (click)="getSelectedFilter('in_active')">
         Inactive<span><!-- TODO--></span>
-      </a>
-      <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'draft' }"
-        (click)="getSelectedFilter('draft')">
-        Draft<span><!-- TODO--></span>
       </a>
       <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'deleted' }"
         (click)="getSelectedFilter('deleted')">
@@ -119,7 +115,7 @@
               <a (click)="deleteMembership(element)">Delete</a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
-            
+
           </td>
         </ng-container>
 

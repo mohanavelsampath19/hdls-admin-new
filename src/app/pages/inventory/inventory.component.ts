@@ -213,7 +213,7 @@ export class InventoryComponent implements OnInit {
     this._inventoryService.getInventoryList().subscribe((res:any)=> {
       res.response.forEach((property:any)=>{
         property.logo = environment.imageUrl+"/"+property.logo;
-        property.roomCount = property.rooms.reduce(function(acc:number,item:any){ 
+        property.roomCount = property.rooms.reduce(function(acc:number,item:any){
           return acc = acc+item.totalrooms;
         },0);
       });

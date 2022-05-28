@@ -78,26 +78,23 @@ export class VouchersComponent implements OnInit {
 
   getPropertyList() {
     this.onFirstLoad();
-    let getCategory = 1;
+    let getCategory = 0;
     switch (this.selectedCategory) {
       case 'live':
-        getCategory = 1;
-        break;
-      case 'in_active':
         getCategory = 0;
         break;
-      case 'draft':
-        getCategory = 2;
+      case 'in_active':
+        getCategory = 1;
         break;
       case 'deleted':
-        getCategory = 3;
+        getCategory = 2;
         break;
       default:
-        getCategory = 1;
+        getCategory = 0;
         break;
     }
 
-    this._membershipService.getVouchers().subscribe((vouchersRes:any) => {
+    this._membershipService.getVoucherList(getCategory).subscribe((vouchersRes:any) => {
       this.dataSource = new MatTableDataSource(vouchersRes.response);
       this.paginator.length = vouchersRes.response.length;
       this.dataSource.paginator = this.paginator;
@@ -156,6 +153,7 @@ export class VouchersComponent implements OnInit {
     //   this.getSearchInput.emit(this.searchValue);
   };
   deleteVouchers(voucher_id:number, vouchertitle:string){
+    console.log(voucher_id, '---')
       const dialogRef = this._dialog.open(DeleteModalComponent, {
         data: {
           productName:vouchertitle,
@@ -166,6 +164,12 @@ export class VouchersComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((data:any) => {
         console.log(data);
+        if(data === true){
+          this._membershipService.deleteVouchers(voucher_id).subscribe((deleteRes:any)=>{
+            console.log(deleteRes);
+          //  this.getMembershipList();
+          })
+        }
       });
   }
 }

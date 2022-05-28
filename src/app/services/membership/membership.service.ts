@@ -43,6 +43,12 @@ export class MembershipService {
       return this._http.get(environment.baseUrl+ 'api/membership/getmembership');
     }
   }
+
+  getAllMembersByCategory(type:any) {
+    return this._http.post(environment.baseUrl+'api/membership/getmembershipbycategory', {
+      type
+    })
+  }
   addVouchers(voucherDetails:any) {
     let formData = this.makeFormData(voucherDetails);
     return this._http.post(environment.baseUrl + 'api/vouchers/createvouchers', formData);
@@ -71,6 +77,17 @@ export class MembershipService {
       }
     });
     return formData;
+  }
+  deleteVouchers(voucherid:any) {
+    return this._http.post(environment.baseUrl + 'api/vouchers/deletevoucher', {voucherid})
+  }
+  getVoucherDetails(voucherid:number) {
+    return this._http.post(environment.baseUrl + 'api/vouchers/editvoucher', {voucherid})
+  }
+  getVoucherList(type:any) {
+    return this._http.post(environment.baseUrl+'api/vouchers/getvoucherbycategory', {
+      type
+    });
   }
 }
 

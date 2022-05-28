@@ -35,19 +35,20 @@ export class HotelsComponent implements OnInit {
     'price',
     'quantity',
     'status',
+    'action'
   ];
   dataSource:any = new MatTableDataSource(this.totalHotelsList);
   pageSize: number = 5;
   pageOffset: number = 0;
   hotelId:number=0;
-  constructor(private _hotelService:HotelsService, private _activatedRouter: ActivatedRoute, private _route: Router, private _roomService:RoomsService) { 
+  constructor(private _hotelService:HotelsService, private _activatedRouter: ActivatedRoute, private _route: Router, private _roomService:RoomsService) {
     this._activatedRouter.queryParams.subscribe((data:any)=>{
       this.hotelId = data.id;
       this.getPropertyList(data.id);
     });
   }
   ngOnInit(): void {
-    
+
   }
 
   getSelectedFilter = (value: string) => {
@@ -158,5 +159,10 @@ export class HotelsComponent implements OnInit {
   gotoLink(event: Event) {
     event.preventDefault();
     this._route.navigate(['/add-room'], { queryParams: { id: this.hotelId } });
+  }
+
+  gotoEditLink(event:Event, roomID:any) {
+    event.preventDefault();
+    this._route.navigate(['/edit-room'], { queryParams: { id: this.hotelId, roomid: roomID } })
   }
 }
