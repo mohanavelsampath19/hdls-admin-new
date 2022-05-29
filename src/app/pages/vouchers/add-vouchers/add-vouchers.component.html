@@ -138,7 +138,15 @@
                     <input matInput formControlName="evoucherpoints" type="number" name="evoucherpoints">
                 </mat-form-field>
             </div>
-            <div>
+            
+            <div class="form-group">
+              <h4>Voucher Image *</h4>
+              <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
+              <div *ngIf="myCoverImageCheck" class="myCoverImage">
+                <img [src]="coverImage" alt="Cover Image">
+              </div>
+            </div>
+            <!-- <div class="transfer">
                 <h4 class="text-bold">Transferable</h4>
                 <mat-radio-group class="transferable" formControlName="tranferable">
                     <mat-radio-button class="p-10" value="non-transferable">
@@ -148,14 +156,7 @@
                         Transferable
                     </mat-radio-button>
                 </mat-radio-group>
-            </div>
-            <div class="form-group">
-              <h4>Voucher Image *</h4>
-              <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
-              <div *ngIf="myCoverImageCheck" class="myCoverImage">
-                <img [src]="coverImage" alt="Cover Image">
-              </div>
-            </div>
+            </div> -->
             <div class="p-10">
                 <button mat-raised-button class="hdls-cancel-btn">Cancel</button>
                 <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="saveVoucher()">Save</button>
