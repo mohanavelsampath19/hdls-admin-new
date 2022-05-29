@@ -8,6 +8,7 @@ import {
   MembershipService,
 } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-vouchers',
@@ -95,6 +96,9 @@ export class VouchersComponent implements OnInit {
     }
 
     this._membershipService.getVoucherList(getCategory).subscribe((vouchersRes:any) => {
+      vouchersRes.response.forEach((property:any)=>{
+        property.logo = environment.imageUrl+"/"+property.logo;
+      });
       this.dataSource = new MatTableDataSource(vouchersRes.response);
       this.paginator.length = vouchersRes.response.length;
       this.dataSource.paginator = this.paginator;

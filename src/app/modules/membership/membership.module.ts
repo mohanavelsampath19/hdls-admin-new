@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { ProductstatusPipe } from 'src/app/pipes/productstatus.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddVouchersComponent } from '../../pages/vouchers/add-vouchers/add-vouchers.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,7 +29,6 @@ import { VouchersComponent } from '../../pages/vouchers/vouchers.component';
 @NgModule({
   declarations: [
     MembershipComponent,
-    ProductstatusPipe,
   ],
   imports: [
     CommonModule,

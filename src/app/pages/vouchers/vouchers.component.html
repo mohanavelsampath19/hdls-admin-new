@@ -80,7 +80,8 @@
           </th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element.voucherstitle }}
+              <div class="logo-container"><img [src]="element.logo" /></div>
+              <div class="vouchertitle-container"> {{element.voucherstitle }}</div>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>

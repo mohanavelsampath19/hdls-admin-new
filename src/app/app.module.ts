@@ -26,7 +26,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from './modules/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
-import { ProductstatusPipe } from './pipes/productstatus.pipe';
+
 import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
 //import { InventoryComponent } from './pages/inventory/inventory.component';

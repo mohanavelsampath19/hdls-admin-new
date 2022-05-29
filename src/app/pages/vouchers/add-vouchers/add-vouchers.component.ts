@@ -55,7 +55,7 @@ export class AddVouchersComponent implements OnInit {
   }
   saveVoucher(){
     console.log(this.newVoucherForm.value);
-    this._vouchers.addVouchers(this.newVoucherForm.value).subscribe((voucherRes:any)=>{
+    this._vouchers.addVouchers({...this.newVoucherForm.value,logo:this.logo}).subscribe((voucherRes:any)=>{
       console.log(voucherRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
