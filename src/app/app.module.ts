@@ -26,7 +26,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from './modules/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
-import { ProductstatusPipe } from './filters/productstatus.pipe';
+import { ProductstatusPipe } from './pipes/productstatus.pipe';
 import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
 //import { InventoryComponent } from './pages/inventory/inventory.component';
@@ -41,7 +41,11 @@ import { EditRoomComponent } from './pages/hotels/edit-room/edit-room.component'
 import { VouchersComponent } from './pages/vouchers/vouchers.component';
 import { AddVouchersComponent } from './pages/vouchers/add-vouchers/add-vouchers.component';
 import { EditMembershipComponent } from './pages/membership/edit-membership/edit-membership.component';
+import { BookingstatusPipe } from './pipes/bookingstatus.pipe';
 // import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { AgmCoreModule } from '@agm/core';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +60,7 @@ import { EditMembershipComponent } from './pages/membership/edit-membership/edit
     AddVouchersComponent,
     VouchersComponent,
     EditMembershipComponent,
+    BookingstatusPipe,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +94,11 @@ import { EditMembershipComponent } from './pages/membership/edit-membership/edit
     HttpClientModule,
     PointsystemModule,
     // NgxMaterialTimepickerModule,
+    MatGoogleMapsAutocompleteModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBPFJayQZ1SGLO7W_p0FAMRR552UdLhr3s',
+      libraries: ['places']
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],

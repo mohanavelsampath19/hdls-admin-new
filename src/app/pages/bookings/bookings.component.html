@@ -115,16 +115,16 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element?.status==1 ? 'Approved':'Pending'  }}
+              {{ element.status | bookingstatus }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              <a href="#"  (click)="openDeleteDialog($event, element.bookingid)">Action</a>
+              <a href="#"  (click)="openDeleteDialog($event, element.bookingid,element.status)" *ngIf="element.status!=3">Action</a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
 

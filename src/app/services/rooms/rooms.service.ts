@@ -51,11 +51,11 @@ export class RoomsService {
     for (let i = 0; i < roomDetails.addImages.length; i++) {
       let addImageItem = roomDetails.addImages[i];
       for(let j=0;j<addImageItem.fileUpload.length;j++){
-        console.log(addImageItem.fileUpload[j][0],addImageItem.fileUpload[j][0]?.name);
+        console.log(addImageItem.fileUpload[j],addImageItem.fileUpload[j]?.name);
         formData.append(
           addImageItem.type+'[]',
-          addImageItem.fileUpload[j][0],
-          addImageItem.fileUpload[j][0].name
+          addImageItem.fileUpload[j],
+          addImageItem.fileUpload[j].name
         );
       }
     }

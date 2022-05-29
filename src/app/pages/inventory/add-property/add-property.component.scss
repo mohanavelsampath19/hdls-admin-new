@@ -449,3 +449,10 @@ table tr th {
     width: 100%;
   }
 }
+.myMapContainer{
+  
+  agm-map{
+    width: 500px;
+    height: 500px;
+  }
+}

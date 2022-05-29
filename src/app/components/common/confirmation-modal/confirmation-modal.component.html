@@ -2,9 +2,10 @@
   <h3>Please confirm the bookings</h3>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button color="primary" class="hdls-btn-primary"
+  <button mat-button color="secondary" class="hdls-btn-secondary"
   [mat-dialog-close]="true"
   cdkFocusInitial
+  *ngIf="data.bookingStatus==0"
   (click)="changeBookingStatus('rejected')">
     Reject
   </button>
@@ -14,8 +15,20 @@
     color="primary"
     [mat-dialog-close]="true"
     cdkFocusInitial
+    *ngIf="data.bookingStatus==0"
     (click)="changeBookingStatus('accepted')"
   >
     Accept
+  </button>
+  <button
+  *ngIf="data.bookingStatus==1"
+    class="hdls-btn-primary"
+    mat-button
+    color="primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    (click)="changeBookingStatus('vacated')"
+  >
+    Room Vacated
   </button>
 </mat-dialog-actions>

@@ -142,13 +142,13 @@ export class BookingsComponent implements OnInit {
     }
   }
 
-  openDeleteDialog(event: Event, deleteid: any) {
+  openDeleteDialog(event: Event, deleteid: any,bookingStatus:number) {
     event.preventDefault();
-    const dialogRef = this._dialog.open(ConfirmationModalComponent, {});
+    const dialogRef = this._dialog.open(ConfirmationModalComponent, {data:{bookingStatus:bookingStatus}});
     const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
       (data) => {
         if (data) {
-          let status = (data === 'accepted') ? 1 : 0;
+          let status = (data === 'accepted') ? 1 : data=='rejected'?0:3;
           this._bookingService.changeBookingStatus(deleteid, status).subscribe((res:any)=> {
             if(res && res.status === 1) {
               const dialogRef = this._dialog.open(InfoPopupComponent, {
