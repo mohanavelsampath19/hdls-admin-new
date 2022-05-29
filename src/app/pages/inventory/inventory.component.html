@@ -19,7 +19,7 @@
         <img src="../../../assets/images/plus.png" alt="add" />
       </a>
     </div>
-    <div class="download-section">
+    <!-- <div class="download-section">
       <app-hdls-date-range
         (getDateRange)="getDateRange($event)"
       ></app-hdls-date-range>
@@ -28,16 +28,16 @@
           ><img src="../../../assets/images/download.png" alt="download"
         /></a>
       </div>
-    </div>
+    </div> -->
   </div>
-  <div class="hdls-choose-property">
+  <!-- <div class="hdls-choose-property">
     <mat-form-field appearance="fill">
       <mat-label>Choose property</mat-label>
       <mat-select class="hdls-form-select" (selectionChange)="redirectTo($event)">
         <mat-option [value]="property.hotel_id" *ngFor="let property of propertyList">{{property.hotelname}}</mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
+  </div> -->
   <div id="hdls-membership-list">
     <div class="category-button">
       <a
@@ -163,7 +163,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              <a href="#" routerLink="/inventory/edit-property">Edit</a>
+              <a href="#" routerLink="/inventory/edit-property/{{element.hotel_id}}">Edit</a>
               <a
                 (click)="openDeleteDialog($event, element.hotel_id, element.is_active)"
                 href="#"
@@ -190,7 +190,7 @@
         [pageSizeOptions]="[5, 10, 20]"
         showFirstLastButtons
         aria-label="Select page of periodic elements"
-        
+
       >
       </mat-paginator>
     </div>

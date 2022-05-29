@@ -43,8 +43,11 @@ import { AddVouchersComponent } from './pages/vouchers/add-vouchers/add-vouchers
 import { EditMembershipComponent } from './pages/membership/edit-membership/edit-membership.component';
 import { BookingstatusPipe } from './pipes/bookingstatus.pipe';
 // import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { AgmCoreModule } from '@agm/core';
+import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
+
 
 @NgModule({
   declarations: [
@@ -60,7 +63,7 @@ import { AgmCoreModule } from '@agm/core';
     AddVouchersComponent,
     VouchersComponent,
     EditMembershipComponent,
-    BookingstatusPipe,
+    EditVouchersComponent
   ],
   imports: [
     BrowserModule,

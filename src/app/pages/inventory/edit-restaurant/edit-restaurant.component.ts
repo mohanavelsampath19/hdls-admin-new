@@ -10,19 +10,20 @@ import {
 //import { ProductService } from 'src/app/services/api/product/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoPopupComponent } from '../../../components/common/info-popup/info-popup.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { InventoryService } from '../../../services/inventory/inventory.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-
 @Component({
-  selector: 'app-add-property',
-  templateUrl: './add-property.component.html',
-  styleUrls: ['./add-property.component.scss'],
+  selector: 'app-edit-restaurant',
+  templateUrl: './edit-restaurant.component.html',
+  styleUrls: ['./edit-restaurant.component.scss']
 })
-export class AddPropertyComponent implements OnInit {
+export class EditRestaurantComponent implements OnInit {
+
   shippingCategory: string = 'free';
   variantFormGroup: FormGroup = this._formBuilder.group({
     variantList: this._formBuilder.array([]),
@@ -31,11 +32,12 @@ export class AddPropertyComponent implements OnInit {
   variantArr: any[] = [];
   roomPrice: any[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  firstFormGroup: FormGroup = this._formBuilder.group({});
+  firstFormGroup: any = this._formBuilder.group({});
   secondFormGroup: any = this._formBuilder.group({});
   specFormGroup: any = this._formBuilder.group({});
   thirdFormGroup: any = this._formBuilder.group({});
   isEditable = false;
+  toppings: any = this._formBuilder.group({});
   facilities: any = this._formBuilder.group({});
   checkin:any='';
   currentStep: any = 0;
@@ -45,14 +47,19 @@ export class AddPropertyComponent implements OnInit {
     coverImage: [],
     featureImage: [],
   };
-  addImages:any=[];
-  addImageType:any = [];
-  myRoomImageCheck:boolean = false;
-  myRoomImageList:any = [];
-  roomList:any=[];
+
   @Input()
   selectedIndex: any;
-  
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+  };
   warrantyPeriod = [
     {
       value: 0,
@@ -137,11 +144,6 @@ export class AddPropertyComponent implements OnInit {
   myCoverImageCheck:boolean = false;
   coverImage:any;
   logo:any;
-  latitude:any;
-  longitude:any;
-  appearance:any = {
-    OUTLINE:"outline"
-  }
   constructor(
     private _formBuilder: FormBuilder,
     // private _productService: ProductService,
@@ -166,9 +168,7 @@ export class AddPropertyComponent implements OnInit {
       // availablerooms: [0, Validators.required],
       front_end_desk: ['', Validators.required],
       // points: ['', Validators.required],
-      checkin:['',Validators.required],
-      checkout:['',Validators.required],
-      address:['', Validators.required],
+      address:[''],
       point_of_contact: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
@@ -180,7 +180,12 @@ export class AddPropertyComponent implements OnInit {
     this.specFormGroup = this._formBuilder.group({
       specLists: this.specRows,
     });
-    
+    this.toppings = this._formBuilder.group({
+      flammable: false,
+      liquid: false,
+      battery: false,
+      none: false,
+    });
 
     this.facilities = this._formBuilder.group({
       breakFast: false,
@@ -229,11 +234,8 @@ export class AddPropertyComponent implements OnInit {
   };
 
   saveProperty = () => {
-    console.log(this.firstFormGroup.value);
-    let {vicinity} = this.firstFormGroup.value.address;
     let property = {
       ...this.firstFormGroup.value,
-      address:vicinity,
       logo:this.logo,
     };
     this._inventoryService.addProperty(property)
@@ -430,75 +432,6 @@ export class AddPropertyComponent implements OnInit {
     reader.onload = e => this.coverImage = reader.result;
     this.logo = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
-  }
-
-
-  onAutocompleteSelected(result: any) {
-    console.log('onAutocompleteSelected: ', result);
-    let country = this.getRegionName('country',result.address_components);
-    let state = this.getRegionName("administrative_area_level_1",result.address_components);
-    let city = this.getRegionName("locality",result.address_components);
-    this.firstFormGroup.patchValue({'country':country,'state':state,'city':city});
-  }
-
-  onLocationSelected(location: any) {
-    console.log('onLocationSelected: ', location);
-    this.latitude = location.latitude;
-    this.longitude = location.longitude;
-  }
-
- 
-  getRegionName(locationType:string,addressComponent:any){
-    let region = addressComponent.filter((reg:any)=>{ 
-      if(reg.types.indexOf(locationType)>-1){
-        return reg;
-      }
-    });
-    return region.length>0?region[0].long_name:'';
-  }
-  registerOnTouched(event:any){
-    console.log(event);
-  }
-  addImageWithType(){
-    this.addImages.push({type:'',files:[]});
-  }
-  addImagetoIndex(i:number,event:any,f:any){
-    f.click();
-  }
-  roomImageFileChange(index:number,event:any){
-    let fileList = event.target.files;
-    let modifiedList = this.pushToFileList(index,fileList);
-    this.addImages[index].fileUpload = modifiedList[0].fileList;
-    for(let i=0;i<modifiedList.length;i++){
-      let reader = new FileReader();
-      this.myRoomImageCheck = true;
-      reader.onload = e => {
-        if(this.addImages[index].fileList){
-          this.addImages[index].fileList.push(reader.result);
-        }
-        else{
-          this.addImages[index].fileList = [];
-          this.addImages[index].fileList.push(reader.result);
-        }
-      };
-      reader.readAsDataURL(fileList[i]);
-    }
-    console.log(this.addImages[index]);
-  }
-
-  pushToFileList(index:number,fileList:any){
-    if(!this.roomList[index] || this.roomList[index].fileList.length==0){
-      this.roomList[index] = {fileList:[]};
-      this.roomList[index].fileList.push(fileList[0]);
-    }else{
-      for(let i=0;i<fileList.length;i++){
-        let checkExist = this.roomList[index].fileList.filter((item:any)=>item.name==fileList[i].name && item.size);
-        if(checkExist.length==0){
-          this.roomList[index].fileList.push(fileList[i]);
-        }
-      }
-    }
-    return this.roomList;
   }
 }
 

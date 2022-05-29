@@ -19,7 +19,7 @@
         <img src="../../../assets/images/plus.png" alt="add" />
       </a>
     </div>
-    <div class="download-section">
+    <!-- <div class="download-section">
       <app-hdls-date-range
         (getDateRange)="getDateRange($event)"
       ></app-hdls-date-range>
@@ -28,7 +28,7 @@
           ><img src="../../../assets/images/download.png" alt="download"
         /></a>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div id="hdls-voucher-list">
@@ -56,14 +56,6 @@
         (click)="getSelectedFilter('in_active')"
       >
         Inactive<span><!-- TODO--></span>
-      </a>
-      <a
-        id="basic"
-        class="add-button"
-        [ngClass]="{ 'selected-item': selectedCategory === 'draft' }"
-        (click)="getSelectedFilter('draft')"
-      >
-        Draft<span><!-- TODO--></span>
       </a>
       <a
         id="basic"
@@ -147,11 +139,11 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              <a href="#">Edit</a>
-              <a href="#">Delete</a>
+              <a routerLink="/edit-vouchers/{{element.vouchersid}}">Edit</a>
+              <a (click)="deleteVouchers(element.vouchersid, 'vouchers')">Delete</a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
-            
+
           </td>
         </ng-container>
 

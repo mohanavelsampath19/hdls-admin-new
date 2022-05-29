@@ -76,32 +76,29 @@ export class MembershipComponent implements OnInit {
 
   getMembershipList() {
     this.onFirstLoad();
-    let getCategory = 1;
+    let getCategory = 0;
     switch (this.selectedCategory) {
       case 'live':
-        getCategory = 1;
-        break;
-      case 'in_active':
         getCategory = 0;
         break;
-      case 'draft':
-        getCategory = 2;
+      case 'in_active':
+        getCategory = 1;
         break;
       case 'deleted':
-        getCategory = 3;
+        getCategory = 2;
         break;
       default:
-        getCategory = 1;
+        getCategory = 0;
         break;
     }
 
-    this._memberShipService.getAllMembership().subscribe((memberShipRes:any) => {
-      memberShipRes.response.forEach((membership:any)=>{
+    this._memberShipService.getAllMembersByCategory(getCategory).subscribe((memberShipRes:any) => {
+      memberShipRes.response && memberShipRes.response.forEach((membership:any)=>{
         membership.evouchers = JSON.parse(membership.evouchers);
         // membership.vouchersTitle = membership.vouchersList.map((member:any)=>{ if(member && member.voucherstitle){ return member.voucherstitle;}} );
         // console.log(membership.vouchersTitle)
       });
-      
+
       this.dataSource = new MatTableDataSource(memberShipRes.response);
       this.dataSource.paginator = this.paginator;
     })
@@ -167,7 +164,7 @@ export class MembershipComponent implements OnInit {
       data: {
         productName:deleteMembership.membershipname+' Membership'
       },
-      
+
     });
     dialogRef.afterClosed().subscribe((desc:any) => {
       if(desc === true){

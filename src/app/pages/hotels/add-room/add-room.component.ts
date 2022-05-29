@@ -7,9 +7,7 @@ import {
 import { RoomsService } from '../../../services/rooms/rooms.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoPopupComponent } from '../../../components/common/info-popup/info-popup.component';
-
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
-
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -83,17 +81,17 @@ export class AddRoomComponent implements OnInit {
         this.hotelId = res.id;
       }
     });
-    this.firstFormGroup.patchValue({
-      roomtitle:'Super Deluxe',
-      roomsdesc:'Super Deluxe',
-      bedtype:'Single bedroom',
-      totalrooms:'4',
-      adults:4,
-      room_facilities:[],
-      roomsize:'10',
-      points:400,
-      price:1400
-    });
+    // this.firstFormGroup.patchValue({
+    //   roomtitle:'Super Deluxe',
+    //   roomsdesc:'Super Deluxe',
+    //   bedtype:'Single bedroom',
+    //   totalrooms:'4',
+    //   adults:4,
+    //   room_facilities:[],
+    //   roomsize:'10',
+    //   points:400,
+    //   price:1400
+    // });
   }
 
   getCurrentStep = (stepno: number) => {
@@ -166,7 +164,7 @@ export class AddRoomComponent implements OnInit {
       this.checkForCoverImage.validationCheck = false;
     }
   }
-  
+
   addItem(category: any) {
     if (category === 'adults') {
       this.adults++;
@@ -195,7 +193,7 @@ export class AddRoomComponent implements OnInit {
       this.myRoomImageCheck = true;
       reader.onload = e => {
         if(this.addImages[index].fileList){
-          this.addImages[index].fileList.push(reader.result); 
+          this.addImages[index].fileList.push(reader.result);
         }
         else{
           this.addImages[index].fileList = [];
@@ -203,7 +201,7 @@ export class AddRoomComponent implements OnInit {
         }
       };
       reader.readAsDataURL(fileList[i]);
-    }    
+    }
     console.log(this.addImages[index]);
   }
   removeImage(index:number){

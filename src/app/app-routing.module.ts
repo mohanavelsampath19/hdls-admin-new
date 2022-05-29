@@ -11,6 +11,7 @@ import { PointsystemComponent } from './pages/pointsystem/pointsystem.component'
 import { AddRoomComponent } from './pages/hotels/add-room/add-room.component';
 import { BookingsComponent } from './pages/bookings/bookings.component';
 import { VouchersComponent } from './pages/vouchers/vouchers.component';
+import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
         path: 'bookings',
         component: BookingsComponent,
       },
+      {
+        path: 'edit-vouchers/:id',
+        component: EditVouchersComponent
+      }
     ],
   },
   {

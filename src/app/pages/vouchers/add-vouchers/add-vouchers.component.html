@@ -1,5 +1,5 @@
 <section id="hdls-newmembership-container">
-    <h3 class="hdls-breadcrumb-title">Add New e-voucher | Membership Information</h3>
+    <h3 class="hdls-breadcrumb-title">Add New e-voucher | Voucher Information</h3>
     <div class="new-membership-form-container">
         <form [formGroup]="newVoucherForm" novalidate>
             <div>
@@ -122,13 +122,13 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>E-voucher Actual Price(RM)*</mat-label>
-                    <input matInput type="number" name="evoucheractualprice" formControlName="evoucheractualprice" />
+                    <input matInput type="number" min="0" name="evoucheractualprice" formControlName="evoucheractualprice" />
                 </mat-form-field>
             </div>
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>E-voucher Selling Price(RM)*</mat-label>
-                    <input matInput type="number" name="evouchersellingprice" formControlName="evouchersellingprice" />
+                    <input matInput type="number" min="0" name="evouchersellingprice" formControlName="evouchersellingprice" />
                 </mat-form-field>
             </div>
 
@@ -149,7 +149,13 @@
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
-
+            <div class="form-group">
+              <h4>Voucher Image *</h4>
+              <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
+              <div *ngIf="myCoverImageCheck" class="myCoverImage">
+                <img [src]="coverImage" alt="Cover Image">
+              </div>
+            </div>
             <div class="p-10">
                 <button mat-raised-button class="hdls-cancel-btn">Cancel</button>
                 <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="saveVoucher()">Save</button>

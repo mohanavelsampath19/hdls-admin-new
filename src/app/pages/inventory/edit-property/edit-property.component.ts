@@ -1,15 +1,20 @@
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {
-  FormGroup,
   AbstractControl,
   FormArray,
   FormBuilder,
+  FormControl,
+  FormGroup,
   Validators,
 } from '@angular/forms';
+//import { ProductService } from 'src/app/services/api/product/product.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { InfoPopupComponent } from '../../../components/common/info-popup/info-popup.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
+import { InventoryService } from '../../../services/inventory/inventory.service';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -33,7 +38,7 @@ export class EditPropertyComponent implements OnInit {
   isEditable = false;
   toppings: any = this._formBuilder.group({});
   facilities: any = this._formBuilder.group({});
-
+  checkin:any='';
   currentStep: any = 0;
   progressBarValue: number = 4;
   checkForCoverImage: imageValidation = {
@@ -41,7 +46,11 @@ export class EditPropertyComponent implements OnInit {
     coverImage: [],
     featureImage: [],
   };
-
+  addImages:any=[];
+  addImageType:any = [];
+  myRoomImageCheck:boolean = false;
+  myRoomImageList:any = [];
+  roomList:any=[];
   @Input()
   selectedIndex: any;
   editorConfig: AngularEditorConfig = {
@@ -135,12 +144,15 @@ export class EditPropertyComponent implements OnInit {
   composedVariantList: Array<any> = [];
   removeFirstVariant: Array<any> = [];
   specRows: FormArray = this._formBuilder.array([]);
-
+  myCoverImageCheck:boolean = false;
+  coverImage:any;
+  logo:any;
   constructor(
     private _formBuilder: FormBuilder,
     // private _productService: ProductService,
     public _dialog: MatDialog,
-    private _route: Router
+    private _route: Router,
+    private _inventoryService: InventoryService
   ) {}
 
   removevalue(i: any) {
@@ -151,22 +163,20 @@ export class EditPropertyComponent implements OnInit {
     this.roomPrice.push({ value: '' });
   }
 
-  ngOnChanges() {
-    console.log(this.roomPrice, '---room price ---');
-  }
-
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
-      room_name: ['', Validators.required],
-      room_description: ['', Validators.required],
-      bed_type: ['', Validators.required],
-      room_quantity: ['', Validators.required],
-      adults: [0, Validators.required],
-      // room_facilities: [''],
-      room_size: ['', Validators.required],
-      points: ['', Validators.required],
-      restrictions: ['', Validators.required],
-      room_price: ['', Validators.required],
+      property_name: ['', Validators.required],
+      property_description: ['', Validators.required],
+      property_type: ['', Validators.required],
+      // availablerooms: [0, Validators.required],
+      front_end_desk: ['', Validators.required],
+      // points: ['', Validators.required],
+      address:[''],
+      point_of_contact: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      country:['', Validators.required],
+      logo:['']
     });
     this.secondFormGroup = this._formBuilder.group({});
 
@@ -210,7 +220,6 @@ export class EditPropertyComponent implements OnInit {
   }
 
   createProduct = () => {
-    console.log(this.selectedIndex, 'index');
     let specObj: any = this.specFormGroup.value.specLists;
     let variantObj = {
       variants: this.variantList.value,
@@ -225,92 +234,27 @@ export class EditPropertyComponent implements OnInit {
       return modifiedObj;
     });
     let myTenantObj = JSON.parse(localStorage.getItem('tenant_details') || '');
-    console.log(
-      this.firstFormGroup.value,
-      this.thirdFormGroup.value,
-      this.checkForCoverImage,
-      specObj,
-      variantObj
-    );
-
-    // this._productService
-    //   .addProduct({
-    //     ...this.firstFormGroup.value,
-    //     ...this.thirdFormGroup.value,
-    //     ...this.checkForCoverImage,
-    //     ...this.toppings.value,
-    //     specObj,
-    //     variantObj,
-    //     tenant_id: myTenantObj.tenant_id,
-    //   })
-    //   .subscribe(
-    //     (productResponse: any) => {
-    //       if (productResponse && productResponse.status === 0) {
-    //         const dialogRef = this._dialog.open(InfoPopupComponent, {
-    //           data: {
-    //             popupText: 'Product created successfully',
-    //           },
-    //         });
-    //         const getDialogRef =
-    //           dialogRef.componentInstance.closePopup.subscribe(() => {
-    //             this._dialog.closeAll();
-    //             this.firstFormGroup.reset();
-    //             this.secondFormGroup.reset();
-    //             this.thirdFormGroup.reset();
-    //             this.currentStep = 1;
-    //             this.progressBarValue = 5;
-    //             this._route.navigate(['/tenant/products']);
-    //           });
-    //         dialogRef.afterClosed().subscribe(() => {
-    //           getDialogRef.unsubscribe();
-    //         });
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
   };
 
-  draftProduct = () => {
-    this.currentStep = 1;
-    let myTenantObj = JSON.parse(localStorage.getItem('tenant_details') || '');
-    // this._productService
-    //   .draftProduct({
-    //     ...this.firstFormGroup.value,
-    //     ...this.thirdFormGroup.value,
-    //     ...this.checkForCoverImage,
-    //     ...this.toppings.value,
-    //     tenant_id: myTenantObj.tenant_id,
-    //   })
-    //   .subscribe(
-    //     (productResponse: any) => {
-    //       if (productResponse && productResponse.status === 0) {
-    //         const dialogRef = this._dialog.open(InfoPopupComponent, {
-    //           data: {
-    //             popupText: 'Product drafted successfully',
-    //           },
-    //         });
-    //         const getDialogRef =
-    //           dialogRef.componentInstance.closePopup.subscribe(() => {
-    //             this._dialog.closeAll();
-    //             this.firstFormGroup.reset();
-    //             this.secondFormGroup.reset();
-    //             this.thirdFormGroup.reset();
-    //             this.currentStep = 1;
-    //             this.progressBarValue = 5;
-    //             this._route.navigate(['/tenant/products']);
-    //           });
-    //         dialogRef.afterClosed().subscribe(() => {
-    //           getDialogRef.unsubscribe();
-    //         });
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-  };
+  saveProperty = () => {
+    let property = {
+      ...this.firstFormGroup.value,
+      logo:this.logo,
+    };
+    this._inventoryService.addProperty(property)
+    .subscribe((res:any) => {
+      if(res && res.status === 1) {
+        const dialogRef = this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Property created successfully',
+          },
+        });
+        dialogRef.afterClosed().subscribe(() => {
+          this._route.navigate(['/inventory'])
+        });
+      }
+    })
+  }
 
   getCurrentStep = (stepno: number) => {
     if (this.firstFormGroup.valid) {
@@ -349,14 +293,6 @@ export class EditPropertyComponent implements OnInit {
       this.checkForCoverImage.validationCheck = false;
     }
   }
-  // updateDiscount() {
-  //   let original_price: any = this.firstFormGroup.value.original_price;
-  //   let sale_price: any = this.firstFormGroup.value.sales_price;
-  //   let differentPer =
-  //     (parseInt(original_price) - parseInt(sale_price)) / (original_price / 100);
-  //   this.firstFormGroup.controls.discount_percentage.setValue(differentPer);
-
-  // }
   get specList() {
     return this.specFormGroup.get('specLists') as FormArray;
   }
@@ -489,6 +425,57 @@ export class EditPropertyComponent implements OnInit {
     } else {
       this.childrens--;
     }
+  }
+  goToLink(routerLink:string){
+    this._route.navigate([routerLink]);
+  }
+  coverFileChange(event:any){
+    var reader = new FileReader();
+    this.myCoverImageCheck = true;
+    reader.onload = e => this.coverImage = reader.result;
+    this.logo = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]);
+  }
+  addImageWithType(){
+    this.addImages.push({type:'',files:[]});
+  }
+  addImagetoIndex(i:number,event:any,f:any){
+    f.click();
+  }
+  roomImageFileChange(index:number,event:any){
+    let fileList = event.target.files;
+    let modifiedList = this.pushToFileList(index,fileList);
+    this.addImages[index].fileUpload = modifiedList[0].fileList;
+    for(let i=0;i<modifiedList.length;i++){
+      let reader = new FileReader();
+      this.myRoomImageCheck = true;
+      reader.onload = e => {
+        if(this.addImages[index].fileList){
+          this.addImages[index].fileList.push(reader.result);
+        }
+        else{
+          this.addImages[index].fileList = [];
+          this.addImages[index].fileList.push(reader.result);
+        }
+      };
+      reader.readAsDataURL(fileList[i]);
+    }
+    console.log(this.addImages[index]);
+  }
+
+  pushToFileList(index:number,fileList:any){
+    if(!this.roomList[index] || this.roomList[index].fileList.length==0){
+      this.roomList[index] = {fileList:[]};
+      this.roomList[index].fileList.push(fileList[0]);
+    }else{
+      for(let i=0;i<fileList.length;i++){
+        let checkExist = this.roomList[index].fileList.filter((item:any)=>item.name==fileList[i].name && item.size);
+        if(checkExist.length==0){
+          this.roomList[index].fileList.push(fileList[i]);
+        }
+      }
+    }
+    return this.roomList;
   }
 }
 
