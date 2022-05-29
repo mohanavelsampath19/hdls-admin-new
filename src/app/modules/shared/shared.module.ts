@@ -30,6 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationModalComponent } from '../../components/common/confirmation-modal/confirmation-modal.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -48,7 +50,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatDatepickerModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGoogleMapsAutocompleteModule,
+    
   ],
   exports: [
     HeaderComponent,

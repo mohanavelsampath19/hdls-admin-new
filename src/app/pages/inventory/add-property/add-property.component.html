@@ -123,6 +123,7 @@
                 aria-label="24hr format"
                 [ngxTimepicker]="checkin"
                 [format]="12"
+                formControlName="checkin"
                 readonly
 
               />
@@ -135,21 +136,25 @@
                 aria-label="24hr format"
                 [ngxTimepicker]="checkout"
                 [format]="12"
+                formControlName="checkout"
                 readonly
               />
               <ngx-material-timepicker #checkout></ngx-material-timepicker>
             </div>
           </div>
         </div>
-        <mat-form-field class="hdls-form-field" appearance="fill">
-          <h4>Address</h4>
-          <input
-            matInput
-            formControlName="address"
-            class="hdls-form-input"
-            placeholder="Address"
-          />
-        </mat-form-field>
+        
+        <div class="hdls-form-field-timings">
+          <div>
+            <mat-google-maps-autocomplete formControlName="address" [appearance]="appearance.OUTLINE" (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)" class="hdls-form-input">
+            </mat-google-maps-autocomplete>
+          </div>
+          <div class="myMapContainer" >
+            <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" >
+              <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+            </agm-map>
+          </div>
+        </div>
         <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>City<span class="required">*</span></h4>
           <input

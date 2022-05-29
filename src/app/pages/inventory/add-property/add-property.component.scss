@@ -450,6 +450,15 @@ table tr th {
   }
 }
 
+.myMapContainer{
+  
+  agm-map{
+    width: 500px;
+    height: 500px;
+  }
+}
+
+
 .p-10 {
   padding: 10px;
 }
@@ -493,3 +502,4 @@ table tr th {
   font-family: 'Open Sans',sans-serif;
   cursor: pointer;
 }
+

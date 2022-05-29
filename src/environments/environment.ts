@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:5000/',
+  // imageUrl: 'http://myfuturefood.com.my:5000/upload'
   imageUrl: 'http://myfuturefood.com.my:5000/upload'
 };
 

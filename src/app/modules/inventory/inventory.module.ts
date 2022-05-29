@@ -23,11 +23,15 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { ProductstatusPipe } from 'src/app/filters/productstatus.pipe';
+import { ProductstatusPipe } from 'src/app/pipes/productstatus.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EditPropertyComponent } from 'src/app/pages/inventory/edit-property/edit-property.component';
+
+import { AgmCoreModule } from '@agm/core';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+
 import { AddRestaurantComponent } from '../../pages/inventory/add-restaurant/add-restaurant.component';
 import { EditRestaurantComponent } from '../../pages/inventory/edit-restaurant/edit-restaurant.component';
 
@@ -71,7 +75,9 @@ import { EditRestaurantComponent } from '../../pages/inventory/edit-restaurant/e
     MatRadioModule,
     NgxMaterialTimepickerModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    AgmCoreModule,
+    MatGoogleMapsAutocompleteModule
   ],
 })
 export class InventoryModule {}
