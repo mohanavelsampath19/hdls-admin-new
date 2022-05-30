@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { FacilitiesService } from 'src/app/services/facilities/facilities.service';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { MembershipService } from 'src/app/services/membership/membership.service';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 
@@ -13,11 +15,12 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 })
 export class AddVouchersComponent implements OnInit {
   isDiscounted:boolean = false;
+
   newVoucherForm:FormGroup = new FormGroup({
     title: new FormControl(),
     description: new FormControl(),
     category:new FormControl(),
-    roomType:new FormControl(),
+    roomType:new FormControl('',Validators.required),
     benefittype:new FormControl(),
     discounttype:new FormControl(),
     discount:new FormControl(),
@@ -28,7 +31,9 @@ export class AddVouchersComponent implements OnInit {
     evoucherpoints:new FormControl(),
     wanttogroupupexistingvoucher:new FormControl(),
     evouchersellingprice:new FormControl(),
-  })
+    hotelid:new FormControl('',Validators.required)    
+  });
+  currentProperty:string='';
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
   hotelId: any;
   isRoomBenefit:boolean = false;
@@ -40,18 +45,27 @@ export class AddVouchersComponent implements OnInit {
   myCoverImageCheck:boolean = false;
   coverImage:any;
   logo:any;
-
-  constructor(private _vouchers:MembershipService, private _dialog:MatDialog, private _route:Router, private _roomService:RoomsService) {
+  inventoryList:any;
+  fbList:any;
+  facilityList:any;
+  marketplaceList:any;
+  editor:any;
+  constructor(private _vouchers:MembershipService, private _dialog:MatDialog, private _route:Router, private _roomService:RoomsService, private _inventory:InventoryService, private _facility:FacilitiesService) {
     this._roomService.getRoomList().subscribe((roomRes:any)=>{
       this.myRoomList = roomRes.response;
       console.log(this.myRoomList);
     });
     this._vouchers.getVouchers().subscribe((vouchersRes:any) => {
       this.existingVoucherList = vouchersRes.response;
-    })
+    });
+    this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
+      this.inventoryList = inventoryList.response;
+    });
+    this.getFacilityDetails();
   }
 
   ngOnInit(): void {
+    
   }
   saveVoucher(){
     console.log(this.newVoucherForm.value);
@@ -76,7 +90,7 @@ export class AddVouchersComponent implements OnInit {
       case 'room':
         this.isRoomBenefit = true;
       break;
-      case 'fb':
+      case 'f&b':
         this.isFB = true;
       break;
       case 'facilities':
@@ -86,6 +100,7 @@ export class AddVouchersComponent implements OnInit {
         this.isMarketplace = true;
       break;
     }
+    this.newVoucherForm.patchValue({roomType:''});
   }
   changeBenefitType(e:any){
     if(e.value === 'complementary'){
@@ -101,5 +116,21 @@ export class AddVouchersComponent implements OnInit {
     reader.onload = e => this.coverImage = reader.result;
     this.logo = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
+  }
+  getFacilityDetails(hotelId?:number){
+    this._facility.getAllFacility(0,hotelId).subscribe((facility:any)=>{
+      let facilityList = facility.response;
+      this.fbList = facilityList.filter((inventory:any)=>inventory.facility_type=='f&b');
+      this.facilityList = facilityList.filter((inventory:any)=>inventory.facility_type=='facility');
+      this.marketplaceList = facilityList.filter((inventory:any)=>inventory.facility_type=='marketplace');
+    });
+  }
+  inventoryChange(e:any){
+    console.log(e);
+    this.currentProperty = e.value;
+    this.getFacilityDetails(e.value);
+    this._roomService.getRoomList(e.value).subscribe((roomRes:any)=>{
+      this.myRoomList = roomRes.response;
+    });
   }
 }

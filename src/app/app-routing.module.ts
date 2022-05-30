@@ -37,6 +37,10 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'facilities',
+        loadChildren: () => import('./modules/facilities/facilities.module').then(facility => facility.FacilitiesModule)
+      },
+      {
         path: 'hotels',
         component: HotelsComponent,
       },
@@ -75,10 +79,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
 
-  // {
-  //   path: 'membership',
-  //   loadChildren: () => import('./modules/membership/membership.module').then(member => member.MembershipModule)
-  // }
+  
 ];
 
 @NgModule({
