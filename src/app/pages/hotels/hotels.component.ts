@@ -6,6 +6,8 @@ import { HotelsService, HotelDetails } from '../../services/hotels/hotels.servic
 import { Loading } from 'src/app/services/utilities/helper_models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
+import { DeleteModalComponent } from 'src/app/components/common/delete-modal/delete-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-hotels',
@@ -41,10 +43,15 @@ export class HotelsComponent implements OnInit {
   pageSize: number = 5;
   pageOffset: number = 0;
   hotelId:number=0;
-  constructor(private _hotelService:HotelsService, private _activatedRouter: ActivatedRoute, private _route: Router, private _roomService:RoomsService) {
+  constructor(private _hotelService:HotelsService,
+    private _activatedRouter: ActivatedRoute,
+    private _route: Router,
+    private _roomService:RoomsService,
+    private _dialog:MatDialog
+    ) {
     this._activatedRouter.queryParams.subscribe((data:any)=>{
       this.hotelId = data.id;
-      this.getPropertyList(data.id);
+      this.getPropertyList();
     });
   }
   ngOnInit(): void {
@@ -55,7 +62,7 @@ export class HotelsComponent implements OnInit {
     this.selectedCategory = value;
     this.pageSize = 5;
     this.pageOffset = 0;
-    this.getPropertyList(this.hotelId);
+    this.getPropertyList();
   };
 
   getSearchInput(searchValue: any) {
@@ -72,9 +79,9 @@ export class HotelsComponent implements OnInit {
     }
   }
 
-  getPropertyList(hotel_name:number) {
+  getPropertyList() {
     this.onFirstLoad();
-    let getCategory = 1;
+    let getCategory = 3;
     switch (this.selectedCategory) {
       case 'live':
         getCategory = 1;
@@ -82,18 +89,14 @@ export class HotelsComponent implements OnInit {
       case 'in_active':
         getCategory = 0;
         break;
-      case 'draft':
+      case 'deleted':
         getCategory = 2;
         break;
-      case 'deleted':
+      default:
         getCategory = 3;
         break;
-      default:
-        getCategory = 1;
-        break;
     }
-
-    this._roomService.getRoomList(this.hotelId).subscribe((res:any) => {
+    this._roomService.getRoomList(this.hotelId, getCategory).subscribe((res:any) => {
       if(res && res.status === 1) {
         this.dataSource = new MatTableDataSource(res.response);
         this.dataSource.paginator = this.paginator;
@@ -121,7 +124,7 @@ export class HotelsComponent implements OnInit {
     console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
-    this.getPropertyList(this.hotelId);
+    this.getPropertyList();
   }
 
   getDateRange(daterange: any) {
@@ -164,5 +167,25 @@ export class HotelsComponent implements OnInit {
   gotoEditLink(event:Event, roomID:any) {
     event.preventDefault();
     this._route.navigate(['/edit-room'], { queryParams: { id: this.hotelId, roomid: roomID } })
+  }
+
+  deleteRoom(event: Event, room_id:number){
+    event.preventDefault();
+      const dialogRef = this._dialog.open(DeleteModalComponent, {
+        data: {
+          productName:'rooms'
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((data:any) => {
+        console.log(data);
+        if(data === true){
+          this._roomService.deleteRoom(room_id).subscribe((res:any) => {
+            if(res.status === 0) {
+              this.getPropertyList();
+            }
+          })
+        }
+      });
   }
 }
