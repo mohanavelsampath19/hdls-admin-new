@@ -1,0 +1,58 @@
+<section id="hdls-newmembership-container">
+    <h3 class="hdls-breadcrumb-title">Edit Facilities </h3>
+    <div class="new-membership-form-container"> 
+        <form [formGroup]="editFacility">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Facility Title *</mat-label>
+                    <input matInput formControlName="facility_name" type="text" name="title" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Facility Type</mat-label>
+                    <mat-select formControlName="facility_type">
+                      <mat-option value="f&b" >F & B</mat-option>
+                      <mat-option value="facility">Facility</mat-option>
+                      <mat-option value="marketplace">Marketplace</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Product Description *</mat-label>
+                    <textarea matInput formControlName="description" type="text" name="description"></textarea>
+                </mat-form-field>
+            </div>
+            
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Properties</mat-label>
+                    <mat-select formControlName="hotel_id">
+                      <mat-option [value]="inventory.hotel_id" *ngFor="let inventory of inventoryList">{{inventory.hotelname}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            
+            <!-- <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Stocks *</mat-label>
+                    <input matInput formControlName="stocks" type="number" name="stocks" />
+                </mat-form-field>
+            </div> -->
+            <div class="form-group coverImageContainer">
+                <h4>Cover Image *</h4>
+                <input type="file" name="myCoverImage" (change)="coverFileChange($event)" #myCoverImage />
+                <div *ngIf="myCoverImageCheck" class="myCoverImage">
+                  <img [src]="coverImage" alt="Cover Image">
+                  <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
+                </div>
+              </div>
+          
+            <div>
+                <button mat-raised-button class="hdls-cancel-btn" (click)="backToFacility()">Cancel</button>
+                <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="saveFacility()">Submit</button>
+            </div>
+        </form>
+    </div>           
+</section>
