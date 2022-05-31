@@ -131,7 +131,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ !element.inactive?'Active':'Inactive' }}
+              {{ element.inactive === 1 ?'Active': element.inactive === 0 ? 'Inactive' : 'Deleted' }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>

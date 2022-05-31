@@ -79,7 +79,7 @@ export class VouchersComponent implements OnInit {
 
   getPropertyList() {
     this.onFirstLoad();
-    let getCategory = 0;
+    let getCategory = 3;
     switch (this.selectedCategory) {
       case 'live':
         getCategory = 0;
@@ -91,7 +91,7 @@ export class VouchersComponent implements OnInit {
         getCategory = 2;
         break;
       default:
-        getCategory = 0;
+        getCategory = 3;
         break;
     }
 
@@ -170,7 +170,7 @@ export class VouchersComponent implements OnInit {
         console.log(data);
         if(data === true){
           this._membershipService.deleteVouchers(voucher_id).subscribe((deleteRes:any)=>{
-            console.log(deleteRes);
+          //  console.log(deleteRes);
             this.getPropertyList();
           })
         }

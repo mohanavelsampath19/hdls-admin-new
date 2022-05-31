@@ -14,7 +14,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { InventoryService } from '../../../services/inventory/inventory.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -147,12 +147,14 @@ export class EditPropertyComponent implements OnInit {
   myCoverImageCheck:boolean = false;
   coverImage:any;
   logo:any;
+  propertyid:any;
   constructor(
     private _formBuilder: FormBuilder,
     // private _productService: ProductService,
     public _dialog: MatDialog,
     private _route: Router,
-    private _inventoryService: InventoryService
+    private _inventoryService: InventoryService,
+    private _activatedRoute:ActivatedRoute,
   ) {}
 
   removevalue(i: any) {
@@ -217,6 +219,25 @@ export class EditPropertyComponent implements OnInit {
     //     this.shippingCategory = value;
     //   }
     // );
+    this._activatedRoute.params.subscribe((param:any)=>{
+      this._inventoryService.getPropertyDetail(param.id).subscribe((res:any) => {
+        this.firstFormGroup.patchValue({
+          property_name: res?.response?.hotelname,
+          property_description: res?.response?.description,
+          property_type: res?.response?.type,
+          // availablerooms: [0, Validators.required],
+          front_end_desk:res?.response?.frontdesknumber,
+          // points: ['', Validators.required],
+          address:res?.response?.address,
+          point_of_contact: res?.response?.poc,
+          city: res?.response?.city,
+          state: res?.response?.state,
+          country:res?.response?.country,
+          logo:res?.response?.logo
+        });
+        this.propertyid = res?.response?.hotel_id
+      })
+    });
   }
 
   createProduct = () => {
@@ -241,7 +262,7 @@ export class EditPropertyComponent implements OnInit {
       ...this.firstFormGroup.value,
       logo:this.logo,
     };
-    this._inventoryService.addProperty(property)
+    this._inventoryService.updateProperty(property, this.propertyid)
     .subscribe((res:any) => {
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {

@@ -33,6 +33,9 @@ export class EditRoomComponent implements OnInit {
   myRoomImageCheck:boolean = false;
   myRoomImageList:any = [];
   roomList:any=[];
+  myCoverImageCheck:boolean = false;
+  coverImage:any;
+  logo:any;
   @Input()
   selectedIndex: any;
 
@@ -232,6 +235,13 @@ export class EditRoomComponent implements OnInit {
   }
   addImagetoIndex(i:number,event:any,f:any){
     f.click();
+  }
+  coverFileChange(event:any){
+    var reader = new FileReader();
+    this.myCoverImageCheck = true;
+    reader.onload = e => this.coverImage = reader.result;
+    this.logo = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]);
   }
 }
 

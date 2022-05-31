@@ -88,7 +88,7 @@ export class InventoryComponent implements OnInit {
 
   getPropertyList() {
     this.onFirstLoad();
-    let getCategory = 1;
+    let getCategory = 3;
     switch (this.selectedCategory) {
       case 'live':
         getCategory = 1;
@@ -96,23 +96,25 @@ export class InventoryComponent implements OnInit {
       case 'in_active':
         getCategory = 0;
         break;
-      case 'draft':
+      case 'deleted':
         getCategory = 2;
         break;
-      case 'deleted':
+      default:
         getCategory = 3;
         break;
-      default:
-        getCategory = 1;
-        break;
     }
-
-    // this._inventoryService.getMyInventoryList().subscribe((res:any) => {
-    //   if(res && res.status === 1) {
-    //     this.dataSource = new MatTableDataSource(res.response);
-    //   }
-    // })
-
+    console.log(getCategory, this.selectedCategory)
+    this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
+      res.response && res.response.forEach((property:any)=>{
+        property.logo = environment.imageUrl+"/"+property.logo;
+        property.roomCount = property.rooms.reduce(function(acc:number,item:any){
+          return acc = acc+item.totalrooms;
+        },0);
+      });
+      this.dataSource = new MatTableDataSource(res.response);
+      this.dataSource.paginator = this.paginator;
+      this.propertyList = res.response;
+    })
   }
 
   // ngAfterViewInit() {
@@ -207,9 +209,9 @@ export class InventoryComponent implements OnInit {
     this._router.navigate(['/hotels'], { queryParams: { id: id } });
   }
   initializeHotelList(){
-    this._inventoryService.currentInventory.subscribe((currentInventory)=>{
-      console.log(currentInventory);
-    });
+    // this._inventoryService.currentInventory.subscribe((currentInventory)=>{
+    //   console.log(currentInventory);
+    // });
     this._inventoryService.getInventoryList().subscribe((res:any)=> {
       res.response.forEach((property:any)=>{
         property.logo = environment.imageUrl+"/"+property.logo;
@@ -217,7 +219,6 @@ export class InventoryComponent implements OnInit {
           return acc = acc+item.totalrooms;
         },0);
       });
-      console.log(res.response);
       this.dataSource = new MatTableDataSource(res.response);
       this.dataSource.paginator = this.paginator;
       this.propertyList = res.response;

@@ -31,7 +31,9 @@ export class AddVouchersComponent implements OnInit {
     evoucherpoints:new FormControl(),
     wanttogroupupexistingvoucher:new FormControl(),
     evouchersellingprice:new FormControl(),
-    hotelid:new FormControl('',Validators.required)    
+    hotelid:new FormControl('',Validators.required),
+    evoucherexpiry: new FormControl(),
+    expirydays: new FormControl()
   });
   currentProperty:string='';
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
@@ -65,10 +67,9 @@ export class AddVouchersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
   saveVoucher(){
-    console.log(this.newVoucherForm.value);
     this._vouchers.addVouchers({...this.newVoucherForm.value,logo:this.logo}).subscribe((voucherRes:any)=>{
       console.log(voucherRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {

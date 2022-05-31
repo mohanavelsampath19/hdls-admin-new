@@ -113,7 +113,7 @@
           <div>
               <mat-form-field appearance="fill">
                   <mat-label>Want To Group-Up Existing Voucher?</mat-label>
-                  <mat-select formControlName="wanttogroupupexistingvoucher">
+                  <mat-select multiple formControlName="wanttogroupupexistingvoucher">
                       <mat-option [value]="voucher.vouchersid" *ngFor="let voucher of existingVoucherList">
                           {{voucher.voucherstitle}}</mat-option>
                   </mat-select>
@@ -138,6 +138,21 @@
                   <input matInput formControlName="evoucherpoints" type="number" name="evoucherpoints">
               </mat-form-field>
           </div>
+          <div class="hdls-expiry">
+            <mat-form-field appearance="fill" class="hdls-no-expiry">
+                <mat-label>E-voucher Expiry</mat-label>
+                <input matInput formControlName="evoucherexpiry" type="number" name="evoucherexpiry">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>E-voucher Type</mat-label>
+              <mat-select class="hdls-form-select" formControlName="expirydays">
+                <mat-option value="days">Days</mat-option>
+                <mat-option value="weeks">Weeks</mat-option>
+                <mat-option value="months">Months</mat-option>
+                <mat-option value="yearly">Yearly</mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
           <div>
               <h4 class="text-bold">Transferable</h4>
               <mat-radio-group class="transferable" formControlName="tranferable">
@@ -157,8 +172,8 @@
             </div>
           </div>
           <div class="p-10">
-              <button mat-raised-button class="hdls-cancel-btn">Cancel</button>
-              <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="saveVoucher()">Save</button>
+              <button mat-raised-button class="hdls-cancel-btn hdls-btn-secondary">Cancel</button>
+              <button mat-raised-button color="primary" class="hdls-nxt-btn hdls-btn-primary" (click)="saveVoucher()">Update</button>
           </div>
       </form>
   </div>

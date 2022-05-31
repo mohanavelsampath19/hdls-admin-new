@@ -16,15 +16,16 @@ export class InventoryService {
   updateMyInventory(id:number){
     this.currentInventory.next(this.getAllInventoryList[id]);
   }
-  getMyInventoryList(){
-    return this._http.get(environment.baseUrl + 'api/hotel/gethotellist',{}).subscribe((apiRes:any)=>{
+  getMyInventoryList(category:number){
+    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist',{type: category}).subscribe((apiRes:any)=>{
       this.getAllInventoryList = apiRes.response;
       this.currentInventory.next(this.getAllInventoryList[0]);
     })
   }
 
-  getInventoryList(){
-    return this._http.get(environment.baseUrl + 'api/hotel/gethotellist',{})
+  getInventoryList(category?:number){
+    let type = category !== undefined ? category : 1;
+    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist',{type: type})
   }
   deleteHotel(hotelId:number){
     return this._http.post(environment.baseUrl + 'api/hotel/deletehotel',{hotelId:hotelId});
@@ -34,7 +35,16 @@ export class InventoryService {
     let formData = this.makeFormData(property_details);
     return this._http.post(environment.baseUrl + 'api/rooms/addproperty', formData);
   }
-  makeFormData(propertyDetails:any){
+
+  updateProperty(property_details:any, propertyid?:any) {
+    let formData = this.makeFormData(property_details, propertyid);
+    return this._http.post(environment.baseUrl + 'api/rooms/updateproperty', formData);
+  }
+
+  getPropertyDetail(propertyid:any) {
+    return this._http.post(environment.baseUrl + 'api/rooms/getpropertydetail', {propertyid})
+  }
+  makeFormData(propertyDetails:any, id?:any){
     let formKeys = Object.keys(propertyDetails);
     let formValues:any = Object.values(propertyDetails);
     let formData = new FormData();
@@ -45,6 +55,9 @@ export class InventoryService {
         formData.append(formItem, formValues[i]);
       }
     });
+    if(id) {
+      formData.append('id', id)
+    }
     return formData;
   }
 }

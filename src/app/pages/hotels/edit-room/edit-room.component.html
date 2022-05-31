@@ -164,7 +164,13 @@
             required
           />
         </mat-form-field>
-
+        <div class="form-group">
+          <h4>Cover Image *</h4>
+          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
+          <div *ngIf="myCoverImageCheck" class="myCoverImage">
+            <img [src]="coverImage" alt="Cover Image">
+          </div>
+        </div>
         <div class="form-group p-10">
           <h4>Room Images *</h4>
           <button (click)="addImageWithType()" mat-raised-button color="primary" class="btn btn-primary">Add Image</button>

@@ -59,7 +59,7 @@ export class RoomsService {
         );
       }
     }
-    
+
     for (let i = 0; i < Object.keys(tmpRoomDetails).length; i++) {
       let tmpParam = Object.keys(tmpRoomDetails)[i];
       formData.append(tmpParam, tmpRoomDetails[tmpParam]);
@@ -69,7 +69,11 @@ export class RoomsService {
     // })
      return this._http.post(environment.baseUrl + 'api/rooms/createrooms', formData);
   }
-  getRoomList(hotel_id?:number) {
-    return this._http.post(environment.baseUrl + 'api/rooms/getroomslist', {hotel_id: hotel_id});
+  getRoomList(hotel_id?:number, category?:number) {
+    return this._http.post(environment.baseUrl + 'api/rooms/getroomslist', {hotel_id: hotel_id, category: category});
+  }
+
+  deleteRoom(room_id:number) {
+    return this._http.post(environment.baseUrl + 'api/rooms/deleteroom', {roomid: room_id});
   }
 }
