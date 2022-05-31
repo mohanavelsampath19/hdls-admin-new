@@ -170,6 +170,7 @@ export class VouchersComponent implements OnInit {
         console.log(data);
         if(data === true){
           this._membershipService.deleteVouchers(voucher_id).subscribe((deleteRes:any)=>{
+          //  console.log(deleteRes);
             this.getPropertyList();
           })
         }

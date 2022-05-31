@@ -51,7 +51,12 @@
         </mat-expansion-panel>
       </div>
     </div>
-
+    <div class="nav-item" (click)="goToLink('/facilities','facilities')">
+      <div class="layout" [ngClass]="{active:myMenu.facilities}">
+        <mat-icon class="icon">apps</mat-icon>
+        <span class="nav-item-span">Facilities</span>
+      </div>
+    </div>
     <div class="nav-item" (click)="logout($event)">
         <div class="layout">
           <mat-icon class="icon">logout</mat-icon>
