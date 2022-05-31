@@ -28,10 +28,10 @@ export class EditVouchersComponent implements OnInit {
     evoucherpoints:new FormControl(),
     wanttogroupupexistingvoucher:new FormControl(),
     evouchersellingprice:new FormControl(),
+    evoucherexpiry: new FormControl(),
+    expirydays: new FormControl()
   })
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
-
   hotelId: any;
   isRoomBenefit:boolean = false;
   isFB:boolean = false;
@@ -42,6 +42,7 @@ export class EditVouchersComponent implements OnInit {
   myCoverImageCheck:boolean = false;
   coverImage:any;
   logo:any;
+  voucherId:any;
 
   constructor(private _vouchers:MembershipService, private _dialog:MatDialog, private _route:Router, private _roomService:RoomsService, private _activateRoute: ActivatedRoute) {
     this._roomService.getRoomList().subscribe((roomRes:any)=>{
@@ -55,10 +56,10 @@ export class EditVouchersComponent implements OnInit {
 
   ngOnInit(): void {
     this._activateRoute.params.subscribe((param:any)=>{
-      let id = param?.id;
+    let id = param?.id;
     this._vouchers.getVoucherDetails(parseInt(id)).subscribe((res:any) => {
-
       if(res && res.response) {
+        let groupingValue = res && res.response && res.response.grouping ? res.response.grouping.split(",").map((res:any) => parseInt(res)) : [];
         this.newVoucherForm.patchValue({
           title: res?.response?.voucherstitle,
           description: res?.response?.voucherdesc,
@@ -72,9 +73,12 @@ export class EditVouchersComponent implements OnInit {
           tranferable:res?.response?.transfer,
           evoucheractualprice:res?.response?.actualprice,
           evoucherpoints:res?.response?.points,
-          wanttogroupupexistingvoucher:res?.response?.grouping,
+          wanttogroupupexistingvoucher:groupingValue,
           evouchersellingprice:res?.response?.sellingprice,
+          evoucherexpiry: res?.response?.expiry_no,
+          expirydays: res?.response?.expiry_type
         })
+        this.voucherId = res?.response?.vouchersid
       }
     })
   });
@@ -82,11 +86,11 @@ export class EditVouchersComponent implements OnInit {
   }
   saveVoucher(){
     console.log(this.newVoucherForm.value);
-    this._vouchers.addVouchers(this.newVoucherForm.value).subscribe((voucherRes:any)=>{
+    this._vouchers.updateVouchers(this.newVoucherForm.value, this.voucherId).subscribe((voucherRes:any)=>{
       console.log(voucherRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
-          popupText: 'Vouchers created successfully',
+          popupText: 'Vouchers updated successfully',
         },
       });
       this._route.navigate(['/vouchers']);

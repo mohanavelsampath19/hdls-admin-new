@@ -1,3 +1,5 @@
+@import '../../../../theme/vars.scss';
+
 #hdls-newmembership-container{
   margin-left: 40px;
   margin-top: 40px;
@@ -5,7 +7,12 @@
       width: 60%;
       mat-form-field{
           width: 100%;
-
+      }
+      .hdls-expiry {
+        display: flex;
+        .hdls-no-expiry {
+          margin-right: 15px;
+        }
       }
   }
   .hdls-cancel-btn{

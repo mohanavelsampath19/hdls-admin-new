@@ -35,7 +35,16 @@ export class InventoryService {
     let formData = this.makeFormData(property_details);
     return this._http.post(environment.baseUrl + 'api/rooms/addproperty', formData);
   }
-  makeFormData(propertyDetails:any){
+
+  updateProperty(property_details:any, propertyid?:any) {
+    let formData = this.makeFormData(property_details, propertyid);
+    return this._http.post(environment.baseUrl + 'api/rooms/updateproperty', formData);
+  }
+
+  getPropertyDetail(propertyid:any) {
+    return this._http.post(environment.baseUrl + 'api/rooms/getpropertydetail', {propertyid})
+  }
+  makeFormData(propertyDetails:any, id?:any){
     let formKeys = Object.keys(propertyDetails);
     let formValues:any = Object.values(propertyDetails);
     let formData = new FormData();
@@ -46,6 +55,9 @@ export class InventoryService {
         formData.append(formItem, formValues[i]);
       }
     });
+    if(id) {
+      formData.append('id', id)
+    }
     return formData;
   }
 }

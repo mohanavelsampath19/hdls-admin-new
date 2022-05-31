@@ -42,7 +42,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            
+
             <div *ngIf="isFB">
                 <mat-form-field appearance="fill">
                     <mat-label>Restaurant</mat-label>
@@ -116,7 +116,7 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Want To Group-Up Existing Voucher?</mat-label>
-                    <mat-select formControlName="wanttogroupupexistingvoucher">
+                    <mat-select multiple formControlName="wanttogroupupexistingvoucher">
                         <mat-option [value]="voucher.vouchersid" *ngFor="let voucher of existingVoucherList">
                             {{voucher.voucherstitle}}</mat-option>
                     </mat-select>
@@ -138,10 +138,24 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>E-voucher Points</mat-label>
-                    <input matInput formControlName="evoucherpoints" type="number" name="evoucherpoints">
+                    <input matInput min="0" formControlName="evoucherpoints" type="number" name="evoucherpoints">
                 </mat-form-field>
             </div>
-            
+            <div class="hdls-expiry">
+              <mat-form-field appearance="fill" class="hdls-no-expiry">
+                  <mat-label>E-voucher Expiry</mat-label>
+                  <input matInput formControlName="evoucherexpiry" type="number" name="evoucherexpiry">
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>E-voucher Type</mat-label>
+                <mat-select class="hdls-form-select" formControlName="expirydays">
+                  <mat-option value="days">Days</mat-option>
+                  <mat-option value="weeks">Weeks</mat-option>
+                  <mat-option value="months">Months</mat-option>
+                  <mat-option value="yearly">Yearly</mat-option>
+                </mat-select>
+            </mat-form-field>
+          </div>
             <div class="form-group">
               <h4>Voucher Image *</h4>
               <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
@@ -161,8 +175,8 @@
                 </mat-radio-group>
             </div> -->
             <div class="submitButtonGroup">
-                <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="saveVoucher()" [disabled]="!newVoucherForm.valid">Save</button>
-                <button mat-raised-button class="hdls-cancel-btn">Cancel</button>
+                <button mat-raised-button color="primary" class="hdls-nxt-btn hdls-btn-primary" (click)="saveVoucher()" [disabled]="!newVoucherForm.valid">Save</button>
+                <button mat-raised-button class="hdls-cancel-btn hdls-btn-secondary">Cancel</button>
             </div>
         </form>
     </div>

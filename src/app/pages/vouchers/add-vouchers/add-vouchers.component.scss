@@ -7,6 +7,12 @@
             width: 100%;
 
         }
+        .hdls-expiry {
+          display: flex;
+          .hdls-no-expiry {
+            margin-right: 15px;
+          }
+        }
     }
     .hdls-nxt-btn{
         margin-right:10px;

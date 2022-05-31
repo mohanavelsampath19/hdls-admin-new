@@ -53,6 +53,11 @@ export class MembershipService {
     let formData = this.makeFormData(voucherDetails);
     return this._http.post(environment.baseUrl + 'api/vouchers/createvouchers', formData);
   }
+
+  updateVouchers(voucherDetails:any, voucherId:any) {
+    let formData = this.makeFormData(voucherDetails, voucherId);
+    return this._http.post(environment.baseUrl + 'api/vouchers/updatevouchers', formData);
+  }
   addMembership(membershipDetails:any){
     return this._http.post(environment.baseUrl+ 'api/membership/creatememberships',{...membershipDetails});
   }
@@ -65,7 +70,7 @@ export class MembershipService {
   getVouchers(){
     return this._http.get(environment.baseUrl + 'api/vouchers/getvouchers');
   }
-  makeFormData(voucherDetails:any){
+  makeFormData(voucherDetails:any, id?:any){
     let formKeys = Object.keys(voucherDetails);
     let formValues:any = Object.values(voucherDetails);
     let formData = new FormData();
@@ -76,6 +81,9 @@ export class MembershipService {
         formData.append(formItem, formValues[i]);
       }
     });
+    if(id) {
+      formData.append('voucherid', id);
+    }
     return formData;
   }
   deleteVouchers(voucherid:any) {
