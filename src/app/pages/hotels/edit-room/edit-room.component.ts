@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InfoPopupComponent } from '../../../components/common/info-popup/info-popup.component';
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HotelsService } from 'src/app/services/hotels/hotels.service';
 
 @Component({
   selector: 'app-edit-room',
@@ -50,8 +51,22 @@ export class EditRoomComponent implements OnInit {
     private _roomsService: RoomsService,
     public _dialog: MatDialog,
     private _route: Router,
-    private _activatedRouter: ActivatedRoute
-  ){}
+    private _activatedRouter: ActivatedRoute,
+    private _hotelService: HotelsService
+  ){
+     this.firstFormGroup = this._formBuilder.group({
+      roomtitle: ['', Validators.required],
+      roomsdesc: ['', Validators.required],
+      bedtype: ['', Validators.required],
+      totalrooms: ['', Validators.required],
+      adults: [0, Validators.required],
+      room_facilities: [''],
+      roomsize: ['', Validators.required],
+      points: ['', Validators.required],
+      price: ['', Validators.required],
+      numberofguest:['',Validators.required]
+    });
+  }
 
   removevalue(i: any) {
     this.roomPrice.splice(i, 1);
@@ -66,35 +81,29 @@ export class EditRoomComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      roomtitle: ['', Validators.required],
-      roomsdesc: ['', Validators.required],
-      bedtype: ['', Validators.required],
-      totalrooms: ['', Validators.required],
-      adults: [0, Validators.required],
-      room_facilities: [''],
-      roomsize: ['', Validators.required],
-      points: ['', Validators.required],
-      price: ['', Validators.required],
-      numberofguest:['',Validators.required]
-    });
-
     this._activatedRouter.queryParams.subscribe((res) => {
       if(res && res.id) {
         this.hotelId = res.id;
+        this._hotelService.getRoomDetails(res.roomid).subscribe((res:any)=> {
+          console.log(JSON.parse(res.response.images), '---')
+          let images = JSON.parse(res.response.images);
+          let title = res?.response?.roomtitle;
+           this.firstFormGroup.patchValue({
+            roomtitle: res?.response?.roomtitle,
+            roomsdesc:res?.response?.roomsdesc,
+            bedtype:res?.response?.bedtype,
+            totalrooms:res?.response?.totalrooms,
+            adults:res?.response?.roomName,
+            room_facilities:res?.response?.roomName,
+            roomsize:res?.response?.roomsize,
+            points:res?.response?.points,
+            price:res?.response?.price
+          });
+          this.roomList = images[title]?.imageList;
+        })
       }
     });
-    // this.firstFormGroup.patchValue({
-    //   roomtitle:'Super Deluxe',
-    //   roomsdesc:'Super Deluxe',
-    //   bedtype:'Single bedroom',
-    //   totalrooms:'4',
-    //   adults:4,
-    //   room_facilities:[],
-    //   roomsize:'10',
-    //   points:400,
-    //   price:1400
-    // });
+
   }
 
   getCurrentStep = (stepno: number) => {
