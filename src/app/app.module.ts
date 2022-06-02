@@ -41,7 +41,7 @@ import { EditRoomComponent } from './pages/hotels/edit-room/edit-room.component'
 import { VouchersComponent } from './pages/vouchers/vouchers.component';
 import { AddVouchersComponent } from './pages/vouchers/add-vouchers/add-vouchers.component';
 import { EditMembershipComponent } from './pages/membership/edit-membership/edit-membership.component';
-import { BookingstatusPipe } from './pipes/bookingstatus.pipe';
+
 // import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
@@ -101,7 +101,8 @@ import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouch
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBPFJayQZ1SGLO7W_p0FAMRR552UdLhr3s',
       libraries: ['places']
-    })
+    }),
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,7 @@
 <mat-dialog-content class="mat-typography hdls-delete-dialog">
-  <h3>Please confirm the bookings</h3>
+  <h3 *ngIf="data.bookingStatus!=1">Please confirm the bookings</h3>
+  <h3 *ngIf="data.bookingStatus==1">Please confirm the booking completion</h3>
+  <p *ngIf="data.bookingStatus==1">The customer vacated from this room at <strong>{{currentDate | date:'medium'}} </strong> </p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button color="secondary" class="hdls-btn-secondary"
@@ -20,6 +22,12 @@
   >
     Accept
   </button>
+  <button mat-button color="secondary" class="hdls-btn-secondary"
+  [mat-dialog-close]="true"
+  cdkFocusInitial
+  *ngIf="data.bookingStatus==1">
+    Cancel
+  </button>
   <button
   *ngIf="data.bookingStatus==1"
     class="hdls-btn-primary"
@@ -29,6 +37,6 @@
     cdkFocusInitial
     (click)="changeBookingStatus('vacated')"
   >
-    Room Vacated
+    Agree
   </button>
 </mat-dialog-actions>
