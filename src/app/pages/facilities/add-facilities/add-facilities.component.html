@@ -1,6 +1,6 @@
 <section id="hdls-newmembership-container">
     <h3 class="hdls-breadcrumb-title">Add Facilities </h3>
-    <div class="new-membership-form-container"> 
+    <div class="new-membership-form-container">
         <form [formGroup]="newFacility">
             <div>
                 <mat-form-field appearance="fill">
@@ -24,7 +24,7 @@
                     <textarea matInput formControlName="description" type="text" name="description"></textarea>
                 </mat-form-field>
             </div>
-            
+
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Properties</mat-label>
@@ -33,7 +33,7 @@
                     </mat-select>
                   </mat-form-field>
             </div>
-            
+
             <!-- <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Stocks *</mat-label>
@@ -48,11 +48,10 @@
                   <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
                 </div>
               </div>
-          
             <div>
                 <button mat-raised-button class="hdls-cancel-btn" (click)="backToFacility()">Cancel</button>
                 <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="saveFacility()">Submit</button>
             </div>
         </form>
-    </div>           
+    </div>
 </section>

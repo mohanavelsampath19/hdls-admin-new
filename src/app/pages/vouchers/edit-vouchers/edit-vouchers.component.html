@@ -10,9 +10,17 @@
           </div>
           <div>
               <mat-form-field appearance="fill">
-                  <mat-label>Description *</mat-label>
+                  <mat-label>Terms and Conditions *</mat-label>
                   <textarea matInput formControlName="description" type="text" name="description"></textarea>
               </mat-form-field>
+          </div>
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>Properties *</mat-label>
+                  <mat-select (selectionChange)="inventoryChange($event)" formControlName="hotelid">
+                    <mat-option [value]="inventory.hotel_id" *ngFor="let inventory of inventoryList">{{inventory.hotelname}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
           </div>
           <div>
               <mat-form-field appearance="fill">
@@ -28,42 +36,37 @@
           <div *ngIf="isRoomBenefit">
               <mat-form-field appearance="fill">
                   <mat-label>Room Type</mat-label>
-                  <mat-select formControlName="roomType">
+                  <mat-select formControlName="roomType" #myInputRefmyRoomList>
                       <mat-option [value]="room.roomsid" *ngFor="let room of myRoomList">{{room.roomtitle}}
                       </mat-option>
                   </mat-select>
               </mat-form-field>
           </div>
+
           <div *ngIf="isFB">
               <mat-form-field appearance="fill">
-                  <mat-label>F&B</mat-label>
-                  <mat-select formControlName="category">
-                      <mat-option value="room">Room</mat-option>
-                      <mat-option value="f&b">F&B</mat-option>
-                      <mat-option value="facilities">Facilities</mat-option>
-                      <mat-option value="market place/deal">Market place/Deal</mat-option>
+                  <mat-label>Restaurant</mat-label>
+                  <mat-select formControlName="roomType" #myInputReffbList>
+                      <mat-option [value]="fb.id" *ngFor="let fb of fbList">{{fb.facility_name}}
+                      </mat-option>
                   </mat-select>
               </mat-form-field>
           </div>
           <div *ngIf="isFacilities">
               <mat-form-field appearance="fill">
                   <mat-label>Facilities</mat-label>
-                  <mat-select formControlName="category">
-                      <mat-option value="room">Room</mat-option>
-                      <mat-option value="fb">F&B</mat-option>
-                      <mat-option value="facilities">Facilities</mat-option>
-                      <mat-option value="market place/deal">Market place/Deal</mat-option>
+                  <mat-select formControlName="roomType" #myInputReffacilityList>
+                      <mat-option [value]="fb.id" *ngFor="let fb of facilityList">{{fb.facility_name}}
+                      </mat-option>
                   </mat-select>
               </mat-form-field>
           </div>
           <div *ngIf="isMarketplace">
               <mat-form-field appearance="fill">
-                  <mat-label>Marketplace Deals</mat-label>
-                  <mat-select formControlName="category">
-                      <mat-option value="room">Room</mat-option>
-                      <mat-option value="f&b">F&B</mat-option>
-                      <mat-option value="facilities">Facilities</mat-option>
-                      <mat-option value="market place/deal">Market place/Deal</mat-option>
+                  <mat-label>Marketplace / Deal</mat-label>
+                  <mat-select formControlName="roomType">
+                      <mat-option [value]="fb.id" *ngFor="let fb of marketplaceList">{{fb.facility_name}}
+                      </mat-option>
                   </mat-select>
               </mat-form-field>
           </div>
@@ -122,20 +125,20 @@
           <div>
               <mat-form-field appearance="fill">
                   <mat-label>E-voucher Actual Price(RM)*</mat-label>
-                  <input matInput type="number" name="evoucheractualprice" formControlName="evoucheractualprice" />
+                  <input matInput type="number" min="0" name="evoucheractualprice" formControlName="evoucheractualprice" />
               </mat-form-field>
           </div>
           <div>
               <mat-form-field appearance="fill">
                   <mat-label>E-voucher Selling Price(RM)*</mat-label>
-                  <input matInput type="number" name="evouchersellingprice" formControlName="evouchersellingprice" />
+                  <input matInput type="number" min="0" name="evouchersellingprice" formControlName="evouchersellingprice" />
               </mat-form-field>
           </div>
 
           <div>
               <mat-form-field appearance="fill">
                   <mat-label>E-voucher Points</mat-label>
-                  <input matInput formControlName="evoucherpoints" type="number" name="evoucherpoints">
+                  <input matInput min="0" formControlName="evoucherpoints" type="number" name="evoucherpoints">
               </mat-form-field>
           </div>
           <div class="hdls-expiry">
@@ -153,7 +156,15 @@
               </mat-select>
           </mat-form-field>
         </div>
-          <div>
+        <div class="form-group coverImageContainer">
+          <h4>Voucher Image *</h4>
+          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" #myCoverImage />
+          <div *ngIf="myCoverImageCheck" class="myCoverImage">
+            <img [src]="coverImage" alt="Cover Image">
+            <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
+          </div>
+        </div>
+          <!-- <div class="transfer">
               <h4 class="text-bold">Transferable</h4>
               <mat-radio-group class="transferable" formControlName="tranferable">
                   <mat-radio-button class="p-10" value="non-transferable">
@@ -163,17 +174,10 @@
                       Transferable
                   </mat-radio-button>
               </mat-radio-group>
-          </div>
-          <div class="form-group">
-            <h4>Voucher Image *</h4>
-            <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
-            <div *ngIf="myCoverImageCheck" class="myCoverImage">
-              <img [src]="coverImage" alt="Cover Image">
-            </div>
-          </div>
-          <div class="p-10">
+          </div> -->
+          <div class="submitButtonGroup">
+              <button mat-raised-button color="primary" class="hdls-nxt-btn hdls-btn-primary" (click)="saveVoucher()" [disabled]="!newVoucherForm.valid">Save</button>
               <button mat-raised-button class="hdls-cancel-btn hdls-btn-secondary">Cancel</button>
-              <button mat-raised-button color="primary" class="hdls-nxt-btn hdls-btn-primary" (click)="saveVoucher()">Update</button>
           </div>
       </form>
   </div>

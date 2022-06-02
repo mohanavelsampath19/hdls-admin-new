@@ -17,20 +17,20 @@ export class AddVouchersComponent implements OnInit {
   isDiscounted:boolean = false;
 
   newVoucherForm:FormGroup = new FormGroup({
-    title: new FormControl(),
-    description: new FormControl(),
+    title: new FormControl('',Validators.required),
+    description: new FormControl('',Validators.required),
     category:new FormControl(),
-    roomType:new FormControl('',Validators.required),
+    roomType:new FormControl(),
     benefittype:new FormControl(),
     discounttype:new FormControl(),
     discount:new FormControl(),
     evoucherQuantity:new FormControl(),
     isthereanyblockoutdates:new FormControl(),
     tranferable:new FormControl(),
-    evoucheractualprice:new FormControl(),
+    evoucheractualprice:new FormControl('',Validators.required),
     evoucherpoints:new FormControl(),
     wanttogroupupexistingvoucher:new FormControl(),
-    evouchersellingprice:new FormControl(),
+    evouchersellingprice:new FormControl('',Validators.required),
     hotelid:new FormControl('',Validators.required),
     evoucherexpiry: new FormControl(),
     expirydays: new FormControl()
@@ -51,7 +51,10 @@ export class AddVouchersComponent implements OnInit {
   fbList:any;
   facilityList:any;
   marketplaceList:any;
+
   editor:any;
+  @ViewChild('myCoverImage', { static: false })
+  myCoverImage!: ElementRef;
   constructor(private _vouchers:MembershipService, private _dialog:MatDialog, private _route:Router, private _roomService:RoomsService, private _inventory:InventoryService, private _facility:FacilitiesService) {
     this._roomService.getRoomList().subscribe((roomRes:any)=>{
       this.myRoomList = roomRes.response;
@@ -133,5 +136,10 @@ export class AddVouchersComponent implements OnInit {
     this._roomService.getRoomList(e.value).subscribe((roomRes:any)=>{
       this.myRoomList = roomRes.response;
     });
+  }
+
+  clearSelectedFile(){
+    this.myCoverImage.nativeElement.value = '';
+    this.myCoverImageCheck = false;
   }
 }

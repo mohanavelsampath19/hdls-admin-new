@@ -36,6 +36,12 @@ export class HotelsService {
       roomid: hotel_name
     })
   }
+
+  getRoomDetails(room_id:any) {
+    return this._http.post(environment.baseUrl + 'api/rooms/getroomdetailbyid', {
+      roomid: room_id
+    })
+  }
 }
 
 export interface HotelDetails {

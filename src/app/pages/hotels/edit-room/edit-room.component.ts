@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InfoPopupComponent } from '../../../components/common/info-popup/info-popup.component';
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HotelsService } from 'src/app/services/hotels/hotels.service';
 
 @Component({
   selector: 'app-edit-room',
@@ -45,13 +46,28 @@ export class EditRoomComponent implements OnInit {
   hotelId:number=0;
   addImages:any=[];
   addImageType:any = [];
+  roomid:any;
   constructor(
     private _formBuilder: FormBuilder,
     private _roomsService: RoomsService,
     public _dialog: MatDialog,
     private _route: Router,
-    private _activatedRouter: ActivatedRoute
-  ){}
+    private _activatedRouter: ActivatedRoute,
+    private _hotelService: HotelsService
+  ){
+     this.firstFormGroup = this._formBuilder.group({
+      roomtitle: ['', Validators.required],
+      roomsdesc: ['', Validators.required],
+      bedtype: ['', Validators.required],
+      totalrooms: ['', Validators.required],
+      adults: [0, Validators.required],
+      room_facilities: [''],
+      roomsize: ['', Validators.required],
+      points: ['', Validators.required],
+      price: ['', Validators.required],
+      numberofguest:['',Validators.required]
+    });
+  }
 
   removevalue(i: any) {
     this.roomPrice.splice(i, 1);
@@ -66,35 +82,32 @@ export class EditRoomComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      roomtitle: ['', Validators.required],
-      roomsdesc: ['', Validators.required],
-      bedtype: ['', Validators.required],
-      totalrooms: ['', Validators.required],
-      adults: [0, Validators.required],
-      room_facilities: [''],
-      roomsize: ['', Validators.required],
-      points: ['', Validators.required],
-      price: ['', Validators.required],
-      numberofguest:['',Validators.required]
-    });
-
     this._activatedRouter.queryParams.subscribe((res) => {
       if(res && res.id) {
         this.hotelId = res.id;
+        this.roomid = res.roomid;
+        this._hotelService.getRoomDetails(this.roomid).subscribe((res:any)=> {
+          let images = JSON.parse(res.response.images);
+          let title = res?.response?.roomtitle;
+           this.firstFormGroup.patchValue({
+            roomtitle: res?.response?.roomtitle,
+            roomsdesc:res?.response?.roomsdesc,
+            bedtype:res?.response?.bedtype,
+            totalrooms:res?.response?.totalrooms,
+            adults:res?.response?.roomName,
+            roomsize:res?.response?.roomsize,
+            points:res?.response?.points,
+            price:res?.response?.price,
+            numberofguest: res?.response?.nog,
+            room_facilities: res?.response?.room_facilities.split(",")
+          });
+          this.roomList = images[title]?.imageList;
+          this.myCoverImageCheck = true;
+          this.coverImage = res?.response?.coverImage
+        })
       }
     });
-    // this.firstFormGroup.patchValue({
-    //   roomtitle:'Super Deluxe',
-    //   roomsdesc:'Super Deluxe',
-    //   bedtype:'Single bedroom',
-    //   totalrooms:'4',
-    //   adults:4,
-    //   room_facilities:[],
-    //   roomsize:'10',
-    //   points:400,
-    //   price:1400
-    // });
+
   }
 
   getCurrentStep = (stepno: number) => {
@@ -137,12 +150,12 @@ export class EditRoomComponent implements OnInit {
       addImages:this.addImages
     };
 
-    this._roomsService.addRoomService(roomDetails).subscribe((res:any) => {
+    this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
       console.log(res);
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
-            popupText: 'Room created successfully',
+            popupText: 'Room updated successfully',
           },
         });
         this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });

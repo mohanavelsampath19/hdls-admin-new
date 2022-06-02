@@ -267,7 +267,7 @@ export class EditPropertyComponent implements OnInit {
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
-            popupText: 'Property created successfully',
+            popupText: 'Property updated successfully',
           },
         });
         dialogRef.afterClosed().subscribe(() => {
