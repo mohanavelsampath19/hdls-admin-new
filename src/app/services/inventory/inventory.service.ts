@@ -17,7 +17,7 @@ export class InventoryService {
     this.currentInventory.next(this.getAllInventoryList[id]);
   }
   getMyInventoryList(category:number){
-    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist',{type: category}).subscribe((apiRes:any)=>{
+    return this._http.get(environment.baseUrl + 'api/hotel/gethotellist?activetype='+category).subscribe((apiRes:any)=>{
       this.getAllInventoryList = apiRes.response;
       this.currentInventory.next(this.getAllInventoryList[0]);
     })
@@ -25,7 +25,7 @@ export class InventoryService {
 
   getInventoryList(category?:number){
     let type = category !== undefined ? category : 1;
-    return this._http.post(environment.baseUrl + 'api/hotel/gethotellist',{type: type})
+    return this._http.get(environment.baseUrl + 'api/hotel/gethotellist?activetype'+type)
   }
   deleteHotel(hotelId:number){
     return this._http.post(environment.baseUrl + 'api/hotel/deletehotel',{hotelId:hotelId});

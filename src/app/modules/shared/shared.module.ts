@@ -31,7 +31,7 @@ import { ConfirmationModalComponent } from '../../components/common/confirmation
 import {MatExpansionModule} from '@angular/material/expansion';
 
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-
+import { BookingstatusPipe } from '../../pipes/bookingstatus.pipe';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -39,7 +39,8 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
     HdlsDateRangeComponent,
     DeleteModalComponent,
     InfoPopupComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    BookingstatusPipe
   ],
   imports: [
     CommonModule,
@@ -60,7 +61,8 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
     HdlsDateRangeComponent,
     MatDatepickerModule,
     MatFormFieldModule,
-    InfoPopupComponent
+    InfoPopupComponent,
+    BookingstatusPipe
   ],
 })
 export class SharedModule {}

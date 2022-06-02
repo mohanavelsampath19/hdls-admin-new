@@ -49,7 +49,7 @@ export class VouchersComponent implements OnInit {
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
-  constructor(private _membershipService: MembershipService,private _dialog:MatDialog) {}
+  constructor(private _membershipService: MembershipService, private _dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getPropertyList();
@@ -82,10 +82,10 @@ export class VouchersComponent implements OnInit {
     let getCategory = 3;
     switch (this.selectedCategory) {
       case 'live':
-        getCategory = 0;
+        getCategory = 1;
         break;
       case 'in_active':
-        getCategory = 1;
+        getCategory = 0;
         break;
       case 'deleted':
         getCategory = 2;
@@ -95,9 +95,9 @@ export class VouchersComponent implements OnInit {
         break;
     }
 
-    this._membershipService.getVoucherList(getCategory).subscribe((vouchersRes:any) => {
-      vouchersRes.response.forEach((property:any)=>{
-        property.logo = environment.imageUrl+"/"+property.logo;
+    this._membershipService.getVoucherList(getCategory).subscribe((vouchersRes: any) => {
+      vouchersRes.response.forEach((property: any) => {
+        property.logo = environment.imageUrl + "/" + property.logo;
       });
       this.dataSource = new MatTableDataSource(vouchersRes.response);
       this.paginator.length = vouchersRes.response.length;
@@ -156,24 +156,29 @@ export class VouchersComponent implements OnInit {
     event.preventDefault();
     //   this.getSearchInput.emit(this.searchValue);
   };
-  deleteVouchers(voucher_id:number, vouchertitle:string){
+  deleteVouchers(voucher_id: number, vouchertitle: string) {
     console.log(voucher_id, '---')
-      const dialogRef = this._dialog.open(DeleteModalComponent, {
-        data: {
-          productName:vouchertitle,
-          popupText: 'Are you sure you want to Delete the Voucher',
-          voucherId:voucher_id
-        },
-      });
+    const dialogRef = this._dialog.open(DeleteModalComponent, {
+      data: {
+        productName: vouchertitle,
+        popupText: 'Are you sure you want to Delete the Voucher',
+        voucherId: voucher_id
+      },
+    });
 
-      dialogRef.afterClosed().subscribe((data:any) => {
-        console.log(data);
-        if(data === true){
-          this._membershipService.deleteVouchers(voucher_id).subscribe((deleteRes:any)=>{
+    dialogRef.afterClosed().subscribe((data: any) => {
+      console.log(data);
+      if (data === true) {
+        this._membershipService.deleteVouchers(voucher_id).subscribe((deleteRes: any) => {
           //  console.log(deleteRes);
-            this.getPropertyList();
-          })
-        }
-      });
+          this.getPropertyList();
+        })
+      }
+    });
+  }
+  changeActiveStatus(event:any,voucherId:any){
+    this._membershipService.updateVoucherActiveStatus(voucherId,event.checked).subscribe((voucherRes:any)=>{
+      console.log(voucherRes);
+    })
   }
 }
