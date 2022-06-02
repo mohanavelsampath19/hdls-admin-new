@@ -134,7 +134,8 @@ export class AddRoomComponent implements OnInit {
     let roomDetails = {
       hotelid: this.hotelId,
       ...this.firstFormGroup.value,
-      addImages:this.addImages
+      addImages:this.addImages,
+      coverImage: this.logo
     };
 
     this._roomsService.addRoomService(roomDetails).subscribe((res:any) => {

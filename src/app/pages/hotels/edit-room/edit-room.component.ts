@@ -46,6 +46,7 @@ export class EditRoomComponent implements OnInit {
   hotelId:number=0;
   addImages:any=[];
   addImageType:any = [];
+  roomid:any;
   constructor(
     private _formBuilder: FormBuilder,
     private _roomsService: RoomsService,
@@ -84,8 +85,8 @@ export class EditRoomComponent implements OnInit {
     this._activatedRouter.queryParams.subscribe((res) => {
       if(res && res.id) {
         this.hotelId = res.id;
-        this._hotelService.getRoomDetails(res.roomid).subscribe((res:any)=> {
-          console.log(JSON.parse(res.response.images), '---')
+        this.roomid = res.roomid;
+        this._hotelService.getRoomDetails(this.roomid).subscribe((res:any)=> {
           let images = JSON.parse(res.response.images);
           let title = res?.response?.roomtitle;
            this.firstFormGroup.patchValue({
@@ -94,12 +95,15 @@ export class EditRoomComponent implements OnInit {
             bedtype:res?.response?.bedtype,
             totalrooms:res?.response?.totalrooms,
             adults:res?.response?.roomName,
-            room_facilities:res?.response?.roomName,
             roomsize:res?.response?.roomsize,
             points:res?.response?.points,
-            price:res?.response?.price
+            price:res?.response?.price,
+            numberofguest: res?.response?.nog,
+            room_facilities: res?.response?.room_facilities.split(",")
           });
           this.roomList = images[title]?.imageList;
+          this.myCoverImageCheck = true;
+          this.coverImage = res?.response?.coverImage
         })
       }
     });
@@ -146,12 +150,12 @@ export class EditRoomComponent implements OnInit {
       addImages:this.addImages
     };
 
-    this._roomsService.addRoomService(roomDetails).subscribe((res:any) => {
+    this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
       console.log(res);
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
-            popupText: 'Room created successfully',
+            popupText: 'Room updated successfully',
           },
         });
         this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
