@@ -10,6 +10,7 @@ import { InfoPopupComponent } from '../../../components/common/info-popup/info-p
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HotelsService } from 'src/app/services/hotels/hotels.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-room',
@@ -89,6 +90,7 @@ export class EditRoomComponent implements OnInit {
         this._hotelService.getRoomDetails(this.roomid).subscribe((res:any)=> {
           let images = JSON.parse(res.response.images);
           let title = res?.response?.roomtitle;
+          let getCoverImage = res?.response?.cover_image;
            this.firstFormGroup.patchValue({
             roomtitle: res?.response?.roomtitle,
             roomsdesc:res?.response?.roomsdesc,
@@ -99,11 +101,11 @@ export class EditRoomComponent implements OnInit {
             points:res?.response?.points,
             price:res?.response?.price,
             numberofguest: res?.response?.nog,
-            room_facilities: res?.response?.room_facilities.split(",")
+            room_facilities: res && res.response && res.response.room_facilities ? res.response.room_facilities.split(",") : []
           });
           this.roomList = images[title]?.imageList;
           this.myCoverImageCheck = true;
-          this.coverImage = res?.response?.coverImage
+          this.coverImage = `${environment.imageUrl}/${getCoverImage}`
         })
       }
     });
