@@ -24,12 +24,14 @@ export class AddMembershipComponent implements OnInit {
   
   inventoryList:any;
   vouchersList:any;
+  allVoucherList:any;
   constructor(private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) { 
     this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
       this.inventoryList = inventoryList.response;
     });
     this._membership.getVouchers().subscribe((vouchersRes:any)=>{
       this.vouchersList = vouchersRes.response;
+      this.allVoucherList = vouchersRes.response;
     })
   }
 
@@ -51,5 +53,9 @@ export class AddMembershipComponent implements OnInit {
   }
   backToMembership(){
     this._route.navigate(['/membership']);
+  }
+  changeMembership(event:any){
+    console.log(event);
+    this.vouchersList = this.allVoucherList.filter((voucher:any)=>{return voucher.hotelid==event.value});
   }
 }

@@ -17,7 +17,7 @@
           <div>
               <mat-form-field appearance="fill">
                   <mat-label>Properties *</mat-label>
-                  <mat-select (selectionChange)="inventoryChange($event)" formControlName="hotelid">
+                  <mat-select (selectionChange)="inventoryChange($event)" formControlName="propertyid">
                     <mat-option [value]="inventory.hotel_id" *ngFor="let inventory of inventoryList">{{inventory.hotelname}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -106,7 +106,7 @@
                   <mat-label>Is There Any Blockout Dates?</mat-label>
                   <mat-select formControlName="isthereanyblockoutdates">
                       <mat-option value="all days can use">All Days Can Use</mat-option>
-                      <mat-option value="weekened cant use">Weekened Cant Use</mat-option>
+                      <mat-option value="weekend cant use">Weekend Cant Use</mat-option>
                       <mat-option value="public holiday cant use">Public Holiday Cant Use</mat-option>
                       <mat-option value="selected dates cant use">Selected Dates Cant Use</mat-option>
                   </mat-select>

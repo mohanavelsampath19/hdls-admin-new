@@ -25,17 +25,19 @@ export class EditMembershipComponent implements OnInit {
   inventoryList:any;
   vouchersList:any;
   membershipDetail:any;
+  allVoucherList:any;
   constructor(private _activatedRoute:ActivatedRoute, private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) {
-    this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
-      this.inventoryList = inventoryList.response;
-    });
-    this._membership.getVouchers().subscribe((vouchersRes:any)=>{
-      this.vouchersList = vouchersRes.response;
-    });
+   
     this._activatedRoute.params.subscribe((param:any)=>{
-      console.log(param.id, '--id')
       this._membership.getAllMembership(param.id).subscribe((membershipDetails:any)=>{
         this.membershipDetail = membershipDetails.response;
+        this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
+          this.inventoryList = inventoryList.response;
+        });
+        this._membership.getVouchers().subscribe((vouchersRes:any)=>{
+          this.allVoucherList = vouchersRes.response;
+          this.vouchersList = this.allVoucherList.filter((voucher:any)=>{return voucher.hotelid==this.membershipDetail.hotelid});
+        });
         this.editMembership.patchValue({
           title: this.membershipDetail.membershipname,
           description: this.membershipDetail.membershipdesc,
@@ -43,7 +45,8 @@ export class EditMembershipComponent implements OnInit {
           evouchers: JSON.parse(this.membershipDetail.evouchers),
           amount: this.membershipDetail.amount,
           stocks: this.membershipDetail.stocks,
-        })
+        });
+        
       })
     });
 
@@ -66,5 +69,8 @@ export class EditMembershipComponent implements OnInit {
   backToMembership(){
     this._route.navigate(['/membership']);
   }
-
+  changeMembership(event:any){
+    console.log(event);
+    this.vouchersList = this.allVoucherList.filter((voucher:any)=>{return voucher.hotelid==event.value});
+  }
 }

@@ -17,7 +17,7 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Properties</mat-label>
-                    <mat-select formControlName="property">
+                    <mat-select formControlName="property" (selectionChange)="changeMembership($event)">
                       <mat-option [value]="inventory.hotel_id" *ngFor="let inventory of inventoryList">{{inventory.hotelname}}</mat-option>
                     </mat-select>
                   </mat-form-field>

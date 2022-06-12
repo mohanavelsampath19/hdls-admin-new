@@ -88,7 +88,7 @@ export class InventoryComponent implements OnInit {
 
   getPropertyList() {
     this.onFirstLoad();
-    let getCategory = 3;
+    let getCategory = 1;
     switch (this.selectedCategory) {
       case 'live':
         getCategory = 1;
@@ -100,7 +100,7 @@ export class InventoryComponent implements OnInit {
         getCategory = 2;
         break;
       default:
-        getCategory = 3;
+        getCategory = 1;
         break;
     }
     console.log(getCategory, this.selectedCategory)

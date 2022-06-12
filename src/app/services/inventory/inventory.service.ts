@@ -33,24 +33,24 @@ export class InventoryService {
 
   addProperty(property_details:any) {
     let formData = this.makeFormData(property_details);
-    return this._http.post(environment.baseUrl + 'api/rooms/addproperty', formData);
+    return this._http.post(environment.baseUrl + 'api/hotel/addproperty', formData);
   }
 
   updateProperty(property_details:any, propertyid?:any) {
     let formData = this.makeFormData(property_details, propertyid);
-    return this._http.post(environment.baseUrl + 'api/rooms/updateproperty', formData);
+    return this._http.post(environment.baseUrl + 'api/hotel/updateproperty', formData);
   }
 
   getPropertyDetail(propertyid:any) {
-    return this._http.post(environment.baseUrl + 'api/rooms/getpropertydetail', {propertyid})
+    return this._http.post(environment.baseUrl + 'api/hotel/getpropertydetail', {propertyid})
   }
   makeFormData(propertyDetails:any, id?:any){
     let formKeys = Object.keys(propertyDetails);
     let formValues:any = Object.values(propertyDetails);
     let formData = new FormData();
     formKeys.forEach((formItem:any,i)=>{
-      if(formItem == 'logo'){
-        formData.append('coverImage', formValues[i], formValues[i].name);
+      if(formItem == 'logo' && formValues[i]){
+        formData.append('logo', formValues[i], formValues[i].name);
       }else{
         formData.append(formItem, formValues[i]);
       }
