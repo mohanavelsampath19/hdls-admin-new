@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -15,6 +15,7 @@ import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { InventoryService } from '../../../services/inventory/inventory.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 
 
 @Component({
@@ -30,6 +31,8 @@ export class AddPropertyComponent implements OnInit {
   addOnBlur = true;
   variantArr: any[] = [];
   roomPrice: any[] = [];
+  @ViewChild('myCoverImage', { static: false })
+  myCoverImage!: ElementRef;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   firstFormGroup: FormGroup = this._formBuilder.group({});
   secondFormGroup: any = this._formBuilder.group({});
@@ -37,7 +40,7 @@ export class AddPropertyComponent implements OnInit {
   thirdFormGroup: any = this._formBuilder.group({});
   isEditable = false;
   facilities: any = this._formBuilder.group({});
-  checkin:any='';
+  checkin: any = '';
   currentStep: any = 0;
   progressBarValue: number = 4;
   checkForCoverImage: imageValidation = {
@@ -45,14 +48,14 @@ export class AddPropertyComponent implements OnInit {
     coverImage: [],
     featureImage: [],
   };
-  addImages:any=[];
-  addImageType:any = [];
-  myRoomImageCheck:boolean = false;
-  myRoomImageList:any = [];
-  roomList:any=[];
+  addImages: any = [];
+  addImageType: any = [];
+  myRoomImageCheck: boolean = false;
+  myRoomImageList: any = [];
+  roomList: any = [];
   @Input()
   selectedIndex: any;
-  
+
   warrantyPeriod = [
     {
       value: 0,
@@ -134,21 +137,22 @@ export class AddPropertyComponent implements OnInit {
   composedVariantList: Array<any> = [];
   removeFirstVariant: Array<any> = [];
   specRows: FormArray = this._formBuilder.array([]);
-  myCoverImageCheck:boolean = false;
-  coverImage:any;
-  logo:any;
-  latitude:any;
-  longitude:any;
-  appearance:any = {
-    OUTLINE:"outline"
+  myCoverImageCheck: boolean = false;
+  coverImage: any;
+  logo: any;
+  latitude: any;
+  longitude: any;
+  appearance: any = {
+    OUTLINE: "outline"
   }
+  @ViewChild("placesRef") placesRef: GooglePlaceDirective | undefined;
   constructor(
     private _formBuilder: FormBuilder,
     // private _productService: ProductService,
     public _dialog: MatDialog,
     private _route: Router,
     private _inventoryService: InventoryService
-  ) {}
+  ) { }
 
   removevalue(i: any) {
     this.roomPrice.splice(i, 1);
@@ -166,22 +170,22 @@ export class AddPropertyComponent implements OnInit {
       // availablerooms: [0, Validators.required],
       front_end_desk: ['', Validators.required],
       // points: ['', Validators.required],
-      checkin:['',Validators.required],
-      checkout:['',Validators.required],
-      address:['', Validators.required],
+      checkin: ['', Validators.required],
+      checkout: ['', Validators.required],
+      address: ['', Validators.required],
       point_of_contact: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      country:['', Validators.required],
-      logo:[''],
-      nearByLocation:this._formBuilder.array([])
+      country: ['', Validators.required],
+      logo: [''],
+      nearByLocation: this._formBuilder.array([])
     });
     this.secondFormGroup = this._formBuilder.group({});
 
     this.specFormGroup = this._formBuilder.group({
       specLists: this.specRows,
     });
-    
+
 
     this.facilities = this._formBuilder.group({
       breakFast: false,
@@ -201,7 +205,7 @@ export class AddPropertyComponent implements OnInit {
       shippingType: 'free',
       shipping_charges: 0,
     });
-    
+
     // this.thirdFormGroup.controls['shippingType'].valueChanges.subscribe(
     //   (value) => {
     //     this.shippingCategory = value;
@@ -209,32 +213,35 @@ export class AddPropertyComponent implements OnInit {
     // );
   }
 
-  
+
 
   saveProperty = () => {
     console.log(this.firstFormGroup.value);
-    let {vicinity} = this.firstFormGroup.value.address;
-    let property = {
-      ...this.firstFormGroup.value,
-      address:vicinity,
-      logo:this.logo,
-      nearbyloc:JSON.stringify(this.nearByLocation.value)
-    };
-    this._inventoryService.addProperty(property)
-    .subscribe((res:any) => {
-      if(res && res.status === 1) {
-        const dialogRef = this._dialog.open(InfoPopupComponent, {
-          data: {
-            popupText: 'Property created successfully',
-          },
-        });
-        dialogRef.afterClosed().subscribe(() => {
-          this._route.navigate(['/inventory'])
-        });
-      }
-    })
+    if (this.firstFormGroup.value) {
+      let { vicinity } = this.firstFormGroup.value.address;
+      let property = {
+        ...this.firstFormGroup.value,
+        address: vicinity,
+        logo: this.logo,
+        nearbyloc: JSON.stringify(this.nearByLocation.value)
+      };
+      this._inventoryService.addProperty(property)
+        .subscribe((res: any) => {
+          if (res && res.status === 1) {
+            const dialogRef = this._dialog.open(InfoPopupComponent, {
+              data: {
+                popupText: 'Property created successfully',
+              },
+            });
+            dialogRef.afterClosed().subscribe(() => {
+              this._route.navigate(['/inventory'])
+            });
+          }
+        })
+    }
+
   }
- 
+
   getCurrentStep = (stepno: number) => {
     if (this.firstFormGroup.valid) {
       switch (stepno) {
@@ -272,11 +279,11 @@ export class AddPropertyComponent implements OnInit {
       this.checkForCoverImage.validationCheck = false;
     }
   }
-  
-  
-  
-  
-  getShippingType(event: any) {}
+
+
+
+
+  getShippingType(event: any) { }
   addItem(category: any) {
     if (category === 'adults') {
       this.adults++;
@@ -291,10 +298,10 @@ export class AddPropertyComponent implements OnInit {
       this.childrens--;
     }
   }
-  goToLink(routerLink:string){
+  goToLink(routerLink: string) {
     this._route.navigate([routerLink]);
   }
-  coverFileChange(event:any){
+  coverFileChange(event: any) {
     var reader = new FileReader();
     this.myCoverImageCheck = true;
     reader.onload = e => this.coverImage = reader.result;
@@ -305,10 +312,10 @@ export class AddPropertyComponent implements OnInit {
 
   onAutocompleteSelected(result: any) {
     console.log('onAutocompleteSelected: ', result);
-    let country = this.getRegionName('country',result.address_components);
-    let state = this.getRegionName("administrative_area_level_1",result.address_components);
-    let city = this.getRegionName("locality",result.address_components);
-    this.firstFormGroup.patchValue({'country':country,'state':state,'city':city});
+    let country = this.getRegionName('country', result.address_components);
+    let state = this.getRegionName("administrative_area_level_1", result.address_components);
+    let city = this.getRegionName("locality", result.address_components);
+    this.firstFormGroup.patchValue({ 'country': country, 'state': state, 'city': city });
   }
 
   onLocationSelected(location: any) {
@@ -317,36 +324,36 @@ export class AddPropertyComponent implements OnInit {
     this.longitude = location.longitude;
   }
 
- 
-  getRegionName(locationType:string,addressComponent:any){
-    let region = addressComponent.filter((reg:any)=>{ 
-      if(reg.types.indexOf(locationType)>-1){
+
+  getRegionName(locationType: string, addressComponent: any) {
+    let region = addressComponent.filter((reg: any) => {
+      if (reg.types.indexOf(locationType) > -1) {
         return reg;
       }
     });
-    return region.length>0?region[0].long_name:'';
+    return region.length > 0 ? region[0].long_name : '';
   }
-  registerOnTouched(event:any){
+  registerOnTouched(event: any) {
     console.log(event);
   }
-  addImageWithType(){
-    this.addImages.push({type:'',files:[]});
+  addImageWithType() {
+    this.addImages.push({ type: '', files: [] });
   }
-  addImagetoIndex(i:number,event:any,f:any){
+  addImagetoIndex(i: number, event: any, f: any) {
     f.click();
   }
-  roomImageFileChange(index:number,event:any){
+  roomImageFileChange(index: number, event: any) {
     let fileList = event.target.files;
-    let modifiedList = this.pushToFileList(index,fileList);
+    let modifiedList = this.pushToFileList(index, fileList);
     this.addImages[index].fileUpload = modifiedList[0].fileList;
-    for(let i=0;i<modifiedList.length;i++){
+    for (let i = 0; i < modifiedList.length; i++) {
       let reader = new FileReader();
       this.myRoomImageCheck = true;
       reader.onload = e => {
-        if(this.addImages[index].fileList){
+        if (this.addImages[index].fileList) {
           this.addImages[index].fileList.push(reader.result);
         }
-        else{
+        else {
           this.addImages[index].fileList = [];
           this.addImages[index].fileList.push(reader.result);
         }
@@ -356,39 +363,52 @@ export class AddPropertyComponent implements OnInit {
     console.log(this.addImages[index]);
   }
 
-  pushToFileList(index:number,fileList:any){
-    if(!this.roomList[index] || this.roomList[index].fileList.length==0){
-      this.roomList[index] = {fileList:[]};
+  pushToFileList(index: number, fileList: any) {
+    if (!this.roomList[index] || this.roomList[index].fileList.length == 0) {
+      this.roomList[index] = { fileList: [] };
       this.roomList[index].fileList.push(fileList[0]);
-    }else{
-      for(let i=0;i<fileList.length;i++){
-        let checkExist = this.roomList[index].fileList.filter((item:any)=>item.name==fileList[i].name && item.size);
-        if(checkExist.length==0){
+    } else {
+      for (let i = 0; i < fileList.length; i++) {
+        let checkExist = this.roomList[index].fileList.filter((item: any) => item.name == fileList[i].name && item.size);
+        if (checkExist.length == 0) {
           this.roomList[index].fileList.push(fileList[i]);
         }
       }
     }
     return this.roomList;
   }
-  changeType(event:any){
+  changeType(event: any) {
     console.log(event, this.nearByLocation);
   }
-  changeLoc($event:any){
+  changeLoc($event: any) {
     console.log($event);
   }
-  get nearByLocation():FormArray{
-    return <FormArray> this.firstFormGroup.get('nearByLocation');
-   }
-   addNewLocation(){
+  get nearByLocation(): FormArray {
+    return <FormArray>this.firstFormGroup.get('nearByLocation');
+  }
+  addNewLocation() {
     this.nearByLocation.push(this.nearByForm());
-   }
-   nearByForm(){
+  }
+  nearByForm() {
     return this._formBuilder.group({
-      locType:[''],
-      name:[''],
-      distance:['']
+      locType: [''],
+      name: [''],
+      distance: ['']
     });
-   }
+  }
+  handleAddressChange(e: any) {
+    console.log(e);
+  }
+  removeImage(index:number){
+    this.removeAt(this.addImages,index);
+  }
+  removeAt(ArrayList:any[],key:any){
+    ArrayList.splice(key, 1);
+  }
+  clearSelectedFile(){
+    this.myCoverImage.nativeElement.value = '';
+    this.myCoverImageCheck = false;
+  }
 }
 
 interface imageValidation {

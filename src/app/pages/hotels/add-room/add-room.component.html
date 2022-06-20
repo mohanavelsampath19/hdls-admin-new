@@ -74,6 +74,7 @@
               name="totalrooms"
               placeholder="Number of rooms"
               required
+              min="1"
             />
           </mat-form-field>
         <div class="adult-children-conatiner">
@@ -87,6 +88,7 @@
               name="numberofguest"
               placeholder="Number of guest"
               required
+              min="1"
             />
             <p
               class="hdls-error"
@@ -131,7 +133,7 @@
           </p>
         </mat-form-field>
         <mat-form-field class="hdls-form-field" appearance="fill">
-          <h4>Primary Room Price (RM)<span class="required">*</span></h4>
+          <h4>Actual Price (RM)<span class="required">*</span></h4>
           <input
             matInput
             formControlName="price"
@@ -149,6 +151,27 @@
             "
           >
             Please fill the room price
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Selling Price (RM)<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="selling_price"
+            class="hdls-form-input-width"
+            placeholder="Room Price"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.selling_price.invalid &&
+              (firstFormGroup.controls.selling_price.dirty ||
+                firstFormGroup.controls.selling_price.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the selling price
           </p>
         </mat-form-field>
 

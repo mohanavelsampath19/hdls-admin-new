@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -26,6 +26,8 @@ export class EditRoomComponent implements OnInit {
   isEditable = false;
   currentStep: any = 0;
   progressBarValue: number = 4;
+  @ViewChild('myCoverImage', { static: false })
+  myCoverImage!: ElementRef;
   checkForCoverImage: imageValidation = {
     validationCheck: false,
     coverImage: [],
@@ -60,11 +62,11 @@ export class EditRoomComponent implements OnInit {
       roomsdesc: ['', Validators.required],
       bedtype: ['', Validators.required],
       totalrooms: ['', Validators.required],
-      adults: [0, Validators.required],
       room_facilities: [''],
       roomsize: ['', Validators.required],
       points: ['', Validators.required],
       price: ['', Validators.required],
+      selling_price:['', Validators.required],
       numberofguest:['',Validators.required]
     });
   }
@@ -144,33 +146,38 @@ export class EditRoomComponent implements OnInit {
   };
 
   saveRoom() {
-    let roomDetails = {
-      hotelid: this.hotelId,
-      ...this.firstFormGroup.value,
-      addImages:this.addImages
-    };
-
-    this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
-      console.log(res);
-      if(res && res.status === 1) {
-        const dialogRef = this._dialog.open(InfoPopupComponent, {
-          data: {
-            popupText: 'Room updated successfully',
-          },
-        });
-        this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
-        dialogRef.afterClosed().subscribe(() => {
-        });
-      } else {
-        const dialogRef = this._dialog.open(InfoPopupComponent, {
-          data: {
-            popupText: 'Please try again later',
-          },
-        });
-        dialogRef.afterClosed().subscribe(() => {
-        });
-      }
-    })
+    console.log(this.firstFormGroup.value, this.firstFormGroup);
+    if(this.firstFormGroup.valid){
+      let roomDetails = {
+        hotelid: this.hotelId,
+        ...this.firstFormGroup.value,
+        addImages:this.addImages,
+        coverImage: this.logo
+      };
+  
+      this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
+        console.log(res);
+        if(res && res.status === 1) {
+          const dialogRef = this._dialog.open(InfoPopupComponent, {
+            data: {
+              popupText: 'Room updated successfully',
+            },
+          });
+          this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
+          dialogRef.afterClosed().subscribe(() => {
+          });
+        } else {
+          const dialogRef = this._dialog.open(InfoPopupComponent, {
+            data: {
+              popupText: 'Please try again later',
+            },
+          });
+          dialogRef.afterClosed().subscribe(() => {
+          });
+        }
+      })
+    }
+    
   }
   checkForFormImage(checkForStatus: imageValidation) {
     this.checkForCoverImage = checkForStatus;
@@ -255,6 +262,10 @@ export class EditRoomComponent implements OnInit {
     reader.onload = e => this.coverImage = reader.result;
     this.logo = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
+  }
+  clearSelectedFile(){
+    this.myCoverImage.nativeElement.value = '';
+    this.myCoverImageCheck = false;
   }
 }
 

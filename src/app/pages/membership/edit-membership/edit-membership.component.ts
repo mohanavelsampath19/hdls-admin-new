@@ -22,10 +22,10 @@ export class EditMembershipComponent implements OnInit {
     stocks: new FormControl()
   });
 
-  inventoryList:any;
-  vouchersList:any;
+  inventoryList:any=[];
+  vouchersList:any=[];
   membershipDetail:any;
-  allVoucherList:any;
+  allVoucherList:any=[];
   constructor(private _activatedRoute:ActivatedRoute, private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) {
    
     this._activatedRoute.params.subscribe((param:any)=>{

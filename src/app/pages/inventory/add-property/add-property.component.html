@@ -146,8 +146,17 @@
 
         <div class="hdls-form-field-timings">
           <div>
-            <mat-google-maps-autocomplete formControlName="address" [appearance]="appearance.OUTLINE" (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)" class="hdls-form-input" (registerOnTouched)="changeLoc($event)">
-            </mat-google-maps-autocomplete>
+            <!-- <mat-google-maps-autocomplete formControlName="address" [appearance]="appearance.OUTLINE" (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)" class="hdls-form-input" (registerOnTouched)="changeLoc($event)">
+            </mat-google-maps-autocomplete> -->
+            
+            <mat-form-field appearance="outline" class="hdls-form-input address-control">
+              <mat-label>Address *</mat-label>
+              <input matInput
+                     matGoogleMapsAutocomplete
+                     formControlName="address"
+                     (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                     (onLocationSelected)="onLocationSelected($event)">
+            </mat-form-field>
           </div>
           <div class="myMapContainer" >
             <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" >
@@ -255,11 +264,12 @@
             Please fill the contact number
           </p>
         </mat-form-field>
-        <div class="form-group">
+        <div class="form-group coverImageContainer">
           <h4>Cover Image *</h4>
-          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
+          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" #myCoverImage/>
           <div *ngIf="myCoverImageCheck" class="myCoverImage">
             <img [src]="coverImage" alt="Cover Image">
+            <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
           </div>
         </div>
         <div class="form-group p-10">

@@ -23,7 +23,7 @@ export class AddMembershipComponent implements OnInit {
   });
   
   inventoryList:any;
-  vouchersList:any;
+  vouchersList:any=[];
   allVoucherList:any;
   constructor(private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) { 
     this._inventory.getInventoryList().subscribe((inventoryList:any)=>{

@@ -76,6 +76,7 @@ export class AddRoomComponent implements OnInit {
       roomsize: ['', Validators.required],
       points: ['', Validators.required],
       price: ['', Validators.required],
+      selling_price: ['', Validators.required],
       numberofguest:['',Validators.required]
     });
 
