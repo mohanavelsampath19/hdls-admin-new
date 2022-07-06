@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -15,6 +15,7 @@ import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { InventoryService } from '../../../services/inventory/inventory.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 
 
 @Component({
@@ -30,6 +31,8 @@ export class AddPropertyComponent implements OnInit {
   addOnBlur = true;
   variantArr: any[] = [];
   roomPrice: any[] = [];
+  @ViewChild('myCoverImage', { static: false })
+  myCoverImage!: ElementRef;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   firstFormGroup: FormGroup = this._formBuilder.group({});
   secondFormGroup: any = this._formBuilder.group({});
@@ -37,7 +40,7 @@ export class AddPropertyComponent implements OnInit {
   thirdFormGroup: any = this._formBuilder.group({});
   isEditable = false;
   facilities: any = this._formBuilder.group({});
-  checkin:any='';
+  checkin: any = '';
   currentStep: any = 0;
   progressBarValue: number = 4;
   checkForCoverImage: imageValidation = {
@@ -45,14 +48,14 @@ export class AddPropertyComponent implements OnInit {
     coverImage: [],
     featureImage: [],
   };
-  addImages:any=[];
-  addImageType:any = [];
-  myRoomImageCheck:boolean = false;
-  myRoomImageList:any = [];
-  roomList:any=[];
+  addImages: any = [];
+  addImageType: any = [];
+  myRoomImageCheck: boolean = false;
+  myRoomImageList: any = [];
+  roomList: any = [];
   @Input()
   selectedIndex: any;
-  
+
   warrantyPeriod = [
     {
       value: 0,
@@ -134,21 +137,22 @@ export class AddPropertyComponent implements OnInit {
   composedVariantList: Array<any> = [];
   removeFirstVariant: Array<any> = [];
   specRows: FormArray = this._formBuilder.array([]);
-  myCoverImageCheck:boolean = false;
-  coverImage:any;
-  logo:any;
-  latitude:any;
-  longitude:any;
-  appearance:any = {
-    OUTLINE:"outline"
+  myCoverImageCheck: boolean = false;
+  coverImage: any;
+  logo: any;
+  latitude: any;
+  longitude: any;
+  appearance: any = {
+    OUTLINE: "outline"
   }
+  @ViewChild("placesRef") placesRef: GooglePlaceDirective | undefined;
   constructor(
     private _formBuilder: FormBuilder,
     // private _productService: ProductService,
     public _dialog: MatDialog,
     private _route: Router,
     private _inventoryService: InventoryService
-  ) {}
+  ) { }
 
   removevalue(i: any) {
     this.roomPrice.splice(i, 1);
@@ -166,21 +170,22 @@ export class AddPropertyComponent implements OnInit {
       // availablerooms: [0, Validators.required],
       front_end_desk: ['', Validators.required],
       // points: ['', Validators.required],
-      checkin:['',Validators.required],
-      checkout:['',Validators.required],
-      address:['', Validators.required],
+      checkin: ['', Validators.required],
+      checkout: ['', Validators.required],
+      address: ['', Validators.required],
       point_of_contact: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      country:['', Validators.required],
-      logo:['']
+      country: ['', Validators.required],
+      logo: [''],
+      nearByLocation: this._formBuilder.array([])
     });
     this.secondFormGroup = this._formBuilder.group({});
 
     this.specFormGroup = this._formBuilder.group({
       specLists: this.specRows,
     });
-    
+
 
     this.facilities = this._formBuilder.group({
       breakFast: false,
@@ -200,10 +205,7 @@ export class AddPropertyComponent implements OnInit {
       shippingType: 'free',
       shipping_charges: 0,
     });
-    this.updateView();
-    this.variantFormGroup.valueChanges.subscribe((val) => {
-      this.composeVariantTable();
-    });
+
     // this.thirdFormGroup.controls['shippingType'].valueChanges.subscribe(
     //   (value) => {
     //     this.shippingCategory = value;
@@ -211,44 +213,33 @@ export class AddPropertyComponent implements OnInit {
     // );
   }
 
-  createProduct = () => {
-    let specObj: any = this.specFormGroup.value.specLists;
-    let variantObj = {
-      variants: this.variantList.value,
-      products: this.composedVariantList,
-    };
-    variantObj.variants = variantObj.variants.map((variant: any) => {
-      let modifiedObj: any = {};
-      modifiedObj.variant_name = variant.variantName;
-      modifiedObj.variants = variant.variantTypes.map(
-        (vt: any) => vt.variantItem
-      );
-      return modifiedObj;
-    });
-    let myTenantObj = JSON.parse(localStorage.getItem('tenant_details') || '');
-  };
+
 
   saveProperty = () => {
     console.log(this.firstFormGroup.value);
-    let {vicinity} = this.firstFormGroup.value.address;
-    let property = {
-      ...this.firstFormGroup.value,
-      address:vicinity,
-      logo:this.logo,
-    };
-    this._inventoryService.addProperty(property)
-    .subscribe((res:any) => {
-      if(res && res.status === 1) {
-        const dialogRef = this._dialog.open(InfoPopupComponent, {
-          data: {
-            popupText: 'Property created successfully',
-          },
-        });
-        dialogRef.afterClosed().subscribe(() => {
-          this._route.navigate(['/inventory'])
-        });
-      }
-    })
+    if (this.firstFormGroup.value) {
+      let { vicinity } = this.firstFormGroup.value.address;
+      let property = {
+        ...this.firstFormGroup.value,
+        address: vicinity,
+        logo: this.logo,
+        nearbyloc: JSON.stringify(this.nearByLocation.value)
+      };
+      this._inventoryService.addProperty(property)
+        .subscribe((res: any) => {
+          if (res && res.status === 1) {
+            const dialogRef = this._dialog.open(InfoPopupComponent, {
+              data: {
+                popupText: 'Property created successfully',
+              },
+            });
+            dialogRef.afterClosed().subscribe(() => {
+              this._route.navigate(['/inventory'])
+            });
+          }
+        })
+    }
+
   }
 
   getCurrentStep = (stepno: number) => {
@@ -288,125 +279,11 @@ export class AddPropertyComponent implements OnInit {
       this.checkForCoverImage.validationCheck = false;
     }
   }
-  get specList() {
-    return this.specFormGroup.get('specLists') as FormArray;
-  }
-  addSpecification() {
-    this.specRows.push(
-      this._formBuilder.group({
-        specname: '',
-        specval: '',
-      })
-    );
-    this.updateView();
-  }
-  removeSpecification(i: number) {
-    this.specRows.removeAt(i);
-    this.updateView();
-  }
-  updateView() {
-    this.specDataSource.next(this.specRows.controls);
-  }
-  get variantList() {
-    return this.variantFormGroup.get('variantList') as FormArray;
-  }
 
-  addVariant() {
-    this.variantArr.push([[{ name: '' }]]);
-    this.variantList.push(
-      this._formBuilder.group({
-        variantName: '',
-        variantTypes: this._formBuilder.array([
-          this._formBuilder.group({
-            variantItem: '',
-          }),
-        ]),
-      })
-    );
-  }
 
-  removeVariant(i: number) {
-    this.variantArr.splice(i, 1);
-    this.variantList.removeAt(i);
-  }
 
-  add(index: number) {
-    let variantType: any = this.variantList.controls[index];
-    if (this.variantArr[index]) {
-      variantType.controls.variantTypes.push(
-        this._formBuilder.group({
-          variantItem: '',
-        })
-      );
-    }
-    variantType.controls.variantTypes.updateValueAndValidity();
-  }
 
-  remove(variant: any, index: number) {
-    let variantType: any = this.variantList.controls[variant];
-    variantType.controls.variantTypes.removeAt(index);
-    variantType.controls.variantTypes.updateValueAndValidity();
-  }
-  getControls(index: number) {
-    return this.variantList.controls[index].get('variantTypes') as FormArray;
-  }
-  composeVariantTable() {
-    let productList = [];
-    if (this.variantFormGroup.value.variantList.length != 0) {
-      for (
-        let i = 0;
-        i < this.variantFormGroup.value.variantList[0].variantTypes.length;
-        i++
-      ) {
-        if (this.variantFormGroup.value.variantList.length === 1) {
-          let composedJSON: any = {
-            quantity: 0,
-            sale_price: 0,
-            original_price: 0,
-            availability: true,
-          };
-          composedJSON[this.variantFormGroup.value.variantList[0].variantName] =
-            this.variantFormGroup.value.variantList[0].variantTypes[
-              i
-            ].variantItem;
-          productList.push(composedJSON);
-        } else {
-          for (
-            let j = 0;
-            j < this.variantFormGroup.value.variantList[1].variantTypes.length;
-            j++
-          ) {
-            let composedJSON: any = {
-              quantity: 0,
-              sale_price: 0,
-              original_price: 0,
-              availability: true,
-            };
-            composedJSON[
-              this.variantFormGroup.value.variantList[0].variantName
-            ] =
-              this.variantFormGroup.value.variantList[0].variantTypes[
-                i
-              ].variantItem;
-            composedJSON[
-              this.variantFormGroup.value.variantList[1].variantName
-            ] =
-              this.variantFormGroup.value.variantList[1].variantTypes[
-                j
-              ].variantItem;
-            productList.push(composedJSON);
-          }
-        }
-      }
-    }
-    this.composedVariantList = productList;
-    if (this.variantList.value.length >= 1) {
-      let tempVar = [...this.variantList.value];
-      // tempVar.shift();
-      this.removeFirstVariant = tempVar;
-    }
-  }
-  getShippingType(event: any) {}
+  getShippingType(event: any) { }
   addItem(category: any) {
     if (category === 'adults') {
       this.adults++;
@@ -421,10 +298,10 @@ export class AddPropertyComponent implements OnInit {
       this.childrens--;
     }
   }
-  goToLink(routerLink:string){
+  goToLink(routerLink: string) {
     this._route.navigate([routerLink]);
   }
-  coverFileChange(event:any){
+  coverFileChange(event: any) {
     var reader = new FileReader();
     this.myCoverImageCheck = true;
     reader.onload = e => this.coverImage = reader.result;
@@ -435,10 +312,10 @@ export class AddPropertyComponent implements OnInit {
 
   onAutocompleteSelected(result: any) {
     console.log('onAutocompleteSelected: ', result);
-    let country = this.getRegionName('country',result.address_components);
-    let state = this.getRegionName("administrative_area_level_1",result.address_components);
-    let city = this.getRegionName("locality",result.address_components);
-    this.firstFormGroup.patchValue({'country':country,'state':state,'city':city});
+    let country = this.getRegionName('country', result.address_components);
+    let state = this.getRegionName("administrative_area_level_1", result.address_components);
+    let city = this.getRegionName("locality", result.address_components);
+    this.firstFormGroup.patchValue({ 'country': country, 'state': state, 'city': city });
   }
 
   onLocationSelected(location: any) {
@@ -447,36 +324,36 @@ export class AddPropertyComponent implements OnInit {
     this.longitude = location.longitude;
   }
 
- 
-  getRegionName(locationType:string,addressComponent:any){
-    let region = addressComponent.filter((reg:any)=>{ 
-      if(reg.types.indexOf(locationType)>-1){
+
+  getRegionName(locationType: string, addressComponent: any) {
+    let region = addressComponent.filter((reg: any) => {
+      if (reg.types.indexOf(locationType) > -1) {
         return reg;
       }
     });
-    return region.length>0?region[0].long_name:'';
+    return region.length > 0 ? region[0].long_name : '';
   }
-  registerOnTouched(event:any){
+  registerOnTouched(event: any) {
     console.log(event);
   }
-  addImageWithType(){
-    this.addImages.push({type:'',files:[]});
+  addImageWithType() {
+    this.addImages.push({ type: '', files: [] });
   }
-  addImagetoIndex(i:number,event:any,f:any){
+  addImagetoIndex(i: number, event: any, f: any) {
     f.click();
   }
-  roomImageFileChange(index:number,event:any){
+  roomImageFileChange(index: number, event: any) {
     let fileList = event.target.files;
-    let modifiedList = this.pushToFileList(index,fileList);
+    let modifiedList = this.pushToFileList(index, fileList);
     this.addImages[index].fileUpload = modifiedList[0].fileList;
-    for(let i=0;i<modifiedList.length;i++){
+    for (let i = 0; i < modifiedList.length; i++) {
       let reader = new FileReader();
       this.myRoomImageCheck = true;
       reader.onload = e => {
-        if(this.addImages[index].fileList){
+        if (this.addImages[index].fileList) {
           this.addImages[index].fileList.push(reader.result);
         }
-        else{
+        else {
           this.addImages[index].fileList = [];
           this.addImages[index].fileList.push(reader.result);
         }
@@ -486,19 +363,51 @@ export class AddPropertyComponent implements OnInit {
     console.log(this.addImages[index]);
   }
 
-  pushToFileList(index:number,fileList:any){
-    if(!this.roomList[index] || this.roomList[index].fileList.length==0){
-      this.roomList[index] = {fileList:[]};
+  pushToFileList(index: number, fileList: any) {
+    if (!this.roomList[index] || this.roomList[index].fileList.length == 0) {
+      this.roomList[index] = { fileList: [] };
       this.roomList[index].fileList.push(fileList[0]);
-    }else{
-      for(let i=0;i<fileList.length;i++){
-        let checkExist = this.roomList[index].fileList.filter((item:any)=>item.name==fileList[i].name && item.size);
-        if(checkExist.length==0){
+    } else {
+      for (let i = 0; i < fileList.length; i++) {
+        let checkExist = this.roomList[index].fileList.filter((item: any) => item.name == fileList[i].name && item.size);
+        if (checkExist.length == 0) {
           this.roomList[index].fileList.push(fileList[i]);
         }
       }
     }
     return this.roomList;
+  }
+  changeType(event: any) {
+    console.log(event, this.nearByLocation);
+  }
+  changeLoc($event: any) {
+    console.log($event);
+  }
+  get nearByLocation(): FormArray {
+    return <FormArray>this.firstFormGroup.get('nearByLocation');
+  }
+  addNewLocation() {
+    this.nearByLocation.push(this.nearByForm());
+  }
+  nearByForm() {
+    return this._formBuilder.group({
+      locType: [''],
+      name: [''],
+      distance: ['']
+    });
+  }
+  handleAddressChange(e: any) {
+    console.log(e);
+  }
+  removeImage(index:number){
+    this.removeAt(this.addImages,index);
+  }
+  removeAt(ArrayList:any[],key:any){
+    ArrayList.splice(key, 1);
+  }
+  clearSelectedFile(){
+    this.myCoverImage.nativeElement.value = '';
+    this.myCoverImageCheck = false;
   }
 }
 

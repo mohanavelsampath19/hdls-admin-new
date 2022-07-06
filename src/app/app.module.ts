@@ -47,6 +47,7 @@ import { EditMembershipComponent } from './pages/membership/edit-membership/edit
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { AgmCoreModule } from '@agm/core';
 import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 
 @NgModule({
@@ -102,6 +103,7 @@ import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouch
       apiKey: 'AIzaSyBPFJayQZ1SGLO7W_p0FAMRR552UdLhr3s',
       libraries: ['places']
     }),
+    GooglePlaceModule,
     MatSlideToggleModule
   ],
   providers: [],

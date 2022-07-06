@@ -57,7 +57,7 @@
           </p>
         </mat-form-field>
         <mat-form-field class="hdls-form-field" appearance="fill">
-          <h4>Bed Type<span class="required">*</span></h4>
+          <h4>Room Type<span class="required">*</span></h4>
           <mat-select class="hdls-form-select" formControlName="bedtype">
             <mat-option value="single">single bedroom</mat-option>
             <mat-option value="double">Double bedroom</mat-option>
@@ -73,6 +73,7 @@
               class="hdls-form-input"
               name="totalrooms"
               placeholder="Number of rooms"
+              min="1"
               required
             />
           </mat-form-field>
@@ -86,6 +87,7 @@
               class="hdls-form-input"
               name="numberofguest"
               placeholder="Number of guest"
+              min="1"
               required
             />
             <p
@@ -131,7 +133,7 @@
           </p>
         </mat-form-field>
         <mat-form-field class="hdls-form-field" appearance="fill">
-          <h4>Primary Room Price (RM)<span class="required">*</span></h4>
+          <h4>Actual Price (RM)<span class="required">*</span></h4>
           <input
             matInput
             formControlName="price"
@@ -151,6 +153,27 @@
             Please fill the room price
           </p>
         </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Selling Price (RM)<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="selling_price"
+            class="hdls-form-input-width"
+            placeholder="Room Price"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.selling_price.invalid &&
+              (firstFormGroup.controls.selling_price.dirty ||
+                firstFormGroup.controls.selling_price.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the selling price
+          </p>
+        </mat-form-field>
 
         <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Points<span class="required">*</span></h4>
@@ -160,15 +183,16 @@
             class="hdls-form-input"
             placeholder="Points"
             type="number"
-            min="100"
+            min="1"
             required
           />
         </mat-form-field>
-        <div class="form-group p-10">
+        <div class="form-group p-10 coverImageContainer">
           <h4>Cover Image *</h4>
-          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
-          <div *ngIf="myCoverImageCheck" class="myCoverImage">
+          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" #myCoverImage />
+          <div *ngIf="myCoverImageCheck && coverImage" class="myCoverImage">
             <img [src]="coverImage" alt="Cover Image">
+            <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
           </div>
         </div>
         <div>

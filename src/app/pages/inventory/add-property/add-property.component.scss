@@ -449,6 +449,9 @@ table tr th {
     width: 100%;
   }
 }
+.nearby-items{
+  width: 500px;
+}
 
 .myMapContainer{
   
@@ -502,4 +505,27 @@ table tr th {
   font-family: 'Open Sans',sans-serif;
   cursor: pointer;
 }
+.address-control{
+  width: calc(100% - 20px);
+}
 
+.coverImageContainer{
+  margin-bottom: 40px;
+  .myCoverImage{
+      width: 100px;
+      height: 100px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-top: 20px;
+      position: relative;
+      text-align: center;
+      img{
+        width: 100%;
+      }
+      .clearImageContainer{
+          position: absolute;
+          bottom: 0px;
+          left: 20px;
+      }
+    }   
+}
