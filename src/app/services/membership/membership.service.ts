@@ -103,6 +103,12 @@ export class MembershipService {
       status
     });
   }
+  updateMembershipStatus(membershipId:any,status:boolean) {
+    return this._http.post(environment.baseUrl+'api/membership/updatevoucherstatus', {
+      membershipId,
+      status
+    });
+  }
 }
 
 export interface MemberShip {

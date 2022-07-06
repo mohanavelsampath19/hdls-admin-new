@@ -36,6 +36,7 @@ export class MembershipComponent implements OnInit {
     'membership_desc',
     'price',
     'stock',
+    'count',
     'status',
     'action',
   ];
@@ -76,19 +77,19 @@ export class MembershipComponent implements OnInit {
 
   getMembershipList() {
     this.onFirstLoad();
-    let getCategory = 0;
+    let getCategory = 3;
     switch (this.selectedCategory) {
       case 'live':
-        getCategory = 0;
+        getCategory = 1;
         break;
       case 'in_active':
-        getCategory = 1;
+        getCategory = 0;
         break;
       case 'deleted':
         getCategory = 2;
         break;
       default:
-        getCategory = 0;
+        getCategory = 3;
         break;
     }
 
@@ -174,5 +175,12 @@ export class MembershipComponent implements OnInit {
         })
       }
     });
+  }
+  changeActiveStatus(event:any,membershipId:any){
+    this._memberShipService.updateMembershipStatus(membershipId,event.checked).subscribe((voucherRes:any)=>{
+      if(voucherRes.status === 0) {
+        this.getMembershipList();
+      }
+    })
   }
 }

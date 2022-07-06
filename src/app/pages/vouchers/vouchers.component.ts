@@ -178,7 +178,9 @@ export class VouchersComponent implements OnInit {
   }
   changeActiveStatus(event:any,voucherId:any){
     this._membershipService.updateVoucherActiveStatus(voucherId,event.checked).subscribe((voucherRes:any)=>{
-      console.log(voucherRes);
+      if(voucherRes.status === 0) {
+        this.getPropertyList();
+      }
     })
   }
 }
