@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
@@ -14,12 +14,12 @@ import { MembershipService } from 'src/app/services/membership/membership.servic
 export class EditMembershipComponent implements OnInit {
 
   editMembership:FormGroup = new FormGroup({
-    title: new FormControl(),
-    description: new FormControl(),
+    title: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
     property:new FormControl(),
     evouchers:new FormControl(),
-    amount: new FormControl(),
-    stocks: new FormControl()
+    amount: new FormControl('', Validators.required),
+    stocks: new FormControl('', Validators.required)
   });
 
   inventoryList:any=[];
@@ -27,7 +27,7 @@ export class EditMembershipComponent implements OnInit {
   membershipDetail:any;
   allVoucherList:any=[];
   constructor(private _activatedRoute:ActivatedRoute, private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) {
-   
+
     this._activatedRoute.params.subscribe((param:any)=>{
       this._membership.getAllMembership(param.id).subscribe((membershipDetails:any)=>{
         this.membershipDetail = membershipDetails.response;
@@ -46,7 +46,7 @@ export class EditMembershipComponent implements OnInit {
           amount: this.membershipDetail.amount,
           stocks: this.membershipDetail.stocks,
         });
-        
+
       })
     });
 

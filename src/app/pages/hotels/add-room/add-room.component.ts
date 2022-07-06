@@ -1,14 +1,19 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   Validators,
+  FormControl
 } from '@angular/forms';
 import { RoomsService } from '../../../services/rooms/rooms.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoPopupComponent } from '../../../components/common/info-popup/info-popup.component';
 import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { Router, ActivatedRoute } from '@angular/router';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-room',
@@ -16,6 +21,11 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./add-room.component.scss'],
 })
 export class AddRoomComponent implements OnInit {
+
+  facilityCtrl = new FormControl('');
+  filteredFacility: Observable<string[]>;
+  facilities: string[] = [];
+ // roomFacilitiesList: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
   addOnBlur = true;
   variantArr: any[] = [];
   priceArr: any[] = [];
@@ -45,13 +55,21 @@ export class AddRoomComponent implements OnInit {
   hotelId:number=0;
   addImages:any=[];
   addImageType:any = [];
+  roomFacilitiesList:string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
+ // fruitInput:any = [];
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   constructor(
     private _formBuilder: FormBuilder,
     private _roomsService: RoomsService,
     public _dialog: MatDialog,
     private _route: Router,
     private _activatedRouter: ActivatedRoute
-  ){}
+  ){
+    this.filteredFacility = this.facilityCtrl.valueChanges.pipe(
+      startWith(null),
+      map((facility: string | null) => (facility ? this._filter(facility) : this.roomFacilitiesList.slice())),
+    );
+  }
 
   removevalue(i: any) {
     this.roomPrice.splice(i, 1);
@@ -62,7 +80,7 @@ export class AddRoomComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.roomPrice, '---room price ---');
+    console.log(this.roomPrice, '---room price ---', this.coverImage);
   }
 
   ngOnInit() {
@@ -71,8 +89,6 @@ export class AddRoomComponent implements OnInit {
       roomsdesc: ['', Validators.required],
       bedtype: ['', Validators.required],
       totalrooms: ['', Validators.required],
-      adults: [0, Validators.required],
-      room_facilities: [''],
       roomsize: ['', Validators.required],
       points: ['', Validators.required],
       price: ['', Validators.required],
@@ -85,58 +101,16 @@ export class AddRoomComponent implements OnInit {
         this.hotelId = res.id;
       }
     });
-    // this.firstFormGroup.patchValue({
-    //   roomtitle:'Super Deluxe',
-    //   roomsdesc:'Super Deluxe',
-    //   bedtype:'Single bedroom',
-    //   totalrooms:'4',
-    //   adults:4,
-    //   room_facilities:[],
-    //   roomsize:'10',
-    //   points:400,
-    //   price:1400
-    // });
   }
 
-  getCurrentStep = (stepno: number) => {
-    if (this.firstFormGroup.valid) {
-      switch (stepno) {
-        case 1:
-          this.currentStep = stepno;
-          this.progressBarValue = 20;
-          break;
-        case 2:
-          console.log(this.firstFormGroup);
-          this.currentStep = stepno;
-          this.progressBarValue = 40;
-          break;
-        case 3:
-          console.log(this.firstFormGroup);
-          this.currentStep = stepno;
-          this.progressBarValue = 60;
-
-          break;
-        case 4:
-          this.currentStep = stepno;
-          this.progressBarValue = 80;
-          break;
-        case 5:
-          this.currentStep = stepno;
-          this.progressBarValue = 100;
-          break;
-        default:
-          this.currentStep = 1;
-          this.progressBarValue = 5;
-      }
-    }
-  };
 
   saveRoom() {
     let roomDetails = {
       hotelid: this.hotelId,
       ...this.firstFormGroup.value,
       addImages:this.addImages,
-      coverImage: this.logo
+      coverImage: this.logo,
+      room_facilities: this.facilities
     };
 
     this._roomsService.addRoomService(roomDetails).subscribe((res:any) => {
@@ -207,10 +181,12 @@ export class AddRoomComponent implements OnInit {
       };
       reader.readAsDataURL(fileList[i]);
     }
-    console.log(this.addImages[index]);
+    console.log(this.addImages[index], this.myRoomImageCheck);
   }
   removeImage(index:number){
     this.removeAt(this.addImages,index);
+    if(this.addImages.length === 0) { this.myRoomImageCheck = false }
+    console.log(this.addImages[index], this.myRoomImageCheck);
   }
   removeAt(ArrayList:any[],key:any){
     ArrayList.splice(key, 1);
@@ -240,11 +216,41 @@ export class AddRoomComponent implements OnInit {
   }
 
   coverFileChange(event:any){
+    console.log(this.firstFormGroup.valid, this.firstFormGroup.value)
     var reader = new FileReader();
     this.myCoverImageCheck = true;
     reader.onload = e => this.coverImage = reader.result;
     this.logo = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.facilities.push(value);
+    }
+    event.chipInput!.clear();
+    this.facilityCtrl.setValue(null);
+  }
+
+  remove(facility: string): void {
+    const index = this.facilities.indexOf(facility);
+
+    if (index >= 0) {
+      this.facilities.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.facilities.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.facilityCtrl.setValue(null);
+    console.log(this.facilities, '---facility---')
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.roomFacilitiesList.filter(facility => facility.toLowerCase().includes(filterValue));
   }
 }
 

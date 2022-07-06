@@ -3,6 +3,7 @@ import {
   FormArray,
   FormBuilder,
   Validators,
+  FormControl
 } from '@angular/forms';
 import { RoomsService } from '../../../services/rooms/rooms.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +12,10 @@ import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HotelsService } from 'src/app/services/hotels/hotels.service';
 import { environment } from 'src/environments/environment';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-room',
@@ -18,6 +23,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./edit-room.component.scss'],
 })
 export class EditRoomComponent implements OnInit {
+  facilityCtrl = new FormControl('');
+  filteredFacility: Observable<string[]>;
+  facilities: string[] = [];
   addOnBlur = true;
   variantArr: any[] = [];
   priceArr: any[] = [];
@@ -50,6 +58,9 @@ export class EditRoomComponent implements OnInit {
   addImages:any=[];
   addImageType:any = [];
   roomid:any;
+  roomFacilitiesList:string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
+  // fruitInput:any = [];
+   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   constructor(
     private _formBuilder: FormBuilder,
     private _roomsService: RoomsService,
@@ -58,6 +69,10 @@ export class EditRoomComponent implements OnInit {
     private _activatedRouter: ActivatedRoute,
     private _hotelService: HotelsService
   ){
+    this.filteredFacility = this.facilityCtrl.valueChanges.pipe(
+      startWith(null),
+      map((facility: string | null) => (facility ? this._filter(facility) : this.roomFacilitiesList.slice())),
+    );
      this.firstFormGroup = this._formBuilder.group({
       roomtitle: ['', Validators.required],
       roomsdesc: ['', Validators.required],
@@ -103,8 +118,8 @@ export class EditRoomComponent implements OnInit {
             points:res?.response?.points,
             price:res?.response?.price,
             numberofguest: res?.response?.nog,
-            room_facilities: res && res.response && res.response.room_facilities ? res.response.room_facilities.split(",") : []
           });
+          this.facilities = res && res.response && res.response.room_facilities ? res.response.room_facilities.split(",") : []
           this.roomList = images[title]?.imageList;
           this.myCoverImageCheck = true;
           this.coverImage = `${environment.imageUrl}/${getCoverImage}`
@@ -156,7 +171,7 @@ export class EditRoomComponent implements OnInit {
         addImages:this.addImages,
         coverImage: this.logo
       };
-  
+
       this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
         console.log(res);
         if(res && res.status === 1) {
@@ -179,7 +194,7 @@ export class EditRoomComponent implements OnInit {
         }
       })
     }
-    
+
   }
   checkForFormImage(checkForStatus: imageValidation) {
     this.checkForCoverImage = checkForStatus;
@@ -268,6 +283,34 @@ export class EditRoomComponent implements OnInit {
   clearSelectedFile(){
     this.myCoverImage.nativeElement.value = '';
     this.myCoverImageCheck = false;
+  }
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.facilities.push(value);
+    }
+    event.chipInput!.clear();
+    this.facilityCtrl.setValue(null);
+  }
+
+  remove(facility: string): void {
+    const index = this.facilities.indexOf(facility);
+
+    if (index >= 0) {
+      this.facilities.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.facilities.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.facilityCtrl.setValue(null);
+    console.log(this.facilities, '---facility---')
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.roomFacilitiesList.filter(facility => facility.toLowerCase().includes(filterValue));
   }
 }
 

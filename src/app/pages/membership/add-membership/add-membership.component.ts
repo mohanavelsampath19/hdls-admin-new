@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
@@ -14,18 +14,18 @@ import { MembershipService } from 'src/app/services/membership/membership.servic
 export class AddMembershipComponent implements OnInit {
 
   newMembership:FormGroup = new FormGroup({
-    title: new FormControl(),
-    description: new FormControl(),
+    title: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
     property:new FormControl(),
     evouchers:new FormControl(),
-    amount: new FormControl(),
-    stocks: new FormControl()
+    amount: new FormControl('', Validators.required),
+    stocks: new FormControl('', Validators.required)
   });
-  
+
   inventoryList:any;
   vouchersList:any=[];
   allVoucherList:any;
-  constructor(private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) { 
+  constructor(private _inventory:InventoryService, private _membership:MembershipService, private _route:Router, private _dialog:MatDialog) {
     this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
       this.inventoryList = inventoryList.response;
     });
@@ -38,7 +38,7 @@ export class AddMembershipComponent implements OnInit {
   ngOnInit(): void {
   }
   savemembership(){
-    
+    console.log(this.newMembership.valid, this.newMembership.value)
     this._membership.addMembership({...this.newMembership.value}).subscribe((membershipRes:any)=>{
       console.log(membershipRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {

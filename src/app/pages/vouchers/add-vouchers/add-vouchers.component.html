@@ -156,7 +156,7 @@
                 </mat-select>
             </mat-form-field>
           </div>
-          <div class="form-group coverImageContainer">
+          <div class="form-group coverImageContainer mb-10">
             <h4>Voucher Image *</h4>
             <input type="file" name="myCoverImage" (change)="coverFileChange($event)" #myCoverImage />
             <div *ngIf="myCoverImageCheck" class="myCoverImage">
@@ -176,8 +176,15 @@
                 </mat-radio-group>
             </div> -->
             <div class="submitButtonGroup">
-                <button mat-raised-button color="primary" class="hdls-nxt-btn hdls-btn-primary" (click)="saveVoucher()" [disabled]="!newVoucherForm.valid">Save</button>
-                <button mat-raised-button class="hdls-cancel-btn hdls-btn-secondary">Cancel</button>
+                <button mat-raised-button
+                 color="primary"
+                   (click)="saveVoucher()"
+                  [ngClass]="[
+                  (newVoucherForm.valid && myCoverImageCheck) ? 'hdls-btn-primary': 'hdls-btn-disable',
+                ]"
+                [disabled]="(newVoucherForm.valid && myCoverImageCheck ) ? false: true"
+                  >Save</button>
+                <button mat-raised-button class="hdls-btn-secondary">Cancel</button>
             </div>
         </form>
     </div>

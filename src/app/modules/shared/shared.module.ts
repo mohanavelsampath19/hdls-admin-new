@@ -29,7 +29,7 @@ import { DeleteModalComponent } from '../../components/common/delete-modal/delet
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmationModalComponent } from '../../components/common/confirmation-modal/confirmation-modal.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { BookingstatusPipe } from '../../pipes/bookingstatus.pipe';
 @NgModule({
@@ -53,7 +53,8 @@ import { BookingstatusPipe } from '../../pipes/bookingstatus.pipe';
     MatDialogModule,
     MatExpansionModule,
     MatGoogleMapsAutocompleteModule,
-    
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   exports: [
     HeaderComponent,
@@ -62,7 +63,9 @@ import { BookingstatusPipe } from '../../pipes/bookingstatus.pipe';
     MatDatepickerModule,
     MatFormFieldModule,
     InfoPopupComponent,
-    BookingstatusPipe
+    BookingstatusPipe,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
 })
 export class SharedModule {}

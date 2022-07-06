@@ -1,6 +1,6 @@
 <section id="hdls-newmembership-container">
     <h3 class="hdls-breadcrumb-title">Add New Membership | Membership Information</h3>
-    <div class="new-membership-form-container"> 
+    <div class="new-membership-form-container">
         <form [formGroup]="newMembership">
             <div>
                 <mat-form-field appearance="fill">
@@ -43,11 +43,17 @@
                     <input matInput formControlName="amount" type="number" name="amount" min="1"/>
                 </mat-form-field>
             </div>
-          
+
             <div>
-                <button mat-raised-button class="hdls-cancel-btn" (click)="backToMembership()">Cancel</button>
-                <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="savemembership()">Submit</button>
+                <button mat-raised-button class="hdls-btn-secondary" (click)="backToMembership()">Cancel</button>
+                <button mat-raised-button color="primary"
+                (click)="savemembership()"
+                [ngClass]="[
+                (newMembership.valid) ? 'hdls-btn-primary hdls-nxt-btn': 'hdls-btn-disable',
+              ]"
+              [disabled]="(newMembership.valid) ? false: true"
+                >Submit</button>
             </div>
         </form>
-    </div>           
+    </div>
 </section>
