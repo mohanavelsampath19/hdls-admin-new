@@ -260,12 +260,12 @@
             <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
           </div>
         </div>
-        
+
         <div class="form-group">
           <h4>Near by locations</h4>
-                
+
           <button mat-raised-button color="primary" (click)="addNewLocation()">Add nearby</button>
-          <div class="nearby-items" formArrayName="nearByLocation">          
+          <div class="nearby-items" formArrayName="nearByLocation">
           <table >
             <tr>
               <td>
@@ -317,13 +317,13 @@
             mat-button
             matStepperNext
             color="primary"
-            [ngClass]="{
-              'hdls-btn-primary': firstFormGroup.valid,
-              'hdls-btn-disable': !firstFormGroup.valid
-            }"
+            [ngClass]="[
+            (firstFormGroup.valid && myCoverImageCheck) ? 'hdls-btn-primary': 'hdls-btn-disable',
+          ]"
+          [disabled]="(firstFormGroup.valid && myCoverImageCheck ) ? false: true"
             (click)="saveProperty()"
           >
-            save
+            Update
           </button>
         </div>
       </form>

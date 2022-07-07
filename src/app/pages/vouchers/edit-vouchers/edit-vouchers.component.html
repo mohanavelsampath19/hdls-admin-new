@@ -176,8 +176,14 @@
               </mat-radio-group>
           </div> -->
           <div class="submitButtonGroup">
-              <button mat-raised-button color="primary" class="hdls-nxt-btn hdls-btn-primary" (click)="saveVoucher()" [disabled]="!newVoucherForm.valid">Save</button>
-              <button mat-raised-button class="hdls-cancel-btn hdls-btn-secondary">Cancel</button>
+              <button mat-raised-button color="primary"
+              color="primary"
+              (click)="saveVoucher()"
+             [ngClass]="[
+             (newVoucherForm.valid && myCoverImageCheck) ? 'hdls-btn-primary': 'hdls-btn-disable',
+           ]"
+           [disabled]="(newVoucherForm.valid && myCoverImageCheck ) ? false: true">Update</button>
+              <button mat-raised-button class="hdls-btn-secondary">Cancel</button>
           </div>
       </form>
   </div>

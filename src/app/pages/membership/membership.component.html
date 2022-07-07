@@ -93,13 +93,22 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="status">
+        <ng-container matColumnDef="count">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Vouchers count
           </th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
               {{ element.evouchers?.length || 0 }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading && element.inactive!==2">
+              <mat-slide-toggle [checked]="element.inactive ===1" (change)="changeActiveStatus($event,element.membershipid)">{{ element.inactive === 1 ? 'Active' : element.inactive === 0 ? 'Inactive' : 'Deleted' }}</mat-slide-toggle>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
