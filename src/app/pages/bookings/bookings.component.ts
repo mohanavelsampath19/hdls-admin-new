@@ -80,21 +80,18 @@ export class BookingsComponent implements OnInit {
       case 'live':
         getCategory = 1;
         break;
-      case 'in_active':
-        getCategory = 0;
-        break;
-      case 'draft':
+      case 'rejected':
         getCategory = 2;
         break;
-      case 'deleted':
+      case 'all':
         getCategory = 3;
         break;
       default:
-        getCategory = 1;
+        getCategory = 3;
         break;
     }
 
-    this._bookingService.getBookingHistory().subscribe((res:any) => {
+    this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
       this.dataSource = new MatTableDataSource(res.response.bookingHistory);
        this.dataSource.paginator = this.paginator;
     })
@@ -147,9 +144,9 @@ export class BookingsComponent implements OnInit {
     const dialogRef = this._dialog.open(ConfirmationModalComponent, {data:{bookingStatus:bookingStatus}});
     const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
       (data) => {
-        if (data) {
-          let status = (data === 'accepted') ? 1 : data=='rejected'?0:3;
-          this._bookingService.changeBookingStatus(deleteid, status).subscribe((res:any)=> {
+        if (data.status) {
+          let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 3;
+          this._bookingService.changeBookingStatus(deleteid, status, data.reason).subscribe((res:any)=> {
             if(res && res.status === 1) {
               const dialogRef = this._dialog.open(InfoPopupComponent, {
                 data: {

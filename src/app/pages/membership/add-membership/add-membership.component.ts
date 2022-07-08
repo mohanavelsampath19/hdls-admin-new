@@ -16,7 +16,6 @@ export class AddMembershipComponent implements OnInit {
   newMembership:FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    property:new FormControl(),
     evouchers:new FormControl(),
     amount: new FormControl('', Validators.required),
     stocks: new FormControl('', Validators.required)

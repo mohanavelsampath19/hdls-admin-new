@@ -52,7 +52,7 @@ export class EditPropertyComponent implements OnInit {
   roomList:any=[];
   @Input()
   selectedIndex: any;
-  
+
   warrantyPeriod = [
     {
       value: 0,
@@ -141,6 +141,7 @@ export class EditPropertyComponent implements OnInit {
 
   @ViewChild('myCoverImage', { static: false })
   myCoverImage!: ElementRef;
+  checkoutError: boolean = false;
   constructor(
     private _formBuilder: FormBuilder,
     // private _productService: ProductService,
@@ -216,9 +217,26 @@ export class EditPropertyComponent implements OnInit {
         this.propertyid = res?.response?.hotel_id
       })
     });
+
+    this.firstFormGroup.controls['checkin'].valueChanges.subscribe(
+      (value:any) => {
+          this.isCheckinTimeValid();
+      }
+    );
+    this.firstFormGroup.controls['checkout'].valueChanges.subscribe(
+      (value:any) => {
+          this.isCheckinTimeValid();
+      }
+    );
   }
 
-  
+  isCheckinTimeValid () {
+    if(this.firstFormGroup.controls['checkin'].value === this.firstFormGroup.controls['checkout'].value) {
+      this.checkoutError = true;
+    } else {
+      this.checkoutError = false
+    }
+  }
 
   saveProperty = () => {
     let property = {
@@ -278,7 +296,7 @@ export class EditPropertyComponent implements OnInit {
       this.checkForCoverImage.validationCheck = false;
     }
   }
-    
+
   getShippingType(event: any) {}
   addItem(category: any) {
     if (category === 'adults') {
@@ -345,7 +363,7 @@ export class EditPropertyComponent implements OnInit {
     }
     return this.roomList;
   }
-  
+
   clearSelectedFile(){
     this.myCoverImage.nativeElement.value = '';
     this.myCoverImageCheck = false;

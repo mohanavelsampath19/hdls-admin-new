@@ -145,6 +145,7 @@ export class AddPropertyComponent implements OnInit {
   appearance: any = {
     OUTLINE: "outline"
   }
+  checkoutError: boolean = false;
   @ViewChild("placesRef") placesRef: GooglePlaceDirective | undefined;
   constructor(
     private _formBuilder: FormBuilder,
@@ -206,14 +207,25 @@ export class AddPropertyComponent implements OnInit {
       shipping_charges: 0,
     });
 
-    // this.thirdFormGroup.controls['shippingType'].valueChanges.subscribe(
-    //   (value) => {
-    //     this.shippingCategory = value;
-    //   }
-    // );
+    this.firstFormGroup.controls['checkin'].valueChanges.subscribe(
+      (value) => {
+          this.isCheckinTimeValid();
+      }
+    );
+    this.firstFormGroup.controls['checkout'].valueChanges.subscribe(
+      (value) => {
+          this.isCheckinTimeValid();
+      }
+    );
   }
 
-
+  isCheckinTimeValid () {
+    if(this.firstFormGroup.controls['checkin'].value === this.firstFormGroup.controls['checkout'].value) {
+      this.checkoutError = true;
+    } else {
+      this.checkoutError = false
+    }
+  }
 
   saveProperty = () => {
     console.log(this.firstFormGroup.value);

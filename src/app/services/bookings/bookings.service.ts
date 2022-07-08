@@ -8,14 +8,17 @@ import { environment } from 'src/environments/environment';
 export class BookingsService {
 
   constructor(private _http: HttpClient) { }
-  getBookingHistory() {
-    return this._http.get(environment.baseUrl + 'api/booking/getbookinglist',{});
+  getBookingHistory(status:any) {
+    return this._http.post(environment.baseUrl + 'api/booking/getbookinglist',{
+      status: status
+    });
   }
 
-  changeBookingStatus(bookingid:any,status:any, ) {
+  changeBookingStatus(bookingid:any,status:any,reason?:any) {
     return this._http.post(environment.baseUrl + 'api/booking/bookingstatuschange', {
       bookingid,
-      status
+      status,
+      reason
     })
   }
 }

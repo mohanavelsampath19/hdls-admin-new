@@ -104,7 +104,7 @@ export class MembershipService {
     });
   }
   updateMembershipStatus(membershipId:any,status:boolean) {
-    return this._http.post(environment.baseUrl+'api/membership/updatevoucherstatus', {
+    return this._http.post(environment.baseUrl+'api/membership/updatemembershipstatus', {
       membershipId,
       status
     });

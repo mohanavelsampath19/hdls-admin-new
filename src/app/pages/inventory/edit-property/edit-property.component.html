@@ -141,6 +141,7 @@
               <ngx-material-timepicker #checkout></ngx-material-timepicker>
             </div>
           </div>
+          <p class="hdls-error" *ngIf="checkoutError">*Checkin and Checkout time should not be same</p>
         </div>
         <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Address</h4>
@@ -318,9 +319,9 @@
             matStepperNext
             color="primary"
             [ngClass]="[
-            (firstFormGroup.valid && myCoverImageCheck) ? 'hdls-btn-primary': 'hdls-btn-disable',
+            (firstFormGroup.valid && myCoverImageCheck && !checkoutError) ? 'hdls-btn-primary': 'hdls-btn-disable',
           ]"
-          [disabled]="(firstFormGroup.valid && myCoverImageCheck ) ? false: true"
+          [disabled]="(firstFormGroup.valid && myCoverImageCheck && !checkoutError) ? false: true"
             (click)="saveProperty()"
           >
             Update

@@ -85,6 +85,10 @@ export class AddVouchersComponent implements OnInit {
       });
     });
   }
+
+  cancelVoucher() {
+    this._route.navigate(['/vouchers']);
+  }
   changeCategory(e:any){
     this.isRoomBenefit= false;
     this.isFB= false;

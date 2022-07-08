@@ -14,14 +14,14 @@
                     <textarea matInput formControlName="description" type="text" name="description"></textarea>
                 </mat-form-field>
             </div>
-            <div>
+            <!-- <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Properties *</mat-label>
                     <mat-select (selectionChange)="inventoryChange($event)" formControlName="hotelid">
                       <mat-option [value]="inventory.hotel_id" *ngFor="let inventory of inventoryList">{{inventory.hotelname}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-            </div>
+            </div> -->
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Categories</mat-label>
@@ -184,7 +184,7 @@
                 ]"
                 [disabled]="(newVoucherForm.valid && myCoverImageCheck ) ? false: true"
                   >Save</button>
-                <button mat-raised-button class="hdls-btn-secondary">Cancel</button>
+                <button mat-raised-button class="hdls-btn-secondary" (click)="cancelVoucher()">Cancel</button>
             </div>
         </form>
     </div>

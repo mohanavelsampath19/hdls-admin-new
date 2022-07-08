@@ -32,6 +32,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { BookingstatusPipe } from '../../pipes/bookingstatus.pipe';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -54,7 +55,8 @@ import { BookingstatusPipe } from '../../pipes/bookingstatus.pipe';
     MatExpansionModule,
     MatGoogleMapsAutocompleteModule,
     MatChipsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    FormsModule
   ],
   exports: [
     HeaderComponent,
