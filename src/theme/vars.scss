@@ -47,7 +47,7 @@ th.mat-sort-header-sorted {
 }
 
 .hdls-product-list-section {
-  padding: 10px;
+  padding: 10px 0;
   background-color: $secondary-font-color;
 }
 .hdls-product-table {
@@ -135,4 +135,8 @@ th.mat-sort-header-sorted {
 
 .mb-10 {
   margin-bottom: 10px;
+}
+
+.hdls-error {
+  color: red;
 }

@@ -179,4 +179,8 @@ export class EditVouchersComponent implements OnInit {
     this.myCoverImage.nativeElement.value = '';
     this.myCoverImageCheck = false;
   }
+
+  cancelVoucher() {
+    this._route.navigate(['/vouchers']);
+  }
 }
