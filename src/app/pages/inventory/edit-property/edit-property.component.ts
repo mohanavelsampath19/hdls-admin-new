@@ -17,6 +17,9 @@ import { InventoryService } from '../../../services/inventory/inventory.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-property',
@@ -24,6 +27,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./edit-property.component.scss'],
 })
 export class EditPropertyComponent implements OnInit {
+
+  facilityCtrl = new FormControl('');
+  filteredFacility: Observable<string[]>;
+  facilities: string[] = [];
+
   shippingCategory: string = 'free';
   variantFormGroup: FormGroup = this._formBuilder.group({
     variantList: this._formBuilder.array([]),
@@ -36,7 +44,7 @@ export class EditPropertyComponent implements OnInit {
   secondFormGroup: any = this._formBuilder.group({});
   thirdFormGroup: any = this._formBuilder.group({});
   isEditable = false;
-  facilities: any = this._formBuilder.group({});
+ // facilities: any = this._formBuilder.group({});
   checkin:any='';
   currentStep: any = 0;
   progressBarValue: number = 4;
@@ -50,6 +58,9 @@ export class EditPropertyComponent implements OnInit {
   myRoomImageCheck:boolean = false;
   myRoomImageList:any = [];
   roomList:any=[];
+  roomFacilitiesList:string[] = ['Break Fast', 'Free Wifi', 'AC', 'Geyser', 'Power Backup', 'Elevator', '24 Hour Room Service'];
+ // fruitInput:any = [];
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   @Input()
   selectedIndex: any;
 
@@ -149,7 +160,12 @@ export class EditPropertyComponent implements OnInit {
     private _route: Router,
     private _inventoryService: InventoryService,
     private _activatedRoute:ActivatedRoute,
-  ) {}
+  ) {
+    this.filteredFacility = this.facilityCtrl.valueChanges.pipe(
+      startWith(null),
+      map((facility: string | null) => (facility ? this._filter(facility) : this.roomFacilitiesList.slice())),
+    );
+  }
 
   removevalue(i: any) {
     this.roomPrice.splice(i, 1);
@@ -178,15 +194,15 @@ export class EditPropertyComponent implements OnInit {
       nearByLocation:this._formBuilder.array([])
     });
     this.secondFormGroup = this._formBuilder.group({});
-    this.facilities = this._formBuilder.group({
-      breakFast: false,
-      ac: false,
-      wifi: false,
-      geyser: false,
-      power_backup: false,
-      elevator: false,
-      room_service: false,
-    });
+    // this.facilities = this._formBuilder.group({
+    //   breakFast: false,
+    //   ac: false,
+    //   wifi: false,
+    //   geyser: false,
+    //   power_backup: false,
+    //   elevator: false,
+    //   room_service: false,
+    // });
 
     this._activatedRoute.params.subscribe((param:any)=>{
       this._inventoryService.getPropertyDetail(param.id).subscribe((res:any) => {
@@ -206,6 +222,7 @@ export class EditPropertyComponent implements OnInit {
           checkin:res.response.checkin,
           checkout:res.response.checkout,
         });
+        this.facilities = res && res.response && res.response.facilities ? res.response.facilities.split(","): [];
         let myNearByList = JSON.parse(res.response.nearbyloc);
         for(let i=0;i<myNearByList.length;i++){
           let newFormItem = this.nearByForm();
@@ -242,7 +259,8 @@ export class EditPropertyComponent implements OnInit {
     let property = {
       ...this.firstFormGroup.value,
       logo:this.logo,
-      nearbyloc:JSON.stringify(this.nearByLocation.value)
+      nearbyloc:JSON.stringify(this.nearByLocation.value),
+      facilities: this.facilities
     };
     this._inventoryService.updateProperty(property, this.propertyid)
     .subscribe((res:any) => {
@@ -387,6 +405,34 @@ export class EditPropertyComponent implements OnInit {
       distance:['']
     });
    }
+   add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.facilities.push(value);
+    }
+    event.chipInput!.clear();
+    this.facilityCtrl.setValue(null);
+  }
+
+  remove(facility: string): void {
+    const index = this.facilities.indexOf(facility);
+
+    if (index >= 0) {
+      this.facilities.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.facilities.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.facilityCtrl.setValue(null);
+    console.log(this.facilities, '---facility---')
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.roomFacilitiesList.filter(facility => facility.toLowerCase().includes(filterValue));
+  }
 }
 
 interface imageValidation {

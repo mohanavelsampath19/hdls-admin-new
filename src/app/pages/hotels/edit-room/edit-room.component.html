@@ -221,12 +221,12 @@
             mat-button
             color="primary"
             [ngClass]="[
-              (firstFormGroup.valid && myCoverImageCheck && myRoomImageCheck) ? 'hdls-btn-primary': 'hdls-btn-disable',
+              (firstFormGroup.valid && myCoverImageCheck) ? 'hdls-btn-primary': 'hdls-btn-disable',
             ]"
-            [disabled]="(firstFormGroup.valid && myCoverImageCheck && myRoomImageCheck) ? false: true"
+            [disabled]="(firstFormGroup.valid && myCoverImageCheck) ? false: true"
             (click)="saveRoom()"
           >
-            save
+            Update
           </button>
         </div>
       </form>

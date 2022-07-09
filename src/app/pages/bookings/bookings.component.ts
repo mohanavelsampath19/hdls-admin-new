@@ -144,6 +144,7 @@ export class BookingsComponent implements OnInit {
     const dialogRef = this._dialog.open(ConfirmationModalComponent, {data:{bookingStatus:bookingStatus}});
     const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
       (data) => {
+        this._dialog.closeAll();
         if (data.status) {
           let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 3;
           this._bookingService.changeBookingStatus(deleteid, status, data.reason).subscribe((res:any)=> {
