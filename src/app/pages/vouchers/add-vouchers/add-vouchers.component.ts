@@ -26,12 +26,10 @@ export class AddVouchersComponent implements OnInit {
     discount:new FormControl(),
     evoucherQuantity:new FormControl(),
     isthereanyblockoutdates:new FormControl(),
-    tranferable:new FormControl(),
     evoucheractualprice:new FormControl('',Validators.required),
     evoucherpoints:new FormControl(),
-    wanttogroupupexistingvoucher:new FormControl(),
+    wanttogroupupexistingvoucher:new FormControl(''),
     evouchersellingprice:new FormControl('',Validators.required),
-    hotelid:new FormControl('',Validators.required),
     evoucherexpiry: new FormControl(),
     expirydays: new FormControl()
   });
@@ -124,13 +122,14 @@ export class AddVouchersComponent implements OnInit {
     reader.onload = e => this.coverImage = reader.result;
     this.logo = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
+    console.log(this.newVoucherForm.valid, this.myCoverImageCheck, '----')
   }
   getFacilityDetails(hotelId?:number){
     this._facility.getAllFacility(0,hotelId).subscribe((facility:any)=>{
       let facilityList = facility.response;
-      this.fbList = facilityList.filter((inventory:any)=>inventory.facility_type=='f&b');
-      this.facilityList = facilityList.filter((inventory:any)=>inventory.facility_type=='facility');
-      this.marketplaceList = facilityList.filter((inventory:any)=>inventory.facility_type=='marketplace');
+      this.fbList = facilityList && facilityList.filter((inventory:any)=>inventory.facility_type=='f&b');
+      this.facilityList = facilityList && facilityList.filter((inventory:any)=>inventory.facility_type=='facility');
+      this.marketplaceList = facilityList && facilityList.filter((inventory:any)=>inventory.facility_type=='marketplace');
     });
   }
   inventoryChange(e:any){

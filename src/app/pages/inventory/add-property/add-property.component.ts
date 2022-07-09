@@ -16,7 +16,9 @@ import { InventoryService } from '../../../services/inventory/inventory.service'
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-property',
@@ -24,6 +26,10 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
   styleUrls: ['./add-property.component.scss'],
 })
 export class AddPropertyComponent implements OnInit {
+  facilityCtrl = new FormControl('');
+  filteredFacility: Observable<string[]>;
+  facilities: string[] = [];
+
   shippingCategory: string = 'free';
   variantFormGroup: FormGroup = this._formBuilder.group({
     variantList: this._formBuilder.array([]),
@@ -39,7 +45,7 @@ export class AddPropertyComponent implements OnInit {
   specFormGroup: any = this._formBuilder.group({});
   thirdFormGroup: any = this._formBuilder.group({});
   isEditable = false;
-  facilities: any = this._formBuilder.group({});
+ // facilities: any = this._formBuilder.group({});
   checkin: any = '';
   currentStep: any = 0;
   progressBarValue: number = 4;
@@ -53,6 +59,9 @@ export class AddPropertyComponent implements OnInit {
   myRoomImageCheck: boolean = false;
   myRoomImageList: any = [];
   roomList: any = [];
+  roomFacilitiesList:string[] = ['Break Fast', 'Free Wifi', 'AC', 'Geyser', 'Power Backup', 'Elevator', '24 Hour Room Service'];
+ // fruitInput:any = [];
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   @Input()
   selectedIndex: any;
 
@@ -153,7 +162,12 @@ export class AddPropertyComponent implements OnInit {
     public _dialog: MatDialog,
     private _route: Router,
     private _inventoryService: InventoryService
-  ) { }
+  ) {
+    this.filteredFacility = this.facilityCtrl.valueChanges.pipe(
+      startWith(null),
+      map((facility: string | null) => (facility ? this._filter(facility) : this.roomFacilitiesList.slice())),
+    );
+   }
 
   removevalue(i: any) {
     this.roomPrice.splice(i, 1);
@@ -188,15 +202,15 @@ export class AddPropertyComponent implements OnInit {
     });
 
 
-    this.facilities = this._formBuilder.group({
-      breakFast: false,
-      ac: false,
-      wifi: false,
-      geyser: false,
-      power_backup: false,
-      elevator: false,
-      room_service: false,
-    });
+    // this.facilities = this._formBuilder.group({
+    //   breakFast: false,
+    //   ac: false,
+    //   wifi: false,
+    //   geyser: false,
+    //   power_backup: false,
+    //   elevator: false,
+    //   room_service: false,
+    // });
 
     this.thirdFormGroup = this._formBuilder.group({
       packageWeight: ['', Validators.required],
@@ -233,9 +247,10 @@ export class AddPropertyComponent implements OnInit {
       let { vicinity } = this.firstFormGroup.value.address;
       let property = {
         ...this.firstFormGroup.value,
-        address: vicinity,
+        address: vicinity ? vicinity : this.firstFormGroup.value.address,
         logo: this.logo,
-        nearbyloc: JSON.stringify(this.nearByLocation.value)
+        nearbyloc: JSON.stringify(this.nearByLocation.value),
+        facilities: this.facilities
       };
       this._inventoryService.addProperty(property)
         .subscribe((res: any) => {
@@ -420,6 +435,34 @@ export class AddPropertyComponent implements OnInit {
   clearSelectedFile(){
     this.myCoverImage.nativeElement.value = '';
     this.myCoverImageCheck = false;
+  }
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.facilities.push(value);
+    }
+    event.chipInput!.clear();
+    this.facilityCtrl.setValue(null);
+  }
+
+  remove(facility: string): void {
+    const index = this.facilities.indexOf(facility);
+
+    if (index >= 0) {
+      this.facilities.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.facilities.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.facilityCtrl.setValue(null);
+    console.log(this.facilities, '---facility---')
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.roomFacilitiesList.filter(facility => facility.toLowerCase().includes(filterValue));
   }
 }
 

@@ -67,7 +67,7 @@
             Please fill the description
           </p>
         </mat-form-field>
-        <section class="example-section" [formGroup]="facilities">
+        <!-- <section class="example-section" [formGroup]="facilities">
           <h4>Facilities Available</h4>
           <mat-checkbox
             formControlName="breakFast"
@@ -112,7 +112,33 @@
             color="primary"
             >24 Hours Room Service</mat-checkbox
           >
-        </section>
+        </section> -->
+        <mat-form-field class="example-chip-list hdls-form-field" appearance="fill">
+          <h4>Facilities<span class="required">*</span></h4>
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip
+              *ngFor="let fruit of facilities"
+              (removed)="remove(fruit)">
+              {{fruit}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input
+              placeholder="Property Facility"
+              #fruitInput
+              [formControl]="facilityCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let facility of filteredFacility | async" [value]="facility">
+              {{facility}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
         <div class="hdls-form-field-timings" appearance="fill">
           <h4>Check-in & Check-out Timing<span class="required">*</span></h4>
           <div class="checkin-checkout">

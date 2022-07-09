@@ -75,8 +75,9 @@ export class MembershipService {
     let formValues:any = Object.values(voucherDetails);
     let formData = new FormData();
     formKeys.forEach((formItem:any,i)=>{
-      if(formItem == 'logo'){
-        formData.append('logo', formValues[i], formValues[i].name);
+      if(formItem == 'logo' && formValues && formValues[i] && formValues[i].name){
+        let name = formValues && formValues[i] && formValues[i].name ? formValues[i].name : 'logo';
+        formData.append('logo', formValues[i], name);
       }else{
         formData.append(formItem, formValues[i]);
       }

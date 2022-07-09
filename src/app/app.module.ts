@@ -48,7 +48,15 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
 import { AgmCoreModule } from '@agm/core';
 import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
 
+const config: SocketIoConfig = {
+	url: environment.socketUrl, // socket server url;
+	options: {
+		transports: ['websocket']
+	}
+}
 
 @NgModule({
   declarations: [
@@ -104,7 +112,8 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
       libraries: ['places']
     }),
     GooglePlaceModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent],

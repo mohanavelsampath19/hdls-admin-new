@@ -118,6 +118,7 @@ export class EditRoomComponent implements OnInit {
             points:res?.response?.points,
             price:res?.response?.price,
             numberofguest: res?.response?.nog,
+            selling_price: res?.response?.selling_price
           });
           this.facilities = res && res.response && res.response.room_facilities ? res.response.room_facilities.split(",") : []
           this.roomList = images[title]?.imageList;
@@ -169,7 +170,8 @@ export class EditRoomComponent implements OnInit {
         hotelid: this.hotelId,
         ...this.firstFormGroup.value,
         addImages:this.addImages,
-        coverImage: this.logo
+        coverImage: this.logo,
+        room_facilities: this.facilities
       };
 
       this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {

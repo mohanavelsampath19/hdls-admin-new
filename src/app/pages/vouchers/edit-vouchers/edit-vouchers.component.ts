@@ -27,12 +27,10 @@ export class EditVouchersComponent implements OnInit {
     discount:new FormControl(),
     evoucherQuantity:new FormControl(),
     isthereanyblockoutdates:new FormControl(),
-    tranferable:new FormControl(),
     evoucheractualprice:new FormControl('',Validators.required),
     evoucherpoints:new FormControl(),
     wanttogroupupexistingvoucher:new FormControl(),
     evouchersellingprice:new FormControl('',Validators.required),
-    propertyid:new FormControl('',Validators.required),
     evoucherexpiry: new FormControl(),
     expirydays: new FormControl()
   });
@@ -109,7 +107,7 @@ export class EditVouchersComponent implements OnInit {
 
   }
   saveVoucher(){
-    console.log(this.newVoucherForm.value);
+    console.log(this.newVoucherForm.value, this.logo);
     this._vouchers.updateVouchers({...this.newVoucherForm.value,logo:this.logo}, this.voucherId).subscribe((voucherRes:any)=>{
       console.log(voucherRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {
