@@ -100,16 +100,14 @@ export class EditVouchersComponent implements OnInit {
         this.newVoucherForm.patchValue({propertyid:res.response.hotelid});
         this.voucherId = res?.response?.vouchersid;
         this.coverImage = environment.imageUrl+"/"+res?.response?.logo;
-        this.myCoverImageCheck = this.logo!=''?true:false;
+        this.myCoverImageCheck = this.coverImage!=''?true:false;
       }
     })
   });
 
   }
   saveVoucher(){
-    console.log(this.newVoucherForm.value, this.logo);
     this._vouchers.updateVouchers({...this.newVoucherForm.value,logo:this.logo}, this.voucherId).subscribe((voucherRes:any)=>{
-      console.log(voucherRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
           popupText: 'Vouchers updated successfully',

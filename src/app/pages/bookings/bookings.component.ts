@@ -86,6 +86,9 @@ export class BookingsComponent implements OnInit {
       case 'all':
         getCategory = 3;
         break;
+      case 'cancelled':
+        getCategory = 4;
+        break;
       default:
         getCategory = 3;
         break;

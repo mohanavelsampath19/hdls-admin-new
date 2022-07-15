@@ -52,6 +52,14 @@
       >
         Rejected<span><!-- TODO--></span>
       </a>
+      <a
+        id="basic"
+        class="add-button"
+        [ngClass]="{ 'selected-item': selectedCategory === 'cancelled' }"
+        (click)="getSelectedFilter('cancelled')"
+      >
+        Cancelled<span><!-- TODO--></span>
+      </a>
     </div>
     <div class="hdls-product-list-section">
       <!-- <app-search-field></app-search-field> -->

@@ -20,16 +20,16 @@ export class EditFacilitiesComponent implements OnInit {
     facility_type: new FormControl(),
     // stocks: new FormControl()
   });
-  
+
   inventoryList:any;
-  
+
   myCoverImageCheck:boolean = false;
   coverImage:any;
   logo:any;
   @ViewChild('myCoverImage', { static: false })
   myCoverImage!: ElementRef;
   facilityDetail:any;
-  constructor(private _activatedRoute:ActivatedRoute,private _inventory:InventoryService, private _facilityService:FacilitiesService, private _route:Router, private _dialog:MatDialog) { 
+  constructor(private _activatedRoute:ActivatedRoute,private _inventory:InventoryService, private _facilityService:FacilitiesService, private _route:Router, private _dialog:MatDialog) {
     this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
       this.inventoryList = inventoryList.response;
     });
@@ -40,7 +40,7 @@ export class EditFacilitiesComponent implements OnInit {
           facility_name: this.facilityDetail.facility_name,
           facility_type: this.facilityDetail.facility_type,
           description:this.facilityDetail.description,
-          hotel_id: this.facilityDetail.hotel_id,          
+          hotel_id: this.facilityDetail.hotel_id,
         });
         this.myCoverImageCheck = true;
         this.coverImage = this.facilityDetail.coverimage;
@@ -55,7 +55,7 @@ export class EditFacilitiesComponent implements OnInit {
       console.log(facilityRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
-          popupText: 'Facility created successfully',
+          popupText: 'Facility updated successfully',
         },
       });
       this._route.navigate(['/facilities']);
