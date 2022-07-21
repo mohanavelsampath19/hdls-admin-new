@@ -107,6 +107,7 @@ export class EditVouchersComponent implements OnInit {
 
   }
   saveVoucher(){
+
     this._vouchers.updateVouchers({...this.newVoucherForm.value,logo:this.logo}, this.voucherId).subscribe((voucherRes:any)=>{
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
