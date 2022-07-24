@@ -49,7 +49,11 @@ import { AgmCoreModule } from '@agm/core';
 import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { environment } from 'src/environments/environment';
+
+import { environment } from "../environments/environment";
+import { initializeApp } from "firebase/app";
+import { ServiceWorkerModule } from '@angular/service-worker';
+initializeApp(environment.firebase);
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -113,7 +117,7 @@ const config: SocketIoConfig = {
     }),
     GooglePlaceModule,
     MatSlideToggleModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
   ],
   providers: [],
   bootstrap: [AppComponent],
