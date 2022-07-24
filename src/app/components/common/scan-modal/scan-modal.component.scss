@@ -1,0 +1,22 @@
+.scan-modal-container-body-desc {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .scan-modal-container-body-desc-name,.scan-modal-container-body-desc-detail{
+        width: 50%;
+        font-size: 15px;
+        font-family: "Open sans",sans-serif;
+        margin-top: 10px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+}
+.scan-modal-container-title {
+    font-size: 18px;
+    font-family: "Open sans",sans-serif;
+    background-color: #3f51b5;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}

@@ -19,6 +19,9 @@ export class BookingstatusPipe implements PipeTransform {
         result = 'Rejected';
         break;
       case 3:
+        result = 'Cheked-In';
+        break;
+      case 4:
         result = 'Completed';
         break;
     }

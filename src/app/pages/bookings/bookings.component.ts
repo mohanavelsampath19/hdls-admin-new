@@ -146,7 +146,7 @@ export class BookingsComponent implements OnInit {
       (data) => {
         this._dialog.closeAll();
         if (data.status) {
-          let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 3;
+          let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 4;
           this._bookingService.changeBookingStatus(deleteid, status, data.reason).subscribe((res:any)=> {
             if(res && res.status === 1) {
               const dialogRef = this._dialog.open(InfoPopupComponent, {

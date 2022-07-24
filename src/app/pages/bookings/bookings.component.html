@@ -124,8 +124,8 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              <a href="#" (click)="openDeleteDialog($event, element.bookingid,element.status)" *ngIf="element.status!=3">Action</a>
-              <div *ngIf="element.status==3"><strong>{{element.updated_at | date:'medium'}}</strong></div>
+              <a href="#" (click)="openDeleteDialog($event, element.bookingid,element.status)" *ngIf="element.status!=4">Action</a>
+              <div *ngIf="element.status==4"><strong>{{element.updated_at | date:'medium'}}</strong></div>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
 
