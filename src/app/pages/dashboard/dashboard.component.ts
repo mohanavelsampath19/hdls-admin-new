@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { environment } from "../../../environments/environment";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -8,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
   sideBarOpen:boolean = true;
   mytheme:any='light-theme';
-  constructor() { }
-
-  ngOnInit(): void {
+  title = 'af-notification';
+  message:any = null;
+  constructor() {
+    
   }
+  ngOnInit(): void {
+    
+  }
+
+  
   changeTheme(e:any){
     document.getElementsByTagName('body')[0].classList.remove(this.mytheme);
     document.getElementsByTagName('body')[0].classList.add(e.target.value);
