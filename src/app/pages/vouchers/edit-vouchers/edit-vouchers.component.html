@@ -164,17 +164,17 @@
             <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
           </div>
         </div>
-          <!-- <div class="transfer">
-              <h4 class="text-bold">Transferable</h4>
-              <mat-radio-group class="transferable" formControlName="tranferable">
-                  <mat-radio-button class="p-10" value="non-transferable">
-                      Non Transferable
-                  </mat-radio-button>
-                  <mat-radio-button class="p-10" value="transferable">
-                      Transferable
-                  </mat-radio-button>
-              </mat-radio-group>
-          </div> -->
+        <div class="transfer">
+          <mat-label>Transferable*</mat-label>
+            <mat-radio-group class="transferable" formControlName="tranferable">
+                <mat-radio-button class="p-10" value="non-transferable">
+                    Non Transferable
+                </mat-radio-button>
+                <mat-radio-button class="p-10" value="transferable">
+                    Transferable
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
           <div class="submitButtonGroup">
               <button mat-raised-button color="primary"
               color="primary"

@@ -39,6 +39,8 @@ export class BookingsComponent implements OnInit {
     'room_type',
     'customername',
     'amount',
+    'hotel_confirmation_number',
+    'remarks',
     'status',
     'action',
   ];
@@ -85,6 +87,9 @@ export class BookingsComponent implements OnInit {
         break;
       case 'all':
         getCategory = 3;
+        break;
+      case 'cancelled':
+        getCategory = -1;
         break;
       default:
         getCategory = 3;
