@@ -5,35 +5,32 @@ import { InventoryService } from 'src/app/services/inventory/inventory.service';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss']
+  styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit {
   selectedMenu: string = '';
   openStatus: boolean = false;
   userLoggedInStatus: boolean = false;
-  myMenu:any = {
-    dashboard:true,
-    membership:false,
-    pointsystem:false,
-    bookings:false,
-    inventory:false
-  }
-  inventoryList:any=[];
-  @Output () routeToLink:EventEmitter<any> = new EventEmitter();
-  constructor( private _router: Router, private _inventory:InventoryService) {
-    this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
+  myMenu: any = {
+    dashboard: true,
+    membership: false,
+    pointsystem: false,
+    bookings: false,
+    inventory: false,
+  };
+  inventoryList: any = [];
+  @Output() routeToLink: EventEmitter<any> = new EventEmitter();
+  constructor(private _router: Router, private _inventory: InventoryService) {
+    this._inventory.getInventoryList().subscribe((inventoryList: any) => {
       this.inventoryList = inventoryList.response;
     });
-    
   }
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
   logout(event: any) {
     event.preventDefault();
     // this._cookieService.deleteAll();
     this.userLoggedInStatus = false;
-    this._router.navigate(['/admin/login']);
+    this._router.navigate(['']);
   }
 
   renderChildmenu = (menuname: string) => {
@@ -48,26 +45,26 @@ export class SidenavComponent implements OnInit {
       this.selectedMenu = menuname;
     }
   };
-  goToLink(routerLink:any,active:string,queryParam?:string){
-    Object.keys(this.myMenu).forEach((item)=>{
+  goToLink(routerLink: any, active: string, queryParam?: string) {
+    Object.keys(this.myMenu).forEach((item) => {
       this.myMenu[item] = false;
-    })
+    });
     this.myMenu[active] = true;
-    if(queryParam){
+    if (queryParam) {
       let routeObj = {
         routerLink: routerLink,
-        queryParam:queryParam
+        queryParam: queryParam,
       };
       this.routeToLink.emit(routeObj);
-    }else{
+    } else {
       let routeObj = {
         routerLink: routerLink,
-        queryParam:queryParam
+        queryParam: queryParam,
       };
       this.routeToLink.emit(routeObj);
     }
   }
-  update(index:number){
+  update(index: number) {
     this._inventory.updateMyInventory(index);
   }
 }

@@ -16,6 +16,10 @@ import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouch
 const routes: Routes = [
   {
     path: '',
+    component: LoginComponent,
+  },
+  {
+    path: 'Landingpage',
     component: LandingpageComponent,
     children: [
       {
@@ -38,7 +42,10 @@ const routes: Routes = [
       },
       {
         path: 'facilities',
-        loadChildren: () => import('./modules/facilities/facilities.module').then(facility => facility.FacilitiesModule)
+        loadChildren: () =>
+          import('./modules/facilities/facilities.module').then(
+            (facility) => facility.FacilitiesModule
+          ),
       },
       {
         path: 'hotels',
@@ -49,8 +56,8 @@ const routes: Routes = [
         component: VouchersComponent,
       },
       {
-        path:'add-vouchers',
-        component:AddVouchersComponent
+        path: 'add-vouchers',
+        component: AddVouchersComponent,
       },
       {
         path: 'points',
@@ -70,16 +77,10 @@ const routes: Routes = [
       },
       {
         path: 'edit-vouchers/:id',
-        component: EditVouchersComponent
-      }
+        component: EditVouchersComponent,
+      },
     ],
   },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-
-  
 ];
 
 @NgModule({
