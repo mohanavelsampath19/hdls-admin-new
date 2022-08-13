@@ -28,6 +28,7 @@
     "@angular/service-worker": "^14.1.0",
     "@kolkov/angular-editor": "^2.0.0",
     "@schematics/angular": "^9.1.0",
+    "angular-responsive-carousel": "^2.1.2",
     "express": "^4.17.3",
     "firebase": "^9.9.1",
     "moment": "^2.29.1",

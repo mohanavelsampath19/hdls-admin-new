@@ -59,8 +59,8 @@ export class EditRoomComponent implements OnInit {
   addImageType:any = [];
   roomid:any;
   roomFacilitiesList:string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
-  // fruitInput:any = [];
-   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  
+
   constructor(
     private _formBuilder: FormBuilder,
     private _roomsService: RoomsService,
@@ -305,7 +305,7 @@ export class EditRoomComponent implements OnInit {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.facilities.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
+    // this.fruitInput?.nativeElement.value = '';
     this.facilityCtrl.setValue(null);
     console.log(this.facilities, '---facility---')
   }

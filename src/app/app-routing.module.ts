@@ -15,11 +15,11 @@ import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouch
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginComponent,
   },
   {
-    path: 'Landingpage',
+    path: '',
     component: LandingpageComponent,
     children: [
       {
@@ -78,7 +78,7 @@ const routes: Routes = [
       {
         path: 'edit-vouchers/:id',
         component: EditVouchersComponent,
-      },
+      }
     ],
   },
 ];

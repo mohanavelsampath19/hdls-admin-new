@@ -28,9 +28,10 @@ export class SidenavComponent implements OnInit {
   ngOnInit() {}
   logout(event: any) {
     event.preventDefault();
-    // this._cookieService.deleteAll();
+    localStorage.removeItem('logged-in-user');
+    localStorage.clear();
     this.userLoggedInStatus = false;
-    this._router.navigate(['']);
+    this._router.navigate(['login']);
   }
 
   renderChildmenu = (menuname: string) => {

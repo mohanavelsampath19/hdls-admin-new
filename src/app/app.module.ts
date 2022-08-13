@@ -110,6 +110,7 @@ const config: SocketIoConfig = {
     MatDialogModule,
     HttpClientModule,
     PointsystemModule,
+    MatPaginatorModule,
     // NgxMaterialTimepickerModule,
     MatGoogleMapsAutocompleteModule,
     AgmCoreModule.forRoot({

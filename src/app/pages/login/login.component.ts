@@ -16,6 +16,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 import { Subscription, timer } from 'rxjs';
+import { LoginService } from 'src/app/services/login/login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -76,37 +77,45 @@ export class LoginComponent implements OnInit {
   constructor(
     public _dialog: MatDialog,
     private _formBuilder: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private _loginService:LoginService
   ) {}
 
+  checkLogin(e:any){
+    e.preventDefault();
+    this.login();
+  }
   login() {
     if (this.form.valid) {
       this.loading = true;
-      this._router.navigate(['/Landingpage']);
-      // this._userService
-      //   .login(
-      //     this.form.get('phoneNumber')?.value,
-      //     btoa(this.form.get('password')?.value)
-      //   )
-      //   .subscribe(
-      //     (loginResponse: any) => {
-      //       this.showMessage = true;
-      //       if (loginResponse.status === 0) {
-      //         this.loading = false;
-      //         this.openMessage('Login successful', 'Success');
-      //         this._dialogRef.close({ loginResponse: loginResponse.response });
-      //       } else {
-      //         this.loading = false;
-      //         this.openMessage('Login unsuccessful', loginResponse.message);
-      //       }
-      //     },
-      //     (error) => {
-      //       console.log(error);
-      //       this.showMessage = true;
-      //       this.loading = false;
-      //       this.openMessage('Login unsuccessful', 'error');
-      //     }
-      //   );
+      this.showMessage = false;
+      // this._router.navigate(['/Landingpage']);
+      this._loginService
+        .login(
+          this.form.get('username')?.value,
+          this.form.get('password')?.value
+        )
+        .subscribe(
+          (loginResponse: any) => {
+            this.showMessage = true;
+            if (loginResponse.status === 0) {
+              this.loading = false;
+              // this.openMessage('Login successful', 'Success');
+              localStorage.setItem('logged-in-user',this.form.value.username);
+              localStorage.setItem('loginRes',JSON.stringify(loginResponse));
+              this._router.navigate(['']);
+            } else {
+              this.loading = false;
+              this.openMessage('Login unsuccessful', loginResponse.message);
+            }
+          },
+          (error) => {
+            console.log(error);
+            this.showMessage = true;
+            this.loading = false;
+            this.openMessage('Login unsuccessful', 'error');
+          }
+        );
     }
   }
 
@@ -131,7 +140,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      phoneNumber: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
     this.enterPhoneNumberForm = this._formBuilder.group({

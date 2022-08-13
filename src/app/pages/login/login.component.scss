@@ -10,25 +10,25 @@
   display: flex;
   // margin: 5% 2%;
   align-items: center;
-  padding: 25px;
+  // padding: 25px;
   border: 1px solid rgb(175, 171, 171);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   gap: 10%;
   .closeErrorMsg {
-    font-family: -webkit-pictograph;
+    font-family: "Open sans",sans-serif;
     position: absolute;
     right: 15px;
     font-size: 18px;
     font-weight: 600;
     top: 26%;
-    color: #d42727;
+    color: #fff;
     cursor: pointer;
   }
   .image {
     // width: 60%;
     display: flex;
     align-items: center;
-    margin-left: 5%;
+    // margin-left: 5%;
     .image-banner {
       width: 40vw;
       height: 30vw;
@@ -51,6 +51,8 @@
       margin-bottom: 16px;
       border-radius: 4px;
       position: relative;
+      background-color: #721c24;
+      color:#fff;
     }
     .success {
       background-color: #d4edda;

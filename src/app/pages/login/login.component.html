@@ -22,13 +22,11 @@
         <p class="header1">Login</p>
         <p class="header2">Login to your account</p>
         <mat-form-field appearance="outline">
-          <mat-label>Enter Phone number</mat-label>
+          <mat-label>Enter your username</mat-label>
           <input
             matInput
-            type="number"
-            formControlName="phoneNumber"
-            maxlength="10"
-            size="10"
+            type="text"
+            formControlName="username"
             required
           />
         </mat-form-field>
@@ -38,6 +36,7 @@
             matInput
             [type]="hide ? 'password' : 'text'"
             formControlName="password"
+            (keydown.enter)="checkLogin($event)" 
             required
           />
           <button
@@ -51,10 +50,10 @@
           </button>
         </mat-form-field>
         <div class="actions">
-          <span class="reset_password" id="resetPwd" (click)="forgotPassword()"
+          <!-- <span class="reset_password" id="resetPwd" (click)="forgotPassword()"
             >Forgot password?</span
-          >
-          <br />
+          > -->
+          <!-- <br /> -->
           <button
             mat-button
             class="sigin-cta"
@@ -63,19 +62,13 @@
           >
             Sign In
           </button>
-          <div class="horizontal">
-            <p>Don't have an account yet?</p>
-            <a class="signup" href="#" (click)="openSignup($event)">Join</a>
-          </div>
+         
         </div>
       </div>
     </form>
 
     <form action="submit" method="post" [formGroup]="enterPhoneNumberForm">
-      <div *ngIf="showMessage" class="message" [ngClass]="status">
-        {{ message }}
-        <span class="closeErrorMsg" (click)="closeErrorMsg()">x</span>
-      </div>
+      
       <div class="forgot-password-ui" *ngIf="showResetPassword">
         <p class="header1">Reset password</p>
         <p class="header2">Enter your phone number to reset password</p>
