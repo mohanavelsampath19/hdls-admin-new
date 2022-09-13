@@ -1,3 +1,4 @@
+import { PointsComponent } from './pages/points/points.component';
 import { EditRoomComponent } from './pages/hotels/edit-room/edit-room.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -64,6 +65,10 @@ const routes: Routes = [
         component: PointsystemComponent,
       },
       {
+        path: 'admin/tenants',
+        component: PointsComponent,
+      },
+      {
         path: 'add-room',
         component: AddRoomComponent,
       },
@@ -78,7 +83,7 @@ const routes: Routes = [
       {
         path: 'edit-vouchers/:id',
         component: EditVouchersComponent,
-      }
+      },
     ],
   },
 ];

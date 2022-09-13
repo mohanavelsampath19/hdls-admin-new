@@ -22,9 +22,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { MemberShipRoutingModule } from '../membership/membership.routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { PointsComponent } from '../../pages/points/points.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  declarations: [PointsystemComponent],
+  declarations: [PointsystemComponent, PointsComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -54,6 +56,7 @@ import { SharedModule } from '../shared/shared.module';
     MatButtonModule,
     MatChipsModule,
     MatSlideToggleModule,
+    MatCardModule,
   ],
   // bootstrap: [PointsystemComponent],
 })
