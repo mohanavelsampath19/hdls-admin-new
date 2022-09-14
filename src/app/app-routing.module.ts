@@ -62,12 +62,9 @@ const routes: Routes = [
       },
       {
         path: 'points',
-        component: PointsystemComponent,
-      },
-      {
-        path: 'admin/tenants',
         component: PointsComponent,
       },
+      
       {
         path: 'add-room',
         component: AddRoomComponent,

@@ -13,7 +13,7 @@ export class PointsComponent implements OnInit {
 
   editPointDetailsForm = new FormGroup({
     pointId: new FormControl(),
-    pointMultiplier: new FormControl(),
+    point_multiplier: new FormControl(),
     isActive: new FormControl(),
     edit: new FormControl(false),
   });
@@ -46,28 +46,28 @@ export class PointsComponent implements OnInit {
     console.log(this.pointDetails[index].edit);
     this.editPointDetailsForm.patchValue({
       pointId: this.pointDetails[index].pointsid,
-      pointMultiplier: this.pointDetails[index].point_multiplier,
+      point_multiplier: this.pointDetails[index].point_multiplier,
       isActive: this.pointDetails[index].isactive,
     });
   }
 
   updateDetails(event: any, index: number) {
     event?.preventDefault();
-    const { pointId, pointMultiplier, isActive } =
+    const { pointId, point_multiplier, isActive } =
       this.editPointDetailsForm.value;
     console.log(
       this.editPointDetailsForm.value,
       pointId,
-      pointMultiplier,
+      point_multiplier,
       isActive
     );
     this.pointDetails[index].edit = false;
     this._pointService
-      .updatePointMultiplier(pointId, pointMultiplier)
+      .updatePointMultiplier(pointId, point_multiplier)
       .subscribe(
         (res: any) => {
           if (res && res.status === 1) {
-            this.pointDetails = res.response;
+            this.getPointDetails();
           } else {
             console.log('Please try again', res);
           }
