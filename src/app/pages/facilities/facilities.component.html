@@ -2,15 +2,15 @@
 
     <div class="hdls-header-search-section">
       <div class="hdls-search-section">
-        <form class="hdls-search-field">
+        <form (submit)="setSearchValue($event)" class="hdls-search-field">
           <input
             type="text"
-  
+            (change)="getSearchDetails($event)"
             matInput
             placeholder="Search"
           />
           <span>
-            <a href="#" >
+            <a href="#" (click)="setSearchValue($event)">
               <img src="../../../assets/images/search.png" alt="Search" />
             </a>
           </span>
@@ -21,7 +21,7 @@
         <img src="../../../assets/images/plus.png" alt="Add Facility" />
       </a>
     </div>
-  
+
     <div id="hdls-membership-list">
       <div class="category-button">
         <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'all' }"
@@ -44,7 +44,7 @@
       <div class="hdls-product-list-section">
         <!-- <app-search-field></app-search-field> -->
         <table mat-table class="hdls-product-table" [dataSource]="dataSource"  matTableExporter>
-  
+
           <ng-container matColumnDef="facility_name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Facility Name
@@ -53,7 +53,7 @@
               <div *ngIf="!element.isLoading">
                 <div class="logo-container"><img [src]="element.coverimage" /></div>
                 <div class="vouchertitle-container"> {{ element.facility_name }}</div>
-                
+
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -69,7 +69,7 @@
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
           </ng-container>
-  
+
           <ng-container matColumnDef="facility_desc">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Description
@@ -81,7 +81,7 @@
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
           </ng-container>
-  
+
           <!-- Symbol Column -->
           <ng-container matColumnDef="property">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -94,8 +94,8 @@
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
           </ng-container>
-  
-          
+
+
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Action
@@ -107,15 +107,15 @@
                 <a (click)="deleteFacility(element)">Delete</a>
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
-  
+
             </td>
           </ng-container>
-  
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row  *matRowDef="let row; columns: displayedColumns" class="hdls-table-row"></tr>
         </table>
         <table>
-  
+
           <tr *ngIf="!dataSource.data.length">
             <td class="hdls-no-records-detail">No Records Found!</td>
           </tr>
@@ -125,6 +125,5 @@
         </mat-paginator>
       </div>
     </div>
-  
+
   </section>
-  

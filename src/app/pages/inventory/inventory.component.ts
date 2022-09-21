@@ -161,12 +161,14 @@ export class InventoryComponent implements OnInit {
 
   getSearchDetails = (event: Event) => {
     event.preventDefault();
-    // this.searchValue = (event.target as HTMLInputElement).value;
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   };
 
   setSearchValue = (event: Event) => {
     event.preventDefault();
-    //   this.getSearchInput.emit(this.searchValue);
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   };
 
   openDeleteDialog(event: Event, deleteid: any, status: any) {

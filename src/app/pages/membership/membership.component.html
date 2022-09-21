@@ -2,15 +2,15 @@
 
   <div class="hdls-header-search-section">
     <div class="hdls-search-section">
-      <form class="hdls-search-field">
+      <form (submit)="setSearchValue($event)" class="hdls-search-field">
         <input
           type="text"
-
+          (change)="getSearchDetails($event)"
           matInput
           placeholder="Search"
         />
         <span>
-          <a href="#" >
+          <a href="#" (click)="setSearchValue($event)">
             <img src="../../../assets/images/search.png" alt="Search" />
           </a>
         </span>

@@ -13,6 +13,7 @@ import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-po
   styleUrls: ['./bookings.component.scss'],
 })
 export class BookingsComponent implements OnInit {
+  getSearchValue:string = '';
   selectedCategory: string = 'all';
   memberShipFilters: any = {
     categoryCounts: {
@@ -182,11 +183,13 @@ export class BookingsComponent implements OnInit {
 
   getSearchDetails = (event: Event) => {
     event.preventDefault();
-    // this.searchValue = (event.target as HTMLInputElement).value;
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   };
 
   setSearchValue = (event: Event) => {
     event.preventDefault();
-    //   this.getSearchInput.emit(this.searchValue);
+    const filterValue = (event.target as HTMLInputElement).value;
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
   };
 }
