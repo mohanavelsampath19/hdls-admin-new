@@ -32,7 +32,8 @@ export class EditVouchersComponent implements OnInit {
     wanttogroupupexistingvoucher:new FormControl(),
     evouchersellingprice:new FormControl('',Validators.required),
     evoucherexpiry: new FormControl(),
-    expirydays: new FormControl()
+    expirydays: new FormControl(),
+    tranferable: new FormControl('', Validators.required)
   });
   currentProperty:string='';
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
@@ -89,7 +90,7 @@ export class EditVouchersComponent implements OnInit {
           discount:res?.response?.discount,
           evoucherQuantity:res?.response?.quantity,
           isthereanyblockoutdates:res?.response?.blockoutdays,
-          tranferable:res?.response?.transfer,
+          tranferable:res && res.response && res.response.transfer && res.response.transfer == 1 ? 'transferable' : 'non-transferable',
           evoucheractualprice:res?.response?.actualprice,
           evoucherpoints:res?.response?.points,
           wanttogroupupexistingvoucher:groupingValue,

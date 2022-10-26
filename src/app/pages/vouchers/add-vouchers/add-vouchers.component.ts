@@ -31,7 +31,8 @@ export class AddVouchersComponent implements OnInit {
     wanttogroupupexistingvoucher:new FormControl(''),
     evouchersellingprice:new FormControl('',Validators.required),
     evoucherexpiry: new FormControl(),
-    expirydays: new FormControl()
+    expirydays: new FormControl(),
+    tranferable: new FormControl('', Validators.required)
   });
   currentProperty:string='';
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];

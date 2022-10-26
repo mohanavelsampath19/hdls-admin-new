@@ -32,6 +32,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { BookingstatusPipe } from '../../pipes/bookingstatus.pipe';
+import { ScanModalComponent } from '../../components/common/scan-modal/scan-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { BookingstatusPipe } from '../../pipes/bookingstatus.pipe';
     DeleteModalComponent,
     InfoPopupComponent,
     ConfirmationModalComponent,
-    BookingstatusPipe
+    BookingstatusPipe,
+    ScanModalComponent
   ],
   imports: [
     CommonModule,

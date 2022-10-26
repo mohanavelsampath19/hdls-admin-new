@@ -10,7 +10,7 @@
         />
         <span>
           <a href="#" (click)="setSearchValue($event)">
-            <img src="../../../assets/images/search.png" alt="search" />
+            <img src="../../../assets/images/search.png" alt="Search" />
           </a>
         </span>
       </form>
@@ -71,7 +71,7 @@
       >
         <ng-container matColumnDef="property_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Booking Id
+            Tribe Reference
           </th>
           <td mat-cell *matCellDef="let element">
             <p *ngIf="!element.isLoading">
@@ -119,6 +119,28 @@
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
+        <ng-container matColumnDef="hotel_confirmation_number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Hotel Confirmation Number
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <p *ngIf="!element.isLoading">
+              {{ element.bookingid }}
+            </p>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="remarks">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Remarks
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <p *ngIf="!element.isLoading">
+              -
+            </p>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
           <td mat-cell *matCellDef="let element">
@@ -129,11 +151,11 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              <a href="#" (click)="openDeleteDialog($event, element.bookingid,element.status)" *ngIf="element.status!=3">Action</a>
-              <div *ngIf="element.status==3"><strong>{{element.updated_at | date:'medium'}}</strong></div>
+              <a href="#" (click)="openDeleteDialog($event, element.bookingid,element.status)" *ngIf="element.status!=4">Action</a>
+              <div *ngIf="element.status==4"><strong>{{element.updated_at | date:'medium'}}</strong></div>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
 

@@ -1,3 +1,4 @@
+import { PointsComponent } from './pages/points/points.component';
 import { EditRoomComponent } from './pages/hotels/edit-room/edit-room.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -14,6 +15,10 @@ import { VouchersComponent } from './pages/vouchers/vouchers.component';
 import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
 
 const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: '',
     component: LandingpageComponent,
@@ -38,7 +43,10 @@ const routes: Routes = [
       },
       {
         path: 'facilities',
-        loadChildren: () => import('./modules/facilities/facilities.module').then(facility => facility.FacilitiesModule)
+        loadChildren: () =>
+          import('./modules/facilities/facilities.module').then(
+            (facility) => facility.FacilitiesModule
+          ),
       },
       {
         path: 'hotels',
@@ -49,13 +57,14 @@ const routes: Routes = [
         component: VouchersComponent,
       },
       {
-        path:'add-vouchers',
-        component:AddVouchersComponent
+        path: 'add-vouchers',
+        component: AddVouchersComponent,
       },
       {
         path: 'points',
-        component: PointsystemComponent,
+        component: PointsComponent,
       },
+      
       {
         path: 'add-room',
         component: AddRoomComponent,
@@ -70,16 +79,10 @@ const routes: Routes = [
       },
       {
         path: 'edit-vouchers/:id',
-        component: EditVouchersComponent
-      }
+        component: EditVouchersComponent,
+      },
     ],
   },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-
-  
 ];
 
 @NgModule({

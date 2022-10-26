@@ -49,14 +49,19 @@ import { AgmCoreModule } from '@agm/core';
 import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { environment } from 'src/environments/environment';
+
+import { environment } from '../environments/environment';
+import { initializeApp } from 'firebase/app';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
+initializeApp(environment.firebase);
 
 const config: SocketIoConfig = {
-	url: environment.socketUrl, // socket server url;
-	options: {
-		transports: ['websocket']
-	}
-}
+  url: environment.socketUrl, // socket server url;
+  options: {
+    transports: ['websocket'],
+  },
+};
 
 @NgModule({
   declarations: [
@@ -72,7 +77,7 @@ const config: SocketIoConfig = {
     AddVouchersComponent,
     VouchersComponent,
     EditMembershipComponent,
-    EditVouchersComponent
+    EditVouchersComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,15 +110,17 @@ const config: SocketIoConfig = {
     MatDialogModule,
     HttpClientModule,
     PointsystemModule,
+    MatPaginatorModule,
     // NgxMaterialTimepickerModule,
     MatGoogleMapsAutocompleteModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBPFJayQZ1SGLO7W_p0FAMRR552UdLhr3s',
-      libraries: ['places']
+      libraries: ['places'],
     }),
     GooglePlaceModule,
     MatSlideToggleModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    IvyCarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

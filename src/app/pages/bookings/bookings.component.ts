@@ -13,6 +13,7 @@ import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-po
   styleUrls: ['./bookings.component.scss'],
 })
 export class BookingsComponent implements OnInit {
+  getSearchValue:string = '';
   selectedCategory: string = 'all';
   memberShipFilters: any = {
     categoryCounts: {
@@ -39,6 +40,8 @@ export class BookingsComponent implements OnInit {
     'room_type',
     'customername',
     'amount',
+    'hotel_confirmation_number',
+    'remarks',
     'status',
     'action',
   ];
@@ -149,7 +152,7 @@ export class BookingsComponent implements OnInit {
       (data) => {
         this._dialog.closeAll();
         if (data.status) {
-          let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 3;
+          let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 4;
           this._bookingService.changeBookingStatus(deleteid, status, data.reason).subscribe((res:any)=> {
             if(res && res.status === 1) {
               const dialogRef = this._dialog.open(InfoPopupComponent, {
@@ -180,11 +183,13 @@ export class BookingsComponent implements OnInit {
 
   getSearchDetails = (event: Event) => {
     event.preventDefault();
-    // this.searchValue = (event.target as HTMLInputElement).value;
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   };
 
   setSearchValue = (event: Event) => {
     event.preventDefault();
-    //   this.getSearchInput.emit(this.searchValue);
+    const filterValue = (event.target as HTMLInputElement).value;
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
   };
 }

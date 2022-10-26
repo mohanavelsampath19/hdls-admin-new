@@ -169,4 +169,16 @@ export class FacilitiesComponent implements OnInit {
       }
     });
   }
+
+  getSearchDetails = (event: Event) => {
+    event.preventDefault();
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  };
+
+  setSearchValue = (event: Event) => {
+    event.preventDefault();
+    const filterValue = (event.target as HTMLInputElement).value;
+   // this.dataSource.filter = filterValue.trim().toLowerCase();
+  };
 }

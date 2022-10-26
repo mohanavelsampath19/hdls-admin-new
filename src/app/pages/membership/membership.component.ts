@@ -54,6 +54,19 @@ export class MembershipComponent implements OnInit {
     this.getMembershipList();
   }
 
+  getSearchDetails = (event: Event) => {
+    event.preventDefault();
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  };
+
+  setSearchValue = (event: Event) => {
+    event.preventDefault();
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  };
+
+
   getSelectedFilter = (value: string) => {
     this.selectedCategory = value;
     this.pageSize = 5;

@@ -1,0 +1,171 @@
+<section id="scan-modal-container">
+    <div class="scan-modal-container-title">Booking Check-In notification</div>
+    <div class="scan-modal-container-body">
+        
+        <div *ngIf="bookingInfoList.length==1">
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Booking ID
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    #{{bookingInfoList[0].bookingid}}
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Booking Date
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    {{bookingInfoList[0].created_at}}
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Customer Name
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    {{bookingInfoList[0].customername}}
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Hotel Name
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    {{bookingInfoList[0].hotelname}}
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Room
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    {{bookingInfoList[0].roomname}}
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Start Date
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    {{bookingInfoList[0].start_at | date:'medium'}}
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    End Date
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    {{bookingInfoList[0].end_at | date:'medium'}}
+                </div>
+            </div>
+            
+            <div class="scan-modal-container-body-desc">
+                <button mat-button color="secondary" class="hdls-btn-secondary"
+                [mat-dialog-close]="true"
+                cdkFocusInitial
+                >
+                    Close
+                </button>
+                <button
+                    class="hdls-btn-primary"
+                    mat-button
+                    color="primary"
+                    (click)="updateCheckIn(bookingInfoList[0].bookingid)"
+                >
+                    Check-In
+                </button>
+                </div>
+            </div>
+        <ng-container *ngIf="bookingInfoList.length>1">
+            <mat-accordion>
+                <mat-expansion-panel hideToggle *ngFor="let bookingInfoDetails of bookingInfoList">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Booking ID #{{bookingInfoDetails.bookingid}}
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                      This is a summary of the content
+                    </mat-panel-description> -->
+                  </mat-expansion-panel-header>
+                  <div class="scan-modal-container-body-desc">
+                    <div class="scan-modal-container-body-desc-name">
+                        Booking ID
+                    </div>
+                    <div class="scan-modal-container-body-desc-detail">
+                        #{{bookingInfoDetails.bookingid}}
+                    </div>
+                </div>
+                <div class="scan-modal-container-body-desc">
+                    <div class="scan-modal-container-body-desc-name">
+                        Booking Date
+                    </div>
+                    <div class="scan-modal-container-body-desc-detail">
+                        {{bookingInfoDetails.created_at}}
+                    </div>
+                </div>
+                <div class="scan-modal-container-body-desc">
+                    <div class="scan-modal-container-body-desc-name">
+                        Customer Name
+                    </div>
+                    <div class="scan-modal-container-body-desc-detail">
+                        {{bookingInfoDetails.customername}}
+                    </div>
+                </div>
+                <div class="scan-modal-container-body-desc">
+                    <div class="scan-modal-container-body-desc-name">
+                        Hotel Name
+                    </div>
+                    <div class="scan-modal-container-body-desc-detail">
+                        {{bookingInfoDetails.hotelname}}
+                    </div>
+                </div>
+                <div class="scan-modal-container-body-desc">
+                    <div class="scan-modal-container-body-desc-name">
+                        Room
+                    </div>
+                    <div class="scan-modal-container-body-desc-detail">
+                        {{bookingInfoDetails.roomname}}
+                    </div>
+                </div>
+                <div class="scan-modal-container-body-desc">
+                    <div class="scan-modal-container-body-desc-name">
+                        Start Date
+                    </div>
+                    <div class="scan-modal-container-body-desc-detail">
+                        {{bookingInfoDetails.start_at | date:'medium'}}
+                    </div>
+                </div>
+                <div class="scan-modal-container-body-desc">
+                    <div class="scan-modal-container-body-desc-name">
+                        End Date
+                    </div>
+                    <div class="scan-modal-container-body-desc-detail">
+                        {{bookingInfoDetails.end_at | date:'medium'}}
+                    </div>
+                </div>
+                
+                <div class="scan-modal-container-body-desc">
+                    <button mat-button color="secondary" class="hdls-btn-secondary"
+                    [mat-dialog-close]="true"
+                    cdkFocusInitial
+                    >
+                        Close
+                    </button>
+                    <button
+                        class="hdls-btn-primary"
+                        mat-button
+                        color="primary"
+                        (click)="updateCheckIn(bookingInfoDetails.bookingid)"
+                    >
+                        Check-In
+                    </button>
+                </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </ng-container>
+        <div *ngIf="bookingInfoList.length==0">
+            <h3>There is no booking available for this customer.</h3>
+        </div>
+    </div>
+</section>
