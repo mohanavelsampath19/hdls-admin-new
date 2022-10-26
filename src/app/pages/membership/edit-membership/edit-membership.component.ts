@@ -35,7 +35,7 @@ export class EditMembershipComponent implements OnInit {
         });
         this._membership.getVouchers().subscribe((vouchersRes:any)=>{
           this.allVoucherList = vouchersRes.response;
-          this.vouchersList = this.allVoucherList.filter((voucher:any)=>{return voucher.hotelid==this.membershipDetail.hotelid});
+          this.vouchersList = this.allVoucherList;
         });
         this.editMembership.patchValue({
           title: this.membershipDetail.membershipname,

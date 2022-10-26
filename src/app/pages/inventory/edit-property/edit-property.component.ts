@@ -181,7 +181,7 @@ export class EditPropertyComponent implements OnInit {
       property_description: ['', Validators.required],
       property_type: ['', Validators.required],
       // availablerooms: [0, Validators.required],
-      front_end_desk: ['', Validators.required],
+      front_end_desk: ['', [Validators.required, Validators.maxLength(10)]],
       // points: ['', Validators.required],
       address:[''],
       point_of_contact: ['', Validators.required],
@@ -194,15 +194,6 @@ export class EditPropertyComponent implements OnInit {
       nearByLocation:this._formBuilder.array([])
     });
     this.secondFormGroup = this._formBuilder.group({});
-    // this.facilities = this._formBuilder.group({
-    //   breakFast: false,
-    //   ac: false,
-    //   wifi: false,
-    //   geyser: false,
-    //   power_backup: false,
-    //   elevator: false,
-    //   room_service: false,
-    // });
 
     this._activatedRoute.params.subscribe((param:any)=>{
       this._inventoryService.getPropertyDetail(param.id).subscribe((res:any) => {
@@ -231,8 +222,10 @@ export class EditPropertyComponent implements OnInit {
         }
         this.myCoverImageCheck = true;
         this.coverImage = environment.imageUrl+"/"+res.response.logo;
-        this.propertyid = res?.response?.hotel_id
+        this.propertyid = res?.response?.hotel_id;
+        this.checkoutError = false;
       })
+     // console.log(this.firstFormGroup.value, this.firstFormGroup.valid, '---')
     });
 
     this.firstFormGroup.controls['checkin'].valueChanges.subscribe(
