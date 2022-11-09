@@ -76,8 +76,8 @@
                     Check-In
                 </button>
                 </div>
-            </div>
-        <ng-container *ngIf="bookingInfoList.length>1">
+        </div>
+        <div *ngIf="bookingInfoList.length>1">
             <mat-accordion>
                 <mat-expansion-panel hideToggle *ngFor="let bookingInfoDetails of bookingInfoList">
                   <mat-expansion-panel-header>
@@ -163,7 +163,7 @@
                 </div>
                 </mat-expansion-panel>
             </mat-accordion>
-        </ng-container>
+        </div>
         <div *ngIf="bookingInfoList.length==0">
             <h3>There is no booking available for this customer.</h3>
         </div>

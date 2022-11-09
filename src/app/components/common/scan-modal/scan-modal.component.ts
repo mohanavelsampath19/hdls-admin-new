@@ -8,14 +8,15 @@ const listentScanPopup = new BroadcastChannel('listenScanPopup');
   styleUrls: ['./scan-modal.component.scss']
 })
 export class ScanModalComponent implements OnInit {
-  bookingInfoList:any;
+  bookingInfoList:any=[];
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,private _bookingService:BookingsService, private _dialog:MatDialog) { 
     let scanData = JSON.parse(this.data.bookingDetails.body) || this.data.bookingDetails.body;
-    console.log(scanData);
     this.bookingInfoList = [...scanData];
   }
 
   ngOnInit(): void {
+    let scanData = JSON.parse(this.data.bookingDetails.body) || this.data.bookingDetails.body;
+    this.bookingInfoList = [...scanData];
   }
   updateCheckIn(bookingId:number){
     this._bookingService.changeBookingStatus(bookingId,3).subscribe((bookingUpdate:any)=>{
