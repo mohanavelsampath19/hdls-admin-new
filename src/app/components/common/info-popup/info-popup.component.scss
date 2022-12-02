@@ -1,0 +1,22 @@
+@import '../../../../theme/vars.scss';
+
+.hdls-delete-dialog {
+  min-height: 200px;
+  width: 450px;
+  h3 {
+    text-align: center;
+  }
+  .hdls-close-icon {
+    float: right;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  .hdls-popup-content {
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+  }
+}

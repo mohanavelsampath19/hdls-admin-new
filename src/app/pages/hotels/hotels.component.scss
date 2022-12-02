@@ -1,0 +1,130 @@
+@import "../../../theme/vars.scss";
+
+.category-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    margin-bottom: 20px;
+    a {
+      width: 120px;
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      // box-shadow: $primary-shadow;
+      background-color: #fff;
+      color: #818181;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .selected-item {
+      background-color: $primary-background-color;
+      color: $secondary-font-color;
+    }
+  }
+
+  .hdls-choose-property {
+    display: flex;
+    align-items: center;
+    .hdls-property-select {
+      .mat-form-field-wrapper {
+        width: 100%;
+      }
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 5px 10px;
+      width: 380px;
+      margin: 10px 0;
+      background-color: $secondary-font-color;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+    }
+    .add-button {
+      height: 47px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: $primary-background-color;
+      color: #fff;
+      font-size: 18px;
+      margin: 0 10px;
+      padding: 1px 25px;
+      border-radius: 5px;
+      border: none;
+      text-decoration: none;
+      justify-content: space-between;
+      span {
+        margin-right: 10px;
+      }
+    }
+  }
+  .search-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .add-product {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-grow: 1;
+      flex-basis: 50%;
+        .hdls-search-field {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 5px 10px;
+          width: 380px;
+          margin: 10px 0;
+          background-color: $secondary-font-color;
+          border: 2px solid #ddd;
+          border-radius: 5px;
+          input {
+            border: none;
+            height: 30px;
+            width: 100%;
+            padding-left: 5px;
+            font-size: 20px;
+            &:hover,
+            &:focus {
+              outline: none;
+            }
+          }
+        }
+      .add-button {
+        height: 47px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: $primary-background-color;
+        color: #fff;
+        font-size: 18px;
+        margin: 0 10px;
+        padding: 1px 25px;
+        border-radius: 5px;
+        border: none;
+        text-decoration: none;
+        span {
+          margin-right: 10px;
+        }
+      }
+    }
+    .download-section {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      .download-button {
+        padding: 0 10px;
+        border-radius: 5px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    width: 100%;
+  }

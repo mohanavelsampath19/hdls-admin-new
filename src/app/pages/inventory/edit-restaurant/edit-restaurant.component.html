@@ -1,0 +1,297 @@
+<div class="hdls-add-product-section">
+  <h3 class="hdls-breadcrumb-title">Add Property <span class="hdls-border"></span>Property Information</h3>
+  <!-- <mat-progress-bar
+    mode="determinate"
+    value="{{ progressBarValue }}"
+    class="hdls-progress-bar"
+  ></mat-progress-bar> -->
+
+  <mat-stepper linear #stepper class="hdls-stepper hdls-tenant-add-product-stepper">
+    <mat-step [stepControl]="firstFormGroup">
+      <form
+        [formGroup]="firstFormGroup"
+        #myform="ngForm"
+      >
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Property Name<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="property_name"
+            class="hdls-form-input"
+            placeholder="Property Title"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.property_name.invalid &&
+              (firstFormGroup.controls.property_name.dirty ||
+                firstFormGroup.controls.property_name.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the property name
+          </p>
+        </mat-form-field>
+
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Property Type<span class="required">*</span></h4>
+          <mat-select class="hdls-form-select" formControlName="property_type">
+            <mat-option value="1">Guesthouse</mat-option>
+            <mat-option value="2">Hostel</mat-option>
+            <mat-option value="3">Hotel</mat-option>
+            <mat-option value="3">Motel</mat-option>
+            <mat-option value="3">Resort</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Property Descriptions<span class="required">*</span></h4>
+          <textarea
+            matInput
+            id="productDescriptionEditor"
+            formControlName="property_description"
+            rows="5"
+            class="hdls-text-area"
+          >
+          </textarea>
+
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.property_description.invalid &&
+              (firstFormGroup.controls.property_description.dirty ||
+                firstFormGroup.controls.property_description.touched)
+            "
+          >
+            Please fill the description
+          </p>
+        </mat-form-field>
+        <section class="example-section" [formGroup]="facilities">
+          <h4>Facilities Available</h4>
+          <mat-checkbox
+            formControlName="breakFast"
+            class="hdls-checkbox"
+            color="primary"
+            >BreakFast</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="wifi"
+            class="hdls-checkbox"
+            color="primary"
+            >Free wi-fi</mat-checkbox
+          >
+          <mat-checkbox formControlName="ac" class="hdls-checkbox" color="primary"
+            >AC</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="geyser"
+            class="hdls-checkbox"
+            color="primary"
+            >Geyser</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="power_backup"
+            class="hdls-checkbox"
+            color="primary"
+            >Power Backup</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="elevator"
+            class="hdls-checkbox"
+            color="primary"
+            >Elevator</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="room_service"
+            class="hdls-checkbox"
+            color="primary"
+            >24 Hours Room Service</mat-checkbox
+          >
+        </section>
+        <div class="hdls-form-field-timings" appearance="fill">
+          <h4>Check-in & Check-out Timing<span class="required">*</span></h4>
+          <div class="checkin-checkout">
+            <div class="check-in">
+              <input
+                class="hdls-form-input"
+                placeholder="check-in"
+                aria-label="24hr format"
+                [ngxTimepicker]="checkin"
+                [format]="12"
+                readonly
+
+              />
+              <ngx-material-timepicker #checkin></ngx-material-timepicker>
+            </div>
+            <div class="check-out">
+              <input
+                class="hdls-form-input"
+                placeholder="check-out"
+                aria-label="24hr format"
+                [ngxTimepicker]="checkout"
+                [format]="12"
+                readonly
+              />
+              <ngx-material-timepicker #checkout></ngx-material-timepicker>
+            </div>
+          </div>
+        </div>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Address</h4>
+          <input
+            matInput
+            formControlName="address"
+            class="hdls-form-input"
+            placeholder="Address"
+          />
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>City<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="city"
+            class="hdls-form-input"
+            placeholder="City"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.city.invalid &&
+              (firstFormGroup.controls.city.dirty ||
+                firstFormGroup.controls.city.touched)
+            "
+          >
+            Please fill the city
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>State<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="state"
+            class="hdls-form-input"
+            placeholder="State"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.state.invalid &&
+              (firstFormGroup.controls.state.dirty ||
+                firstFormGroup.controls.state.touched)
+            "
+          >
+            Please fill the State
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Country<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="country"
+            class="hdls-form-input"
+            placeholder="Country"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.country.invalid &&
+              (firstFormGroup.controls.country.dirty ||
+                firstFormGroup.controls.country.touched)
+            "
+          >
+            Please fill the Country
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Point of Contact<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="point_of_contact"
+            class="hdls-form-input"
+            placeholder="Point of contact"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.point_of_contact.invalid &&
+              (firstFormGroup.controls.point_of_contact.dirty ||
+                firstFormGroup.controls.point_of_contact.touched)
+            "
+          >
+            Please fill the point of contact
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Contact number<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="front_end_desk"
+            class="hdls-form-input"
+            placeholder="Contact number"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.front_end_desk.invalid &&
+              (firstFormGroup.controls.front_end_desk.dirty ||
+                firstFormGroup.controls.front_end_desk.touched)
+            "
+          >
+            Please fill the contact number
+          </p>
+        </mat-form-field>
+
+        <!-- <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Points<span class="required">*</span></h4>
+          <mat-select class="hdls-form-select" formControlName="points">
+            <mat-option value="1">Default</mat-option>
+            <mat-option value="2">Double Points</mat-option>
+            <mat-option value="3">Public Points</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <!-- <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Restrictions<span class="required">*</span></h4>
+          <mat-select class="hdls-form-select" formControlName="restrictions">
+            <mat-option value="1">Public Holiday</mat-option>
+            <mat-option value="2">Weekends</mat-option>
+            <mat-option value="3">Selected Dates</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <div class="form-group">
+          <h4>Cover Image *</h4>
+          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" />
+          <div *ngIf="myCoverImageCheck" class="myCoverImage">
+            <img [src]="coverImage" alt="Cover Image">
+          </div>
+        </div>
+        <div>
+          <button mat-button matStepperNext class="hdls-btn-secondary" (click)="goToLink('/inventory')">
+            Cancel
+          </button>
+          <button
+            mat-button
+            matStepperNext
+            color="primary"
+            [ngClass]="{
+              'hdls-btn-primary': firstFormGroup.valid,
+              'hdls-btn-disable': !firstFormGroup.valid
+            }"
+            (click)="saveProperty()"
+          >
+            save
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>

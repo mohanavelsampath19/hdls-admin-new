@@ -1,0 +1,104 @@
+<section id="hdls-points-container">
+  <div class="" *ngIf="pointDetails.length>0">
+    <mat-card class="hdls-points-earning-card card-container">
+      <mat-card-header>
+        <mat-card-title
+          ><h1>{{ pointDetails[0]?.pointstitle }}</h1></mat-card-title>
+        <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
+      </mat-card-header>
+      <div class="card-image-detail">
+        <img src="../../../assets/images/earning.png" alt="logo" />
+      </div>
+      <mat-card-content class="card-content-container">
+        <form [formGroup]="editPointDetailsForm" >
+          <div class="hdls-points-form-feilds">
+            
+            <div class="point-desc">1 MYR  <br>=<br> <span *ngIf="!pointDetails[0].edit" > {{ pointDetails[0]?.point_multiplier }}</span> Points</div>
+            <input
+              *ngIf="pointDetails[0].edit"
+              type="text"
+              matInput
+              formControlName="point_multiplier"
+            />
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>
+          <mat-icon (click)="editDetails($event, 0)">edit</mat-icon>
+        </button>
+        <button mat-button>
+          <mat-icon (click)="updateDetails($event, 0)">save</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="" *ngIf="pointDetails.length>0">
+    <mat-card class="hdls-points-earning-card card-container">
+      <mat-card-header>
+        <mat-card-title
+          ><h1>{{ pointDetails[1]?.pointstitle }}</h1></mat-card-title
+        >
+        <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
+      </mat-card-header>
+      <div class="card-image-detail">
+        <img src="../../../assets/images/redeem.png" alt="logo" />
+      </div>
+      <mat-card-content class="card-content-container">
+        <form [formGroup]="editPointDetailsForm">
+          <div class="hdls-points-form-feilds">
+            <div class="point-desc">1 MYR  <br>=<br> <span *ngIf="!pointDetails[1].edit" > {{ pointDetails[1]?.point_multiplier }}</span> Points</div>
+            <input
+              *ngIf="pointDetails[1].edit"
+              type="text"
+              matInput
+              formControlName="point_multiplier"
+            />
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>
+          <mat-icon (click)="editDetails($event, 1)">edit</mat-icon>
+        </button>
+        <button mat-button>
+          <mat-icon (click)="updateDetails($event, 1)">save</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="" *ngIf="pointDetails.length>0">
+    <mat-card class="hdls-points-earning-card card-container">
+      <mat-card-header>
+        <mat-card-title
+          ><h1>{{ pointDetails[2]?.pointstitle }}</h1></mat-card-title
+        >
+        <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
+      </mat-card-header>
+      <div class="card-image-detail">
+        <img src="../../../assets/images/maximum.png" alt="logo" />
+      </div>
+      <mat-card-content class="card-content-container">
+        <form [formGroup]="editPointDetailsForm">
+          <div class="hdls-points-form-feilds">
+            <div *ngIf="!pointDetails[2].edit" class="point-desc"> Maximum points to be redeemed for single transaction <strong> {{ pointDetails[2]?.point_multiplier }}</strong></div>
+            <input
+              *ngIf="pointDetails[2].edit"
+              type="text"
+              matInput
+              formControlName="point_multiplier"
+            />
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>
+          <mat-icon (click)="editDetails($event, 2)">edit</mat-icon>
+        </button>
+        <button mat-button>
+          <mat-icon (click)="updateDetails($event, 2)">save</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>

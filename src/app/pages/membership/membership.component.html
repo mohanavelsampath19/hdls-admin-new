@@ -1,0 +1,146 @@
+<section id="hdls-membership-container">
+
+  <div class="hdls-header-search-section">
+    <div class="hdls-search-section">
+      <form (submit)="setSearchValue($event)" class="hdls-search-field">
+        <input
+          type="text"
+          (change)="getSearchDetails($event)"
+          matInput
+          placeholder="Search"
+        />
+        <span>
+          <a href="#" (click)="setSearchValue($event)">
+            <img src="../../../assets/images/search.png" alt="Search" />
+          </a>
+        </span>
+      </form>
+    </div>
+    <a class="add-button" routerLink="/membership/add-membership">
+      <span>Add Membership</span>
+      <img src="../../../assets/images/plus.png" alt="Add membership" />
+    </a>
+  </div>
+
+  <div id="hdls-membership-list">
+    <div class="category-button">
+      <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'all' }"
+        (click)="getSelectedFilter('all')">
+        All
+      </a>
+      <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'live' }"
+        (click)="getSelectedFilter('live')">
+        Live<span><!-- TODO--></span>
+      </a>
+      <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'in_active' }"
+        (click)="getSelectedFilter('in_active')">
+        Inactive<span><!-- TODO--></span>
+      </a>
+      <a id="basic" class="add-button" [ngClass]="{ 'selected-item': selectedCategory === 'deleted' }"
+        (click)="getSelectedFilter('deleted')">
+        Deleted<span><!-- TODO--></span>
+      </a>
+    </div>
+    <div class="hdls-product-list-section">
+      <!-- <app-search-field></app-search-field> -->
+      <table mat-table class="hdls-product-table" [dataSource]="dataSource"  matTableExporter>
+
+        <ng-container matColumnDef="membership_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Membership Name
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element.membershipname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="membership_desc">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Membership description
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element.membershipdesc }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Price
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element.amount }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Stock
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element.stocks }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="count">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Vouchers count
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element.evouchers?.length || 0 }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading && element.inactive!==2">
+              <mat-slide-toggle [checked]="element.inactive ===1" (change)="changeActiveStatus($event,element.membershipid)">{{ element.inactive === 1 ? 'Active' : element.inactive === 0 ? 'Inactive' : 'Deleted' }}</mat-slide-toggle>
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header >
+            <span *ngIf="selectedCategory!='deleted'">Action</span>
+          </th>
+          <td mat-cell *matCellDef="let element" >
+            <div *ngIf="!element.isLoading && selectedCategory!='deleted'">
+              <!-- <a href="#">View</a> -->
+              <a routerLink="edit-membership/{{element.membershipid}}" >Edit</a>
+              <a (click)="deleteMembership(element)">Delete</a>
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row  *matRowDef="let row; columns: displayedColumns" class="hdls-table-row"></tr>
+      </table>
+      <table>
+
+        <tr *ngIf="!dataSource.data.length">
+          <td class="hdls-no-records-detail">No Records Found!</td>
+        </tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"
+        (page)="changePage($event)">
+      </mat-paginator>
+    </div>
+  </div>
+
+</section>

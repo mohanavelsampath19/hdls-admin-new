@@ -1,0 +1,190 @@
+<section id="hdls-newmembership-container">
+  <h3 class="hdls-breadcrumb-title">Edit e-voucher | Voucher Information</h3>
+  <div class="new-membership-form-container">
+      <form [formGroup]="newVoucherForm" novalidate>
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>e-voucher Title *</mat-label>
+                  <input matInput formControlName="title" type="text" name="title" />
+              </mat-form-field>
+          </div>
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>Terms and Conditions *</mat-label>
+                  <textarea matInput formControlName="description" type="text" name="description"></textarea>
+              </mat-form-field>
+          </div>
+          <!-- <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>Properties *</mat-label>
+                  <mat-select (selectionChange)="inventoryChange($event)" formControlName="propertyid">
+                    <mat-option [value]="inventory.hotel_id" *ngFor="let inventory of inventoryList">{{inventory.hotelname}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </div> -->
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>Categories</mat-label>
+                  <mat-select formControlName="category" (selectionChange)="changeCategory($event)">
+                      <mat-option value="room">Room</mat-option>
+                      <mat-option value="f&b">F&B</mat-option>
+                      <mat-option value="facilities">Facilities</mat-option>
+                      <mat-option value="marketplace">Market place/Deal</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div *ngIf="isRoomBenefit">
+              <mat-form-field appearance="fill">
+                  <mat-label>Room Type</mat-label>
+                  <mat-select formControlName="roomType" #myInputRefmyRoomList>
+                      <mat-option [value]="room.roomsid" *ngFor="let room of myRoomList">{{room.roomtitle}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div *ngIf="isFB">
+              <mat-form-field appearance="fill">
+                  <mat-label>Restaurant</mat-label>
+                  <mat-select formControlName="roomType" #myInputReffbList>
+                      <mat-option [value]="fb.id" *ngFor="let fb of fbList">{{fb.facility_name}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div *ngIf="isFacilities">
+              <mat-form-field appearance="fill">
+                  <mat-label>Facilities</mat-label>
+                  <mat-select formControlName="roomType" #myInputReffacilityList>
+                      <mat-option [value]="fb.id" *ngFor="let fb of facilityList">{{fb.facility_name}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div *ngIf="isMarketplace">
+              <mat-form-field appearance="fill">
+                  <mat-label>Marketplace / Deal</mat-label>
+                  <mat-select formControlName="roomType">
+                      <mat-option [value]="fb.id" *ngFor="let fb of marketplaceList">{{fb.facility_name}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>Benefit Type</mat-label>
+                  <mat-select formControlName="benefittype" (selectionChange)="changeBenefitType($event)">
+                      <mat-option value="complementary">Complementary</mat-option>
+                      <mat-option value="discount">Discounted</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div *ngIf="isDiscounted">
+              <mat-form-field appearance="fill">
+                  <mat-label>Discount Type</mat-label>
+                  <mat-select formControlName="discounttype">
+                      <mat-option value="percentage">Percentage</mat-option>
+                      <mat-option value="fixed">Fixed Amount</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div *ngIf="isDiscounted">
+              <mat-form-field appearance="fill">
+                  <mat-label>Discount Percentage / Amount *</mat-label>
+                  <input matInput formControlName="discount" type="number" name="discount" />
+              </mat-form-field>
+          </div>
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>E-vouchers Quantity</mat-label>
+                  <input matInput type="number" name="evoucherQuantity" formControlName="evoucherQuantity" />
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>Is There Any Blockout Dates?</mat-label>
+                  <mat-select formControlName="isthereanyblockoutdates">
+                      <mat-option value="all days can use">All Days Can Use</mat-option>
+                      <mat-option value="weekend cant use">Weekend Cant Use</mat-option>
+                      <mat-option value="public holiday cant use">Public Holiday Cant Use</mat-option>
+                      <mat-option value="selected dates cant use">Selected Dates Cant Use</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>Want To Group-Up Existing Voucher?</mat-label>
+                  <mat-select multiple formControlName="wanttogroupupexistingvoucher">
+                      <mat-option [value]="voucher.vouchersid" *ngFor="let voucher of existingVoucherList">
+                          {{voucher.voucherstitle}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>E-voucher Actual Price(RM)*</mat-label>
+                  <input matInput type="number" name="evoucheractualprice" formControlName="evoucheractualprice" />
+              </mat-form-field>
+          </div>
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>E-voucher Selling Price(RM)*</mat-label>
+                  <input matInput type="number"  name="evouchersellingprice" formControlName="evouchersellingprice" />
+              </mat-form-field>
+          </div>
+
+          <div>
+              <mat-form-field appearance="fill">
+                  <mat-label>E-voucher Points</mat-label>
+                  <input matInput formControlName="evoucherpoints" type="number" name="evoucherpoints">
+              </mat-form-field>
+          </div>
+          <div class="hdls-expiry">
+            <mat-form-field appearance="fill" class="hdls-no-expiry">
+                <mat-label>E-voucher Expiry</mat-label>
+                <input matInput formControlName="evoucherexpiry" type="number" name="evoucherexpiry">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>E-voucher Type</mat-label>
+              <mat-select class="hdls-form-select" formControlName="expirydays">
+                <mat-option value="days">Days</mat-option>
+                <mat-option value="weeks">Weeks</mat-option>
+                <mat-option value="months">Months</mat-option>
+                <mat-option value="yearly">Yearly</mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-group coverImageContainer">
+          <h4>Voucher Image *</h4>
+          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" #myCoverImage />
+          <div *ngIf="myCoverImageCheck" class="myCoverImage">
+            <img [src]="coverImage" alt="Cover Image">
+            <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
+          </div>
+        </div>
+        <div class="transfer">
+          <mat-label>Transferable*</mat-label>
+            <mat-radio-group class="transferable" formControlName="tranferable">
+                <mat-radio-button class="p-10" value="non-transferable">
+                    Non Transferable
+                </mat-radio-button>
+                <mat-radio-button class="p-10" value="transferable">
+                    Transferable
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+          <div class="submitButtonGroup">
+              <button mat-raised-button color="primary"
+              color="primary"
+              (click)="saveVoucher()"
+             [ngClass]="[
+             (newVoucherForm.valid && myCoverImageCheck) ? 'hdls-btn-primary': 'hdls-btn-disable',
+           ]"
+           [disabled]="(newVoucherForm.valid && myCoverImageCheck ) ? false: true">Update</button>
+              <button mat-raised-button class="hdls-btn-secondary" (click)="cancelVoucher()">Cancel</button>
+          </div>
+      </form>
+  </div>
+</section>

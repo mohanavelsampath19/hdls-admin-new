@@ -1,0 +1,199 @@
+@import "../../../theme/vars.scss";
+:host {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100%;
+}
+.login-popup {
+  width: 85%;
+  display: flex;
+  // margin: 5% 2%;
+  align-items: center;
+  // padding: 25px;
+  border: 1px solid rgb(175, 171, 171);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  gap: 10%;
+  .closeErrorMsg {
+    font-family: "Open sans",sans-serif;
+    position: absolute;
+    right: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    top: 26%;
+    color: #fff;
+    cursor: pointer;
+  }
+  .image {
+    // width: 60%;
+    display: flex;
+    align-items: center;
+    // margin-left: 5%;
+    .image-banner {
+      width: 40vw;
+      height: 30vw;
+      // max-height: 450px;
+      // background-position: center;
+      // background-image: url("../../../../assets/images/login_image.svg");
+      // background-size: 100%;
+      // background-repeat: no-repeat;
+      carousel {
+        height: 100% !important;
+      }
+    }
+  }
+  .form {
+    // width: 40%;
+    display: flex;
+    flex-direction: column;
+    .message {
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      position: relative;
+      background-color: #721c24;
+      color:#fff;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .header1 {
+      font-size: x-large;
+      font-weight: 500;
+    }
+    .header2 {
+      font-size: larger;
+    }
+    mat-form-field {
+      width: 100%;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    .sigin-cta {
+      background-color: $primary-background-color;
+      width: 100%;
+      color: white;
+      border: none;
+      border-radius: 0.3em;
+      padding: 0.3em 0;
+      margin-top: 1em;
+    }
+    .sigin-cta:disabled {
+      background-color: $primary-font-color;
+    }
+    .horizontal {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .reset_password {
+      cursor: pointer;
+      width: 100%;
+      color: $primary-background-color;
+      // text-decoration: none;
+    }
+    .send-otp-cta {
+      margin-bottom: 2em;
+    }
+    .otp-number {
+      display: flex;
+      margin-bottom: 1em;
+      mat-icon {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
+    .resend-hint {
+      width: 100%;
+      justify-content: space-between;
+      display: flex;
+      align-items: center;
+      .resend-btn {
+        font-size: medium;
+        font-weight: 500;
+        cursor: pointer;
+        background-color: $primary-background-color;
+        color: white;
+        border: none;
+        border-radius: 0.3em;
+        padding: 0.5em 1em;
+      }
+      .resend-btn:disabled {
+        background-color: gray;
+      }
+    }
+
+    .password-hint {
+      display: block;
+      font-size: small;
+      align-items: center;
+      mat-icon {
+        font-size: small;
+        font-weight: bolder;
+      }
+      .green {
+        color: green;
+      }
+      .red {
+        color: red;
+      }
+      span {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+// .parent {
+//   display: flex;
+//   align-items: center;
+//   margin: auto 10%;
+//   img {
+//     width: 50%;
+//   }
+//   .login_section {
+//     width: 100%;
+//     margin: 2em 4em;
+//
+//     .input-group {
+//       display: flex;
+//       flex-direction: column;
+//       label {
+//         margin-top: 2em;
+//       }
+//       input {
+//         padding: 1em 0.7em;
+//         border-radius: 0.5em;
+//         margin-top: 0.5em;
+//       }
+//     }
+//     .hori-flex {
+//       display: flex;
+//       place-content: space-between;
+//       align-items: center;
+//       margin-top: 0.5em;
+//       .reset_password {
+//         font-size: smaller;
+//         text-decoration: none;
+//         color: $primary-background-color;
+//       }
+//       mat-checkbox {
+//         font-size: smaller;
+//       }
+//       p {
+//         font-size: small;
+//       }
+//     }
+//
+//   }
+// }

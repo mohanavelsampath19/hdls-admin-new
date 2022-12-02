@@ -1,0 +1,17 @@
+@import '../../../../theme/vars.scss';
+#hdls-newmembership-container{
+    margin-left: 40px;
+    margin-top: 40px;
+    .new-membership-form-container{
+        width: 60%;
+        mat-form-field{
+            width: 100%;
+        }
+    }
+    .hdls-cancel-btn{
+        margin-right:10px;
+        color: $primary-background-color;
+        border: 1px solid $primary-background-color;
+        box-shadow: none;
+    }
+}

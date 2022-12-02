@@ -1,0 +1,78 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import url('https://fonts.googleapis.com/css2?family=Proza+Libre:wght@400;700&display=swap');
+
+
+@import "~@angular/material/theming";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+@include mat-core();
+
+// import our custom theme                // 👈 changed
+@import "./theme/default.scss";                   // 👈 changed
+@import "./theme/green.scss";
+@import "./theme/vars.scss";
+// import custom component themes         // 👈 changed
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
+@include angular-material-theme($HDLS-Admin-theme);  // 👈 changed
+
+
+// 👇 added
+
+// Include the dark color styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.dark-theme` will be affected by this alternate dark theme instead of the default theme.
+
+.dark-theme {
+  @include angular-material-color($dark-theme);  
+}
+.green-theme{
+  @include angular-material-color($HDLS-Admin-UI-green-theme);
+}
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($typography);
+
+.hdls-breadcrumb-title {
+  font-family: "Proza Libre", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #010101e0;
+}
+.loading-data{  
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(90deg,#eee 8%,#ddd 18%,#eee 33%);
+    background-size: 1000px 104px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.hdls-no-records-detail {
+  padding: 10px 20px;
+}
+.mat-drawer-container{
+  background: #fff;
+}
+.m-b-10{
+  margin-bottom: 10px;
+}
+.p-l-10{
+  padding-left: 10px;
+}
+a{
+  cursor: pointer;
+}

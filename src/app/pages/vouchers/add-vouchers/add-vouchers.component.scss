@@ -1,0 +1,37 @@
+@import '../../../../theme/vars.scss';
+
+#hdls-newmembership-container{
+    margin-left: 40px;
+    margin-top: 40px;
+    .new-membership-form-container{
+        width: 60%;
+        mat-form-field{
+            width: 100%;
+
+        }
+        .hdls-expiry {
+          display: flex;
+          .hdls-no-expiry {
+            margin-right: 15px;
+          }
+        }
+    }
+    .hdls-nxt-btn{
+        margin-right:10px;
+    }
+    .text-bold{
+        font-weight: 600;
+    }
+    .submitButtonGroup{
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+}
+
+.myCoverImage{
+  width: 80px;
+  img{
+    width: 100%;
+    margin-top: 5px;
+  }
+}

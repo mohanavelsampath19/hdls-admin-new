@@ -1,0 +1,411 @@
+<div class="hdls-add-product-section">
+  <h3 class="hdls-breadcrumb-title">Add Property <span class="hdls-border"></span>Property Information</h3>
+  <!-- <mat-progress-bar
+    mode="determinate"
+    value="{{ progressBarValue }}"
+    class="hdls-progress-bar"
+  ></mat-progress-bar> -->
+
+  <mat-stepper linear #stepper class="hdls-stepper hdls-tenant-add-product-stepper">
+    <mat-step [stepControl]="firstFormGroup">
+      <form
+        [formGroup]="firstFormGroup"
+        #myform="ngForm"
+      >
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Property Name<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="property_name"
+            class="hdls-form-input"
+            placeholder="Property Title"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.property_name.invalid &&
+              (firstFormGroup.controls.property_name.dirty ||
+                firstFormGroup.controls.property_name.touched) &&
+              myform.submitted
+            "
+          >
+            Please fill the property name
+          </p>
+        </mat-form-field>
+
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Property Type<span class="required">*</span></h4>
+          <mat-select class="hdls-form-select" formControlName="property_type">
+            <mat-option value="1">Guesthouse</mat-option>
+            <mat-option value="2">Hostel</mat-option>
+            <mat-option value="3">Hotel</mat-option>
+            <mat-option value="3">Motel</mat-option>
+            <mat-option value="3">Resort</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Property Descriptions<span class="required">*</span></h4>
+          <textarea
+            matInput
+            id="productDescriptionEditor"
+            formControlName="property_description"
+            rows="5"
+            class="hdls-text-area"
+          >
+          </textarea>
+
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.property_description.invalid &&
+              (firstFormGroup.controls.property_description.dirty ||
+                firstFormGroup.controls.property_description.touched)
+            "
+          >
+            Please fill the description
+          </p>
+        </mat-form-field>
+        <!-- <section class="example-section" [formGroup]="facilities">
+          <h4>Facilities Available</h4>
+          <mat-checkbox
+            formControlName="breakFast"
+            class="hdls-checkbox"
+            color="primary"
+            >BreakFast</mat-checkbox
+          >
+          <mat-checkbox
+            formControlName="wifi"
+            class="hdls-checkbox"
+            color="primary"
+            >Free wi-fi</mat-checkbox
+          >
+          <mat-checkbox formControlName="ac" class="hdls-checkbox" color="primary"
+            >AC</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="geyser"
+            class="hdls-checkbox"
+            color="primary"
+            >Geyser</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="power_backup"
+            class="hdls-checkbox"
+            color="primary"
+            >Power Backup</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="elevator"
+            class="hdls-checkbox"
+            color="primary"
+            >Elevator</mat-checkbox
+          >
+
+          <mat-checkbox
+            formControlName="room_service"
+            class="hdls-checkbox"
+            color="primary"
+            >24 Hours Room Service</mat-checkbox
+          >
+        </section> -->
+        <mat-form-field class="example-chip-list hdls-form-field" appearance="fill">
+          <h4>Facilities<span class="required">*</span></h4>
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip
+              *ngFor="let fruit of facilities"
+              (removed)="remove(fruit)">
+              {{fruit}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input
+              placeholder="Property Facility"
+              #fruitInput
+              [formControl]="facilityCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let facility of filteredFacility | async" [value]="facility">
+              {{facility}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <div class="hdls-form-field-timings" appearance="fill">
+          <h4>Check-in & Check-out Timing<span class="required">*</span></h4>
+          <div class="checkin-checkout">
+            <div class="check-in">
+              <input
+                class="hdls-form-input"
+                placeholder="check-in"
+                aria-label="24hr format"
+                [ngxTimepicker]="checkin"
+                [format]="12"
+                formControlName="checkin"
+                readonly
+
+              />
+              <ngx-material-timepicker #checkin></ngx-material-timepicker>
+            </div>
+            <div class="check-out">
+              <input
+                class="hdls-form-input"
+                placeholder="check-out"
+                aria-label="24hr format"
+                [ngxTimepicker]="checkout"
+                [format]="12"
+                formControlName="checkout"
+                readonly
+              />
+              <ngx-material-timepicker #checkout></ngx-material-timepicker>
+            </div>
+          </div>
+          <p class="hdls-error" *ngIf="checkoutError">*Checkin and Checkout time should not be same</p>
+        </div>
+
+        <div class="hdls-form-field-timings">
+          <div>
+            <!-- <mat-google-maps-autocomplete formControlName="address" [appearance]="appearance.OUTLINE" (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)" class="hdls-form-input" (registerOnTouched)="changeLoc($event)">
+            </mat-google-maps-autocomplete> -->
+
+            <mat-form-field appearance="outline" class="hdls-form-input address-control">
+              <mat-label>Address *</mat-label>
+              <input matInput
+                     matGoogleMapsAutocomplete
+                     formControlName="address"
+                     (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                     (onLocationSelected)="onLocationSelected($event)">
+            </mat-form-field>
+          </div>
+          <div class="myMapContainer" >
+            <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" >
+              <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+            </agm-map>
+          </div>
+        </div>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>City<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="city"
+            class="hdls-form-input"
+            placeholder="City"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.city.invalid &&
+              (firstFormGroup.controls.city.dirty ||
+                firstFormGroup.controls.city.touched)
+            "
+          >
+            Please fill the city
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>State<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="state"
+            class="hdls-form-input"
+            placeholder="State"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.state.invalid &&
+              (firstFormGroup.controls.state.dirty ||
+                firstFormGroup.controls.state.touched)
+            "
+          >
+            Please fill the State
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Country<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="country"
+            class="hdls-form-input"
+            placeholder="Country"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.country.invalid &&
+              (firstFormGroup.controls.country.dirty ||
+                firstFormGroup.controls.country.touched)
+            "
+          >
+            Please fill the Country
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Point of Contact<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="point_of_contact"
+            class="hdls-form-input"
+            placeholder="Point of contact"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.point_of_contact.invalid &&
+              (firstFormGroup.controls.point_of_contact.dirty ||
+                firstFormGroup.controls.point_of_contact.touched)
+            "
+          >
+            Please fill the point of contact
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Contact number<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="front_end_desk"
+            class="hdls-form-input"
+            placeholder="Contact number"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.front_end_desk.invalid &&
+              (firstFormGroup.controls.front_end_desk.dirty ||
+                firstFormGroup.controls.front_end_desk.touched)
+            "
+          >
+            Please fill the contact number and it should be maximum of 10 numbers
+          </p>
+        </mat-form-field>
+        <div class="form-group coverImageContainer">
+          <h4>Cover Image *</h4>
+          <input type="file" name="myCoverImage" (change)="coverFileChange($event)" #myCoverImage/>
+          <div *ngIf="myCoverImageCheck" class="myCoverImage">
+            <img [src]="coverImage" alt="Cover Image">
+            <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
+          </div>
+        </div>
+        <div class="form-group p-10">
+          <h4>Property Images </h4>
+          <button (click)="addImageWithType()" mat-raised-button color="primary" class="btn btn-primary">Add Image</button>
+          <div class="addRoomImageContainer">
+            <form>
+            <div ngModelGroup="addImages">
+              <div *ngFor="let image of addImages;let i = index" class="addRoomImageCard" >
+                <div class="m-b-10">
+                  <div class="hdls-form-field" appearance="fill">
+                    <input
+                      matInput
+                      class="hdls-form-input"
+                      placeholder="Property Type"
+                      type="text"
+                      [(ngModel)]="image.type"
+                      name="imageType"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="m-b-10">
+                  <div class="hdls-form-field">
+                    <input type="file" [(ngModel)]="image.files" name="files[]" (change)="roomImageFileChange(i,$event)" class="myRoominputfile" #f>
+                  </div>
+                  <div class="myRoomImage-container">
+                    <ng-template [ngIf]="image.fileList && image.fileList.length>0">
+                      <div class="myRoomImage-item" *ngFor="let myRoomImage of image.fileList">
+                        <img [src]="myRoomImage" alt="Room images" >
+                      </div>
+                    </ng-template>
+                    <div class="myRoomImage-item addImageBtn" (click)="addImagetoIndex(i,$event,f)">
+                      Add Image
+                    </div>
+                  </div>
+                </div>
+                <button mat-raised-button color="warning" (click)="removeImage(index)"><mat-icon>delete</mat-icon></button>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+        <div class="form-group">
+          <h4>Near by locations</h4>
+
+          <button mat-raised-button color="primary" (click)="addNewLocation()">Add nearby</button>
+          <div class="nearby-items" formArrayName="nearByLocation">
+          <table >
+            <tr>
+              <td>
+                Type
+              </td>
+              <td>
+                Name
+              </td>
+              <td>
+                Distance
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr  [formGroupName]="i" *ngFor="let t of nearByLocation.controls; let i = index">
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Location Type</mat-label>
+                  <mat-select formControlName="locType" (selectionChange)="changeType($event)">
+                    <mat-option value="Restaurant">Restaurant</mat-option>
+                    <mat-option value="School">School / University</mat-option>
+                    <mat-option value="Tourist">Tourist places</mat-option>
+                    <mat-option value="Airport">Airport</mat-option>
+                    <mat-option value="Others">Others</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Location Name</mat-label>
+                  <input type="text" name="name" matInput formControlName="name" />
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Distance</mat-label>
+                  <input type="text" name="distance" matInput formControlName="distance" />
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </div>
+        </div>
+        <div>
+          <button mat-button matStepperNext class="hdls-btn-secondary" (click)="goToLink('/inventory')">
+            Cancel
+          </button>
+          <button
+            mat-button
+            matStepperNext
+            color="primary"
+            [ngClass]="[
+                  (firstFormGroup.valid && myCoverImageCheck && !checkoutError) ? 'hdls-btn-primary': 'hdls-btn-disable',
+                ]"
+                [disabled]="(firstFormGroup.valid && myCoverImageCheck && !checkoutError ) ? false: true"
+            (click)="saveProperty()"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</div>

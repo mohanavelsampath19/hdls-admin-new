@@ -1,0 +1,59 @@
+<section id="hdls-newmembership-container">
+    <h3 class="hdls-breadcrumb-title">Add New Membership | Membership Information</h3>
+    <div class="new-membership-form-container">
+        <form [formGroup]="newMembership">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Membership Title *</mat-label>
+                    <input matInput formControlName="title" type="text" name="title" />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Product Description *</mat-label>
+                    <textarea matInput formControlName="description" type="text" name="description"></textarea>
+                </mat-form-field>
+            </div>
+            <!-- <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Properties</mat-label>
+                    <mat-select formControlName="property" (selectionChange)="changeMembership($event)">
+                      <mat-option [value]="inventory.hotel_id" *ngFor="let inventory of inventoryList">{{inventory.hotelname}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div> -->
+            <div>
+                <mat-form-field appearance="fill" >
+                    <mat-label>E-vouchers</mat-label>
+                    <mat-select  multiple formControlName="evouchers">
+                      <mat-option *ngFor="let voucher of vouchersList" [value]="voucher.vouchersid">{{voucher.voucherstitle}}</mat-option>
+                    </mat-select>
+                    <span *ngIf="vouchersList?.length==0">No results found</span>
+                  </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Stocks *</mat-label>
+                    <input matInput formControlName="stocks" type="number" name="stocks" min="1"/>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Membership Price (RM)*</mat-label>
+                    <input matInput formControlName="amount" type="number" name="amount" min="1"/>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <button mat-raised-button class="hdls-btn-secondary" (click)="backToMembership()">Cancel</button>
+                <button mat-raised-button color="primary"
+                (click)="savemembership()"
+                [ngClass]="[
+                (newMembership.valid) ? 'hdls-btn-primary hdls-nxt-btn': 'hdls-btn-disable',
+              ]"
+              [disabled]="(newMembership.valid) ? false: true"
+                >Submit</button>
+            </div>
+        </form>
+    </div>
+</section>

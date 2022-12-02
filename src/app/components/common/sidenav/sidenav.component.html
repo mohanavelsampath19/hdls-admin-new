@@ -1,0 +1,66 @@
+<div class="sidenav">
+    <div class="nav-item" (click)="goToLink('/dashboard','dashboard')">
+      <div class="layout" [ngClass]="{active:myMenu.dashboard}">
+        <mat-icon class="icon">dashboard</mat-icon>
+        <span class="nav-item-span">Dashboard</span>
+      </div>
+    </div>
+    <div class="nav-item">
+      <div class="expansionPanel">
+        <mat-expansion-panel >
+          <mat-expansion-panel-header [ngClass]="{active:myMenu.membership}" (click)="goToLink('/membership','membership')">
+            <mat-panel-title>
+              <mat-icon class="icon">card_membership</mat-icon>
+              <span class="nav-item-span">Membership</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="layout" (click)="goToLink('/vouchers','vouchers')">
+            <span class="nav-item-span">Vouchers</span>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
+
+
+    <div class="nav-item" (click)="goToLink('/bookings','bookings')">
+      <div class="layout" [ngClass]="{active:myMenu.bookings}">
+        <!-- Update icon -->
+        <mat-icon class="icon">event_available</mat-icon>
+        <span class="nav-item-span">Bookings</span>
+      </div>
+    </div>
+
+    <div class="nav-item" (click)="goToLink('/points','')">
+      <div class="layout" [ngClass]="{active:myMenu.points}">
+        <mat-icon class="icon">redeem</mat-icon>
+        <span class="nav-item-span">Points</span>
+      </div>
+    </div>
+    <div class="nav-item">
+      <div class="expansionPanel">
+        <mat-expansion-panel >
+          <mat-expansion-panel-header [ngClass]="{active:myMenu.inventory}" (click)="goToLink('/inventory','inventory')">
+            <mat-panel-title>
+              <mat-icon class="icon">inventory</mat-icon>
+              <span class="nav-item-span">Inventory</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="layout" *ngFor="let inventory of inventoryList" (click)="goToLink('/hotels','hotels',inventory.hotel_id)">
+            <span class="nav-item-span">{{inventory.hotelname}}</span>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
+    <div class="nav-item" (click)="goToLink('/facilities','facilities')">
+      <div class="layout" [ngClass]="{active:myMenu.facilities}">
+        <mat-icon class="icon">apps</mat-icon>
+        <span class="nav-item-span">Facilities</span>
+      </div>
+    </div>
+    <div class="nav-item" (click)="logout($event)">
+        <div class="layout">
+          <mat-icon class="icon">logout</mat-icon>
+          <span class="nav-item-span">Logout</span>
+        </div>
+    </div>
+  </div>

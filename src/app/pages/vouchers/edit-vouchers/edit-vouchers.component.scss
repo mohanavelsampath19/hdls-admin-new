@@ -1,0 +1,51 @@
+@import '../../../../theme/vars.scss';
+
+#hdls-newmembership-container{
+  margin-left: 40px;
+  margin-top: 40px;
+  .new-membership-form-container{
+      width: 60%;
+      mat-form-field{
+          width: 100%;
+      }
+      .hdls-expiry {
+        display: flex;
+        .hdls-no-expiry {
+          margin-right: 15px;
+        }
+      }
+  }
+  .hdls-cancel-btn{
+      margin-right:10px;
+  }
+  .text-bold{
+      font-weight: 600;
+  }
+}
+.myCoverImage{
+  width: 80px;
+  img{
+    width: 100%;
+    margin-top: 5px;
+  }
+}
+.coverImageContainer{
+  margin-bottom: 40px;
+  .myCoverImage{
+      width: 100px;
+      height: 100px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-top: 20px;
+      position: relative;
+      text-align: center;
+      img{
+        width: 100%;
+      }
+      .clearImageContainer{
+          position: absolute;
+          bottom: 0px;
+          left: 20px;
+      }
+    }
+}
