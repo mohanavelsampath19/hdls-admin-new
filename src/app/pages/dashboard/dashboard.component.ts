@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { environment } from "../../../environments/environment";
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +11,9 @@ export class DashboardComponent implements OnInit {
   mytheme:any='light-theme';
   title = 'af-notification';
   message:any = null;
-  constructor() {
+  bookingInfoList:any = [];
+  
+  constructor(private _bookingService:BookingsService) {
     
   }
   ngOnInit(): void {

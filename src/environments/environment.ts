@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://myfuturefood.com.my:5000/',
+  baseUrl: 'https://cloud.tribehotelloyalty.com/',
   imageUrl: 'http://myfuturefood.com.my:5000/upload',
   socketUrl: '',
   // imageUrl: 'http://localhost:5000/upload'

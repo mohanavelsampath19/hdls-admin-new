@@ -54,6 +54,10 @@ import { environment } from '../environments/environment';
 import { initializeApp } from 'firebase/app';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { ReportComponent } from './report/report.component';
+import { UsersComponent } from './report/users/users.component';
+import { MembershipComponent } from './report/membership/membership.component';
+import { TransactionsComponent } from './report/transactions/transactions.component';
 initializeApp(environment.firebase);
 
 const config: SocketIoConfig = {
@@ -78,6 +82,10 @@ const config: SocketIoConfig = {
     VouchersComponent,
     EditMembershipComponent,
     EditVouchersComponent,
+    ReportComponent,
+    UsersComponent,
+    MembershipComponent,
+    TransactionsComponent,
   ],
   imports: [
     BrowserModule,

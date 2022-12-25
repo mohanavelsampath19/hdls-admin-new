@@ -13,6 +13,10 @@ import { AddRoomComponent } from './pages/hotels/add-room/add-room.component';
 import { BookingsComponent } from './pages/bookings/bookings.component';
 import { VouchersComponent } from './pages/vouchers/vouchers.component';
 import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
+import { ReportComponent } from './report/report.component';
+import { UsersComponent } from './report/users/users.component';
+import { MembershipComponent } from './report/membership/membership.component';
+import { TransactionsComponent } from './report/transactions/transactions.component';
 
 const routes: Routes = [
   {
@@ -81,6 +85,24 @@ const routes: Routes = [
         path: 'edit-vouchers/:id',
         component: EditVouchersComponent,
       },
+      {
+        path:'report',
+        component: ReportComponent,
+        children:[
+          {
+            path:'users',
+            component:UsersComponent
+          },
+          {
+            path:'membership',
+            component:MembershipComponent
+          },
+          {
+            path:'transaction',
+            component:TransactionsComponent
+          }
+        ]
+      }
     ],
   },
 ];
