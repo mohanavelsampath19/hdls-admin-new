@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
-    "build": "ng build",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "heroku-postbuild": "ng build"
@@ -13,18 +13,18 @@
   "dependencies": {
     "@agm/core": "^3.0.0-beta.0",
     "@angular-material-extensions/google-maps-autocomplete": "^7.0.1",
-    "@angular/animations": "^12.2.16",
-    "@angular/cdk": "^12.2.13",
-    "@angular/cli": "~12.2.1",
-    "@angular/common": "~12.2.0",
-    "@angular/compiler": "~12.2.0",
-    "@angular/core": "~12.2.0",
+    "@angular/animations": "^14",
+    "@angular/cdk": "^14",
+    "@angular/cli": "^14",
+    "@angular/common": "^14",
+    "@angular/compiler": "^14",
+    "@angular/core": "^14",
     "@angular/flex-layout": "^13.0.0-beta.38",
-    "@angular/forms": "^12.2.16",
-    "@angular/material": "^12.2.13",
-    "@angular/platform-browser": "~12.2.0",
-    "@angular/platform-browser-dynamic": "~12.2.0",
-    "@angular/router": "~12.2.0",
+    "@angular/forms": "^14",
+    "@angular/material": "^14",
+    "@angular/platform-browser": "^14",
+    "@angular/platform-browser-dynamic": "^14",
+    "@angular/router": "^14",
     "@angular/service-worker": "^14.1.0",
     "@kolkov/angular-editor": "^2.0.0",
     "@schematics/angular": "^9.1.0",
@@ -42,9 +42,9 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.2.1",
-    "@angular/cli": "~12.2.1",
-    "@angular/compiler-cli": "~12.2.0",
+    "@angular-devkit/build-angular": "^14",
+    "@angular/cli": "^14",
+    "@angular/compiler-cli": "^14",
     "@nativescript/schematics": "^11.2.0",
     "@types/googlemaps": "^3.39.13",
     "@types/jasmine": "~3.8.0",
@@ -55,7 +55,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.3.5"
+    "typescript": "~4.7.0"
   },
   "engines": {
     "node": "12.18.2",

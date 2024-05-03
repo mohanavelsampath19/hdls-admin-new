@@ -1,12 +1,11 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @import "~@angular/material/theming";
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat.core();
-
+// @include mat.core();
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
@@ -25,8 +24,7 @@ $HDLS-Admin-Green-Primary: (
   A200: #66cf66,
   A400: #66cf66,
   A700: #66cf66,
-  contrast: (
-    50: white,
+  contrast: (50: white,
     100: white,
     200: white,
     300: white,
@@ -57,8 +55,7 @@ $HDLS-Admin-Green-accent-color: (
   A200: #3e6df0,
   A400: #3e6df0,
   A700: #3e6df0,
-  contrast: (
-    50: white,
+  contrast: (50: white,
     100: white,
     200: white,
     300: white,
@@ -79,13 +76,10 @@ $HDLS-Admin-UI-green-primary: mat.define-palette($HDLS-Admin-Green-Primary);
 $HDLS-Admin-UI-green-accent: mat.define-palette($HDLS-Admin-Green-accent-color);
 
 // The warn palette is optional (defaults to red).
-$HDLS-Admin-UI-green-warn: mat.define-palette(mat.$red-palette,800,400,500);
+$HDLS-Admin-UI-green-warn: mat.define-palette(mat.$red-palette, 800, 400, 500);
 
 
-$HDLS-Admin-UI-green-theme: mat.define-light-theme((
-  color: (
-    primary: $HDLS-Admin-UI-green-primary,
-    accent: $HDLS-Admin-UI-green-accent,
-    warn: $HDLS-Admin-UI-green-warn,
-  )
-));
+$HDLS-Admin-UI-green-theme: mat.define-light-theme((color: (primary: $HDLS-Admin-UI-green-primary,
+        accent: $HDLS-Admin-UI-green-accent,
+        warn: $HDLS-Admin-UI-green-warn,
+      )));
