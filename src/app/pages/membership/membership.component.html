@@ -44,7 +44,17 @@
     <div class="hdls-product-list-section">
       <!-- <app-search-field></app-search-field> -->
       <table mat-table class="hdls-product-table" [dataSource]="dataSource"  matTableExporter>
-
+        <ng-container matColumnDef="membership_image">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Membership Image
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading" class="membership-image">
+              <img [src]="element.image_url" />
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="membership_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Membership Name

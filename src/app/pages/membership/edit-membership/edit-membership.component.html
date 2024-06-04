@@ -31,6 +31,26 @@
                     <span *ngIf="vouchersList?.length==0">No results found</span>
                   </mat-form-field>
             </div>
+            <div class="form-group coverImageContainer mb-10">
+                <h4>Membership Image *</h4>
+                <input type="file" name="myCoverImage"  (change)="fileChangeEvent($event)" #myCoverImage/>
+
+                <image-cropper                     
+                    [imageChangedEvent]="imageChangedEvent"
+                    [imageBase64]="base64String" 
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="5 / 3"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded()"
+                    (cropperReady)="cropperReady()"
+                    (loadImageFailed)="loadImageFailed()"
+                ></image-cropper>
+                <div class="croppedImageContainer" *ngIf="croppedImage">
+                    <img [src]="croppedImage" class="demo-Image"/>
+                </div>
+              </div>
+            
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Stocks *</mat-label>

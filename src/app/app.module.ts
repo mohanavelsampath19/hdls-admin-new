@@ -58,6 +58,7 @@ import { ReportComponent } from './report/report.component';
 import { UsersComponent } from './report/users/users.component';
 import { MembershipComponent } from './report/membership/membership.component';
 import { TransactionsComponent } from './report/transactions/transactions.component';
+import { ImageCropperComponent, ImageCropperModule } from 'ngx-image-cropper';
 initializeApp(environment.firebase);
 
 const config: SocketIoConfig = {
@@ -122,14 +123,16 @@ const config: SocketIoConfig = {
     // NgxMaterialTimepickerModule,
     MatGoogleMapsAutocompleteModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBPFJayQZ1SGLO7W_p0FAMRR552UdLhr3s',
+      apiKey: 'AIzaSyCAAD0E_IVtAbkV1fCqa_SjxrUowDxQcCo',
       libraries: ['places'],
     }),
     GooglePlaceModule,
     MatSlideToggleModule,
     SocketIoModule.forRoot(config),
     IvyCarouselModule,
+    ImageCropperModule
   ],
+  
   providers: [],
   bootstrap: [AppComponent],
 })
