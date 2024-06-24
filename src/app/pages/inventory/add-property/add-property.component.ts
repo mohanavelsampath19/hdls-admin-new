@@ -183,7 +183,7 @@ export class AddPropertyComponent implements OnInit {
       property_description: ['', Validators.required],
       property_type: ['', Validators.required],
       // availablerooms: [0, Validators.required],
-      front_end_desk: ['', [Validators.required, Validators.maxLength(10)]],
+      front_end_desk: ['', [Validators.required]],
       // points: ['', Validators.required],
       checkin: ['', Validators.required],
       checkout: ['', Validators.required],

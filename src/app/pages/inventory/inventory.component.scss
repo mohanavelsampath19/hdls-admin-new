@@ -126,6 +126,8 @@
   }
 .property-logo{
   width: 150px;
+  display: flex;
+  flex-basis: 50%;
   img{
     width: 100%;
   }
@@ -134,5 +136,8 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  line-height: 0px;
+ // line-height: 0px;
+ a {
+  flex-basis: 50%;
+ }
 }
