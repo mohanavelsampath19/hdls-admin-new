@@ -39,7 +39,7 @@ export class EditMembershipComponent implements OnInit {
     this._activatedRoute.params.subscribe((param:any)=>{
       this._membership.getAllMembership(param.id).subscribe((membershipDetails:any)=>{
         console.log(membershipDetails);
-        this.membershipDetail = membershipDetails.response;
+        this.membershipDetail = membershipDetails.membership_tiers || {};
         this.getBase64(this.membershipDetail.image_url);
         this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
           this.inventoryList = inventoryList.response;
