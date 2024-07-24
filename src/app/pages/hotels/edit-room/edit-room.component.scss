@@ -464,5 +464,12 @@ table tr th {
           bottom: 0px;
           left: 20px;
       }
-    }   
+    }  
 }
+.hdls-room-image-item {
+  display: flex;
+  gap: 10px;
+  .myCoverImage {
+   // flex-basis: 50%;
+  }
+} 

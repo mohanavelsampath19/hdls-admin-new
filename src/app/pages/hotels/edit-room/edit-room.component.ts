@@ -59,7 +59,7 @@ export class EditRoomComponent implements OnInit {
   addImageType:any = [];
   roomid:any;
   roomFacilitiesList:string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
-  
+  roomCategoryList:any = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -123,7 +123,23 @@ export class EditRoomComponent implements OnInit {
           this.facilities = res && res.response && res.response.room_facilities ? res.response.room_facilities.split(",") : []
           this.roomList = images[title]?.imageList;
           this.myCoverImageCheck = true;
-          this.coverImage = `${environment.imageUrl}/${getCoverImage}`
+          this.coverImage = `${environment.imageUrl}/${getCoverImage}`;
+          this.roomCategoryList = Object.keys(images) || [];
+          this.myRoomImageList = this.roomCategoryList.map((imageData:any,index:number) => {
+            let setData = images[imageData].imageList ||[];
+            let setImagePath = setData.map((updatePath:any) => {
+              let trimPath = `${environment.imageUrl}/${updatePath.location}`.trim();
+              return {
+                'imagePath': trimPath,
+                ...updatePath
+              }
+            })
+            let data = {
+              [imageData]: setImagePath
+            }
+            return data;
+          })
+          console.log(this.myRoomImageList);
         })
       }
     });

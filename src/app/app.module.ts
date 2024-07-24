@@ -59,6 +59,8 @@ import { UsersComponent } from './report/users/users.component';
 import { MembershipComponent } from './report/membership/membership.component';
 import { TransactionsComponent } from './report/transactions/transactions.component';
 import { ImageCropperComponent, ImageCropperModule } from 'ngx-image-cropper';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 initializeApp(environment.firebase);
 
 const config: SocketIoConfig = {
@@ -130,7 +132,8 @@ const config: SocketIoConfig = {
     MatSlideToggleModule,
     SocketIoModule.forRoot(config),
     IvyCarouselModule,
-    ImageCropperModule
+    ImageCropperModule,
+    MatExpansionModule
   ],
   
   providers: [],

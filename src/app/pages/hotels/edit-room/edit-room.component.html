@@ -213,6 +213,19 @@
             <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
           </div>
         </div>
+        <mat-accordion class="hdls-room-image-list" multi>
+          <mat-expansion-panel *ngFor="let roomImageInfo of myRoomImageList; let i=index">
+            <mat-expansion-panel-header>
+              <mat-panel-title> {{ roomCategoryList[i] }} </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="hdls-room-image-item coverImageContainer">
+              <div class="myCoverImage" *ngFor="let getImages of roomImageInfo[roomCategoryList[i]]">
+                <img [src]="getImages.imagePath" alt="test" />
+                <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
+              </div>
+            </div>            
+          </mat-expansion-panel>
+        </mat-accordion>        
         <div>
           <button mat-button matStepperNext class="hdls-btn-secondary" (click)="goToLink('/inventory')">
             Cancel
