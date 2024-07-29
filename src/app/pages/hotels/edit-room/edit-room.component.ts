@@ -121,7 +121,7 @@ export class EditRoomComponent implements OnInit {
             selling_price: res?.response?.selling_price
           });
           this.facilities = res && res.response && res.response.room_facilities ? res.response.room_facilities.split(",") : []
-          this.roomList = images[title]?.imageList;
+          this.roomList = images[title]?.imageList || [];
           this.myCoverImageCheck = true;
           this.coverImage = `${environment.imageUrl}/${getCoverImage}`;
           this.roomCategoryList = Object.keys(images) || [];
@@ -134,10 +134,11 @@ export class EditRoomComponent implements OnInit {
                 ...updatePath
               }
             })
-            let data = {
-              [imageData]: setImagePath
-            }
-            return data;
+            return {
+              [imageData]: {
+                "imageList": setImagePath
+              }
+            };
           })
           console.log(this.myRoomImageList);
         })
@@ -191,7 +192,7 @@ export class EditRoomComponent implements OnInit {
       };
 
       this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
-        console.log(res);
+       // console.log(res);
         if(res && res.status === 1) {
           const dialogRef = this._dialog.open(InfoPopupComponent, {
             data: {
@@ -323,13 +324,47 @@ export class EditRoomComponent implements OnInit {
     this.facilities.push(event.option.viewValue);
     // this.fruitInput?.nativeElement.value = '';
     this.facilityCtrl.setValue(null);
-    console.log(this.facilities, '---facility---')
+   // console.log(this.facilities, '---facility---')
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.roomFacilitiesList.filter(facility => facility.toLowerCase().includes(filterValue));
   }
+
+  removeRoomImage(categoryName:string, categoryIndex:number, index:number) {
+    let getImageList = this.myRoomImageList[categoryIndex][categoryName].imageList ||[];
+   // this.myRoomImageList[categoryIndex][categoryName].imageList = 
+    let getFilterImage = getImageList.filter((details:any, indexNumber:number) => indexNumber !== index);
+    this.myRoomImageList[categoryIndex][categoryName].imageList = getFilterImage;
+  }
+
+  updateRoomImage(categoryName:string, index:number, event:any) {
+    var reader = new FileReader();
+    reader.onload = e => {
+      console.log(reader.result);
+      this.myRoomImageList[index][categoryName].imageList.push({
+        location: '',
+        name: event.target.files[0].name,
+        'imagePath': reader.result || ''
+      });
+      if(this.addImages[index]){
+        this.addImages[index].fileUpload.push(event.target.files);
+        this.addImages[index].fileList.push(reader.result);
+        this.addImages[index].type = categoryName;
+      } else {
+      //  this.addImages = [];
+        this.addImages.push({type: '', fileList: [], fileUpload: []});
+        this.addImages[index].fileList.push(reader.result);
+        this.addImages[index].fileUpload.push(event.target.files[0]);
+        this.addImages[index].type = categoryName;
+      }
+    }
+    reader.readAsDataURL(event.target.files[0]);
+
+    console.log(categoryName, event.target.files, this.myRoomImageList[index][categoryName].imageList);   
+  }
+
 }
 
 interface imageValidation {

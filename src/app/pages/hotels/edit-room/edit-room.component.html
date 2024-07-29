@@ -214,16 +214,19 @@
           </div>
         </div>
         <mat-accordion class="hdls-room-image-list" multi>
-          <mat-expansion-panel *ngFor="let roomImageInfo of myRoomImageList; let i=index">
+          <mat-expansion-panel *ngFor="let roomImageInfo of myRoomImageList; let getCategoryIndex=index">
             <mat-expansion-panel-header>
-              <mat-panel-title> {{ roomCategoryList[i] }} </mat-panel-title>
+              <mat-panel-title> {{ roomCategoryList[getCategoryIndex] }} </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="hdls-room-image-item coverImageContainer">
-              <div class="myCoverImage" *ngFor="let getImages of roomImageInfo[roomCategoryList[i]]">
+              <div class="myCoverImage" *ngFor="let getImages of roomImageInfo[roomCategoryList[getCategoryIndex]].imageList; let i=index">
                 <img [src]="getImages.imagePath" alt="test" />
-                <div class="clearImageContainer"><button mat-button (click)="clearSelectedFile()"><mat-icon>delete</mat-icon></button></div>
+                <div class="clearImageContainer"><button mat-button (click)="removeRoomImage(roomCategoryList[getCategoryIndex], getCategoryIndex, i)"><mat-icon>delete</mat-icon></button></div>
               </div>
-            </div>            
+            </div> 
+            <div class="hdls-add-room-category-image">
+              <input type="file" name="myCoverImage" (change)="updateRoomImage(roomCategoryList[getCategoryIndex], getCategoryIndex, $event)" #myCoverImage />
+            </div>           
           </mat-expansion-panel>
         </mat-accordion>        
         <div>
