@@ -60,6 +60,7 @@ export class EditRoomComponent implements OnInit {
   roomid:any;
   roomFacilitiesList:string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
   roomCategoryList:any = [];
+  getRoomList:any = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -122,6 +123,7 @@ export class EditRoomComponent implements OnInit {
           });
           this.facilities = res && res.response && res.response.room_facilities ? res.response.room_facilities.split(",") : []
           this.roomList = images[title]?.imageList || [];
+          this.getRoomList = res?.response?.images || [];
           this.myCoverImageCheck = true;
           this.coverImage = `${environment.imageUrl}/${getCoverImage}`;
           this.roomCategoryList = Object.keys(images) || [];
@@ -140,7 +142,7 @@ export class EditRoomComponent implements OnInit {
               }
             };
           })
-          console.log(this.myRoomImageList);
+        //  console.log(this.myRoomImageList);
         })
       }
     });
@@ -181,14 +183,15 @@ export class EditRoomComponent implements OnInit {
   };
 
   saveRoom() {
-    console.log(this.firstFormGroup.value, this.firstFormGroup);
+    //console.log(this.firstFormGroup.value, this.firstFormGroup);
     if(this.firstFormGroup.valid){
       let roomDetails = {
         hotelid: this.hotelId,
         ...this.firstFormGroup.value,
         addImages:this.addImages,
         coverImage: this.logo,
-        room_facilities: this.facilities
+        room_facilities: this.facilities,
+        updatedRoomImages: this.getRoomList
       };
 
       this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
@@ -337,6 +340,9 @@ export class EditRoomComponent implements OnInit {
    // this.myRoomImageList[categoryIndex][categoryName].imageList = 
     let getFilterImage = getImageList.filter((details:any, indexNumber:number) => indexNumber !== index);
     this.myRoomImageList[categoryIndex][categoryName].imageList = getFilterImage;
+    let updateRoomList = JSON.parse(this.getRoomList);
+    updateRoomList[categoryName].imageList = getFilterImage;
+    this.getRoomList = JSON.stringify(updateRoomList);
   }
 
   updateRoomImage(categoryName:string, index:number, event:any) {
@@ -372,5 +378,7 @@ interface imageValidation {
   coverImage: Array<any>;
   featureImage: Array<any>;
 }
+
+
 
 
