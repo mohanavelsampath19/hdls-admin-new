@@ -355,9 +355,9 @@ export class EditRoomComponent implements OnInit {
         'imagePath': reader.result || ''
       });
       if(this.addImages[index]){
-        this.addImages[index].fileUpload.push(event.target.files);
+        this.addImages[index].fileUpload.push(event.target.files[0]);
         this.addImages[index].fileList.push(reader.result);
-        this.addImages[index].type = categoryName;
+      //  this.addImages[index].type = categoryName;
       } else {
       //  this.addImages = [];
         this.addImages.push({type: '', fileList: [], fileUpload: []});
