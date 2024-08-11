@@ -191,7 +191,9 @@ export class EditPropertyComponent implements OnInit {
       logo: [''],
       checkin: [''],
       checkout: [''],
-      nearByLocation: this._formBuilder.array([])
+      nearByLocation: this._formBuilder.array([]),
+      lattitude:['', Validators.required],
+      longitude:['',Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({});
 
@@ -212,6 +214,8 @@ export class EditPropertyComponent implements OnInit {
           logo: res?.response?.logo,
           checkin: res.response.checkin,
           checkout: res.response.checkout,
+          lattitude:res.response.lat,
+          longitude:res.response.lng
         });
         this.facilities = res && res.response && res.response.facilities ? res.response.facilities.split(",") : [];
         let myNearByList = JSON.parse(res.response.nearbyloc);

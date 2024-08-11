@@ -173,24 +173,52 @@
 
         <div class="hdls-form-field-timings">
           <div>
-            <!-- <mat-google-maps-autocomplete formControlName="address" [appearance]="appearance.OUTLINE" (onAutocompleteSelected)="onAutocompleteSelected($event)" (onLocationSelected)="onLocationSelected($event)" class="hdls-form-input" (registerOnTouched)="changeLoc($event)">
-            </mat-google-maps-autocomplete> -->
-
             <mat-form-field appearance="outline" class="hdls-form-input address-control">
               <mat-label>Address *</mat-label>
-              <input matInput
-                     matGoogleMapsAutocomplete
-                     formControlName="address"
-                     (onAutocompleteSelected)="onAutocompleteSelected($event)"
-                     (onLocationSelected)="onLocationSelected($event)">
+              <input matInput formControlName="address" />
             </mat-form-field>
           </div>
-          <div class="myMapContainer" >
-            <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" >
-              <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-            </agm-map>
-          </div>
         </div>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Lattitude<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="lattitude"
+            class="hdls-form-input"
+            placeholder="Lattitude"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.lattitude.invalid &&
+              (firstFormGroup.controls.lattitude.dirty ||
+                firstFormGroup.controls.lattitude.touched)
+            "
+          >
+            Please fill the Lattitude
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Longitude<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="longitude"
+            class="hdls-form-input"
+            placeholder="Longitude"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.longitude.invalid &&
+              (firstFormGroup.controls.longitude.dirty ||
+                firstFormGroup.controls.longitude.touched)
+            "
+          >
+            Please fill the Longitude
+          </p>
+        </mat-form-field>
         <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>City<span class="required">*</span></h4>
           <input
@@ -251,6 +279,7 @@
             Please fill the Country
           </p>
         </mat-form-field>
+
         <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>Point of Contact<span class="required">*</span></h4>
           <input

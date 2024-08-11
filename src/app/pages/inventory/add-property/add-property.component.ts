@@ -61,7 +61,7 @@ export class AddPropertyComponent implements OnInit {
   roomList: any = [];
   roomFacilitiesList:string[] = ['Break Fast', 'Free Wifi', 'AC', 'Geyser', 'Power Backup', 'Elevator', '24 Hour Room Service'];
  // fruitInput:any = [];
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('fruitInput') fruitInput!: ElementRef<HTMLInputElement>;
   @Input()
   selectedIndex: any;
 
@@ -193,7 +193,9 @@ export class AddPropertyComponent implements OnInit {
       state: ['', Validators.required],
       country: ['', Validators.required],
       logo: [''],
-      nearByLocation: this._formBuilder.array([])
+      nearByLocation: this._formBuilder.array([]),
+      lattitude:['', Validators.required],
+      longitude:['',Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({});
 

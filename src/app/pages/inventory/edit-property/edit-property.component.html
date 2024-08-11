@@ -170,13 +170,53 @@
           <p class="hdls-error" *ngIf="checkoutError">*Checkin and Checkout time should not be same</p>
         </div>
         <mat-form-field class="hdls-form-field" appearance="fill">
-          <h4>Address</h4>
+          <h4>Address *</h4>
           <input
             matInput
             formControlName="address"
             class="hdls-form-input"
             placeholder="Address"
           />
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Lattitude<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="lattitude"
+            class="hdls-form-input"
+            placeholder="Lattitude"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.lattitude.invalid &&
+              (firstFormGroup.controls.lattitude.dirty ||
+                firstFormGroup.controls.lattitude.touched)
+            "
+          >
+            Please fill the Lattitude
+          </p>
+        </mat-form-field>
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <h4>Longitude<span class="required">*</span></h4>
+          <input
+            matInput
+            formControlName="longitude"
+            class="hdls-form-input"
+            placeholder="Longitude"
+            required
+          />
+          <p
+            class="hdls-error"
+            *ngIf="
+              firstFormGroup.controls.longitude.invalid &&
+              (firstFormGroup.controls.longitude.dirty ||
+                firstFormGroup.controls.longitude.touched)
+            "
+          >
+            Please fill the Longitude
+          </p>
         </mat-form-field>
         <mat-form-field class="hdls-form-field" appearance="fill">
           <h4>City<span class="required">*</span></h4>
