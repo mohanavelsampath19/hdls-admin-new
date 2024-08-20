@@ -58,8 +58,14 @@ import { ReportComponent } from './report/report.component';
 import { UsersComponent } from './report/users/users.component';
 import { MembershipComponent } from './report/membership/membership.component';
 import { TransactionsComponent } from './report/transactions/transactions.component';
-import { ImageCropperComponent, ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { HomeComponent } from './pages/web/home/home.component';
+import { NavbarComponent } from './components/web/navbar/navbar.component';
+import { SignupComponent } from './pages/web/signup/signup.component';
+import { FaqsComponent } from './pages/web/faqs/faqs.component';
+import { TermsComponent } from './pages/web/terms/terms.component';
+import { SuccessComponent } from './pages/web/success/success.component';
 
 initializeApp(environment.firebase);
 
@@ -89,6 +95,12 @@ const config: SocketIoConfig = {
     UsersComponent,
     MembershipComponent,
     TransactionsComponent,
+    HomeComponent,
+    NavbarComponent,
+    SignupComponent,
+    FaqsComponent,
+    TermsComponent,
+    SuccessComponent,
   ],
   imports: [
     BrowserModule,
@@ -133,7 +145,7 @@ const config: SocketIoConfig = {
     SocketIoModule.forRoot(config),
     IvyCarouselModule,
     ImageCropperModule,
-    MatExpansionModule
+    MatExpansionModule,
   ],
   
   providers: [],

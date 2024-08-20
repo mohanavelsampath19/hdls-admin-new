@@ -1,0 +1,20 @@
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    width: 85vw;
+    align-items: center;
+    .navbar-menu {
+        display: flex;
+        gap: 20px;
+        a{
+            font-size: 20px;
+            font-family: 'jost',sans-serif;
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+}
+.web-navbar-container {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,52 @@
+
+
+#parent-container{
+    background: rgb(50,50,50);
+    background: radial-gradient(circle, rgba(50,50,50,0.654499299719888) 0%, rgba(50,50,50,1) 74%, rgba(0,0,0,1) 100%);
+    width: 100vw;
+    height: 100vh;
+}
+.banner-txt{
+    font-family: "Jost", sans-serif;
+    font-size: 68px;
+    font-weight: 400;
+    color: #fff;
+    line-height: 85px;
+}
+#home-page-container{
+    padding-left: 40px;
+}
+
+.banner-detail-container{
+    margin-top: 80px;
+    padding-left: 8vw;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+.signup-banner{
+    background: url('../../../../assets/images/web-banner.svg');
+    width: 30vw;
+    height: 23vw;
+    background-size: 100%;
+    position: absolute;
+    right: -1vw;
+    bottom: 0vw;
+}
+.terms-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #fff;
+    font-family: 'Kanit',sans-serif;
+    width: 50vw;
+    height: calc(100vh - 300px);
+    overflow-y: auto;
+    ul{
+        margin-top: 0;
+    }
+}
+.celebration-div{
+    position: absolute;
+    top:0;
+}

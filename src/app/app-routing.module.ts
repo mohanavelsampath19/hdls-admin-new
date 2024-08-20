@@ -17,8 +17,33 @@ import { ReportComponent } from './report/report.component';
 import { UsersComponent } from './report/users/users.component';
 import { MembershipComponent } from './report/membership/membership.component';
 import { TransactionsComponent } from './report/transactions/transactions.component';
+import { HomeComponent } from './pages/web/home/home.component';
+import { SignupComponent } from './pages/web/signup/signup.component';
+import { FaqsComponent } from './pages/web/faqs/faqs.component';
+import { TermsComponent } from './pages/web/terms/terms.component';
+import { SuccessComponent } from './pages/web/success/success.component';
 
 const routes: Routes = [
+  {
+    path:'home',
+    component:HomeComponent
+  },
+  {
+    path:'signup',
+    component:SignupComponent
+  },
+  {
+    path:'faqs',
+    component:FaqsComponent
+  },
+  {
+    path:'terms',
+    component:TermsComponent
+  },
+  {
+    path:'success',
+    component:SuccessComponent
+  },
   {
     path: 'login',
     component: LoginComponent,

@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+#parent-container{
+    background: rgb(50,50,50);
+    background: radial-gradient(circle, rgba(50,50,50,0.654499299719888) 0%, rgba(50,50,50,1) 74%, rgba(0,0,0,1) 100%);
+    width: 100vw;
+    height: 100vh;
+}
+.banner-txt{
+    font-family: "Jost", sans-serif;
+    font-size: 68px;
+    font-weight: 400;
+    color: #fff;
+    line-height: 85px;
+}
+#home-page-container{
+    padding-left: 40px;
+}
+.signup-btn {
+    font-family: "Jost", sans-serif;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 220px;
+    border-radius: 19px;
+    font-size: 22px;
+    color: #000;
+    font-weight: 400;
+    border: none;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    // margin-left: 40px;
+}
+.banner-detail-container{
+    margin-top: 30px;
+    padding-left: 8vw;
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+}
+.signup-banner{
+    background: url('../../../../assets/images/web-banner.svg');
+    width: 30vw;
+    height: 23vw;
+    background-size: 100%;
+    position: absolute;
+    right: -1vw;
+    bottom: 0vw;
+}
+.form-group-container{
+    display: flex;
+    width: 450px;
+    flex-direction: column;
+    gap: 20px;
+    .form-group{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-family: 'jost', sans-serif;
+        width: 100%;
+        label{
+            color: #fff;
+        }
+        input{
+            border: none;
+            box-shadow: none;
+            border-radius: 4px;
+    font-size: 14px;
+    height: 25px;
+        }
+    }
+}
+.form-two-group {
+    flex-direction: row;
+    display: flex;
+    gap: 40px;
+}
+.google-signup-button{
+    display: flex;
+    background: #fff;
+    border-radius: 19px;
+    justify-content: center;
+    width: 200px;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .google-signup-icon{
+        width: 40px;
+        img{
+            width: 100%;
+        }
+    }
+}
+.error-msg{
+    font-size: 12px;
+    color: orange;
+}

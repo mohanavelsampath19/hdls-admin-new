@@ -16,4 +16,7 @@ export class LoginService {
   updateToken(userid:any,userToken:string){
     return this._http.post(environment.baseUrl + 'api/hoteluser/updatetoken', {userid,loginToken:userToken});
   }
+  signupUser(userdetails:any){
+    return this._http.post(environment.baseUrl + 'api/customers/signup',{...userdetails});
+  }
 }
