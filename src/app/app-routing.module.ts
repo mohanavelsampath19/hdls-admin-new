@@ -22,8 +22,14 @@ import { SignupComponent } from './pages/web/signup/signup.component';
 import { FaqsComponent } from './pages/web/faqs/faqs.component';
 import { TermsComponent } from './pages/web/terms/terms.component';
 import { SuccessComponent } from './pages/web/success/success.component';
+import { PointsTableComponent } from './components/common/points-table/points-table.component';
+
 
 const routes: Routes = [
+  {
+    path: 'pointstable',
+    component: PointsTableComponent
+  },
   {
     path:'home',
     component:HomeComponent

@@ -1,0 +1,84 @@
+<section id="hdls-membership-container">
+    <h3>Points Table</h3>
+    <div id="hdls-membership-list">
+      <div class="hdls-product-list-section">
+        <!-- <app-search-field></app-search-field> -->
+        <table
+          mat-table
+          class="hdls-product-table"
+          [dataSource]="dataSource"
+          matTableExporter
+        >
+          <ng-container matColumnDef="guestSpend">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Guest Spend
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <p *ngIf="!element.isLoading">
+                {{ element.bookingid }}
+              </p>
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="earnPoints">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Earn Points</th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="!element.isLoading">
+                {{ element?.hotelmaster?.hotelname }}
+              </div>
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+  
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="reedemPoints">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Reedem Points</th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="!element.isLoading">
+                {{ element?.rooms?.roomtitle }}
+              </div>
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="!element.isLoading">
+                {{ element?.customers?.firstname }}
+              </div>
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="percentageofDiscount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Percentage of Discount Impossed Hotel/Merchant Throw </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="!element.isLoading">
+                {{ element?.amount }}
+              </div>
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            class="hdls-table-row"
+          ></tr>
+        </table>
+        <table>
+          <tr *ngIf="!dataSource.data.length">
+            <td class="hdls-no-records-detail">No Records Found!</td>
+          </tr>
+        </table>
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons
+          aria-label="Select page of periodic elements"
+          (page)="changePage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </section>
+  
