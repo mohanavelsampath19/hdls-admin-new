@@ -97,7 +97,7 @@ export class EditRoomComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.roomPrice, '---room price ---');
+   // console.log(this.roomPrice, '---room price ---');
   }
 
   ngOnInit() {
@@ -157,12 +157,12 @@ export class EditRoomComponent implements OnInit {
           this.progressBarValue = 20;
           break;
         case 2:
-          console.log(this.firstFormGroup);
+      //    console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 40;
           break;
         case 3:
-          console.log(this.firstFormGroup);
+    //      console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 60;
 
@@ -264,7 +264,7 @@ export class EditRoomComponent implements OnInit {
       };
       reader.readAsDataURL(fileList[i]);
     }
-    console.log(this.addImages[index]);
+   // console.log(this.addImages[index]);
   }
   removeImage(index:number){
     this.removeAt(this.addImages,index);
@@ -276,7 +276,7 @@ export class EditRoomComponent implements OnInit {
     this.addImages.push({type:'',files:[]});
   }
   updateRoomImageFiles(index:any,event:any){
-    console.log(this.addImages[index]);
+  //  console.log(this.addImages[index]);
   }
   pushToFileList(index:number,fileList:any){
     if(!this.roomList[index] || this.roomList[index].fileList.length==0){
@@ -348,7 +348,7 @@ export class EditRoomComponent implements OnInit {
   updateRoomImage(categoryName:string, index:number, event:any) {
     var reader = new FileReader();
     reader.onload = e => {
-      console.log(reader.result);
+     // console.log(reader.result);
       this.myRoomImageList[index][categoryName].imageList.push({
         location: '',
         name: event.target.files[0].name,
@@ -368,7 +368,7 @@ export class EditRoomComponent implements OnInit {
     }
     reader.readAsDataURL(event.target.files[0]);
 
-    console.log(categoryName, event.target.files, this.myRoomImageList[index][categoryName].imageList);   
+   // console.log(categoryName, event.target.files, this.myRoomImageList[index][categoryName].imageList);   
   }
 
 }

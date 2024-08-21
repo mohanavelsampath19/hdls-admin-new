@@ -55,3 +55,48 @@
     bottom: 18px;
     left: 450px;
 }
+
+@media only screen and (max-width: 480px) {
+    #parent-container {
+        #home-page-container {
+            padding-left: 30px;
+            margin-top: 50px;
+            .banner-detail-container {
+                margin-top: 0px;
+                padding-left: 0vw;
+                gap: 20px;
+                h3.banner-txt {
+                    font-size: 30px;
+                    margin-bottom: 0;
+                }
+                .faqs-container {
+                    width: 95vw;
+                    .question-detail-outer-container {
+                        width: 85vw;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+    #parent-container {
+        #home-page-container {
+            .banner-detail-container {
+                margin-top: 0px;
+                padding-left: 0vw;
+                h3.banner-txt {
+                    font-size: 42px;
+                    margin-bottom: 0;
+                }
+                .faqs-container {
+                    width: 95vw;
+                    .question-detail-outer-container {
+                        width: 85vw;
+                    }
+                }
+            }
+        }
+    }
+}

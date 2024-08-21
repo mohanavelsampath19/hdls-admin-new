@@ -18,3 +18,29 @@
     display: flex;
     justify-content: center;
 }
+
+@media only screen and (max-width: 480px) {
+    .web-navbar-container {
+        .navbar-container {
+            width: 95vw;
+            .navbar-menu {
+                a {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+    .web-navbar-container {
+        justify-content: normal;
+        .navbar-container {
+            width: 95vw;
+            .navbar-menu {
+                a {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

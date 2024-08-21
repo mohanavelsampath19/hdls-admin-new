@@ -114,7 +114,7 @@ export class AddRoomComponent implements OnInit {
     };
 
     this._roomsService.addRoomService(roomDetails).subscribe((res:any) => {
-      console.log(res);
+    //  console.log(res);
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
