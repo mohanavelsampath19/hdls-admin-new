@@ -14,7 +14,7 @@ export class SidenavComponent implements OnInit {
   myMenu: any = {
     dashboard: true,
     membership: false,
-    pointsystem: false,
+    pointsystem: true,
     bookings: false,
     inventory: false,
   };

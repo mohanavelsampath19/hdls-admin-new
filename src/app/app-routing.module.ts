@@ -23,6 +23,7 @@ import { FaqsComponent } from './pages/web/faqs/faqs.component';
 import { TermsComponent } from './pages/web/terms/terms.component';
 import { SuccessComponent } from './pages/web/success/success.component';
 import { PointsTableComponent } from './components/common/points-table/points-table.component';
+import { TierpointsComponent } from './pages/tierpoints/tierpoints.component';
 
 
 const routes: Routes = [
@@ -97,9 +98,12 @@ const routes: Routes = [
       },
       {
         path: 'points',
-        component: PointsComponent,
+        component: PointsComponent
       },
-      
+      {
+        path:'tierpoints',
+        component:TierpointsComponent
+      },
       {
         path: 'add-room',
         component: AddRoomComponent,
