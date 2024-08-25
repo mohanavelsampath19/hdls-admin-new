@@ -23,9 +23,15 @@
     .web-navbar-container {
         .navbar-container {
             width: 95vw;
+            a {
+                img {
+                    width: 150px;
+                }
+            }
             .navbar-menu {
                 a {
                     font-size: 18px;
+                    
                 }
             }
         }
