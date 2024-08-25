@@ -10,7 +10,7 @@ import { PointService } from 'src/app/services/points/point.service';
 export class PointsComponent implements OnInit {
   pointDetails: any = [];
   editUserDetails: boolean = false;
-
+  isLoading:boolean = false;
   editPointDetailsForm = new FormGroup({
     pointId: new FormControl(),
     point_multiplier: new FormControl(),
@@ -24,9 +24,11 @@ export class PointsComponent implements OnInit {
   }
 
   getPointDetails() {
+    this.isLoading = true;
     this._pointService.getPointDetails(2, 2).subscribe(
       (res: any) => {
         if (res && res.status === 1) {
+          this.isLoading = false;
           console.log(res);
           this.pointDetails = res.response;
         } else {
@@ -62,6 +64,7 @@ export class PointsComponent implements OnInit {
       isActive
     );
     this.pointDetails[index].edit = false;
+    this.isLoading = true;
     this._pointService
       .updatePointMultiplier(pointId, point_multiplier)
       .subscribe(

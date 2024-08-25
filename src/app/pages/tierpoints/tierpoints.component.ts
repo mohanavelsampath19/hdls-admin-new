@@ -11,7 +11,7 @@ export class TierpointsComponent implements OnInit {
 
   pointDetails: any = [];
   editUserDetails: boolean = false;
-
+  isLoading:boolean = false;
   editPointDetailsForm = new FormGroup({
     pointId: new FormControl(),
     point_multiplier: new FormControl(),
@@ -25,12 +25,13 @@ export class TierpointsComponent implements OnInit {
   }
 
   getPointDetails() {
+    this.isLoading = true;
     this._pointService.getPointDetails(2, 2).subscribe(
       (res: any) => {
         if (res && res.status === 1) {
+          this.isLoading = false;
           console.log(res);
-          let points = ['Credit', 'Debit', 'Maximum']
-          this.pointDetails = res.response?.filter((pointData:any) => !points.includes(pointData.pointstitle));
+          this.pointDetails = res.response?.filter((pointData:any, i:number) =>{return i>2 && i!=7; });
           console.log(this.pointDetails, '---')
         } else {
           console.log('Please try again', res);
@@ -65,10 +66,12 @@ export class TierpointsComponent implements OnInit {
       isActive
     );
     this.pointDetails[index].edit = false;
+    this.isLoading = true;
     this._pointService
       .updatePointMultiplier(pointId, point_multiplier)
       .subscribe(
         (res: any) => {
+          this.isLoading = false;
           if (res && res.status === 1) {
             this.getPointDetails();
           } else {

@@ -108,3 +108,23 @@
 ::ng-deep .mat-form-field-wrapper {
   width: 100%;
 }
+.hdls-points-table td, .hdls-points-table th {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+  min-width: 200px;
+}
+.hdls-points-table {
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-right: 0px;
+  border: 1px solid #ccc;
+  border-spacing: 0px !important;
+}
+.modal-action {
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+  margin-top: 20px;
+}

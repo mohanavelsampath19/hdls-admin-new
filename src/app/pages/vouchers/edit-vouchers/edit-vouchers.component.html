@@ -175,14 +175,43 @@
                 </mat-radio-button>
             </mat-radio-group>
         </div>
+        <div class="voucher-applicable-days">
+                <label>Vouchers applicable days</label>
+        <div class="edit-voucher-days">
+            <button mat-raised-button color="primary" (click)="openVoucherModal()">
+                Edit voucher days
+            </button>
+        </div>
+        <table class="hdls-points-table">
+            <thead>
+              <tr>
+                <th >
+                  Day
+                </th>
+                <th >Percentage</th>
+              </tr>
+            </thead>
+            
+              <tbody>
+                <tr *ngFor="let day of dayPercentList">
+                  <td>
+                    {{day.day}}
+                  </td>
+                  <td>
+                    {{day.percent}}
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+          </div>
           <div class="submitButtonGroup">
-              <button mat-raised-button color="primary"
+              <button mat-raised-button
               color="primary"
               (click)="saveVoucher()"
              [ngClass]="[
-             (newVoucherForm.valid && myCoverImageCheck) ? 'hdls-btn-primary': 'hdls-btn-disable',
+             (newVoucherForm.valid && myCoverImageCheck && dayPercentList.length > 0) ? 'hdls-btn-primary': 'hdls-btn-disable',
            ]"
-           [disabled]="(newVoucherForm.valid && myCoverImageCheck ) ? false: true">Update</button>
+           [disabled]="(newVoucherForm.valid && myCoverImageCheck  && dayPercentList.length > 0) ? false: true">Update</button>
               <button mat-raised-button class="hdls-btn-secondary" (click)="cancelVoucher()">Cancel</button>
           </div>
       </form>

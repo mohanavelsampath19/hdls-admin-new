@@ -1,13 +1,16 @@
 <section id="hdls-points-container">
+  <div class="loading-container" *ngIf="isLoading==true">
+    <div class="loader"></div>
+  </div>
     <div class="" *ngIf="pointDetails.length>0">
-      <mat-card class="hdls-points-earning-card card-container">
+      <mat-card class="hdls-points-earning-card card-container {{pointDetails[0]?.pointstitle}}">
         <mat-card-header>
           <mat-card-title
             ><h1>{{ pointDetails[0]?.pointstitle }}</h1></mat-card-title>
           <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
         </mat-card-header>
         <div class="card-image-detail">
-          <img src="../../../assets/images/earning.png" alt="logo" />
+          <img src="../../../assets/images/ranking.png" alt="logo" />
         </div>
         <mat-card-content class="card-content-container">
           <form [formGroup]="editPointDetailsForm" >
@@ -34,7 +37,7 @@
       </mat-card>
     </div>
     <div class="" *ngIf="pointDetails.length>0">
-      <mat-card class="hdls-points-earning-card card-container">
+      <mat-card class="hdls-points-earning-card card-container {{pointDetails[1]?.pointstitle}}">
         <mat-card-header>
           <mat-card-title
             ><h1>{{ pointDetails[1]?.pointstitle }}</h1></mat-card-title
@@ -42,7 +45,7 @@
           <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
         </mat-card-header>
         <div class="card-image-detail">
-          <img src="../../../assets/images/redeem.png" alt="logo" />
+          <img src="../../../assets/images/ranking.png" alt="logo" />
         </div>
         <mat-card-content class="card-content-container">
           <form [formGroup]="editPointDetailsForm">
@@ -68,7 +71,7 @@
       </mat-card>
     </div>
     <div class="" *ngIf="pointDetails.length>0">
-      <mat-card class="hdls-points-earning-card card-container">
+      <mat-card class="hdls-points-earning-card card-container {{pointDetails[2]?.pointstitle}}">
         <mat-card-header>
           <mat-card-title
             ><h1>{{ pointDetails[2]?.pointstitle }}</h1></mat-card-title
@@ -76,12 +79,12 @@
           <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
         </mat-card-header>
         <div class="card-image-detail">
-          <img src="../../../assets/images/maximum.png" alt="logo" />
+          <img src="../../../assets/images/ranking.png" alt="logo" />
         </div>
         <mat-card-content class="card-content-container">
           <form [formGroup]="editPointDetailsForm">
             <div class="hdls-points-form-feilds">
-              <div *ngIf="!pointDetails[2].edit" class="point-desc"> Maximum points to be redeemed for single transaction <strong> {{ pointDetails[2]?.point_multiplier }}</strong></div>
+              <div class="point-desc">1 MYR  <br>=<br> <span *ngIf="!pointDetails[2].edit" > {{ pointDetails[2]?.point_multiplier }}</span> Points</div>
               <input
                 *ngIf="pointDetails[2].edit"
                 type="text"
@@ -102,7 +105,7 @@
       </mat-card>
     </div>
     <div class="" *ngIf="pointDetails.length>0">
-      <mat-card class="hdls-points-earning-card card-container">
+      <mat-card class="hdls-points-earning-card card-container {{pointDetails[3]?.pointstitle}}">
         <mat-card-header>
           <mat-card-title
             ><h1>{{ pointDetails[3]?.pointstitle }}</h1></mat-card-title
@@ -110,12 +113,12 @@
           <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
         </mat-card-header>
         <div class="card-image-detail">
-          <img src="../../../assets/images/maximum.png" alt="logo" />
+          <img src="../../../assets/images/ranking.png" alt="logo" />
         </div>
         <mat-card-content class="card-content-container">
           <form [formGroup]="editPointDetailsForm">
             <div class="hdls-points-form-feilds">
-              <div *ngIf="!pointDetails[3].edit" class="point-desc"> Maximum points to be redeemed for single transaction <strong> {{ pointDetails[2]?.point_multiplier }}</strong></div>
+              <div class="point-desc">1 MYR  <br>=<br> <span *ngIf="!pointDetails[3].edit" > {{ pointDetails[3]?.point_multiplier }}</span> Points</div>
               <input
                 *ngIf="pointDetails[3].edit"
                 type="text"

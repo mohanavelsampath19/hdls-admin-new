@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { PointsTableComponent } from 'src/app/components/common/points-table/points-table.component';
 import { FacilitiesService } from 'src/app/services/facilities/facilities.service';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { MembershipService } from 'src/app/services/membership/membership.service';
@@ -15,7 +16,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 })
 export class AddVouchersComponent implements OnInit {
   isDiscounted:boolean = false;
-
+  dayPercentList:any = [];
   newVoucherForm:FormGroup = new FormGroup({
     title: new FormControl('',Validators.required),
     description: new FormControl('',Validators.required),
@@ -72,7 +73,7 @@ export class AddVouchersComponent implements OnInit {
 
   }
   saveVoucher(){
-    this._vouchers.addVouchers({...this.newVoucherForm.value,logo:this.logo}).subscribe((voucherRes:any)=>{
+    this._vouchers.addVouchers({...this.newVoucherForm.value,logo:this.logo, voucherDays:JSON.stringify([...this.dayPercentList])}).subscribe((voucherRes:any)=>{
       console.log(voucherRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
@@ -145,5 +146,18 @@ export class AddVouchersComponent implements OnInit {
   clearSelectedFile(){
     this.myCoverImage.nativeElement.value = '';
     this.myCoverImageCheck = false;
+  }
+  openVoucherModal(){
+    let voucherDialogRef = this._dialog.open(PointsTableComponent, {
+      data: {
+        daysPercent:[...this.dayPercentList]
+      },
+    });
+    voucherDialogRef.afterClosed().subscribe((closeRes:any)=>{
+      console.log(closeRes);
+      if(closeRes?.status == 'added successfully'){
+        this.dayPercentList = [...closeRes.voucherDays];
+      }
+    })
   }
 }

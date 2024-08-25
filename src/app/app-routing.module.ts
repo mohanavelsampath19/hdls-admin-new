@@ -28,10 +28,6 @@ import { TierpointsComponent } from './pages/tierpoints/tierpoints.component';
 
 const routes: Routes = [
   {
-    path: 'pointstable',
-    component: PointsTableComponent
-  },
-  {
     path:'home',
     component:HomeComponent
   },

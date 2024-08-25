@@ -49,3 +49,26 @@
       }
     }
 }
+.hdls-points-table td, .hdls-points-table th {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+  min-width: 200px;
+}
+.hdls-points-table {
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-right: 0px;
+  border: 1px solid #ccc;
+  border-spacing: 0px !important;
+}
+.edit-voucher-days{
+  display: flex;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+.voucher-applicable-days{
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
