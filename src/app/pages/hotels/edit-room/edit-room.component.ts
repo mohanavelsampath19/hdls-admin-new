@@ -182,41 +182,67 @@ export class EditRoomComponent implements OnInit {
     }
   };
 
-  saveRoom() {
-    //console.log(this.firstFormGroup.value, this.firstFormGroup);
+  async saveRoom() {
     if(this.firstFormGroup.valid){
-      let roomDetails = {
-        hotelid: this.hotelId,
-        ...this.firstFormGroup.value,
-        addImages:this.addImages,
-        coverImage: this.logo,
-        room_facilities: this.facilities,
-        updatedRoomImages: this.getRoomList
-      };
-
-      this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
-       // console.log(res);
-        if(res && res.status === 1) {
-          const dialogRef = this._dialog.open(InfoPopupComponent, {
-            data: {
-              popupText: 'Room updated successfully',
-            },
-          });
-          this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
-          dialogRef.afterClosed().subscribe(() => {
-          });
-        } else {
-          const dialogRef = this._dialog.open(InfoPopupComponent, {
-            data: {
-              popupText: 'Please try again later',
-            },
-          });
-          dialogRef.afterClosed().subscribe(() => {
-          });
-        }
+      let allPromises:any = [];
+      this.addImages.forEach((imageDetails:any) => {
+        imageDetails['fileUpload'].forEach((fileDetails:any) => {
+          let updatePromise = new Promise((resolve, reject) => {
+          this._roomsService.uploadImages(fileDetails, imageDetails.type).subscribe((res: any) => {
+            if (res && res.status === 1) {
+              let getRoomData = JSON.parse(this.getRoomList);
+              getRoomData[imageDetails.type].imageList.push({
+                name: fileDetails.name,
+                location: res.response
+              });
+              this.getRoomList = JSON.stringify(getRoomData);
+              resolve(this.getRoomList);
+            } else {
+              reject();
+            }
+          })
+        }); 
+          allPromises.push(updatePromise)
+        })
+      })
+      Promise.all(allPromises).then((values) => {
+        this.saveDetails();
       })
     }
+  }
 
+  
+
+  saveDetails() {
+    let roomDetails = {
+      hotelid: this.hotelId,
+      ...this.firstFormGroup.value,
+      addImages:this.addImages,
+      coverImage: this.logo,
+      room_facilities: this.facilities,
+      updatedRoomImages: this.getRoomList
+    };
+    this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
+     // console.log(res);
+      if(res && res.status === 1) {
+        const dialogRef = this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Room updated successfully',
+          },
+        });
+        this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
+        dialogRef.afterClosed().subscribe(() => {
+        });
+      } else {
+        const dialogRef = this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Please try again later',
+          },
+        });
+        dialogRef.afterClosed().subscribe(() => {
+        });
+      }
+    })
   }
   checkForFormImage(checkForStatus: imageValidation) {
     this.checkForCoverImage = checkForStatus;
@@ -348,18 +374,16 @@ export class EditRoomComponent implements OnInit {
   updateRoomImage(categoryName:string, index:number, event:any) {
     var reader = new FileReader();
     reader.onload = e => {
-     // console.log(reader.result);
       this.myRoomImageList[index][categoryName].imageList.push({
         location: '',
         name: event.target.files[0].name,
         'imagePath': reader.result || ''
       });
+   //   this.getRoomList = JSON.stringify(this.myRoomImageList);
       if(this.addImages[index]){
         this.addImages[index].fileUpload.push(event.target.files[0]);
         this.addImages[index].fileList.push(reader.result);
-      //  this.addImages[index].type = categoryName;
       } else {
-      //  this.addImages = [];
         this.addImages.push({type: '', fileList: [], fileUpload: []});
         this.addImages[index].fileList.push(reader.result);
         this.addImages[index].fileUpload.push(event.target.files[0]);

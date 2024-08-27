@@ -49,17 +49,17 @@ export class RoomsService {
     let tmpRoomDetails = { ...roomDetails };
     delete tmpRoomDetails.addImages;
     formData.append('coverImage', roomDetails.coverImage);
-    for (let i = 0; i < roomDetails.addImages.length; i++) {
-      let addImageItem = roomDetails.addImages[i];
-      for(let j=0;j<addImageItem.fileUpload.length;j++){
-        console.log(addImageItem.fileUpload[j],addImageItem.fileUpload[j]?.name);
-        formData.append(
-          addImageItem.type+'[]',
-          addImageItem.fileUpload[j],
-          addImageItem.fileUpload[j].name
-        );
-      }
-    }
+    // for (let i = 0; i < roomDetails.addImages.length; i++) {
+    //   let addImageItem = roomDetails.addImages[i];
+    //   for(let j=0;j<addImageItem.fileUpload.length;j++){
+    //     console.log(addImageItem.fileUpload[j],addImageItem.fileUpload[j]?.name);
+    //     formData.append(
+    //       addImageItem.type+'[]',
+    //       addImageItem.fileUpload[j],
+    //       addImageItem.fileUpload[j].name
+    //     );
+    //   }
+    // }
 
     for (let i = 0; i < Object.keys(tmpRoomDetails).length; i++) {
       let tmpParam = Object.keys(tmpRoomDetails)[i];
@@ -74,24 +74,24 @@ export class RoomsService {
     let tmpRoomDetails = { ...roomDetails };
     delete tmpRoomDetails.addImages;
     formData.append('coverImage', roomDetails.coverImage);
-    for (let i = 0; i < roomDetails.addImages.length; i++) {
-      let addImageItem = roomDetails.addImages[i];
-      for(let j=0;j<addImageItem.fileUpload.length;j++){
-        console.log(addImageItem.fileUpload[j],addImageItem.fileUpload[j]?.name);
-        formData.append(
-          addImageItem.type+'[]',
-          addImageItem.fileUpload[j],
-          addImageItem.fileUpload[j].name
-        );
-      }
-    }
+    // for (let i = 0; i < roomDetails.addImages.length; i++) {
+    //   let addImageItem = roomDetails.addImages[i];
+    //   for(let j=0;j<addImageItem.fileUpload.length;j++){
+    //     console.log(addImageItem.fileUpload[j],addImageItem.fileUpload[j]?.name);
+    //     formData.append(
+    //       addImageItem.type+'[]',
+    //       addImageItem.fileUpload[j],
+    //       addImageItem.fileUpload[j].name
+    //     );
+    //   }
+    // }
 
     for (let i = 0; i < Object.keys(tmpRoomDetails).length; i++) {
       let tmpParam = Object.keys(tmpRoomDetails)[i];
       formData.append(tmpParam, tmpRoomDetails[tmpParam]);
     }
     formData.append('roomid', roomid);
-     return this._http.post(environment.baseUrl + 'api/rooms/updaterooms', formData);
+    return this._http.post(environment.baseUrl + 'api/rooms/updaterooms', formData);
   }
   getRoomList(hotel_id?:number, category?:number) {
     return this._http.post(environment.baseUrl + 'api/rooms/getroomslist', {hotel_id: hotel_id, category: category});
@@ -99,5 +99,15 @@ export class RoomsService {
 
   deleteRoom(room_id:number) {
     return this._http.post(environment.baseUrl + 'api/rooms/deleteroom', {roomid: room_id});
+  }
+
+  uploadImages(imageData:any, categoryname:any) {
+    let formData: any = new FormData();
+    formData.append(
+      categoryname,
+      imageData
+    );
+    formData.append('categoryname', categoryname);
+    return this._http.post(environment.baseUrl + 'api/rooms/uploadimages', formData);
   }
 }

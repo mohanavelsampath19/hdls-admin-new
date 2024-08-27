@@ -56,6 +56,7 @@ export class AddRoomComponent implements OnInit {
   addImages:any=[];
   addImageType:any = [];
   roomFacilitiesList:string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
+  updatedImageList:any=[];
  // fruitInput:any = [];
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   constructor(
@@ -103,18 +104,57 @@ export class AddRoomComponent implements OnInit {
     });
   }
 
+  async saveRoom() {
+    if(this.firstFormGroup.valid){
+      let allPromises:any = [];
+      this.addImages.forEach((imageDetails:any) => {
+        imageDetails['fileUpload'].forEach((fileDetails:any) => {
+          let updatePromise = new Promise((resolve, reject) => {
+          this._roomsService.uploadImages(fileDetails, imageDetails.type).subscribe((res: any) => {
+            if (res && res.status === 1) {
+              if(this.updatedImageList[imageDetails.type]) {
+                this.updatedImageList[imageDetails.type].imageList.push({
+                  name: fileDetails.name,
+                  location: res.response
+                });
+              } else {
+                this.updatedImageList = {
+                  ...this.updatedImageList,
+                  [imageDetails.type] : {
+                    imageList: []
+                  }
+                }
+                this.updatedImageList[imageDetails.type].imageList.push({
+                  name: fileDetails.name,
+                  location: res.response
+                });
+              }
+              resolve(this.updatedImageList);
+            } else {
+              reject();
+            }
+          })
+        }); 
+          allPromises.push(updatePromise)
+        })
+      })
+      Promise.all(allPromises).then((values) => {
+        this.saveDetails();
+      })
+    }
+  }
 
-  saveRoom() {
+  saveDetails() {
     let roomDetails = {
       hotelid: this.hotelId,
       ...this.firstFormGroup.value,
       addImages:this.addImages,
       coverImage: this.logo,
-      room_facilities: this.facilities
+      room_facilities: this.facilities,
+      updatedRoomImages: JSON.stringify(this.updatedImageList)
     };
 
     this._roomsService.addRoomService(roomDetails).subscribe((res:any) => {
-    //  console.log(res);
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
@@ -245,7 +285,7 @@ export class AddRoomComponent implements OnInit {
     this.facilities.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
     this.facilityCtrl.setValue(null);
-    console.log(this.facilities, '---facility---')
+  //  console.log(this.facilities, '---facility---')
   }
 
   private _filter(value: string): string[] {
