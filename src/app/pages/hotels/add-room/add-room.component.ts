@@ -12,8 +12,8 @@ import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {Observable, from, of} from 'rxjs';
+import {map, startWith, concatMap, catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-room',
@@ -34,7 +34,7 @@ export class AddRoomComponent implements OnInit {
   firstFormGroup: any = this._formBuilder.group({});
   isEditable = false;
   currentStep: any = 0;
-  progressBarValue: number = 4;
+  progressBarValue: number = 0;
   checkForCoverImage: imageValidation = {
     validationCheck: false,
     coverImage: [],
@@ -56,6 +56,7 @@ export class AddRoomComponent implements OnInit {
   addImages:any=[];
   addImageType:any = [];
   roomFacilitiesList:string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
+  updatedImageList:any=[];
  // fruitInput:any = [];
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   constructor(
@@ -103,18 +104,92 @@ export class AddRoomComponent implements OnInit {
     });
   }
 
+  async saveRoom() {
+    if(this.firstFormGroup.valid){
+      let allPromises:any = [];
+      let getProgressCount = 0;
+      let getProgressBarValue=0;
+      let setUploadImages:any = [];
+      this.addImages.forEach((count:any) => {
+        getProgressCount = getProgressCount+count['fileUpload'].length;
+      })
+      getProgressBarValue = 100/getProgressCount;
+      this.addImages.forEach((imageDetails:any) => {
+        imageDetails['fileUpload'].forEach((fileDetails:any) => {
+          setUploadImages.push({
+            'type': imageDetails.type,
+            'file': fileDetails
+          })
+        })
+      })
+      this.uploadImagesToServer(setUploadImages)
+    }
+  }
 
-  saveRoom() {
+  uploadImagesToServer(urls:any) {
+    let getProgressCount = 0;
+    let getProgressBarValue=0;
+   // let setUploadImages:any = [];
+    this.addImages.forEach((count:any) => {
+      getProgressCount = getProgressCount+count['fileUpload'].length;
+    })
+    getProgressBarValue = 100/getProgressCount;
+    from(urls).pipe(
+      concatMap((url:any) => 
+        this._roomsService.uploadImages(url.file, url.type).pipe(
+          catchError(error => {
+            console.error('Error fetching data from', url, error);
+            return of(null);  // Return a fallback value or empty observable
+          })
+        )
+      )
+    ).subscribe({
+      next: (res:any) => {
+        if (res && res.status === 1) {
+          if(this.updatedImageList[res.response.type]) {
+            this.updatedImageList[res.response.type].imageList.push({
+              name: res.response.name,
+              location: res.response.location
+            });
+          } else {
+            this.updatedImageList = {
+              ...this.updatedImageList,
+              [res.response.type] : {
+                imageList: []
+              }
+            }
+            this.updatedImageList[res.response.type].imageList.push({
+              name: res.response.name,
+              location: res.response.location
+            });
+          }
+          this.progressBarValue = this.progressBarValue+getProgressBarValue;
+         
+        } else {
+          
+        }
+      },
+      error: (err) => {
+        console.error('An error occurred:', err);
+      },
+      complete: () => {
+        this.saveDetails();
+      }
+    });
+  }
+  
+
+  saveDetails() {
     let roomDetails = {
       hotelid: this.hotelId,
       ...this.firstFormGroup.value,
       addImages:this.addImages,
       coverImage: this.logo,
-      room_facilities: this.facilities
+      room_facilities: this.facilities,
+      updatedRoomImages: JSON.stringify(this.updatedImageList)
     };
 
     this._roomsService.addRoomService(roomDetails).subscribe((res:any) => {
-    //  console.log(res);
       if(res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
@@ -245,7 +320,7 @@ export class AddRoomComponent implements OnInit {
     this.facilities.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
     this.facilityCtrl.setValue(null);
-    console.log(this.facilities, '---facility---')
+  //  console.log(this.facilities, '---facility---')
   }
 
   private _filter(value: string): string[] {

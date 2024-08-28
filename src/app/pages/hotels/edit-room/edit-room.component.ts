@@ -16,6 +16,8 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { concatMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-room',
@@ -34,7 +36,7 @@ export class EditRoomComponent implements OnInit {
   firstFormGroup: any = this._formBuilder.group({});
   isEditable = false;
   currentStep: any = 0;
-  progressBarValue: number = 4;
+  progressBarValue: number = 0;
   @ViewChild('myCoverImage', { static: false })
   myCoverImage!: ElementRef;
   checkForCoverImage: imageValidation = {
@@ -114,7 +116,7 @@ export class EditRoomComponent implements OnInit {
             roomsdesc:res?.response?.roomsdesc,
             bedtype:res?.response?.bedtype,
             totalrooms:res?.response?.totalrooms,
-            adults:res?.response?.roomName,
+         //   adults:res?.response?.roomName,
             roomsize:res?.response?.roomsize,
             points:res?.response?.points,
             price:res?.response?.price,
@@ -182,41 +184,120 @@ export class EditRoomComponent implements OnInit {
     }
   };
 
-  saveRoom() {
-    //console.log(this.firstFormGroup.value, this.firstFormGroup);
+  async saveRoom() {
     if(this.firstFormGroup.valid){
-      let roomDetails = {
-        hotelid: this.hotelId,
-        ...this.firstFormGroup.value,
-        addImages:this.addImages,
-        coverImage: this.logo,
-        room_facilities: this.facilities,
-        updatedRoomImages: this.getRoomList
-      };
-
-      this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
-       // console.log(res);
-        if(res && res.status === 1) {
-          const dialogRef = this._dialog.open(InfoPopupComponent, {
-            data: {
-              popupText: 'Room updated successfully',
-            },
-          });
-          this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
-          dialogRef.afterClosed().subscribe(() => {
-          });
-        } else {
-          const dialogRef = this._dialog.open(InfoPopupComponent, {
-            data: {
-              popupText: 'Please try again later',
-            },
-          });
-          dialogRef.afterClosed().subscribe(() => {
-          });
-        }
+      let allPromises:any = [];
+      let getProgressCount = 0;
+      let getProgressBarValue=0;
+      let setUploadImages:any = [];
+      this.addImages.forEach((count:any) => {
+        getProgressCount = getProgressCount+count['fileUpload'].length;
       })
+      getProgressBarValue = 100/getProgressCount;
+      this.addImages.forEach((imageDetails:any) => {
+        imageDetails['fileUpload'].forEach((fileDetails:any) => {
+          setUploadImages.push({
+            'type': imageDetails.type,
+            'file': fileDetails
+          })
+        //   let updatePromise = new Promise((resolve, reject) => {
+        //   this._roomsService.uploadImages(fileDetails, imageDetails.type).subscribe((res: any) => {
+        //     if (res && res.status === 1) {
+        //       let getRoomData = JSON.parse(this.getRoomList);
+        //       getRoomData[imageDetails.type].imageList.push({
+        //         name: fileDetails.name,
+        //         location: res.response
+        //       });
+        //       this.progressBarValue = this.progressBarValue+getProgressBarValue;
+        //       this.getRoomList = JSON.stringify(getRoomData);
+        //       resolve(this.getRoomList);
+        //     } else {
+        //       reject();
+        //     }
+        //   })
+        // }); 
+        //   allPromises.push(updatePromise)
+        })
+      })
+      this.uploadImagesToServer(setUploadImages)
+      // Promise.all(allPromises).then((values) => {
+      //   this.saveDetails();
+      // })
     }
+  }
 
+  uploadImagesToServer(urls:any) {
+    let getProgressCount = 0;
+    let getProgressBarValue=0;
+   // let setUploadImages:any = [];
+    this.addImages.forEach((count:any) => {
+      getProgressCount = getProgressCount+count['fileUpload'].length;
+    })
+    getProgressBarValue = 100/getProgressCount;
+    from(urls).pipe(
+      concatMap((url:any) => 
+        this._roomsService.uploadImages(url.file, url.type).pipe(
+          catchError(error => {
+            console.error('Error fetching data from', url, error);
+            return of(null);  // Return a fallback value or empty observable
+          })
+        )
+      )
+    ).subscribe({
+      next: (res:any) => {
+                    if (res && res.status === 1) {
+              let getRoomData = JSON.parse(this.getRoomList);
+              getRoomData[res.response.type].imageList.push({
+                name: res.response.name,
+                location: res.response.location
+              });
+              this.progressBarValue = this.progressBarValue+getProgressBarValue;
+              this.getRoomList = JSON.stringify(getRoomData);
+             
+            } else {
+            //  reject();
+            }
+      },
+      error: (err) => {
+        console.error('An error occurred:', err);
+      },
+      complete: () => {
+        this.saveDetails();
+      }
+    });
+  }
+  
+
+  saveDetails() {
+    let roomDetails = {
+      hotelid: this.hotelId,
+      ...this.firstFormGroup.value,
+      addImages:this.addImages,
+      coverImage: this.logo,
+      room_facilities: this.facilities,
+      updatedRoomImages: this.getRoomList
+    };
+    this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
+     // console.log(res);
+      if(res && res.status === 1) {
+        const dialogRef = this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Room updated successfully',
+          },
+        });
+        this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
+        dialogRef.afterClosed().subscribe(() => {
+        });
+      } else {
+        const dialogRef = this._dialog.open(InfoPopupComponent, {
+          data: {
+            popupText: 'Please try again later',
+          },
+        });
+        dialogRef.afterClosed().subscribe(() => {
+        });
+      }
+    })
   }
   checkForFormImage(checkForStatus: imageValidation) {
     this.checkForCoverImage = checkForStatus;
@@ -348,18 +429,16 @@ export class EditRoomComponent implements OnInit {
   updateRoomImage(categoryName:string, index:number, event:any) {
     var reader = new FileReader();
     reader.onload = e => {
-     // console.log(reader.result);
       this.myRoomImageList[index][categoryName].imageList.push({
         location: '',
         name: event.target.files[0].name,
         'imagePath': reader.result || ''
       });
+   //   this.getRoomList = JSON.stringify(this.myRoomImageList);
       if(this.addImages[index]){
         this.addImages[index].fileUpload.push(event.target.files[0]);
         this.addImages[index].fileList.push(reader.result);
-      //  this.addImages[index].type = categoryName;
       } else {
-      //  this.addImages = [];
         this.addImages.push({type: '', fileList: [], fileUpload: []});
         this.addImages[index].fileList.push(reader.result);
         this.addImages[index].fileUpload.push(event.target.files[0]);
