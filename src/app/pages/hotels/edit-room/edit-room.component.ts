@@ -16,6 +16,8 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { concatMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-room',
@@ -34,7 +36,7 @@ export class EditRoomComponent implements OnInit {
   firstFormGroup: any = this._formBuilder.group({});
   isEditable = false;
   currentStep: any = 0;
-  progressBarValue: number = 4;
+  progressBarValue: number = 0;
   @ViewChild('myCoverImage', { static: false })
   myCoverImage!: ElementRef;
   checkForCoverImage: imageValidation = {
@@ -114,7 +116,7 @@ export class EditRoomComponent implements OnInit {
             roomsdesc:res?.response?.roomsdesc,
             bedtype:res?.response?.bedtype,
             totalrooms:res?.response?.totalrooms,
-            adults:res?.response?.roomName,
+         //   adults:res?.response?.roomName,
             roomsize:res?.response?.roomsize,
             points:res?.response?.points,
             price:res?.response?.price,
@@ -185,32 +187,85 @@ export class EditRoomComponent implements OnInit {
   async saveRoom() {
     if(this.firstFormGroup.valid){
       let allPromises:any = [];
+      let getProgressCount = 0;
+      let getProgressBarValue=0;
+      let setUploadImages:any = [];
+      this.addImages.forEach((count:any) => {
+        getProgressCount = getProgressCount+count['fileUpload'].length;
+      })
+      getProgressBarValue = 100/getProgressCount;
       this.addImages.forEach((imageDetails:any) => {
         imageDetails['fileUpload'].forEach((fileDetails:any) => {
-          let updatePromise = new Promise((resolve, reject) => {
-          this._roomsService.uploadImages(fileDetails, imageDetails.type).subscribe((res: any) => {
-            if (res && res.status === 1) {
-              let getRoomData = JSON.parse(this.getRoomList);
-              getRoomData[imageDetails.type].imageList.push({
-                name: fileDetails.name,
-                location: res.response
-              });
-              this.getRoomList = JSON.stringify(getRoomData);
-              resolve(this.getRoomList);
-            } else {
-              reject();
-            }
+          setUploadImages.push({
+            'type': imageDetails.type,
+            'file': fileDetails
           })
-        }); 
-          allPromises.push(updatePromise)
+        //   let updatePromise = new Promise((resolve, reject) => {
+        //   this._roomsService.uploadImages(fileDetails, imageDetails.type).subscribe((res: any) => {
+        //     if (res && res.status === 1) {
+        //       let getRoomData = JSON.parse(this.getRoomList);
+        //       getRoomData[imageDetails.type].imageList.push({
+        //         name: fileDetails.name,
+        //         location: res.response
+        //       });
+        //       this.progressBarValue = this.progressBarValue+getProgressBarValue;
+        //       this.getRoomList = JSON.stringify(getRoomData);
+        //       resolve(this.getRoomList);
+        //     } else {
+        //       reject();
+        //     }
+        //   })
+        // }); 
+        //   allPromises.push(updatePromise)
         })
       })
-      Promise.all(allPromises).then((values) => {
-        this.saveDetails();
-      })
+      this.uploadImagesToServer(setUploadImages)
+      // Promise.all(allPromises).then((values) => {
+      //   this.saveDetails();
+      // })
     }
   }
 
+  uploadImagesToServer(urls:any) {
+    let getProgressCount = 0;
+    let getProgressBarValue=0;
+   // let setUploadImages:any = [];
+    this.addImages.forEach((count:any) => {
+      getProgressCount = getProgressCount+count['fileUpload'].length;
+    })
+    getProgressBarValue = 100/getProgressCount;
+    from(urls).pipe(
+      concatMap((url:any) => 
+        this._roomsService.uploadImages(url.file, url.type).pipe(
+          catchError(error => {
+            console.error('Error fetching data from', url, error);
+            return of(null);  // Return a fallback value or empty observable
+          })
+        )
+      )
+    ).subscribe({
+      next: (res:any) => {
+                    if (res && res.status === 1) {
+              let getRoomData = JSON.parse(this.getRoomList);
+              getRoomData[res.response.type].imageList.push({
+                name: res.response.name,
+                location: res.response.location
+              });
+              this.progressBarValue = this.progressBarValue+getProgressBarValue;
+              this.getRoomList = JSON.stringify(getRoomData);
+             
+            } else {
+            //  reject();
+            }
+      },
+      error: (err) => {
+        console.error('An error occurred:', err);
+      },
+      complete: () => {
+        this.saveDetails();
+      }
+    });
+  }
   
 
   saveDetails() {

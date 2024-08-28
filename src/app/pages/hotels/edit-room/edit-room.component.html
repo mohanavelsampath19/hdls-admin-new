@@ -1,10 +1,11 @@
 <div class="hdls-add-product-section">
   <h2>Edit Room <span class="hdls-border"></span>Room Information</h2>
-  <!-- <mat-progress-bar
+  <mat-progress-bar
     mode="determinate"
     value="{{ progressBarValue }}"
     class="hdls-progress-bar"
-  ></mat-progress-bar> -->
+    *ngIf="progressBarValue > 0"
+  ></mat-progress-bar>
 
   <mat-stepper linear #stepper class="hdls-stepper hdls-tenant-add-product-stepper">
     <mat-step [stepControl]="firstFormGroup">
@@ -249,3 +250,6 @@
     </mat-step>
   </mat-stepper>
 </div>
+
+{{firstFormGroup.valid}}
+{{myCoverImageCheck}}

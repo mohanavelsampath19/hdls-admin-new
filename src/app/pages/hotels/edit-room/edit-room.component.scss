@@ -469,6 +469,7 @@ table tr th {
 .hdls-room-image-item {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
   .myCoverImage {
    // flex-basis: 50%;
   }

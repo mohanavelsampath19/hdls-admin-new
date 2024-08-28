@@ -12,8 +12,8 @@ import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {Observable, from, of} from 'rxjs';
+import {map, startWith, concatMap, catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-room',
@@ -34,7 +34,7 @@ export class AddRoomComponent implements OnInit {
   firstFormGroup: any = this._formBuilder.group({});
   isEditable = false;
   currentStep: any = 0;
-  progressBarValue: number = 4;
+  progressBarValue: number = 0;
   checkForCoverImage: imageValidation = {
     validationCheck: false,
     coverImage: [],
@@ -107,42 +107,77 @@ export class AddRoomComponent implements OnInit {
   async saveRoom() {
     if(this.firstFormGroup.valid){
       let allPromises:any = [];
+      let getProgressCount = 0;
+      let getProgressBarValue=0;
+      let setUploadImages:any = [];
+      this.addImages.forEach((count:any) => {
+        getProgressCount = getProgressCount+count['fileUpload'].length;
+      })
+      getProgressBarValue = 100/getProgressCount;
       this.addImages.forEach((imageDetails:any) => {
         imageDetails['fileUpload'].forEach((fileDetails:any) => {
-          let updatePromise = new Promise((resolve, reject) => {
-          this._roomsService.uploadImages(fileDetails, imageDetails.type).subscribe((res: any) => {
-            if (res && res.status === 1) {
-              if(this.updatedImageList[imageDetails.type]) {
-                this.updatedImageList[imageDetails.type].imageList.push({
-                  name: fileDetails.name,
-                  location: res.response
-                });
-              } else {
-                this.updatedImageList = {
-                  ...this.updatedImageList,
-                  [imageDetails.type] : {
-                    imageList: []
-                  }
-                }
-                this.updatedImageList[imageDetails.type].imageList.push({
-                  name: fileDetails.name,
-                  location: res.response
-                });
-              }
-              resolve(this.updatedImageList);
-            } else {
-              reject();
-            }
+          setUploadImages.push({
+            'type': imageDetails.type,
+            'file': fileDetails
           })
-        }); 
-          allPromises.push(updatePromise)
         })
       })
-      Promise.all(allPromises).then((values) => {
-        this.saveDetails();
-      })
+      this.uploadImagesToServer(setUploadImages)
     }
   }
+
+  uploadImagesToServer(urls:any) {
+    let getProgressCount = 0;
+    let getProgressBarValue=0;
+   // let setUploadImages:any = [];
+    this.addImages.forEach((count:any) => {
+      getProgressCount = getProgressCount+count['fileUpload'].length;
+    })
+    getProgressBarValue = 100/getProgressCount;
+    from(urls).pipe(
+      concatMap((url:any) => 
+        this._roomsService.uploadImages(url.file, url.type).pipe(
+          catchError(error => {
+            console.error('Error fetching data from', url, error);
+            return of(null);  // Return a fallback value or empty observable
+          })
+        )
+      )
+    ).subscribe({
+      next: (res:any) => {
+        if (res && res.status === 1) {
+          if(this.updatedImageList[res.response.type]) {
+            this.updatedImageList[res.response.type].imageList.push({
+              name: res.response.name,
+              location: res.response.location
+            });
+          } else {
+            this.updatedImageList = {
+              ...this.updatedImageList,
+              [res.response.type] : {
+                imageList: []
+              }
+            }
+            this.updatedImageList[res.response.type].imageList.push({
+              name: res.response.name,
+              location: res.response.location
+            });
+          }
+          this.progressBarValue = this.progressBarValue+getProgressBarValue;
+         
+        } else {
+          
+        }
+      },
+      error: (err) => {
+        console.error('An error occurred:', err);
+      },
+      complete: () => {
+        this.saveDetails();
+      }
+    });
+  }
+  
 
   saveDetails() {
     let roomDetails = {
