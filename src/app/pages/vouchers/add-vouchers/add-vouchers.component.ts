@@ -33,7 +33,8 @@ export class AddVouchersComponent implements OnInit {
     evouchersellingprice:new FormControl('',Validators.required),
     evoucherexpiry: new FormControl(),
     expirydays: new FormControl(),
-    tranferable: new FormControl('', Validators.required)
+    tranferable: new FormControl('', Validators.required),
+    minDay: new FormControl('',Validators.required)
   });
   currentProperty:string='';
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];

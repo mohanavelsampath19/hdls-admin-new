@@ -34,7 +34,8 @@ export class EditVouchersComponent implements OnInit {
     evouchersellingprice:new FormControl('',Validators.required),
     evoucherexpiry: new FormControl(),
     expirydays: new FormControl(),
-    tranferable: new FormControl('', Validators.required)
+    tranferable: new FormControl('', Validators.required),
+    minDay: new FormControl('',Validators.required)
   });
   currentProperty:string='';
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
@@ -98,6 +99,7 @@ export class EditVouchersComponent implements OnInit {
           evouchersellingprice:res?.response?.sellingprice,
           evoucherexpiry: res?.response?.expiry_no,
           expirydays: res?.response?.expiry_type,
+          minDay: res?.response?.minDay
         });
         this.newVoucherForm.patchValue({propertyid:res.response.hotelid});
         this.voucherId = res?.response?.vouchersid;
@@ -107,7 +109,6 @@ export class EditVouchersComponent implements OnInit {
       }
     })
   });
-
   }
   saveVoucher(){
 
