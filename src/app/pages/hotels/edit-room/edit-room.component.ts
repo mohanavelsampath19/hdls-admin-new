@@ -12,10 +12,10 @@ import { COMMA, ENTER, V } from '@angular/cdk/keycodes';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HotelsService } from 'src/app/services/hotels/hotels.service';
 import { environment } from 'src/environments/environment';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { from, of } from 'rxjs';
 import { concatMap, catchError } from 'rxjs/operators';
 
@@ -44,25 +44,25 @@ export class EditRoomComponent implements OnInit {
     coverImage: [],
     featureImage: [],
   };
-  myRoomImageCheck:boolean = false;
-  myRoomImageList:any = [];
-  roomList:any=[];
-  myCoverImageCheck:boolean = false;
-  coverImage:any;
-  logo:any;
+  myRoomImageCheck: boolean = false;
+  myRoomImageList: any = [];
+  roomList: any = [];
+  myCoverImageCheck: boolean = false;
+  coverImage: any;
+  logo: any;
   @Input()
   selectedIndex: any;
 
   displayColumns = ['sno', 'specname', 'specval', 'delete'];
   adults: any = 0;
   childrens: any = 0;
-  hotelId:number=0;
-  addImages:any=[];
-  addImageType:any = [];
-  roomid:any;
-  roomFacilitiesList:string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
-  roomCategoryList:any = [];
-  getRoomList:any = [];
+  hotelId: number = 0;
+  addImages: any = [];
+  addImageType: any = [];
+  roomid: any;
+  roomFacilitiesList: string[] = ['Break Fast', 'Smoking Room', 'Extra Bed'];
+  roomCategoryList: any = [];
+  getRoomList: any = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -71,12 +71,12 @@ export class EditRoomComponent implements OnInit {
     private _route: Router,
     private _activatedRouter: ActivatedRoute,
     private _hotelService: HotelsService
-  ){
+  ) {
     this.filteredFacility = this.facilityCtrl.valueChanges.pipe(
       startWith(null),
       map((facility: string | null) => (facility ? this._filter(facility) : this.roomFacilitiesList.slice())),
     );
-     this.firstFormGroup = this._formBuilder.group({
+    this.firstFormGroup = this._formBuilder.group({
       roomtitle: ['', Validators.required],
       roomsdesc: ['', Validators.required],
       bedtype: ['', Validators.required],
@@ -85,8 +85,8 @@ export class EditRoomComponent implements OnInit {
       roomsize: ['', Validators.required],
       points: ['', Validators.required],
       price: ['', Validators.required],
-      selling_price:['', Validators.required],
-      numberofguest:['',Validators.required]
+      selling_price: ['', Validators.required],
+      numberofguest: ['', Validators.required]
     });
   }
 
@@ -99,27 +99,27 @@ export class EditRoomComponent implements OnInit {
   }
 
   ngOnChanges() {
-   // console.log(this.roomPrice, '---room price ---');
+    // console.log(this.roomPrice, '---room price ---');
   }
 
   ngOnInit() {
     this._activatedRouter.queryParams.subscribe((res) => {
-      if(res && res.id) {
+      if (res && res.id) {
         this.hotelId = res.id;
         this.roomid = res.roomid;
-        this._hotelService.getRoomDetails(this.roomid).subscribe((res:any)=> {
+        this._hotelService.getRoomDetails(this.roomid).subscribe((res: any) => {
           let images = JSON.parse(res.response.images);
           let title = res?.response?.roomtitle;
           let getCoverImage = res?.response?.cover_image;
-           this.firstFormGroup.patchValue({
+          this.firstFormGroup.patchValue({
             roomtitle: res?.response?.roomtitle,
-            roomsdesc:res?.response?.roomsdesc,
-            bedtype:res?.response?.bedtype,
-            totalrooms:res?.response?.totalrooms,
-         //   adults:res?.response?.roomName,
-            roomsize:res?.response?.roomsize,
-            points:res?.response?.points,
-            price:res?.response?.price,
+            roomsdesc: res?.response?.roomsdesc,
+            bedtype: res?.response?.bedtype,
+            totalrooms: res?.response?.totalrooms,
+            //   adults:res?.response?.roomName,
+            roomsize: res?.response?.roomsize,
+            points: res?.response?.points,
+            price: res?.response?.price,
             numberofguest: res?.response?.nog,
             selling_price: res?.response?.selling_price
           });
@@ -129,12 +129,13 @@ export class EditRoomComponent implements OnInit {
           this.myCoverImageCheck = true;
           this.coverImage = `${environment.imageUrl}/${getCoverImage}`;
           this.roomCategoryList = Object.keys(images) || [];
-          this.myRoomImageList = this.roomCategoryList.map((imageData:any,index:number) => {
-            let setData = images[imageData].imageList ||[];
-            let setImagePath = setData.map((updatePath:any) => {
+          this.myRoomImageList = this.roomCategoryList.map((imageData: any, index: number) => {
+            let setData = images[imageData].imageList || [];
+            let setImagePath = setData.map((updatePath: any) => {
               let trimPath = `${environment.imageUrl}/${updatePath.location}`.trim();
               return {
                 'imagePath': trimPath,
+                'imageType': 'existing',
                 ...updatePath
               }
             })
@@ -144,7 +145,6 @@ export class EditRoomComponent implements OnInit {
               }
             };
           })
-        //  console.log(this.myRoomImageList);
         })
       }
     });
@@ -159,12 +159,12 @@ export class EditRoomComponent implements OnInit {
           this.progressBarValue = 20;
           break;
         case 2:
-      //    console.log(this.firstFormGroup);
+          //    console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 40;
           break;
         case 3:
-    //      console.log(this.firstFormGroup);
+          //      console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 60;
 
@@ -185,57 +185,36 @@ export class EditRoomComponent implements OnInit {
   };
 
   async saveRoom() {
-    if(this.firstFormGroup.valid){
-      let allPromises:any = [];
+    if (this.firstFormGroup.valid) {
+      let allPromises: any = [];
       let getProgressCount = 0;
-      let getProgressBarValue=0;
-      let setUploadImages:any = [];
-      this.addImages.forEach((count:any) => {
-        getProgressCount = getProgressCount+count['fileUpload'].length;
+      let getProgressBarValue = 0;
+      let setUploadImages: any = [];
+      this.addImages.forEach((count: any) => {
+        getProgressCount = getProgressCount + count['fileUpload'].length;
       })
-      getProgressBarValue = 100/getProgressCount;
-      this.addImages.forEach((imageDetails:any) => {
-        imageDetails['fileUpload'].forEach((fileDetails:any) => {
+      getProgressBarValue = 100 / getProgressCount;
+      this.addImages.forEach((imageDetails: any) => {
+        imageDetails['fileUpload'].forEach((fileDetails: any) => {
           setUploadImages.push({
             'type': imageDetails.type,
             'file': fileDetails
           })
-        //   let updatePromise = new Promise((resolve, reject) => {
-        //   this._roomsService.uploadImages(fileDetails, imageDetails.type).subscribe((res: any) => {
-        //     if (res && res.status === 1) {
-        //       let getRoomData = JSON.parse(this.getRoomList);
-        //       getRoomData[imageDetails.type].imageList.push({
-        //         name: fileDetails.name,
-        //         location: res.response
-        //       });
-        //       this.progressBarValue = this.progressBarValue+getProgressBarValue;
-        //       this.getRoomList = JSON.stringify(getRoomData);
-        //       resolve(this.getRoomList);
-        //     } else {
-        //       reject();
-        //     }
-        //   })
-        // }); 
-        //   allPromises.push(updatePromise)
         })
       })
-      this.uploadImagesToServer(setUploadImages)
-      // Promise.all(allPromises).then((values) => {
-      //   this.saveDetails();
-      // })
+      this.uploadImagesToServer(setUploadImages);
     }
   }
 
-  uploadImagesToServer(urls:any) {
+  uploadImagesToServer(urls: any) {
     let getProgressCount = 0;
-    let getProgressBarValue=0;
-   // let setUploadImages:any = [];
-    this.addImages.forEach((count:any) => {
-      getProgressCount = getProgressCount+count['fileUpload'].length;
+    let getProgressBarValue = 0;
+    this.addImages.forEach((count: any) => {
+      getProgressCount = getProgressCount + count['fileUpload'].length;
     })
-    getProgressBarValue = 100/getProgressCount;
+    getProgressBarValue = 100 / getProgressCount;
     from(urls).pipe(
-      concatMap((url:any) => 
+      concatMap((url: any) =>
         this._roomsService.uploadImages(url.file, url.type).pipe(
           catchError(error => {
             console.error('Error fetching data from', url, error);
@@ -244,19 +223,26 @@ export class EditRoomComponent implements OnInit {
         )
       )
     ).subscribe({
-      next: (res:any) => {
-                    if (res && res.status === 1) {
-              let getRoomData = JSON.parse(this.getRoomList);
-              getRoomData[res.response.type].imageList.push({
-                name: res.response.name,
-                location: res.response.location
+      next: (res: any) => {
+        if (res && res.status === 1) {
+          let getRoomData = this.myRoomImageList.map((data: any) => {
+            if (data[res.response.type]) {
+              data[res.response.type].imageList = data[res.response.type].imageList.map((images: any) => {
+                if (images.imageType !== 'existing' && images.name === res.response.name) {
+                  images.location = res.response.location
+                }
+                return images;
               });
-              this.progressBarValue = this.progressBarValue+getProgressBarValue;
-              this.getRoomList = JSON.stringify(getRoomData);
-             
+              return data;
             } else {
-            //  reject();
+              return data;
             }
+          })
+          this.myRoomImageList = getRoomData;
+
+        } else {
+          //  reject();
+        }
       },
       error: (err) => {
         console.error('An error occurred:', err);
@@ -266,25 +252,36 @@ export class EditRoomComponent implements OnInit {
       }
     });
   }
-  
+
 
   saveDetails() {
+    let getFinalRoomImages: any = {};
+    this.myRoomImageList.forEach((data: any, index: number) => {
+      let getCategoryName = Object.keys(data)?.[0] || '';
+      getFinalRoomImages[getCategoryName] = {};
+      let getTrimmedPath = data[getCategoryName].imageList?.map((imageDetails: any) => {
+        delete imageDetails.imagePath;
+        return imageDetails;
+      })
+      getFinalRoomImages[getCategoryName]['imageList'] = getTrimmedPath || [];
+    })
+    this.getRoomList = JSON.stringify(getFinalRoomImages);
     let roomDetails = {
       hotelid: this.hotelId,
       ...this.firstFormGroup.value,
-      addImages:this.addImages,
+      addImages: this.addImages,
       coverImage: this.logo,
       room_facilities: this.facilities,
       updatedRoomImages: this.getRoomList
     };
-    this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res:any) => {
-     // console.log(res);
-      if(res && res.status === 1) {
+    this._roomsService.updateRoomService(roomDetails, this.roomid).subscribe((res: any) => {
+      if (res && res.status === 1) {
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
             popupText: 'Room updated successfully',
           },
         });
+        this.progressBarValue = 0;
         this._route.navigate(['/hotels'], { queryParams: { id: this.hotelId } });
         dialogRef.afterClosed().subscribe(() => {
         });
@@ -316,74 +313,73 @@ export class EditRoomComponent implements OnInit {
     }
   }
   removeItem(category: any) {
-    if (category === 'adults' && this.adults!=0) {
+    if (category === 'adults' && this.adults != 0) {
       this.adults--;
     } else {
-      if(this.childrens!=0){
+      if (this.childrens != 0) {
         this.childrens--;
       }
     }
   }
-  goToLink(routerLink:string){
+  goToLink(routerLink: string) {
     this._route.navigate([routerLink]);
   }
-  roomImageFileChange(index:number,event:any){
+  roomImageFileChange(index: number, event: any) {
     let fileList = event.target.files;
-    let modifiedList = this.pushToFileList(index,fileList);
+    let modifiedList = this.pushToFileList(index, fileList);
     this.addImages[index].fileUpload = modifiedList[0].fileList;
-    for(let i=0;i<modifiedList.length;i++){
+    for (let i = 0; i < modifiedList.length; i++) {
       let reader = new FileReader();
       this.myRoomImageCheck = true;
       reader.onload = e => {
-        if(this.addImages[index].fileList){
+        if (this.addImages[index].fileList) {
           this.addImages[index].fileList.push(reader.result);
         }
-        else{
+        else {
           this.addImages[index].fileList = [];
           this.addImages[index].fileList.push(reader.result);
         }
       };
       reader.readAsDataURL(fileList[i]);
     }
-   // console.log(this.addImages[index]);
   }
-  removeImage(index:number){
-    this.removeAt(this.addImages,index);
+  removeImage(index: number) {
+    this.removeAt(this.addImages, index);
   }
-  removeAt(ArrayList:any[],key:any){
+  removeAt(ArrayList: any[], key: any) {
     ArrayList.splice(key, 1);
   }
-  addImageWithType(){
-    this.addImages.push({type:'',files:[]});
+  addImageWithType() {
+    this.addImages.push({ type: '', files: [] });
   }
-  updateRoomImageFiles(index:any,event:any){
-  //  console.log(this.addImages[index]);
+  updateRoomImageFiles(index: any, event: any) {
+    //  console.log(this.addImages[index]);
   }
-  pushToFileList(index:number,fileList:any){
-    if(!this.roomList[index] || this.roomList[index].fileList.length==0){
-      this.roomList[index] = {fileList:[]};
+  pushToFileList(index: number, fileList: any) {
+    if (!this.roomList[index] || this.roomList[index].fileList.length == 0) {
+      this.roomList[index] = { fileList: [] };
       this.roomList[index].fileList.push(fileList[0]);
-    }else{
-      for(let i=0;i<fileList.length;i++){
-        let checkExist = this.roomList[index].fileList.filter((item:any)=>item.name==fileList[i].name && item.size);
-        if(checkExist.length==0){
+    } else {
+      for (let i = 0; i < fileList.length; i++) {
+        let checkExist = this.roomList[index].fileList.filter((item: any) => item.name == fileList[i].name && item.size);
+        if (checkExist.length == 0) {
           this.roomList[index].fileList.push(fileList[i]);
         }
       }
     }
     return this.roomList;
   }
-  addImagetoIndex(i:number,event:any,f:any){
+  addImagetoIndex(i: number, event: any, f: any) {
     f.click();
   }
-  coverFileChange(event:any){
+  coverFileChange(event: any) {
     var reader = new FileReader();
     this.myCoverImageCheck = true;
     reader.onload = e => this.coverImage = reader.result;
     this.logo = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
   }
-  clearSelectedFile(){
+  clearSelectedFile() {
     this.myCoverImage.nativeElement.value = '';
     this.myCoverImageCheck = false;
   }
@@ -406,9 +402,7 @@ export class EditRoomComponent implements OnInit {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.facilities.push(event.option.viewValue);
-    // this.fruitInput?.nativeElement.value = '';
     this.facilityCtrl.setValue(null);
-   // console.log(this.facilities, '---facility---')
   }
 
   private _filter(value: string): string[] {
@@ -416,17 +410,17 @@ export class EditRoomComponent implements OnInit {
     return this.roomFacilitiesList.filter(facility => facility.toLowerCase().includes(filterValue));
   }
 
-  removeRoomImage(categoryName:string, categoryIndex:number, index:number) {
-    let getImageList = this.myRoomImageList[categoryIndex][categoryName].imageList ||[];
-   // this.myRoomImageList[categoryIndex][categoryName].imageList = 
-    let getFilterImage = getImageList.filter((details:any, indexNumber:number) => indexNumber !== index);
+  removeRoomImage(categoryName: string, categoryIndex: number, index: number) {
+    let getImageList = this.myRoomImageList[categoryIndex][categoryName].imageList || [];
+    let getFilterImage = getImageList.filter((details: any, indexNumber: number) => indexNumber !== index);
     this.myRoomImageList[categoryIndex][categoryName].imageList = getFilterImage;
     let updateRoomList = JSON.parse(this.getRoomList);
     updateRoomList[categoryName].imageList = getFilterImage;
     this.getRoomList = JSON.stringify(updateRoomList);
+    console.log(this.myRoomImageList);
   }
 
-  updateRoomImage(categoryName:string, index:number, event:any) {
+  updateRoomImage(categoryName: string, index: number, event: any) {
     var reader = new FileReader();
     reader.onload = e => {
       this.myRoomImageList[index][categoryName].imageList.push({
@@ -434,20 +428,17 @@ export class EditRoomComponent implements OnInit {
         name: event.target.files[0].name,
         'imagePath': reader.result || ''
       });
-   //   this.getRoomList = JSON.stringify(this.myRoomImageList);
-      if(this.addImages[index]){
+      if (this.addImages[index]) {
         this.addImages[index].fileUpload.push(event.target.files[0]);
         this.addImages[index].fileList.push(reader.result);
       } else {
-        this.addImages.push({type: '', fileList: [], fileUpload: []});
+        this.addImages.push({ type: '', fileList: [], fileUpload: [] });
         this.addImages[index].fileList.push(reader.result);
         this.addImages[index].fileUpload.push(event.target.files[0]);
         this.addImages[index].type = categoryName;
       }
     }
     reader.readAsDataURL(event.target.files[0]);
-
-   // console.log(categoryName, event.target.files, this.myRoomImageList[index][categoryName].imageList);   
   }
 
 }

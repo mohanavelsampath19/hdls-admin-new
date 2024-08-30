@@ -402,6 +402,7 @@ table tr th {
   display: flex;
   gap: 20px;
   margin-top: 20px;
+  flex-wrap: wrap;
   .myRoomImage-item {
       width: 100px;
       background: #fff;
