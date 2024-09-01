@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://cloud.tribeloyalty.my/',
-  imageUrl: 'http://cloud.tribeloyalty.my/upload',
+  baseUrl: 'https://cloud.tribeloyalty.my/',
+  imageUrl: 'https://cloud.tribeloyalty.my/upload',
   socketUrl: '',
   firebase:{
     apiKey: "AIzaSyAWVqEisgsNdryoP_57ijROoaf5kdJyZmU",
