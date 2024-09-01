@@ -103,7 +103,6 @@ export class InventoryComponent implements OnInit {
         getCategory = 1;
         break;
     }
-    console.log(getCategory, this.selectedCategory)
     this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
       res.response && res.response.forEach((property:any)=>{
         property.logo = environment.imageUrl+"/"+property.logo;
@@ -129,13 +128,6 @@ export class InventoryComponent implements OnInit {
   updateImage() {
     this.dataSource = new MatTableDataSource(this.totalInventoryList);
   }
-
-  // changePage(e: any) {
-  //   console.log(e);
-  //   this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
-  //   this.pageSize = e.pageSize;
-  //   this.getPropertyList();
-  // }
 
   getDateRange(daterange: any) {
     if (
@@ -211,9 +203,6 @@ export class InventoryComponent implements OnInit {
     this._router.navigate(['/hotels'], { queryParams: { id: id } });
   }
   initializeHotelList(){
-    // this._inventoryService.currentInventory.subscribe((currentInventory)=>{
-    //   console.log(currentInventory);
-    // });
     this._inventoryService.getInventoryList().subscribe((res:any)=> {
       res.response.forEach((property:any)=>{
         property.logo = environment.imageUrl+"/"+property.logo;

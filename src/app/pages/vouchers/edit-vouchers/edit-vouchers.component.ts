@@ -64,7 +64,6 @@ export class EditVouchersComponent implements OnInit {
      private _activateRoute: ActivatedRoute) {
     this._roomService.getRoomList().subscribe((roomRes:any)=>{
       this.myRoomList = roomRes.response;
-      console.log(this.myRoomList);
     });
     this._vouchers.getVouchers().subscribe((vouchersRes:any) => {
       this.existingVoucherList = vouchersRes.response;
@@ -79,7 +78,6 @@ export class EditVouchersComponent implements OnInit {
     this._activateRoute.params.subscribe((param:any)=>{
     let id = param?.id;
     this._vouchers.getVoucherDetails(parseInt(id)).subscribe((res:any) => {
-      console.log(res.response);
       if(res && res.response) {
         let groupingValue = res && res.response && res.response.grouping ? res.response.grouping.split(",").map((res:any) => parseInt(res)) : [];
         this.newVoucherForm.patchValue({
@@ -168,7 +166,6 @@ export class EditVouchersComponent implements OnInit {
     });
   }
   inventoryChange(e:any){
-    console.log(e);
     this.currentProperty = e.value;
     this.getFacilityDetails(e.value);
     this._roomService.getRoomList(e.value).subscribe((roomRes:any)=>{
@@ -191,7 +188,6 @@ export class EditVouchersComponent implements OnInit {
       },
     });
     voucherDialogRef.afterClosed().subscribe((closeRes:any)=>{
-      console.log(closeRes);
       if(closeRes?.status == 'added successfully'){
         this.dayPercentList = [...closeRes?.voucherDays];
       }

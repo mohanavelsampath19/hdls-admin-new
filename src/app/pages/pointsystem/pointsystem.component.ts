@@ -115,7 +115,6 @@ export class PointsystemComponent implements OnInit {
   }
 
   changePage(e: any) {
-    console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
     this.getPropertyList();

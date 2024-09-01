@@ -81,7 +81,6 @@ export class AddRoomComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.roomPrice, '---room price ---', this.coverImage);
   }
 
   ngOnInit() {
@@ -257,12 +256,11 @@ export class AddRoomComponent implements OnInit {
       };
       reader.readAsDataURL(fileList[i]);
     }
-    console.log(this.addImages[index], this.myRoomImageCheck);
+   
   }
   removeImage(index:number){
     this.removeAt(this.addImages,index);
     if(this.addImages.length === 0) { this.myRoomImageCheck = false }
-    console.log(this.addImages[index], this.myRoomImageCheck);
   }
   removeAt(ArrayList:any[],key:any){
     ArrayList.splice(key, 1);
@@ -271,7 +269,6 @@ export class AddRoomComponent implements OnInit {
     this.addImages.push({type:'',files:[]});
   }
   updateRoomImageFiles(index:any,event:any){
-    console.log(this.addImages[index]);
   }
   pushToFileList(index:number,fileList:any){
     if(!this.roomList[index] || this.roomList[index].fileList.length==0){
@@ -292,7 +289,6 @@ export class AddRoomComponent implements OnInit {
   }
 
   coverFileChange(event:any){
-    console.log(this.firstFormGroup.valid, this.firstFormGroup.value)
     var reader = new FileReader();
     this.myCoverImageCheck = true;
     reader.onload = e => this.coverImage = reader.result;
@@ -321,7 +317,6 @@ export class AddRoomComponent implements OnInit {
     this.facilities.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
     this.facilityCtrl.setValue(null);
-  //  console.log(this.facilities, '---facility---')
   }
 
   private _filter(value: string): string[] {

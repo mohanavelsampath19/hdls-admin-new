@@ -99,7 +99,6 @@ export class EditRoomComponent implements OnInit {
   }
 
   ngOnChanges() {
-    // console.log(this.roomPrice, '---room price ---');
   }
 
   ngOnInit() {
@@ -159,12 +158,10 @@ export class EditRoomComponent implements OnInit {
           this.progressBarValue = 20;
           break;
         case 2:
-          //    console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 40;
           break;
         case 3:
-          //      console.log(this.firstFormGroup);
           this.currentStep = stepno;
           this.progressBarValue = 60;
 
@@ -353,7 +350,6 @@ export class EditRoomComponent implements OnInit {
     this.addImages.push({ type: '', files: [] });
   }
   updateRoomImageFiles(index: any, event: any) {
-    //  console.log(this.addImages[index]);
   }
   pushToFileList(index: number, fileList: any) {
     if (!this.roomList[index] || this.roomList[index].fileList.length == 0) {
@@ -417,7 +413,6 @@ export class EditRoomComponent implements OnInit {
     let updateRoomList = JSON.parse(this.getRoomList);
     updateRoomList[categoryName].imageList = getFilterImage;
     this.getRoomList = JSON.stringify(updateRoomList);
-    console.log(this.myRoomImageList);
   }
 
   updateRoomImage(categoryName: string, index: number, event: any) {

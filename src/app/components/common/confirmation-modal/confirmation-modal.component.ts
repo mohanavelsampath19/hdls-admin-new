@@ -12,11 +12,11 @@ export class ConfirmationModalComponent implements OnInit {
   reason:any = '';
   errorMsg:any = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(this.data);
+   
   }
 
   ngOnInit(): void {
-    console.log(this.reason, '----')
+    
   }
 
   isRejected(status:any) {
@@ -28,7 +28,6 @@ export class ConfirmationModalComponent implements OnInit {
         status: status,
         reason: this.reason
       }
-      console.log(details, '---')
       this.onDelete.emit(details);
     }
   }

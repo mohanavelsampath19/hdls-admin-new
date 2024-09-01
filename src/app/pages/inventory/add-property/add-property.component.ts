@@ -244,7 +244,7 @@ export class AddPropertyComponent implements OnInit {
   }
 
   saveProperty = () => {
-    console.log(this.firstFormGroup.value);
+   
     if (this.firstFormGroup.value) {
       let { vicinity } = this.firstFormGroup.value.address;
       let property = {
@@ -340,7 +340,6 @@ export class AddPropertyComponent implements OnInit {
 
 
   onAutocompleteSelected(result: any) {
-    console.log('onAutocompleteSelected: ', result);
     let country = this.getRegionName('country', result.address_components);
     let state = this.getRegionName("administrative_area_level_1", result.address_components);
     let city = this.getRegionName("locality", result.address_components);
@@ -348,7 +347,6 @@ export class AddPropertyComponent implements OnInit {
   }
 
   onLocationSelected(location: any) {
-    console.log('onLocationSelected: ', location);
     this.latitude = location.latitude;
     this.longitude = location.longitude;
   }
@@ -389,7 +387,7 @@ export class AddPropertyComponent implements OnInit {
       };
       reader.readAsDataURL(fileList[i]);
     }
-    console.log(this.addImages[index]);
+   
   }
 
   pushToFileList(index: number, fileList: any) {
@@ -459,7 +457,6 @@ export class AddPropertyComponent implements OnInit {
     this.facilities.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
     this.facilityCtrl.setValue(null);
-    console.log(this.facilities, '---facility---')
   }
 
   private _filter(value: string): string[] {

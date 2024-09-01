@@ -11,7 +11,7 @@ export class InfoPopupComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    //console.log(this.data, '-- data --');
+   
   }
   closeModalPopup() {
     this.closePopup.emit();

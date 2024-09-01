@@ -43,7 +43,6 @@ export class SignupComponent implements OnInit {
     return this.signupForm.get('referenceCode');
   }
   submitForm(){
-    console.log(this.signupForm.value);
     this._loginService.signupUser({...this.signupForm.value}).subscribe((apiRes:any)=>{
       if(apiRes.status == 0){
         this._routing.navigate(['/success']);
@@ -54,7 +53,6 @@ export class SignupComponent implements OnInit {
           },
         });
       }else{
-        console.log(apiRes);
         const dialogRef = this._dialog.open(InfoPopupComponent, {
           data: {
             popupText: `Issue with API. Please try again later.`,

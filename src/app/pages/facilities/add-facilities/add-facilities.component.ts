@@ -40,7 +40,6 @@ export class AddFacilitiesComponent implements OnInit {
   }
   saveFacility(){
     this._facilityService.addFacility({...this.newFacility.value,logo:this.logo}).subscribe((facilityRes:any)=>{
-      console.log(facilityRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
           popupText: 'Facility created successfully',
