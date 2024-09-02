@@ -242,7 +242,7 @@ export class AddRoomComponent implements OnInit {
   roomImageFileChange(index:number,event:any){
     let fileList = event.target.files;
     let modifiedList = this.pushToFileList(index,fileList);
-    this.addImages[index].fileUpload = modifiedList[0].fileList;
+    this.addImages[index].fileUpload = modifiedList[index].fileList;
     for(let i=0;i<modifiedList.length;i++){
       let reader = new FileReader();
       this.myRoomImageCheck = true;
@@ -268,7 +268,7 @@ export class AddRoomComponent implements OnInit {
     ArrayList.splice(key, 1);
   }
   addImageWithType(){
-    this.addImages.push({type:'',files:[]});
+    this.addImages.push({type:'',files:''});
   }
   updateRoomImageFiles(index:any,event:any){
     console.log(this.addImages[index]);
