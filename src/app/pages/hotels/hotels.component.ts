@@ -121,7 +121,6 @@ export class HotelsComponent implements OnInit {
   }
 
   changePage(e: any) {
-    console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
     this.getPropertyList();
@@ -180,7 +179,6 @@ export class HotelsComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((data:any) => {
-        console.log(data);
         if(data === true){
           this._roomService.deleteRoom(room_id).subscribe((res:any) => {
             if(res.status === 0) {

@@ -17,7 +17,6 @@ export class UsersComponent implements OnInit {
   paginator: MatPaginator | undefined;
   constructor(private _reportService:ReportsService) { 
     this._reportService.getUserList().subscribe((userList:any)=>{
-      console.log(userList);
       this.dataSource = new MatTableDataSource( userList.response);
       this.dataSource.paginator = this.paginator;
       this.resultsLength = userList.response.length;

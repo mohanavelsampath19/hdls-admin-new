@@ -18,7 +18,6 @@ export class LandingpageComponent implements OnInit {
       this._router.navigate(['login'])
     }
     channel4Broadcast.onmessage = (event) => {
-      console.log(event.data);
       channel5Broadcast.postMessage(event.data);
       if(event.data.payload){
         this.openScanPopup(event.data.payload);  
@@ -38,30 +37,26 @@ export class LandingpageComponent implements OnInit {
     ).then(
        (currentToken) => {
          if (currentToken) {
-           console.log("Hurraaa!!! we got the token.....");
+          
            let userid =JSON.parse(localStorage.getItem('loginRes') || '{}').loginRes.userid;
-           console.log(currentToken);
+           
            this._loginService.updateToken(userid,currentToken).subscribe((tokenServiceRes:any)=>{
-            console.log("Token updated",tokenServiceRes);
+            
            });
          } else {
-           console.log('No registration token available. Request permission to generate one.');
            alert("You need to enable notification permission to get the live notification");
          }
      }).catch((err) => {
         alert("You need to enable notification permission to get the live notification");
-        console.log('An error occurred while retrieving token. ', err);
     });
   }
   listen() {
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
-      console.log('Message received. ', payload);
       this.openScanPopup(payload.data);
     });
   }
   sideBarToggler() {
-    console.log("Checked",this.sideBarOpen)
     this.sideBarOpen = !this.sideBarOpen;
   }
   goToLink(routeObj:any){

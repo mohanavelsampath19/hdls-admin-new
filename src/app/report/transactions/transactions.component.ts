@@ -17,7 +17,6 @@ export class TransactionsComponent implements OnInit {
   paginator: MatPaginator | undefined;
   constructor(private _reportService:ReportsService) { 
     this._reportService.getTransactionDetails().subscribe((userList:any)=>{
-      console.log(userList);
       this.dataSource = new MatTableDataSource( userList.response);
       this.dataSource.paginator = this.paginator;
       this.resultsLength = userList.response.length;
@@ -28,7 +27,6 @@ export class TransactionsComponent implements OnInit {
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue)
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   pageChanged(event:any){

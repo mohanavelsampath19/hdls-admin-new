@@ -29,7 +29,7 @@ export class PointsComponent implements OnInit {
       (res: any) => {
         if (res && res.status === 1) {
           this.isLoading = false;
-          console.log(res);
+         
           this.pointDetails = res.response;
         } else {
           console.log('Please try again', res);
@@ -42,10 +42,8 @@ export class PointsComponent implements OnInit {
   }
   editDetails(event: any, index: number) {
     event?.preventDefault();
-    console.log(event);
 
     this.pointDetails[index].edit = true;
-    console.log(this.pointDetails[index].edit);
     this.editPointDetailsForm.patchValue({
       pointId: this.pointDetails[index].pointsid,
       point_multiplier: this.pointDetails[index].point_multiplier,
@@ -57,12 +55,6 @@ export class PointsComponent implements OnInit {
     event?.preventDefault();
     const { pointId, point_multiplier, isActive } =
       this.editPointDetailsForm.value;
-    console.log(
-      this.editPointDetailsForm.value,
-      pointId,
-      point_multiplier,
-      isActive
-    );
     this.pointDetails[index].edit = false;
     this.isLoading = true;
     this._pointService

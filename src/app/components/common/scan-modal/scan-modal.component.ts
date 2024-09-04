@@ -20,7 +20,6 @@ export class ScanModalComponent implements OnInit {
   }
   updateCheckIn(bookingId:number){
     this._bookingService.changeBookingStatus(bookingId,3).subscribe((bookingUpdate:any)=>{
-      console.log(bookingUpdate);
     });
     this.bookingInfoList = [...this.bookingInfoList].filter((bookingItem:any)=>{
       return bookingItem.bookingid != bookingId

@@ -119,7 +119,6 @@ export class VouchersComponent implements OnInit {
   }
 
   changePage(e: any) {
-    console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
     this.getPropertyList();
@@ -159,7 +158,6 @@ export class VouchersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   };
   deleteVouchers(voucher_id: number, vouchertitle: string) {
-    console.log(voucher_id, '---')
     const dialogRef = this._dialog.open(DeleteModalComponent, {
       data: {
         productName: vouchertitle,
@@ -169,10 +167,8 @@ export class VouchersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((data: any) => {
-      console.log(data);
       if (data === true) {
         this._membershipService.deleteVouchers(voucher_id).subscribe((deleteRes: any) => {
-          //  console.log(deleteRes);
           this.getPropertyList();
         })
       }

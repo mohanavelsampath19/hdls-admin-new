@@ -101,7 +101,6 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   createProduct = () => {
-   // console.log(this.firstFormGroup, '-----')
   };
 
   saveProperty = () => {
@@ -109,7 +108,6 @@ export class AddRestaurantComponent implements OnInit {
       ...this.firstFormGroup.value,
       logo:this.logo,
     };
-    console.log(property);
     // this._inventoryService.addProperty(property)
     // .subscribe((res:any) => {
     //   if(res && res.status === 1) {
@@ -151,7 +149,7 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.firstFormGroup, '-----')
+  
   }
 }
 

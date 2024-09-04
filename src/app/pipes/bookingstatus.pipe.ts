@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class BookingstatusPipe implements PipeTransform {
 
   transform(value: unknown, ...args: unknown[]): unknown {
-    console.log(value)
     let result = '';
     switch(value){
       case 0:

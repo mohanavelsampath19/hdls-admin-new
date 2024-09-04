@@ -38,7 +38,6 @@ export class EditMembershipComponent implements OnInit {
 
     this._activatedRoute.params.subscribe((param:any)=>{
       this._membership.getAllMembership(param.id).subscribe((membershipDetails:any)=>{
-        console.log(membershipDetails);
         this.membershipDetail = membershipDetails.membership_tiers || {};
         this.getBase64(this.membershipDetail.image_url);
         this._inventory.getInventoryList().subscribe((inventoryList:any)=>{
@@ -80,7 +79,6 @@ export class EditMembershipComponent implements OnInit {
     this._route.navigate(['/membership']);
   }
   changeMembership(event:any){
-    console.log(event);
     this.vouchersList = this.allVoucherList.filter((voucher:any)=>{return voucher.hotelid==event.value});
   }
   fileChangeEvent(event: any): void {
@@ -109,7 +107,6 @@ export class EditMembershipComponent implements OnInit {
       if (this.status == 200) {
         //Get a blob objects
         var blob = this.response;
-        console.log("blob", blob)
         //  Essential
         let oFileReader = new FileReader();
         oFileReader.onloadend = function (e) {

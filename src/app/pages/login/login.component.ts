@@ -110,7 +110,6 @@ export class LoginComponent implements OnInit {
             }
           },
           (error) => {
-            console.log(error);
             this.showMessage = true;
             this.loading = false;
             this.openMessage('Login unsuccessful', 'error');

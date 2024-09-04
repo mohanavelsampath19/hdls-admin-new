@@ -52,7 +52,6 @@ export class EditFacilitiesComponent implements OnInit {
   }
   saveFacility(){
     this._facilityService.updateFacility({...this.editFacility.value,logo:this.logo,facilityId:this.facilityDetail.id}).subscribe((facilityRes:any)=>{
-      console.log(facilityRes);
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
           popupText: 'Facility updated successfully',

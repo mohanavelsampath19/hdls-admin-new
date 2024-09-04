@@ -148,7 +148,6 @@ export class FacilitiesComponent implements OnInit {
   }
 
   changePage(e: any) {
-    console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
     this.getFacilityList();
@@ -163,7 +162,6 @@ export class FacilitiesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((desc:any) => {
       if(desc === true){
         this._facilityService.deleteFacility(deleteItem.id).subscribe((deleteRes:any)=>{
-          console.log(deleteRes);
           this.getFacilityList();
         })
       }

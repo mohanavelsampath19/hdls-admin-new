@@ -52,9 +52,8 @@ export class AddMembershipComponent implements OnInit {
     reader.readAsDataURL(event.target.files[0]);
   }
   savemembership(){
-    console.log(this.newMembership.valid, this.newMembership.value)
     this._membership.addMembership({...this.newMembership.value,image_url:this.base64String}).subscribe((membershipRes:any)=>{
-      console.log(membershipRes);
+     
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
           popupText: 'Membership created successfully',
@@ -69,7 +68,6 @@ export class AddMembershipComponent implements OnInit {
     this._route.navigate(['/membership']);
   }
   changeMembership(event:any){
-    console.log(event);
     this.vouchersList = this.allVoucherList.filter((voucher:any)=>{return voucher.hotelid==event.value});
   }
   fileChangeEvent(event: any): void {
