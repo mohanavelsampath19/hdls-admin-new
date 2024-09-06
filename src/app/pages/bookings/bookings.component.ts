@@ -39,6 +39,7 @@ export class BookingsComponent implements OnInit {
     'property_id',
     'room_type',
     'customername',
+    'specialrequest',
     'amount',
     'hotel_confirmation_number',
     'remarks',

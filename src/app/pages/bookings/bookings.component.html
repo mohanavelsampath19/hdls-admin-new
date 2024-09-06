@@ -110,6 +110,15 @@
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
+        <ng-container matColumnDef="specialrequest">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Special Request</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.specialrequest || '-'}}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="amount">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
           <td mat-cell *matCellDef="let element">
