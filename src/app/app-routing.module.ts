@@ -24,6 +24,7 @@ import { TermsComponent } from './pages/web/terms/terms.component';
 import { SuccessComponent } from './pages/web/success/success.component';
 import { PointsTableComponent } from './components/common/points-table/points-table.component';
 import { TierpointsComponent } from './pages/tierpoints/tierpoints.component';
+import { PointsexplanationComponent } from './pages/pointsexplanation/pointsexplanation.component';
 
 
 const routes: Routes = [
@@ -133,9 +134,13 @@ const routes: Routes = [
             component:TransactionsComponent
           }
         ]
+      },
+      {
+        path: 'pointsexplanation',
+        component: PointsexplanationComponent
       }
     ],
-  },
+  }
 ];
 
 @NgModule({
