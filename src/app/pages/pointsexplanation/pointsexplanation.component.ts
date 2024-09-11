@@ -7,6 +7,8 @@ import { Loading } from 'src/app/services/utilities/helper_models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { FormGroup, FormControl } from '@angular/forms';
+import { PointService } from 'src/app/services/points/point.service';
 
 @Component({
   selector: 'app-pointsexplanation',
@@ -14,179 +16,106 @@ import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-po
   styleUrls: ['./pointsexplanation.component.scss']
 })
 export class PointsexplanationComponent implements OnInit {
-
-  getSearchValue:string = '';
-  selectedCategory: string = 'all';
-  memberShipFilters: any = {
-    categoryCounts: {
-      live: '',
-      in_active: '',
-      draft: '',
-      deleted: '',
-    },
-    membershipList: [],
-  };
-  totalMembershipList: Array<MemberShip> = [];
-  skeletonList: Array<Loading> = [
-    { isLoading: true },
-    { isLoading: true },
-    { isLoading: true },
-    { isLoading: true },
-  ];
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-
-  // @ViewChild(MatSort) sort: MatSort;
+  pointDetails: any = [];
+  editUserDetails: boolean = false;
+  isLoading:boolean = false;
+  editPointDetailsForm = new FormGroup({
+    pointId: new FormControl(),
+    point_multiplier: new FormControl(),
+    isActive: new FormControl(),
+    edit: new FormControl(false),
+  });
+  mytransactionList:any = [];
   displayedColumns: string[] = [
-    'guest_spend',
-    'median_commission',
-    'hotel_commission'
+    'sno',
+    'type',
+    'totalamount',
+    'mediancommission',
+    'hoteldebit',
+    'hotelcredit'
   ];
-  dataSource: any = new MatTableDataSource(this.totalMembershipList);
+  dataSource:any = new MatTableDataSource(this.mytransactionList);
   pageSize: number = 5;
   pageOffset: number = 0;
-
-  constructor(private _bookingService: BookingsService, private _dialog: MatDialog) {}
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  medianCommission:number = 0;
+  debitMultiplier:number = 0 ;
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private _pointService: PointService) {}
 
   ngOnInit(): void {
+    this.getPointDetails();
     this.getBookingHistory();
   }
 
-  getSelectedFilter = (value: string) => {
-    this.selectedCategory = value;
-    this.pageSize = 5;
-    this.pageOffset = 0;
-    this.getBookingHistory();
-  };
-
-  getSearchInput(searchValue: any) {
-    let searchText = searchValue.toLowerCase();
-    if (searchText === '') {
-      this.dataSource = new MatTableDataSource(this.totalMembershipList);
-    } else {
-      let filteredResults;
-      filteredResults = this.totalMembershipList.filter((list) => {
-        let getValues = Object.values(list).toString().toLowerCase();
-        return getValues.includes(searchText);
-      });
-      this.dataSource = new MatTableDataSource(filteredResults);
-    }
-  }
-
-  getBookingHistory() {
-    this.onFirstLoad();
-    let getCategory = 1;
-    switch (this.selectedCategory) {
-      case 'live':
-        getCategory = 1;
-        break;
-      case 'rejected':
-        getCategory = 2;
-        break;
-      case 'all':
-        getCategory = 3;
-        break;
-      case 'cancelled':
-        getCategory = 4;
-        break;
-      default:
-        getCategory = 3;
-        break;
-    }
-
-    this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
-      this.dataSource = new MatTableDataSource(res.response.bookingHistory);
-       this.dataSource.paginator = this.paginator;
-    })
-  }
-
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  // }
-
-  onFirstLoad() {
-    this.dataSource = new MatTableDataSource(this.skeletonList);
-    // this.dataSource.paginator = this.paginator;
-  }
-
-  updateImage() {
-    this.dataSource = new MatTableDataSource(this.totalMembershipList);
-  }
-
-  changePage(e: any) {
-    console.log(e);
-    this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
-    this.pageSize = e.pageSize;
-    this.getBookingHistory();
-  }
-
-  getDateRange(daterange: any) {
-    if (
-      daterange.start === 'Invalid date' &&
-      daterange.end === 'Invalid date'
-    ) {
-      // this.getProductList();
-    } else if (daterange.start !== '' && daterange.end !== '') {
-      // let myTenantObj = JSON.parse(
-      //   localStorage.getItem('tenant_details') || ''
-      // );
-      // let tenant_id = myTenantObj.tenant_id;
-      // this.tenantService
-      //   .getProductsSearchByDate(daterange.start, daterange.end, tenant_id)
-      //   .subscribe((res: any) => {
-      //     if (res && res.status === 1) {
-      //       this.totalProductList = res.products;
-      //       this.dataSource = new MatTableDataSource(this.totalProductList);
-      //     }
-      //   });
-    }
-  }
-
-  openDeleteDialog(event: Event, deleteid: any,bookingStatus:number) {
-    event.preventDefault();
-    const dialogRef = this._dialog.open(ConfirmationModalComponent, {data:{bookingStatus:bookingStatus}});
-    const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
-      (data) => {
-        this._dialog.closeAll();
-        if (data.status) {
-          let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 4;
-          this._bookingService.changeBookingStatus(deleteid, status, data.reason).subscribe((res:any)=> {
-            if(res && res.status === 1) {
-              const dialogRef = this._dialog.open(InfoPopupComponent, {
-                data: {
-                  popupText: 'Booking status updated successfully',
-                },
-              });
-              this.getBookingHistory();
-              dialogRef.afterClosed().subscribe(() => {
-              });
-            } else {
-              const dialogRef = this._dialog.open(InfoPopupComponent, {
-                data: {
-                  popupText: 'Please try again later',
-                },
-              });
-              dialogRef.afterClosed().subscribe(() => {
-              });
-            }
-          })
+  getPointDetails() {
+    this.isLoading = true;
+    this._pointService.getPointDetails(2, 2).subscribe(
+      (res: any) => {
+        if (res && res.status === 1) {
+          this.isLoading = false;
+          console.log(res);
+          this.pointDetails = res.response;
+          this.medianCommission = this.pointDetails[8].point_multiplier * 0.01;
+          this.debitMultiplier = this.pointDetails[1].point_multiplier;
+        } else {
+          console.log('Please try again', res);
         }
+      },
+      (error) => {
+        console.log(error, ' API error');
       }
     );
-    dialogRef.afterClosed().subscribe(() => {
-      getDialogRef.unsubscribe();
+  }
+  editDetails(event: any, index: number) {
+    event?.preventDefault();
+    console.log(event);
+
+    this.pointDetails[index].edit = true;
+    console.log(this.pointDetails[index].edit);
+    this.editPointDetailsForm.patchValue({
+      pointId: this.pointDetails[index].pointsid,
+      point_multiplier: this.pointDetails[index].point_multiplier,
+      isActive: this.pointDetails[index].isactive,
     });
   }
 
-  getSearchDetails = (event: Event) => {
-    event.preventDefault();
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  };
+  updateDetails(event: any, index: number) {
+    event?.preventDefault();
+    const { pointId, point_multiplier, isActive } =
+      this.editPointDetailsForm.value;
+    console.log(
+      this.editPointDetailsForm.value,
+      pointId,
+      point_multiplier,
+      isActive
+    );
+    this.pointDetails[index].edit = false;
+    this.isLoading = true;
+    this._pointService
+      .updatePointMultiplier(pointId, point_multiplier)
+      .subscribe(
+        (res: any) => {
+          if (res && res.status === 1) {
+            this.getPointDetails();
+          } else {
+            console.log('Please try again', res);
+          }
+        },
+        (error) => {
+          console.log(error, ' API error');
+        }
+      );
+  }
+  getBookingHistory() {
 
-  setSearchValue = (event: Event) => {
-    event.preventDefault();
-    const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-  };
+    this._bookingService.getBookingHistory(4).subscribe((res:any) => {
+      res.response.bookingHistory.forEach((element:any) => {
+        element.amount = parseInt(element.amount);
+      });
+      this.dataSource = new MatTableDataSource(res.response.bookingHistory);
+
+       this.dataSource.paginator = this.paginator;
+    })
+  }
 }
 

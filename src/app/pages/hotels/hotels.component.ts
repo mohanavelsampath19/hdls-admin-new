@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { DeleteModalComponent } from 'src/app/components/common/delete-modal/delete-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { RoomScheduleComponent } from 'src/app/components/common/room-schedule/room-schedule.component';
 
 @Component({
   selector: 'app-hotels',
@@ -37,6 +38,7 @@ export class HotelsComponent implements OnInit {
     'price',
     'quantity',
     'status',
+    'availability',
     'action'
   ];
   dataSource:any = new MatTableDataSource(this.totalHotelsList);
@@ -187,6 +189,21 @@ export class HotelsComponent implements OnInit {
               this.getPropertyList();
             }
           })
+        }
+      });
+  }
+  viewSchedule(roomDetail:any){
+
+      const dialogRef = this._dialog.open(RoomScheduleComponent, {
+        data: {...roomDetail},
+        width:'600px',
+        // height:'800px'
+      });
+
+      dialogRef.afterClosed().subscribe((data:any) => {
+        console.log(data);
+        if(data === true){
+          
         }
       });
   }

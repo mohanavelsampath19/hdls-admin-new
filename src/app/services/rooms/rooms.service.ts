@@ -110,4 +110,11 @@ export class RoomsService {
     formData.append('categoryname', categoryname);
     return this._http.post(environment.baseUrl + 'api/rooms/uploadimages', formData);
   }
+  getRoomScheduleList(roomId:number) {
+    return this._http.get(environment.baseUrl + `api/rooms/getroomscheduledetails?roomid=${roomId}`);
+  }
+
+  updateRoomSchedule(roomScheduleDetails:any) {
+    return this._http.post(environment.baseUrl + 'api/rooms/updateroomscheduledetails', {...roomScheduleDetails});
+  }
 }

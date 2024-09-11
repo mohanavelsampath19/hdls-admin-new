@@ -136,7 +136,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'pointsexplanation',
+        path: 'commissiondetails',
         component: PointsexplanationComponent
       }
     ],

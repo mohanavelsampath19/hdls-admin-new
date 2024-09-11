@@ -23,6 +23,8 @@ export class SidenavComponent implements OnInit {
   constructor(private _router: Router, private _inventory: InventoryService) {
     this._inventory.getInventoryList().subscribe((inventoryList: any) => {
       this.inventoryList = inventoryList.response;
+    },(error:any)=>{
+      console.log(error);
     });
   }
   ngOnInit() {}

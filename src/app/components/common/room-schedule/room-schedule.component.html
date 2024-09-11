@@ -1,0 +1,73 @@
+<section id="hdls-membership-container">
+    <h2>{{data.roomtitle}}</h2>
+    <h3 class="room-header">Room availability <div class="room-slider">
+        <mat-slide-toggle [checked]="isAvailable" (change)="changeAvailability()">{{isAvailable == true ? 'Available' :'Unavailable'}} </mat-slide-toggle>
+      </div> </h3>
+    <div class="room-availability-container" *ngIf="isAvailable==false">
+
+     <form [formGroup]="roomavailabilityForm">
+        <div class="availability-form">
+            <mat-form-field color="accent" appearance="fill">
+                <mat-label>From</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="from" name="from" (dateChange)="onFromDateChange()">
+                <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field color="accent" appearance="fill">
+                <mat-label>To</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="to" name="to" [min]="minToDate">
+                <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+              <button mat-mini-fab color="accent" class="save-schedule" [disabled]="roomavailabilityForm.invalid" (click)="saveScheduleDetails()">
+                <mat-icon>plus_one</mat-icon>
+              </button>
+        </div>
+     </form>
+    </div>
+    <div class="room-availability-list-container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="roomScheduleList?.length > 0">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+          
+            <!-- Position Column -->
+            <ng-container matColumnDef="sno">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element;let i=index"> {{i+1}} </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="from">
+              <th mat-header-cell *matHeaderCellDef> From </th>
+              <td mat-cell *matCellDef="let element"> {{element.from | date:'MMM dd, yyyy'}} </td>
+            </ng-container>
+          
+            <!-- Weight Column -->
+            <ng-container matColumnDef="to">
+              <th mat-header-cell *matHeaderCellDef> To </th>
+              <td mat-cell *matCellDef="let element"> {{element.to | date:'MMM dd, yyyy'}} </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let element"> 
+                <div class="btn-actions">
+                    <button mat-mini-fab color="primary" class="save-schedule" (click)="editExistingSchedule(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="accent" class="save-schedule">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>                
+                </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+    </div>
+  </section>

@@ -114,6 +114,8 @@ export class InventoryComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res.response);
       this.dataSource.paginator = this.paginator;
       this.propertyList = res.response;
+    },(error:any)=>{
+      console.log(error);
     })
   }
 
@@ -224,6 +226,8 @@ export class InventoryComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res.response);
       this.dataSource.paginator = this.paginator;
       this.propertyList = res.response;
+    },(error:any)=>{
+      console.log(error);
     })
   }
 

@@ -1,67 +1,46 @@
 <section id="hdls-membership-container">
-    <div class="search-section">
-      <div class="add-product">
-        <form (submit)="setSearchValue($event)" class="hdls-search-field">
-          <input
-            type="text"
-            (change)="getSearchDetails($event)"
-            matInput
-            placeholder="Search"
-          />
-          <span>
-            <a href="#" (click)="setSearchValue($event)">
-              <img src="../../../assets/images/search.png" alt="Search" />
-            </a>
-          </span>
-        </form>
-      </div>
-      <!-- <div class="download-section">
-        <app-hdls-date-range
-          (getDateRange)="getDateRange($event)"
-        ></app-hdls-date-range>
-        <div class="download-button">
-          <a href="#"
-            ><img src="../../../assets/images/download.png" alt="download"
-          /></a>
-        </div>
-      </div> -->
+  <section id="hdls-points-container">
+    <div class="loading-container" *ngIf="isLoading==true">
+      <div class="loader"></div>
     </div>
-    <div id="hdls-membership-list">
-      <div class="category-button">
-        <a
-          id="basic"
-          class="add-button"
-          [ngClass]="{ 'selected-item': selectedCategory === 'all' }"
-          (click)="getSelectedFilter('all')"
-        >
-          All
-        </a>
-        <a
-          id="basic"
-          class="add-button"
-          [ngClass]="{ 'selected-item': selectedCategory === 'live' }"
-          (click)="getSelectedFilter('live')"
-        >
-        Accepted<span><!-- TODO--></span>
-        </a>
-        <a
-          id="basic"
-          class="add-button"
-          [ngClass]="{ 'selected-item': selectedCategory === 'rejected' }"
-          (click)="getSelectedFilter('rejected')"
-        >
-          Rejected<span><!-- TODO--></span>
-        </a>
-        <a
-          id="basic"
-          class="add-button"
-          [ngClass]="{ 'selected-item': selectedCategory === 'cancelled' }"
-          (click)="getSelectedFilter('cancelled')"
-        >
-          Completed<span><!-- TODO--></span>
-        </a>
+      <div class="" *ngIf="pointDetails.length>0">
+        <mat-card class="hdls-points-earning-card card-container">
+          <mat-card-header>
+            <mat-card-title
+              ><h1>{{ pointDetails[8]?.pointsdesc}}</h1></mat-card-title>
+            <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
+          </mat-card-header>
+          <div class="card-image-detail">
+            <img src="../../../assets/images/commission.png" alt="commission" />
+          </div>
+          <mat-card-content class="card-content-container">
+            <form [formGroup]="editPointDetailsForm" >
+              <div class="hdls-points-form-feilds">
+                
+                <div class="point-desc">For Every transactions  <br>=<br> <span *ngIf="!pointDetails[8].edit" > {{ pointDetails[8]?.point_multiplier }}</span>%</div>
+                <input
+                  *ngIf="pointDetails[8].edit"
+                  type="number"
+                  matInput
+                  formControlName="point_multiplier"
+                  min="1" max="99"
+                  maxlength="2"
+                />
+              </div>
+            </form>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>
+              <mat-icon (click)="editDetails($event, 8)">edit</mat-icon>
+            </button>
+            <button mat-button>
+              <mat-icon (click)="updateDetails($event, 8)">save</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
       </div>
-      <div class="hdls-product-list-section">
+    <div class="commission-report-container">
+      <div class="hdls-profit-list-section">
         <!-- <app-search-field></app-search-field> -->
         <table
           mat-table
@@ -69,43 +48,62 @@
           [dataSource]="dataSource"
           matTableExporter
         >
-          <ng-container matColumnDef="guest_spend">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Guest Spend
-            </th>
+          <ng-container matColumnDef="sno">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Reference ID</th>
             <td mat-cell *matCellDef="let element">
-              <p *ngIf="!element.isLoading">
-                {{ element.bookingid }}
+              <p *ngIf="!element.loading">
+                #{{ element.bookingid }}
               </p>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
+              <div *ngIf="element.loading" class="loading-data"></div>
             </td>
           </ng-container>
   
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Type</th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="!element.loading">
+                Room booking
+              </div>
+              <div *ngIf="element.loading" class="loading-data"></div>
+            </td>
+          </ng-container>
   
           <!-- Symbol Column -->
-          <ng-container matColumnDef="median_commission">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Median Commission</th>
+          <ng-container matColumnDef="totalamount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount received</th>
             <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.rooms?.roomtitle }}
+              <div *ngIf="!element.loading">
+                {{ element.amount }}
               </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
+              <div *ngIf="element.loading" class="loading-data"></div>
             </td>
           </ng-container>
-          <ng-container matColumnDef="hotel_commission">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hotel Commission</th>
+  
+          <ng-container matColumnDef="mediancommission">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Median commission
+            </th>
             <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.amount }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
+              {{ element.amount * medianCommission }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="hoteldebit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hotel spend for </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.points * debitMultiplier}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="hotelcredit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Hotel Credit</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.amount - ((element.amount * medianCommission) + (element.points * debitMultiplier))}}
             </td>
           </ng-container>
   
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr
             mat-row
-            *matRowDef="let row; columns: displayedColumns"
+            *matRowDef="let row; columns: displayedColumns;"
             class="hdls-table-row"
           ></tr>
         </table>
@@ -118,10 +116,10 @@
           [pageSizeOptions]="[5, 10, 20]"
           showFirstLastButtons
           aria-label="Select page of periodic elements"
-          (page)="changePage($event)"
+  
         >
         </mat-paginator>
-      </div>
+    </div>
     </div>
   </section>
   
