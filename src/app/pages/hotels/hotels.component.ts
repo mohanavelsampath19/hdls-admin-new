@@ -196,7 +196,7 @@ export class HotelsComponent implements OnInit {
 
       const dialogRef = this._dialog.open(RoomScheduleComponent, {
         data: {...roomDetail},
-        width:'600px',
+        width:'800px',
         // height:'800px'
       });
 

@@ -117,4 +117,8 @@ export class RoomsService {
   updateRoomSchedule(roomScheduleDetails:any) {
     return this._http.post(environment.baseUrl + 'api/rooms/updateroomscheduledetails', {...roomScheduleDetails});
   }
+  deleteRoomSchedule(scheduleId:number) {
+    return this._http.post(environment.baseUrl + 'api/rooms/deleteroomscheduledetails', {scheduleId:scheduleId});
+  }
+
 }

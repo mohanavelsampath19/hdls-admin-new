@@ -21,6 +21,8 @@ export class RoomScheduleComponent implements OnInit {
   displayedColumns: string[] = ['sno', 'from', 'to', 'action'];
   dataSource:any;
   roomScheduleList:any[] = [];
+  isLoading:boolean = false;
+  isErrorMsg:boolean = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,private _roomService:RoomsService) { 
     this.roomsId = this.data.roomsid;
     console.log(data);
@@ -36,11 +38,20 @@ export class RoomScheduleComponent implements OnInit {
     }else{
       this.minToDate = null;
     }
+    if(this.scheduleId==0){
+      this.scheduleCheck();
+    }
+  }
+  onToDateChange(){
+    if(this.scheduleId==0){
+      this.scheduleCheck();
+    }
   }
   changeAvailability(){
     this.isAvailable = !this.isAvailable;
   }
   saveScheduleDetails(){
+    this.isLoading = true;
     let reqPayload = {
       ...this.roomavailabilityForm.value,
       roomid:this.roomsId, existingId:this.scheduleId };
@@ -55,10 +66,19 @@ export class RoomScheduleComponent implements OnInit {
     })
   }
   getRoomScheduleList(){
+    this.isLoading = true;
     this._roomService.getRoomScheduleList(this.data.roomsid).subscribe((apiRes:any)=>{
       console.log(apiRes);
       this.dataSource = new MatTableDataSource([...apiRes.response]);
       this.roomScheduleList = [...apiRes.response];
+      this.isLoading = false;
+    })
+  }
+  deleteRoomScheduleDetails(scheduleId:number){
+    this.isLoading = true;
+    this._roomService.deleteRoomSchedule(scheduleId).subscribe((apiRes:any)=>{
+      console.log(apiRes);
+      this.getRoomScheduleList();
     })
   }
   editExistingSchedule(scheduleDetails:any){
@@ -67,5 +87,22 @@ export class RoomScheduleComponent implements OnInit {
       to:scheduleDetails.to
     });
     this.scheduleId = scheduleDetails.id;
+  }
+  clearScheduleDetails(){
+    this.roomavailabilityForm.reset();
+    this.scheduleId = 0;
+  }
+  scheduleCheck(){
+    this.isErrorMsg = false;
+    let { from,to} = this.roomavailabilityForm.value;
+    for(let i=0;i<this.roomScheduleList.length;i++){
+      let fromCheck = new Date(this.roomScheduleList[i].from).getTime(), toCheck = new Date(this.roomScheduleList[i].to).getTime(), fromVal = new Date(from).getTime(), toVal = new Date(to).getTime();
+      if(fromCheck <= fromVal && toCheck>fromVal){
+        this.isErrorMsg = true;
+      }
+      else if(fromCheck < toVal && toCheck >=toVal){
+        this.isErrorMsg = true;
+      }
+    }
   }
 }

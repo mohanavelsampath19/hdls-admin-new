@@ -16,16 +16,25 @@
               </mat-form-field>
               <mat-form-field color="accent" appearance="fill">
                 <mat-label>To</mat-label>
-                <input matInput [matDatepicker]="picker2" formControlName="to" name="to" [min]="minToDate">
+                <input matInput [matDatepicker]="picker2" formControlName="to" name="to" [min]="minToDate" (dateChange)="onToDateChange()">
                 <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
-              <button mat-mini-fab color="accent" class="save-schedule" [disabled]="roomavailabilityForm.invalid" (click)="saveScheduleDetails()">
+              <button mat-mini-fab color="primary" class="save-schedule" [disabled]="roomavailabilityForm.invalid" (click)="saveScheduleDetails()">
                 <mat-icon>plus_one</mat-icon>
+              </button>
+              <button mat-mini-fab color="accent" class="save-schedule" (click)="clearScheduleDetails()">
+                <mat-icon>clear_all</mat-icon>
               </button>
         </div>
      </form>
+    </div>
+    <div class="is-error-message" *ngIf="isErrorMsg">
+      This schedule already exist or Schedule date already exist.
+    </div>
+    <div class="loading-container" *ngIf="isLoading==true">
+      <div class="loader"></div>
     </div>
     <div class="room-availability-list-container">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="roomScheduleList?.length > 0">
@@ -59,7 +68,7 @@
                     <button mat-mini-fab color="primary" class="save-schedule" (click)="editExistingSchedule(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-mini-fab color="accent" class="save-schedule">
+                    <button mat-mini-fab color="accent" class="save-schedule" (click)="deleteRoomScheduleDetails(element.id)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>                
