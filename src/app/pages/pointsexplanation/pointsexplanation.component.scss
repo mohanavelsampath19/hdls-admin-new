@@ -2,7 +2,7 @@
 #hdls-points-container {
   padding: 20px;
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: center;
   gap: 20px;
   .hdls-points-form-feilds {
@@ -23,7 +23,7 @@
     text-align: center;
     background: #ff95c1;
     color: #555;
-    padding:20px 40px;
+    padding:20px 0px;
     height: 560px;
     display: flex;
     flex-direction: column;
@@ -110,4 +110,16 @@ input[type='number']{
   border: 1px solid #ccc;
   padding: 5px;
   border-radius: 5px;
+}
+.my-date-header {
+  width: 150px;
+}
+.my-date-details{
+  line-height: 30px;
+}
+.legends {
+  margin-bottom: 0px;
+  font-weight: 700;
+  text-align: right;
+  padding-right: 10px;
 }

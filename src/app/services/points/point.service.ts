@@ -14,6 +14,9 @@ export class PointService {
       value: _value,
     });
   }
+  getCommissionDetails(){
+    return this._http.get(environment.baseUrl + 'api/report/getcommissiondetails');
+  }
 
   updatePointMultiplier(_id: number, _value: any) {
     return this._http.post(

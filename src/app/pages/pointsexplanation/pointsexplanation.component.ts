@@ -27,12 +27,12 @@ export class PointsexplanationComponent implements OnInit {
   });
   mytransactionList:any = [];
   displayedColumns: string[] = [
-    'sno',
+    'date',
     'type',
     'totalamount',
     'mediancommission',
     'hoteldebit',
-    'hotelcredit'
+    'hotelcredit',
   ];
   dataSource:any = new MatTableDataSource(this.mytransactionList);
   pageSize: number = 5;
@@ -108,11 +108,11 @@ export class PointsexplanationComponent implements OnInit {
   }
   getBookingHistory() {
 
-    this._bookingService.getBookingHistory(4).subscribe((res:any) => {
-      res.response.bookingHistory.forEach((element:any) => {
-        element.amount = parseInt(element.amount);
+    this._pointService.getCommissionDetails().subscribe((res:any) => {
+      res.response.forEach((element:any) => {
+        element.amount = parseFloat(element.medienwork) + parseFloat(element.hotel_debit) + parseFloat(element.hotel_credit);
       });
-      this.dataSource = new MatTableDataSource(res.response.bookingHistory);
+      this.dataSource = new MatTableDataSource(res.response);
 
        this.dataSource.paginator = this.paginator;
     })

@@ -42,27 +42,28 @@
     <div class="commission-report-container">
       <div class="hdls-profit-list-section">
         <!-- <app-search-field></app-search-field> -->
+         <div class="legends"> Units calculated in RM</div>
         <table
           mat-table
           class="hdls-product-table"
           [dataSource]="dataSource"
           matTableExporter
         >
-          <ng-container matColumnDef="sno">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Reference ID</th>
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="my-date-header">Date</th>
             <td mat-cell *matCellDef="let element">
-              <p *ngIf="!element.loading">
-                #{{ element.bookingid }}
+              <p *ngIf="!element.loading" class="my-date-details">
+                {{ element.created_at | date:'MMM dd, yyyy hh:mm a' }}
               </p>
               <div *ngIf="element.loading" class="loading-data"></div>
             </td>
           </ng-container>
   
           <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Type</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction <br> Type</th>
             <td mat-cell *matCellDef="let element">
               <div *ngIf="!element.loading">
-                Room booking
+                {{element.transaction_master.transaction_name}}
               </div>
               <div *ngIf="element.loading" class="loading-data"></div>
             </td>
@@ -81,22 +82,22 @@
   
           <ng-container matColumnDef="mediancommission">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Median commission
+              Median commission ({{ pointDetails[8]?.point_multiplier }}%)
             </th>
             <td mat-cell *matCellDef="let element">
-              {{ element.amount * medianCommission }}
+              {{ element.medienwork }}
             </td>
           </ng-container>
           <ng-container matColumnDef="hoteldebit">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Hotel spend for </th>
             <td mat-cell *matCellDef="let element">
-              {{element.points * debitMultiplier}}
+              {{element.hotel_debit}}
             </td>
           </ng-container>
           <ng-container matColumnDef="hotelcredit">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Hotel Credit</th>
             <td mat-cell *matCellDef="let element">
-              {{element.amount - ((element.amount * medianCommission) + (element.points * debitMultiplier))}}
+              {{element.hotel_credit}}
             </td>
           </ng-container>
   
