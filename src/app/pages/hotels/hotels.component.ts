@@ -9,6 +9,7 @@ import { RoomsService } from 'src/app/services/rooms/rooms.service';
 import { DeleteModalComponent } from 'src/app/components/common/delete-modal/delete-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RoomScheduleComponent } from 'src/app/components/common/room-schedule/room-schedule.component';
+import { QrcodeComponent } from 'src/app/components/popups/qrcode/qrcode.component';
 
 @Component({
   selector: 'app-hotels',
@@ -16,7 +17,7 @@ import { RoomScheduleComponent } from 'src/app/components/common/room-schedule/r
   styleUrls: ['./hotels.component.scss']
 })
 export class HotelsComponent implements OnInit {
-
+  hotelDetails:any;
   selectedCategory: string = 'all';
   memberShipFilters: any = {
     categoryCounts: {
@@ -100,6 +101,8 @@ export class HotelsComponent implements OnInit {
     }
     this._roomService.getRoomList(this.hotelId, getCategory).subscribe((res:any) => {
       if(res && res.status === 1) {
+        console.log(res);
+        this.hotelDetails = res.hotelDetails;
         this.dataSource = new MatTableDataSource(res.response);
         this.dataSource.paginator = this.paginator;
       }
@@ -207,4 +210,19 @@ export class HotelsComponent implements OnInit {
         }
       });
   }
+  viewQRCode(){
+
+    const dialogRef = this._dialog.open(QrcodeComponent, {
+      data: {...this.hotelDetails},
+      width:'400px',
+      // height:'800px'
+    });
+
+    dialogRef.afterClosed().subscribe((data:any) => {
+      console.log(data);
+      if(data === true){
+        
+      }
+    });
+}
 }

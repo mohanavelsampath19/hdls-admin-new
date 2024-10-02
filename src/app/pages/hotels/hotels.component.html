@@ -1,5 +1,9 @@
 <section id="hdls-membership-container">
   <div class="search-section">
+    <div class="hotel-details">
+      <h3>{{hotelDetails?.hotelname}}</h3>
+      <button color="accent" mat-raised-button class="mat-raised-button" (click)="viewQRCode()">View QR code</button>
+    </div>
     <div class="add-product">
       <form (submit)="setSearchValue($event)" class="hdls-search-field">
         <input

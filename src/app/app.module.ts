@@ -70,6 +70,7 @@ import { PointsTableComponent } from './components/common/points-table/points-ta
 import { TierpointsComponent } from './pages/tierpoints/tierpoints.component';
 import { PointsexplanationComponent } from './pages/pointsexplanation/pointsexplanation.component';
 import { RoomScheduleComponent } from './components/common/room-schedule/room-schedule.component';
+import { QrcodeComponent } from './components/popups/qrcode/qrcode.component';
 
 initializeApp(environment.firebase);
 
@@ -109,6 +110,7 @@ const config: SocketIoConfig = {
     TierpointsComponent,
     PointsexplanationComponent,
     RoomScheduleComponent,
+    QrcodeComponent,
   ],
   imports: [
     BrowserModule,
