@@ -147,7 +147,7 @@ const config: SocketIoConfig = {
     // NgxMaterialTimepickerModule,
     MatGoogleMapsAutocompleteModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCAAD0E_IVtAbkV1fCqa_SjxrUowDxQcCo',
+      apiKey: 'RE-6ToVhmGGrkPmQa-vYafYCWW_hgntf_7yLiERKuvo',
       libraries: ['places'],
     }),
     GooglePlaceModule,

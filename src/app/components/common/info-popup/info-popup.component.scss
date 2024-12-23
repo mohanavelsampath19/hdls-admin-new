@@ -2,7 +2,9 @@
 
 .hdls-delete-dialog {
   min-height: 200px;
-  width: 450px;
+  max-width: 450px;
+  text-align: center;
+  line-height: 40px;
   h3 {
     text-align: center;
   }

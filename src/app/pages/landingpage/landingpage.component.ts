@@ -34,7 +34,7 @@ export class LandingpageComponent implements OnInit {
   }
   requestPermission() {
     const messaging = getMessaging();
-    getToken(messaging, { vapidKey: 'BA0nKzJXojvaY3GuU0TdYseaCvac35Aln6NQVNXJeDwCKyYpP0i_P07DCIdErMWRYMdcprBi-xwmFaznAIE_3kw' }
+    getToken(messaging, { vapidKey: 'BFz8edpla2q_vcFjOR9JbdKEI-4_BheilUKDm7Zh-K8X87VB8JUow6AXIjVkzuULCvC_XmYgtxSZ_o_8Z18xr5Y' }
     ).then(
        (currentToken) => {
          if (currentToken) {

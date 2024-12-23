@@ -4,12 +4,12 @@ export const environment = {
   imageUrl: 'https://cloud.tribeloyalty.my/upload',
   socketUrl: '',
   firebase:{
-    apiKey: "AIzaSyCShvShumkNiSE613TF7AbOmnWuU2OWHXY",
-  authDomain: "tribeapp-24cfc.firebaseapp.com",
-  projectId: "tribeapp-24cfc",
-  storageBucket: "tribeapp-24cfc.appspot.com",
-  messagingSenderId: "613954042294",
-  appId: "1:613954042294:web:3a97a3c7dffb4d03082917",
-  measurementId: "G-WK8PP7SNXT"
+    apiKey: "AIzaSyBL8_awaeTeqbw-SOJfQ_Xa3RG01NXJrvc",
+  authDomain: "tribe-loyalty.firebaseapp.com",
+  projectId: "tribe-loyalty",
+  storageBucket: "tribe-loyalty.appspot.com",
+  messagingSenderId: "632844966384",
+  appId: "1:632844966384:web:9ffd535afbc456328ae535",
+  measurementId: "G-QS5FXBMK86"
   }
 };
