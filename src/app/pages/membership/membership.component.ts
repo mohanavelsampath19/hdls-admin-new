@@ -111,8 +111,7 @@ export class MembershipComponent implements OnInit {
       memberShipRes.response && memberShipRes.response.forEach((membership:any)=>{
         membership.image_url = "https://cloud.tribeloyalty.my/upload/"+membership.image_url;
         membership.evouchers = JSON.parse(membership.evouchers);
-        // membership.vouchersTitle = membership.vouchersList.map((member:any)=>{ if(member && member.voucherstitle){ return member.voucherstitle;}} );
-        // console.log(membership.vouchersTitle)
+       
       });
 
       this.dataSource = new MatTableDataSource(memberShipRes.response);
@@ -170,7 +169,6 @@ export class MembershipComponent implements OnInit {
   }
 
   changePage(e: any) {
-    console.log(e);
     this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
     this.pageSize = e.pageSize;
     this.getMembershipList();
@@ -185,7 +183,7 @@ export class MembershipComponent implements OnInit {
     dialogRef.afterClosed().subscribe((desc:any) => {
       if(desc === true){
         this._memberShipService.deleteMembership(deleteMembership.membershipid).subscribe((deleteRes:any)=>{
-          console.log(deleteRes);
+         
           this.getMembershipList();
         })
       }

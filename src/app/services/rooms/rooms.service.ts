@@ -10,7 +10,6 @@ export class RoomsService {
 
   constructor(private _http: HttpClient) { }
   addProduct(roomDetails: any) {
-    console.log(roomDetails);
     let formData: any = new FormData();
     let tmpRoomDetails = { ...roomDetails };
     delete tmpRoomDetails.coverImage;
@@ -44,7 +43,6 @@ export class RoomsService {
     );
   }
   addRoomService(roomDetails:any) {
-    console.log(roomDetails);
     let formData: any = new FormData();
     let tmpRoomDetails = { ...roomDetails };
     delete tmpRoomDetails.addImages;
@@ -69,7 +67,6 @@ export class RoomsService {
   }
 
   updateRoomService(roomDetails:any, roomid:any) {
-    console.log(roomDetails);
     let formData: any = new FormData();
     let tmpRoomDetails = { ...roomDetails };
     delete tmpRoomDetails.addImages;

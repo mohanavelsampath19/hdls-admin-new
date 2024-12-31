@@ -17,7 +17,6 @@ export class MembershipComponent implements OnInit {
   paginator: MatPaginator | undefined;
   constructor(private _reportService:ReportsService) { 
     this._reportService.getMembershipPurchase().subscribe((userList:any)=>{
-      console.log(userList);
       userList.response.forEach((item:any) => {
         let d = new Date(item.created_at);
         d.setFullYear(d.getFullYear() + 1);
@@ -33,7 +32,6 @@ export class MembershipComponent implements OnInit {
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue)
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   pageChanged(event:any){

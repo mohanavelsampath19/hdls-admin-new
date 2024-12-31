@@ -59,7 +59,6 @@ export class AddVouchersComponent implements OnInit {
   constructor(private _vouchers:MembershipService, private _dialog:MatDialog, private _route:Router, private _roomService:RoomsService, private _inventory:InventoryService, private _facility:FacilitiesService) {
     this._roomService.getRoomList().subscribe((roomRes:any)=>{
       this.myRoomList = roomRes.response;
-      console.log(this.myRoomList);
     });
     this._vouchers.getVouchers().subscribe((vouchersRes:any) => {
       this.existingVoucherList = vouchersRes.response;
@@ -75,7 +74,7 @@ export class AddVouchersComponent implements OnInit {
   }
   saveVoucher(){
     this._vouchers.addVouchers({...this.newVoucherForm.value,logo:this.logo, voucherDays:JSON.stringify([...this.dayPercentList])}).subscribe((voucherRes:any)=>{
-      console.log(voucherRes);
+     
       const dialogRef = this._dialog.open(InfoPopupComponent, {
         data: {
           popupText: 'Vouchers created successfully',
@@ -125,7 +124,6 @@ export class AddVouchersComponent implements OnInit {
     reader.onload = e => this.coverImage = reader.result;
     this.logo = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
-    console.log(this.newVoucherForm.valid, this.myCoverImageCheck, '----')
   }
   getFacilityDetails(hotelId?:number){
     this._facility.getAllFacility(0,hotelId).subscribe((facility:any)=>{
@@ -136,7 +134,6 @@ export class AddVouchersComponent implements OnInit {
     });
   }
   inventoryChange(e:any){
-    console.log(e);
     this.currentProperty = e.value;
     this.getFacilityDetails(e.value);
     this._roomService.getRoomList(e.value).subscribe((roomRes:any)=>{
@@ -155,7 +152,6 @@ export class AddVouchersComponent implements OnInit {
       },
     });
     voucherDialogRef.afterClosed().subscribe((closeRes:any)=>{
-      console.log(closeRes);
       if(closeRes?.status == 'added successfully'){
         this.dayPercentList = [...closeRes.voucherDays];
       }

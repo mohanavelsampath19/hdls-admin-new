@@ -229,7 +229,6 @@ export class EditPropertyComponent implements OnInit {
         this.propertyid = res?.response?.hotel_id;
         this.checkoutError = false;
       })
-      // console.log(this.firstFormGroup.value, this.firstFormGroup.valid, '---')
     });
 
     this.firstFormGroup.controls['checkin'].valueChanges.subscribe(
@@ -361,7 +360,6 @@ export class EditPropertyComponent implements OnInit {
       };
       reader.readAsDataURL(fileList[i]);
     }
-    console.log(this.addImages[index]);
   }
 
   pushToFileList(index: number, fileList: any) {
@@ -423,7 +421,6 @@ export class EditPropertyComponent implements OnInit {
     this.facilities.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
     this.facilityCtrl.setValue(null);
-    console.log(this.facilities, '---facility---')
   }
 
   private _filter(value: string): string[] {
