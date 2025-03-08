@@ -1,0 +1,68 @@
+<section id="scan-modal-container">
+    <div class="scan-modal-container-title">F & B Voucher Redemption notification</div>
+    <div class="scan-modal-container-body">
+        
+        <div *ngIf="scanInfoList.length==1">
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Voucher ID
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    #{{scanInfoList[0].vouchercustomerrelid}}
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Voucher
+                </div>
+                <div class="scan-modal-container-body-desc-detail scan-modal-facility-container">
+                    {{scanInfoList[0].vouchername}}
+                    <div class="scan-modal-facility-logo-container">
+                        <img [src]="scanInfoList[0].voucherlogo" width="100">
+                    </div>
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Customer Name
+                </div>
+                <div class="scan-modal-container-body-desc-detail">
+                    {{scanInfoList[0].customername}}
+                </div>
+            </div>
+            <div class="scan-modal-container-body-desc">
+                <div class="scan-modal-container-body-desc-name">
+                    Facility
+                </div>
+                <div class="scan-modal-container-body-desc-detail scan-modal-facility-container">
+                    {{scanInfoList[0].facilityname}}
+                    <div class="scan-modal-facility-logo-container">
+                        <img [src]="scanInfoList[0].facilitylogo" width="100">
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="scan-modal-container-body-desc btn-container">
+                <button mat-button color="secondary" class="hdls-btn-secondary"
+                [mat-dialog-close]="true"
+                cdkFocusInitial
+                >
+                    Close
+                </button>
+                <button
+                    class="hdls-btn-primary"
+                    mat-raised-button
+                    color="primary"
+                   (click)="redeemVoucher(scanInfoList[0].vouchercustomerrelid)"
+                >
+                    Redeem
+                </button>
+                </div>
+        </div>
+       
+        <div *ngIf="scanInfoList.length==0">
+            <h3>There is no voucher available for this customer.</h3>
+        </div>
+    </div>
+</section>

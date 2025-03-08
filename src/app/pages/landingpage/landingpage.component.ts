@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { ScanModalFacilityComponent } from 'src/app/components/common/scan-modal-facility/scan-modal-facility.component';
 import { ScanModalComponent } from 'src/app/components/common/scan-modal/scan-modal.component';
 import { LoginService } from 'src/app/services/login/login.service';
 const channel4Broadcast = new BroadcastChannel('channel4');
@@ -18,7 +19,7 @@ export class LandingpageComponent implements OnInit {
       this._router.navigate(['login'])
     }
     channel4Broadcast.onmessage = (event) => {
-      console.log(event.data);
+      console.log(event);
       channel5Broadcast.postMessage(event.data);
       if(event.data.payload){
         this.openScanPopup(event.data.payload);  
@@ -72,17 +73,33 @@ export class LandingpageComponent implements OnInit {
     }
   }
   openScanPopup(bookingInfo:any){
-    const dialogRef = this._dialog.open(ScanModalComponent, {
-      data: {
-        productName:' Facility',
-        bookingDetails:bookingInfo
-      },
-      width:'600px'
-    });
-    dialogRef.afterClosed().subscribe((desc:any) => {
-      if(desc === true){
-        
-      }
-    });
+    if(bookingInfo.title == "Voucher redemption for Facilities"){
+      const dialogRef = this._dialog.open(ScanModalFacilityComponent, {
+        data: {
+          productName:' Facility',
+          bookingDetails:bookingInfo
+        },
+        width:'600px'
+      });
+      dialogRef.afterClosed().subscribe((desc:any) => {
+        if(desc === true){
+          
+        }
+      });
+    }else{
+      const dialogRef = this._dialog.open(ScanModalComponent, {
+        data: {
+          productName:' Facility',
+          bookingDetails:bookingInfo
+        },
+        width:'600px'
+      });
+      dialogRef.afterClosed().subscribe((desc:any) => {
+        if(desc === true){
+          
+        }
+      });
+    }
+    
   }
 }

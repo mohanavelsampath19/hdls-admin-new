@@ -59,5 +59,7 @@ export class FacilitiesService {
     });
     return formData;
   }
-  
+  updateCustomerVoucherStatus(voucherCustRelId:number,status:number = 0){
+    return this._http.post(environment.baseUrl+ 'api/vouchercustomer/updatecustomervoucherstatus',{voucherCustRelId:voucherCustRelId, status:status});
+  }
 }
