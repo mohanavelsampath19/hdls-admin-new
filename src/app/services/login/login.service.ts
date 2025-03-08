@@ -19,4 +19,9 @@ export class LoginService {
   signupUser(userdetails:any){
     return this._http.post(environment.baseUrl + 'api/customers/signup',{...userdetails});
   }
+
+  savenewuserrole(userdetails:any) {
+    return this._http.post(environment.baseUrl + 'api/customers/signup',{...userdetails});
+  }
+
 }

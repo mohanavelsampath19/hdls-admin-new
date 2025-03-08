@@ -1,0 +1,91 @@
+<div id="hdls-add-user-role">
+  <div class="hdls-add-user-section">
+    <h3 class="hdls-add-user-heading">Add User</h3>
+    <form [formGroup]="addUserGroup" novalidate #myform="ngForm">
+      <div class="hdls-user-group">
+        <div class="hdls-user-fields">
+          <mat-form-field class="hdls-form-field" appearance="fill">
+            <mat-label>User Name</mat-label>
+            <input
+              matInput
+              formControlName="userName"
+              class="hdls-form-input"
+              placeholder="User Name"
+              required
+            />
+            <!-- <p
+              class="hdls-error"
+              *ngIf="
+                addUserGroup.controls.userName.invalid &&
+                (addUserGroup.controls.userName.dirty ||
+                  addUserGroup.controls.userName.touched) &&
+                myform.submitted
+              "
+            >
+              Please fill the userName
+            </p> -->
+          </mat-form-field>
+          <mat-form-field class="hdls-form-field" appearance="fill">
+            <mat-label>User Email</mat-label>
+            <input
+              matInput
+              formControlName="userEmail"
+              class="hdls-form-input"
+              placeholder="User Email"
+              required
+            />
+<!-- 
+            <p
+              class="hdls-error"
+              *ngIf="
+                addUserGroup.controls.userEmail.invalid &&
+                (addUserGroup.controls.userEmail.dirty ||
+                  addUserGroup.controls.userEmail.touched)
+              "
+            >
+              Please fill the email
+            </p> -->
+          </mat-form-field>
+        </div>
+        <div class="hdls-user-fields">
+          <mat-form-field class="hdls-form-field" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              class="hdls-form-input"
+              name="totalrooms"
+              placeholder="Password"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field class="hdls-form-field" appearance="fill">
+            <mat-label>Hotel</mat-label>
+            <mat-select class="hdls-form-select" formControlName="hotelName">
+              <mat-option *ngFor="let hotels of hotelDetails" [key]="hotels.hotel_id" [value]="hotels.hotel_id">{{hotels.hotel_name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="hdls-user-fields">
+          <mat-form-field class="hdls-form-field" appearance="fill">
+            <mat-label>Features</mat-label>
+            <mat-select class="hdls-form-select" formControlName="role" multiple>
+              <mat-option name="membership" value="membership">Membership</mat-option>
+              <mat-option name="reports" value="reports">Reports</mat-option>
+              <mat-option name="bookings" value="bookings">Bookings</mat-option>
+              <mat-option name="points" value="points">Points</mat-option>
+              <mat-option name="inventory" value="inventory">Inventory</mat-option>
+              <mat-option name="facility" value="facility">Facility</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div></div>
+      </div>
+      <div class="hdls-user-button">
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <button mat-raised-button (click)="saveUser()">Add User</button>
+      </div>
+    </form>
+  </div>
+</div>
