@@ -109,7 +109,7 @@ export class MembershipComponent implements OnInit {
 
     this._memberShipService.getAllMembersByCategory(getCategory).subscribe((memberShipRes:any) => {
       memberShipRes.response && memberShipRes.response.forEach((membership:any)=>{
-        membership.image_url = "https://cloud.tribeloyalty.my/upload/"+membership.image_url;
+        membership.image_url = "https://stage.tribeloyalty.my/upload/"+membership.image_url;
         membership.evouchers = JSON.parse(membership.evouchers);
         // membership.vouchersTitle = membership.vouchersList.map((member:any)=>{ if(member && member.voucherstitle){ return member.voucherstitle;}} );
         // console.log(membership.vouchersTitle)

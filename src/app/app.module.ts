@@ -70,7 +70,10 @@ import { PointsTableComponent } from './components/common/points-table/points-ta
 import { TierpointsComponent } from './pages/tierpoints/tierpoints.component';
 import { PointsexplanationComponent } from './pages/pointsexplanation/pointsexplanation.component';
 import { RoomScheduleComponent } from './components/common/room-schedule/room-schedule.component';
+
 import { QrcodeComponent } from './components/popups/qrcode/qrcode.component';
+import { ScanModalFacilityComponent } from './components/common/scan-modal-facility/scan-modal-facility.component';
+import { ViewexpensesComponent } from './components/common/viewexpenses/viewexpenses.component';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { AddUserRoleComponent } from './components/common/add-user-role/add-user-role.component';
 
@@ -113,6 +116,8 @@ const config: SocketIoConfig = {
     PointsexplanationComponent,
     RoomScheduleComponent,
     QrcodeComponent,
+    ScanModalFacilityComponent,
+    ViewexpensesComponent,
     AddUserComponent,
     AddUserRoleComponent,
   ],

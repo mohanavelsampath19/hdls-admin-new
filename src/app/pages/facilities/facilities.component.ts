@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from 'src/app/components/common/delete-modal/delete-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { QrcodeComponent } from 'src/app/components/popups/qrcode/qrcode.component';
 import { FacilitiesService } from 'src/app/services/facilities/facilities.service';
 import { MemberShip, MembershipService } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
@@ -36,6 +37,7 @@ export class FacilitiesComponent implements OnInit {
     'facility_desc',
     'facility_type',
     'property',
+    'qrcode',
     'action',
   ];
   dataSource:any = new MatTableDataSource(this.totalMembershipList);
@@ -181,4 +183,20 @@ export class FacilitiesComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
    // this.dataSource.filter = filterValue.trim().toLowerCase();
   };
+  viewQR(index:number){
+    console.log(this.dataSource.data[index]);
+    let facilityDetails = this.dataSource.data[index];
+    const dialogRef = this._dialog.open(QrcodeComponent, {
+          data: {...facilityDetails},
+          width:'423px',
+          // height:'800px'
+        });
+    
+        dialogRef.afterClosed().subscribe((data:any) => {
+          console.log(data);
+          if(data === true){
+            
+          }
+        });
+  }
 }
