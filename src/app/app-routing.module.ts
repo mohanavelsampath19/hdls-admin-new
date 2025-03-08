@@ -25,6 +25,7 @@ import { SuccessComponent } from './pages/web/success/success.component';
 import { PointsTableComponent } from './components/common/points-table/points-table.component';
 import { TierpointsComponent } from './pages/tierpoints/tierpoints.component';
 import { PointsexplanationComponent } from './pages/pointsexplanation/pointsexplanation.component';
+import { AddUserComponent } from './pages/add-user/add-user.component';
 
 
 const routes: Routes = [
@@ -138,6 +139,10 @@ const routes: Routes = [
       {
         path: 'commissiondetails',
         component: PointsexplanationComponent
+      },
+      {
+        path: 'add-user',
+        component: AddUserComponent
       }
     ],
   }

@@ -71,6 +71,8 @@ import { TierpointsComponent } from './pages/tierpoints/tierpoints.component';
 import { PointsexplanationComponent } from './pages/pointsexplanation/pointsexplanation.component';
 import { RoomScheduleComponent } from './components/common/room-schedule/room-schedule.component';
 import { QrcodeComponent } from './components/popups/qrcode/qrcode.component';
+import { AddUserComponent } from './pages/add-user/add-user.component';
+import { AddUserRoleComponent } from './components/common/add-user-role/add-user-role.component';
 
 initializeApp(environment.firebase);
 
@@ -111,6 +113,8 @@ const config: SocketIoConfig = {
     PointsexplanationComponent,
     RoomScheduleComponent,
     QrcodeComponent,
+    AddUserComponent,
+    AddUserRoleComponent,
   ],
   imports: [
     BrowserModule,
