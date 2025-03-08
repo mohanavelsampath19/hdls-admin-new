@@ -1,0 +1,22 @@
+#hdls-add-user-role {
+    .hdls-add-user-section {
+        .hdls-add-user-heading {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bolder;
+        }
+     .hdls-user-group {
+        .hdls-user-fields {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+     } 
+     .hdls-user-button {
+        text-align: center;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+     }  
+    }
+}
