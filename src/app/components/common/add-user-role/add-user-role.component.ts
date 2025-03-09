@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { LoginService } from 'src/app/services/login/login.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-add-user-role',
@@ -14,23 +16,23 @@ export class AddUserRoleComponent implements OnInit {
   hotelDetails:any = [];
 
   constructor(private _formBuilder: FormBuilder, private _inventoryService: InventoryService,
-    private _loginService: LoginService
+    private _loginService: LoginService, private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.addUserGroup = this._formBuilder.group({
-          userName: ['', Validators.required],
-          userEmail: ['', Validators.required],
+          username: ['', Validators.required],
+          email: ['', Validators.required],
           password: ['', Validators.required],
-          hotelName: ['', Validators.required],
+          // hotelName: ['', Validators.required],
           hotelId: ['', Validators.required],
-          role: ['', Validators.required]
+          available_features: ['', Validators.required]
     });
     this.getHotelList();
   }
 
   ngDoCheck() {
-    console.log(this.addUserGroup.value)
+
   }
 
   getHotelList() {
@@ -49,9 +51,10 @@ export class AddUserRoleComponent implements OnInit {
   }
 
   saveUser() {
-    const userdetails = {}
-    this._loginService.savenewuserrole(userdetails).subscribe((res:any) => {
-      
+    this._loginService.savenewuserrole(this.addUserGroup.value).subscribe((res:any) => {
+      let snackBarSuccess = this._snackBar.open('Hotel users created successfully', 'Close', {
+        duration: 3000
+      });
     })
   }
 

@@ -5,6 +5,7 @@ import { ReportsService } from 'src/app/services/reports/reports.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUserRoleComponent } from 'src/app/components/common/add-user-role/add-user-role.component';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
+import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
   selector: 'app-add-user',
@@ -15,16 +16,19 @@ export class AddUserComponent implements OnInit {
 
   dataSource:any;
     userSearch:any;
-    displayedColumns:any = ['sno','name','mobile','address','city','state','dob','created_at'];
+    displayedColumns:any = ['sno','name','email','available_features','hotel_id','created_at'];
     resultsLength:number=0;
     @ViewChild(MatPaginator)
     paginator: MatPaginator | undefined;
-    constructor(private _reportService:ReportsService, private _dialog: MatDialog, private _inventoryService: InventoryService) { 
-      this._reportService.getUserList().subscribe((userList:any)=>{
-        console.log(userList);
-        this.dataSource = new MatTableDataSource( userList.response);
+    constructor(private _loginService:LoginService, private _dialog: MatDialog, private _inventoryService: InventoryService) { 
+      this._loginService.getHotelUserList().subscribe((userListRes:any)=>{
+        let userList = userListRes.response.map((userObj:any)=>{
+          userObj.permissions = JSON.parse(userObj.available_features);
+          return userObj;
+        })
+        this.dataSource = new MatTableDataSource(userList);
         this.dataSource.paginator = this.paginator;
-        this.resultsLength = userList.response.length;
+        this.resultsLength = userList.length;
       })
     }
   

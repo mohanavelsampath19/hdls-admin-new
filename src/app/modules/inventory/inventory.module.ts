@@ -28,9 +28,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EditPropertyComponent } from 'src/app/pages/inventory/edit-property/edit-property.component';
 
-import { AgmCoreModule } from '@agm/core';
-import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-
 import { AddRestaurantComponent } from '../../pages/inventory/add-restaurant/add-restaurant.component';
 import { EditRestaurantComponent } from '../../pages/inventory/edit-restaurant/edit-restaurant.component';
 
@@ -75,8 +72,6 @@ import { EditRestaurantComponent } from '../../pages/inventory/edit-restaurant/e
     NgxMaterialTimepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    AgmCoreModule,
-    MatGoogleMapsAutocompleteModule
   ],
 })
 export class InventoryModule {}

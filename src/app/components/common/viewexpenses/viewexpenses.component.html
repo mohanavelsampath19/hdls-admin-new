@@ -2,75 +2,91 @@
     <h3 class="room-header">External payment history</h3>
     <div class="room-availability-container" *ngIf="isAvailable==false">
 
-     <form [formGroup]="roomavailabilityForm">
-        <div class="availability-form">
-            <mat-form-field>
-                <mat-label>Payment desc</mat-label>
-                <textarea matInput></textarea>
-              </mat-form-field>
-              <mat-form-field floatLabel="always">
-                <mat-label>Amount</mat-label>
-                <input matInput type="number" class="example-right-align" placeholder="0" />
-                <span matTextPrefix>MYR&nbsp;</span>
-                <span matTextSuffix>.00</span>
-              </mat-form-field>
-              <button mat-mini-fab color="primary" class="save-schedule" [disabled]="roomavailabilityForm.invalid" (click)="saveExpenses()">
-                <mat-icon>plus_one</mat-icon>
-              </button>
-              <button mat-mini-fab color="accent" class="save-schedule" (click)="clearExpenses()">
-                <mat-icon>clear_all</mat-icon>
-              </button>
-        </div>
-     </form>
+        <form [formGroup]="paymentFormGroup">
+            <div class="availability-form">
+                <mat-form-field>
+                    <mat-label>Amount</mat-label>
+                    <input matInput type="number" class="example-right-align" placeholder=""
+                        formControlName="amount" />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Payment Desc</mat-label>
+                    <textarea matInput formControlName="paymentDesc"></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="paymentDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+
+                <button mat-mini-fab color="primary" class="save-schedule" [disabled]="paymentFormGroup.invalid"
+                    (click)="saveExpenses()">
+                    <mat-icon>plus_one</mat-icon>
+                </button>
+                <button mat-mini-fab color="accent" class="save-schedule" (click)="clearExpenses()">
+                    <mat-icon>clear_all</mat-icon>
+                </button>
+            </div>
+        </form>
     </div>
     <div class="is-error-message" *ngIf="isErrorMsg">
-      This schedule already exist or Schedule date already exist.
+        Payment updated
     </div>
     <div class="loading-container" *ngIf="isLoading==true">
-      <div class="loader"></div>
+        <div class="loader"></div>
     </div>
     <div class="room-availability-list-container">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="viewExpenseList?.length > 0">
+        <table mat-table [dataSource]="viewExpenseList" class="mat-elevation-z8" *ngIf="viewExpenseList?.length > 0">
 
             <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
-          
+
             <!-- Position Column -->
             <ng-container matColumnDef="sno">
-              <th mat-header-cell *matHeaderCellDef> No. </th>
-              <td mat-cell *matCellDef="let element;let i=index"> {{i+1}} </td>
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element;let i=index"> {{i+1}} </td>
             </ng-container>
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="from">
-              <th mat-header-cell *matHeaderCellDef> From </th>
-              <td mat-cell *matCellDef="let element"> {{element.from | date:'MMM dd, yyyy'}} </td>
+
+            
+            <ng-container matColumnDef="desc">
+                <th mat-header-cell *matHeaderCellDef> Payment Desc </th>
+                <td mat-cell *matCellDef="let element"> {{element.payment_desc}} </td>
             </ng-container>
-          
-            <!-- Weight Column -->
-            <ng-container matColumnDef="to">
-              <th mat-header-cell *matHeaderCellDef> To </th>
-              <td mat-cell *matCellDef="let element"> {{element.to | date:'MMM dd, yyyy'}} </td>
+
+            
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
             </ng-container>
-          
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef> Action </th>
-              <td mat-cell *matCellDef="let element"> 
-                <div class="btn-actions">
-                    <button mat-mini-fab color="primary" class="save-schedule" (click)="editExistingSchedule(element)">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-mini-fab color="accent" class="save-schedule" (click)="deleteRoomScheduleDetails(element.id)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </div>                
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Payment Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.created_at | date:'MMM dd, YYYY'}} </td>
+            </ng-container>
+
+            
+            <!-- <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="btn-actions">
+                        <button mat-mini-fab color="primary" class="save-schedule"
+                            (click)="editExistingSchedule(element)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-mini-fab color="accent" class="save-schedule"
+                            (click)="deleteRoomScheduleDetails(element.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
                 </td>
-            </ng-container>
-          
+            </ng-container> -->
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
+        </table>
     </div>
-    
-  </section>
+</section>

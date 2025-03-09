@@ -44,8 +44,8 @@ import { EditMembershipComponent } from './pages/membership/edit-membership/edit
 
 // import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
-import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-import { AgmCoreModule } from '@agm/core';
+
+
 import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -76,7 +76,9 @@ import { ScanModalFacilityComponent } from './components/common/scan-modal-facil
 import { ViewexpensesComponent } from './components/common/viewexpenses/viewexpenses.component';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { AddUserRoleComponent } from './components/common/add-user-role/add-user-role.component';
-
+import { CommonModule } from '@angular/common';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { PermissionsPipe } from './pipes/hotelusers/permissions.pipe';
 initializeApp(environment.firebase);
 
 const config: SocketIoConfig = {
@@ -120,8 +122,10 @@ const config: SocketIoConfig = {
     ViewexpensesComponent,
     AddUserComponent,
     AddUserRoleComponent,
+    PermissionsPipe,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     RouterModule,
     AppRoutingModule,
@@ -154,17 +158,19 @@ const config: SocketIoConfig = {
     PointsystemModule,
     MatPaginatorModule,
     // NgxMaterialTimepickerModule,
-    MatGoogleMapsAutocompleteModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'RE-6ToVhmGGrkPmQa-vYafYCWW_hgntf_7yLiERKuvo',
-      libraries: ['places'],
-    }),
+    // MatGoogleMapsAutocompleteModule,
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'RE-6ToVhmGGrkPmQa-vYafYCWW_hgntf_7yLiERKuvo',
+    //   libraries: ['places'],
+    // }),
     GooglePlaceModule,
     MatSlideToggleModule,
     SocketIoModule.forRoot(config),
     IvyCarouselModule,
     ImageCropperModule,
     MatExpansionModule,
+    SharedModule,
+    MatSnackBarModule,
   ],
   
   providers: [],

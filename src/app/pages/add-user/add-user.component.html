@@ -58,71 +58,51 @@
 
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Name
+              Username
             </th>
             <td mat-cell *matCellDef="let element; let i=index">
               <p *ngIf="!element.isLoading">
-                {{ element.firstname ? (element.firstname+","+element.lastname) : '--' }}
+                {{ element.username || '--' }}
               </p>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="mobile">
+          
+          <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Mobile
+              Email
             </th>
             <td mat-cell *matCellDef="let element; let i=index">
               <p *ngIf="!element.isLoading">
-                {{ element.mobile || '--'}}
+                {{ (element.email) || '--'}}
               </p>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
           </ng-container>
-          <ng-container matColumnDef="address">
+          <ng-container matColumnDef="available_features">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Address
+              Permissions
             </th>
             <td mat-cell *matCellDef="let element; let i=index">
               <p *ngIf="!element.isLoading">
-                {{ (element.address | uppercase) || '--'}}
+                {{ element?.permissions?.available_features | permissions | uppercase}}
               </p>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
           </ng-container>
-          <ng-container matColumnDef="city">
+          <ng-container matColumnDef="hotel_id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              City
+              Hotel ID
             </th>
             <td mat-cell *matCellDef="let element; let i=index">
               <p *ngIf="!element.isLoading">
-                {{ (element.city | uppercase) || '--'}}
+                {{ (element?.permissions?.hotelId) || '--'}}
               </p>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
           </ng-container>
-          <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              State
-            </th>
-            <td mat-cell *matCellDef="let element; let i=index">
-              <p *ngIf="!element.isLoading">
-                {{ (element.state | uppercase) || '--'}}
-              </p>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="dob">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Date of birth
-            </th>
-            <td mat-cell *matCellDef="let element; let i=index">
-              <p *ngIf="!element.isLoading">
-                {{ (element.birthday | date:'dd-MMM-yyyy') || '--'}}
-              </p>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
+          
           
           <ng-container matColumnDef="created_at">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>

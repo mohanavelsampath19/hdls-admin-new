@@ -19,4 +19,10 @@ export class ReportsService {
   getTransactionDetails() {
     return this._http.get(environment.baseUrl + 'api/report/gettransactions');
   }
+  updateExternalPayment(paymentInfo:any){
+    return this._http.post(environment.baseUrl +'api/externalpayment/insertpayment',{...paymentInfo});
+  }
+  getExternalPaymentList(userId:any){
+    return this._http.get(environment.baseUrl +'api/externalpayment/getexternalpayment?userId='+userId);
+  }
 }

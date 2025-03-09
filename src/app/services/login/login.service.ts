@@ -21,7 +21,10 @@ export class LoginService {
   }
 
   savenewuserrole(userdetails:any) {
-    return this._http.post(environment.baseUrl + 'api/customers/signup',{...userdetails});
+    return this._http.post(environment.baseUrl + 'api/hoteluser/createhotelusers',{...userdetails});
+  }
+  getHotelUserList() {
+    return this._http.get(environment.baseUrl + 'api/hoteluser/gethoteluserlist');
   }
 
 }

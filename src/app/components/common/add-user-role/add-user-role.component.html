@@ -8,7 +8,7 @@
             <mat-label>User Name</mat-label>
             <input
               matInput
-              formControlName="userName"
+              formControlName="username"
               class="hdls-form-input"
               placeholder="User Name"
               required
@@ -29,7 +29,7 @@
             <mat-label>User Email</mat-label>
             <input
               matInput
-              formControlName="userEmail"
+              formControlName="email"
               class="hdls-form-input"
               placeholder="User Email"
               required
@@ -62,7 +62,7 @@
           </mat-form-field>
           <mat-form-field class="hdls-form-field" appearance="fill">
             <mat-label>Hotel</mat-label>
-            <mat-select class="hdls-form-select" formControlName="hotelName">
+            <mat-select class="hdls-form-select" formControlName="hotelId">
               <mat-option *ngFor="let hotels of hotelDetails" [key]="hotels.hotel_id" [value]="hotels.hotel_id">{{hotels.hotel_name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -70,7 +70,7 @@
         <div class="hdls-user-fields">
           <mat-form-field class="hdls-form-field" appearance="fill">
             <mat-label>Features</mat-label>
-            <mat-select class="hdls-form-select" formControlName="role" multiple>
+            <mat-select class="hdls-form-select" formControlName="available_features" multiple>
               <mat-option name="membership" value="membership">Membership</mat-option>
               <mat-option name="reports" value="reports">Reports</mat-option>
               <mat-option name="bookings" value="bookings">Bookings</mat-option>
@@ -84,7 +84,7 @@
       </div>
       <div class="hdls-user-button">
         <button mat-raised-button mat-dialog-close>Cancel</button>
-        <button mat-raised-button (click)="saveUser()">Add User</button>
+        <button mat-raised-button (click)="saveUser()" [mat-dialog-close]="true">Add User</button>
       </div>
     </form>
   </div>

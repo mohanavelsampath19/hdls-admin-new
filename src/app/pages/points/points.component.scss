@@ -3,8 +3,16 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
   gap: 20px;
+  overflow-x: auto;
+  .hdls-points-inner-container{
+    // padding: 20px;
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    gap: 20px;
+  }
   .hdls-points-form-feilds {
     display: flex;
     align-items: center;
