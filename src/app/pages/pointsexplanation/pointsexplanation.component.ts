@@ -107,12 +107,12 @@ export class PointsexplanationComponent implements OnInit {
       );
   }
   getBookingHistory() {
-
     this._pointService.getCommissionDetails().subscribe((res:any) => {
       res.response.forEach((element:any) => {
         element.amount = parseFloat(element.medienwork) + parseFloat(element.hotel_debit) + parseFloat(element.hotel_credit);
       });
-      this.dataSource = new MatTableDataSource(res.response);
+      let modifiedRes = [...res.response].reverse();
+      this.dataSource = new MatTableDataSource(modifiedRes);
 
        this.dataSource.paginator = this.paginator;
     })

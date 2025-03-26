@@ -23,7 +23,11 @@ export class AddUserComponent implements OnInit {
     constructor(private _loginService:LoginService, private _dialog: MatDialog, private _inventoryService: InventoryService) { 
       this._loginService.getHotelUserList().subscribe((userListRes:any)=>{
         let userList = userListRes.response.map((userObj:any)=>{
-          userObj.permissions = JSON.parse(userObj.available_features);
+          if(userObj.available_features){
+            userObj.permissions = JSON.parse(userObj.available_features);
+          }else{
+            userObj.permissions = [];
+          }
           return userObj;
         })
         this.dataSource = new MatTableDataSource(userList);
