@@ -23,8 +23,16 @@ export class LoginService {
   savenewuserrole(userdetails:any) {
     return this._http.post(environment.baseUrl + 'api/hoteluser/createhotelusers',{...userdetails});
   }
-  getHotelUserList() {
-    return this._http.get(environment.baseUrl + 'api/hoteluser/gethoteluserlist');
+  updateUserRole(userdetails:any) {
+    return this._http.post(environment.baseUrl + 'api/hoteluser/updatehotelusers',{...userdetails});
+  }
+  
+  getHotelUserList(username:any=undefined) {
+    if(username){
+      return this._http.get(environment.baseUrl + 'api/hoteluser/gethoteluserlist?user_id='+username);
+    }else{
+      return this._http.get(environment.baseUrl + 'api/hoteluser/gethoteluserlist');
+    }
   }
 
 }

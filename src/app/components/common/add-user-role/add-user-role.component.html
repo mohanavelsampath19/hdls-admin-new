@@ -1,30 +1,28 @@
 <div id="hdls-add-user-role">
-  <div class="hdls-add-user-section">
-    <h3 class="hdls-add-user-heading">Add User</h3>
+  <div class="hdls-add-user-section" *ngIf="!isDeleteUserDetails">
+    <h3 class="hdls-add-user-heading">{{isEditUserDetails ? 'Edit User':'Add User'}}</h3>
     <form [formGroup]="addUserGroup" novalidate #myform="ngForm">
       <div class="hdls-user-group">
         <div class="hdls-user-fields">
-          <mat-form-field class="hdls-form-field" appearance="fill">
-            <mat-label>User Name</mat-label>
-            <input
-              matInput
-              formControlName="username"
-              class="hdls-form-input"
-              placeholder="User Name"
-              required
-            />
-            <!-- <p
-              class="hdls-error"
-              *ngIf="
-                addUserGroup.controls.userName.invalid &&
-                (addUserGroup.controls.userName.dirty ||
-                  addUserGroup.controls.userName.touched) &&
-                myform.submitted
-              "
-            >
-              Please fill the userName
-            </p> -->
-          </mat-form-field>
+          <div class="hdls-user-container">
+            <mat-form-field class="hdls-form-field" appearance="fill">
+              <mat-label>User Name</mat-label>
+              <input
+                matInput
+                formControlName="username"
+                class="hdls-form-input"
+                placeholder="User Name"
+                (keyup)="checkForAvailable()"
+                [readonly]="isEditUserDetails==true"
+                required
+              />
+             
+            </mat-form-field>
+            <p class="hdls-error" *ngIf="userAlreadyExist==true && isEditUserDetails==false">
+            This username already exist
+            </p>
+          </div>
+          
           <mat-form-field class="hdls-form-field" appearance="fill">
             <mat-label>User Email</mat-label>
             <input
@@ -52,13 +50,14 @@
             <mat-label>Password</mat-label>
             <input
               matInput
-              type="password"
+              type="{{togglePassword ? 'text':'password'}}"
               formControlName="password"
               class="hdls-form-input"
               name="totalrooms"
               placeholder="Password"
               required
             />
+            <mat-icon matSuffix (click)="viewPassword()">visibility</mat-icon>
           </mat-form-field>
           <mat-form-field class="hdls-form-field" appearance="fill">
             <mat-label>Hotel</mat-label>
@@ -84,8 +83,18 @@
       </div>
       <div class="hdls-user-button">
         <button mat-raised-button mat-dialog-close>Cancel</button>
-        <button mat-raised-button (click)="saveUser()" [mat-dialog-close]="true">Add User</button>
+        <button mat-raised-button (click)="saveUser()" [disabled]="userAlreadyExist">{{isEditUserDetails ? 'Edit User':'Add User'}}</button>
       </div>
     </form>
+  </div>
+  <div class="hdls-add-user-section" *ngIf="isDeleteUserDetails">
+    <h3 class="hdls-add-user-heading">Delete user confirmation</h3>
+      <div>
+        <p>Are you sure you want to delete <strong>{{data?.userDetails?.username}}</strong></p>
+      </div>
+      <div class="hdls-user-button">
+        <button mat-raised-button mat-dialog-close color="primary">Cancel</button>
+        <button mat-raised-button (click)="deleteUser()" color="secondary">Yes</button>
+      </div>
   </div>
 </div>

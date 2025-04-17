@@ -28,9 +28,12 @@ export class SidenavComponent implements OnInit {
   };
   inventoryList: any = [];
   @Output() routeToLink: EventEmitter<any> = new EventEmitter();
+  isSuperUser:boolean = false;
   constructor(private _router: Router, private _inventory: InventoryService) {
     let loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
     let availableFeatures = JSON.parse(loginResponseObj.loginRes.available_features).available_features;
+    let availableInventory = JSON.parse(loginResponseObj.loginRes.available_features).hotelId;
+    this.isSuperUser = localStorage.getItem('logged-in-user')=='hdlsadmin'?true:false;
     this.isMembershipPermissionExist = availableFeatures.indexOf('membership')>-1 ? true: false;
     this.isReportPermissionExist = availableFeatures.indexOf('reports')>-1 ? true: false;
     this.isBookingPermissionExist = availableFeatures.indexOf("bookings")>-1 ? true: false;
@@ -39,7 +42,12 @@ export class SidenavComponent implements OnInit {
     this.isFacilityPermissionExist = availableFeatures.indexOf("facility")>-1 ? true: false;
     this.isUserRolePermissionExist = localStorage.getItem('logged-in-user')=='hdlsadmin' ? true:false;
     this._inventory.getInventoryList().subscribe((inventoryList: any) => {
-      this.inventoryList = inventoryList.response;
+      if(localStorage.getItem('logged-in-user')=='hdlsadmin'){
+        this.inventoryList = inventoryList.response;
+      }else{
+        this.inventoryList = inventoryList.response.filter((hotel:any)=>availableInventory==hotel.hotel_id);
+      }
+      
     },(error:any)=>{
       console.log(error);
     });

@@ -216,16 +216,24 @@ export class InventoryComponent implements OnInit {
     // this._inventoryService.currentInventory.subscribe((currentInventory)=>{
     //   console.log(currentInventory);
     // });
-    this._inventoryService.getInventoryList().subscribe((res:any)=> {
-      res.response.forEach((property:any)=>{
+    let loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
+    let availableInventory = JSON.parse(loginResponseObj.loginRes.available_features).hotelId;
+    this._inventoryService.getInventoryList().subscribe((inventoryListRes:any)=> {
+      let inventoryList;
+      if(localStorage.getItem('logged-in-user')=='hdlsadmin'){
+        inventoryList = inventoryListRes.response;
+      }else{
+        inventoryList = inventoryListRes.response.filter((hotel:any)=>availableInventory==hotel.hotel_id);
+      }
+      inventoryList.forEach((property:any)=>{
         property.logo = environment.imageUrl+"/"+property.logo;
         property.roomCount = property.rooms.reduce(function(acc:number,item:any){
           return acc = acc+item.totalrooms;
         },0);
       });
-      this.dataSource = new MatTableDataSource(res.response);
+      this.dataSource = new MatTableDataSource(inventoryList);
       this.dataSource.paginator = this.paginator;
-      this.propertyList = res.response;
+      this.propertyList = inventoryList;
     },(error:any)=>{
       console.log(error);
     })

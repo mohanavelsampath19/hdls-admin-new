@@ -68,19 +68,36 @@
         </mat-expansion-panel>
       </div>
     </div>
+
     <div class="nav-item" *ngIf="isInventoryPermisssionExist==true">
+
       <div class="expansionPanel">
-        <mat-expansion-panel >
-          <mat-expansion-panel-header [ngClass]="{active:myMenu.inventory}" (click)="goToLink('/inventory','inventory')">
-            <mat-panel-title>
-              <mat-icon class="icon">inventory</mat-icon>
-              <span class="nav-item-span">Inventory</span>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="layout" *ngFor="let inventory of inventoryList" (click)="goToLink('/hotels','hotels',inventory.hotel_id)">
-            <span class="nav-item-span">{{inventory.hotelname}}</span>
-          </div>
-        </mat-expansion-panel>
+        <div *ngIf="isSuperUser">
+          <mat-expansion-panel >
+              <mat-expansion-panel-header [ngClass]="{active:myMenu.inventory}" (click)="goToLink('/inventory','inventory')">
+                <mat-panel-title>
+                  <mat-icon class="icon">inventory</mat-icon>
+                  <span class="nav-item-span">Inventory</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="layout" *ngFor="let inventory of inventoryList" (click)="goToLink('/hotels','hotels',inventory.hotel_id)">
+                <span class="nav-item-span">{{inventory.hotelname}}</span>
+              </div>
+          </mat-expansion-panel>
+        </div>
+        <div *ngIf="!isSuperUser">
+          <mat-expansion-panel >
+              <mat-expansion-panel-header [ngClass]="{active:myMenu.inventory}">
+                <mat-panel-title>
+                  <mat-icon class="icon">inventory</mat-icon>
+                  <span class="nav-item-span">Inventory</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="layout" *ngFor="let inventory of inventoryList" (click)="goToLink('/hotels','hotels',inventory.hotel_id)">
+                <span class="nav-item-span">{{inventory.hotelname}}</span>
+              </div>
+          </mat-expansion-panel>
+        </div>
       </div>
     </div>
     <div class="nav-item" (click)="goToLink('/facilities','facilities')" *ngIf="isFacilityPermissionExist==true">
