@@ -99,11 +99,22 @@ export class BookingsComponent implements OnInit {
     }
 
     this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
-      this.dataSource = new MatTableDataSource(res.response.bookingHistory);
-       this.dataSource.paginator = this.paginator;
+      const loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
+      const availableInventory = JSON.parse(loginResponseObj.loginRes.available_features || {}).hotelId ?? 0;
+      const isSuperUser = localStorage.getItem('logged-in-user') === 'hdlsadmin'? true : false;
+      const getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
+      this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
+      this.dataSource.paginator = this.paginator;
     })
   }
 
+  getHotelRelatedBookings(hotel_id:any, booking_data:any, userType:any) {
+    if(userType) {
+      return booking_data;
+    }
+    const getFilteredBookings = booking_data.filter((booking_info:any) => booking_info.hotelid === hotel_id);
+    return getFilteredBookings;
+  }
   // ngAfterViewInit() {
   //   this.dataSource.paginator = this.paginator;
   // }
