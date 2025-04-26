@@ -37,11 +37,11 @@ export class BookingsComponent implements OnInit {
   displayedColumns: string[] = [
     'property_name',
     'property_id',
-    'room_type',
+    'checkin',
+    'bookingdate',
     'customername',
     'specialrequest',
     'amount',
-    'hotel_confirmation_number',
     'remarks',
     'status',
     'action',

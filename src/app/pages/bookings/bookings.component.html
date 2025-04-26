@@ -92,11 +92,11 @@
         </ng-container>
 
         
-        <ng-container matColumnDef="room_type">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Room Type</th>
-          <td mat-cell *matCellDef="let element">
+        <ng-container matColumnDef="checkin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="check-in-column">Check-In & <br> Check-out</th>
+          <td mat-cell *matCellDef="let element" class="check-in-column">
             <div *ngIf="!element.isLoading">
-              {{ element?.rooms?.roomtitle }}
+              {{ element?.start_at | date:'Y-MM-dd' }} <br> {{ element?.end_at | date:'Y-MM-dd' }} 
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -128,13 +128,13 @@
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
-        <ng-container matColumnDef="hotel_confirmation_number">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Hotel Confirmation Number
+        <ng-container matColumnDef="bookingdate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="booking-date-column">
+            Booking Date 
           </th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading">
-              {{ element.bookingid }}
+              {{ element.created_at | date:'Y-MM-dd HH:mm a' }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
