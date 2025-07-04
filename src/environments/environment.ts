@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost/',
+  //baseUrl: 'https://stage.tribeloyalty.my/',
+  baseUrl: 'http://localhost:443/',
   imageUrl: 'https://cloud.tribeloyalty.my/upload',
   socketUrl: '',
   // imageUrl: 'http://localhost:5000/upload'

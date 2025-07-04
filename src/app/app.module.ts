@@ -79,6 +79,10 @@ import { AddUserRoleComponent } from './components/common/add-user-role/add-user
 import { CommonModule } from '@angular/common';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { PermissionsPipe } from './pipes/hotelusers/permissions.pipe';
+import { PointsSummary } from './report/points-summary/points-summary.component';
+import { MemberDetailsComponent } from './report/member-details/member-details.component';
+import { BookingDetailsComponent } from './report/booking-details/booking-details.component';
+
 initializeApp(environment.firebase);
 
 const config: SocketIoConfig = {
@@ -123,6 +127,9 @@ const config: SocketIoConfig = {
     AddUserComponent,
     AddUserRoleComponent,
     PermissionsPipe,
+    PointsSummary,
+    MemberDetailsComponent,
+    BookingDetailsComponent
   ],
   imports: [
     CommonModule,

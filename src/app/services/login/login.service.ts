@@ -35,4 +35,8 @@ export class LoginService {
     }
   }
 
+  getCustomerDetails(customerid:any) {
+    return this._http.get(environment.baseUrl + 'api/customers/profiledetails?customerid='+customerid);
+  }
+
 }
