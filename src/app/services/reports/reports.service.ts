@@ -25,4 +25,8 @@ export class ReportsService {
   getExternalPaymentList(userId:any){
     return this._http.get(environment.baseUrl +'api/externalpayment/getexternalpayment?userId='+userId);
   }
+
+  getPointsSummary() {
+    return this._http.get(environment.baseUrl + 'api/report/getpointsummary');
+  }
 }

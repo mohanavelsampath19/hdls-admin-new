@@ -79,8 +79,15 @@ import { AddUserRoleComponent } from './components/common/add-user-role/add-user
 import { CommonModule } from '@angular/common';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { PermissionsPipe } from './pipes/hotelusers/permissions.pipe';
+
+import { PointsSummary } from './report/points-summary/points-summary.component';
+import { MemberDetailsComponent } from './report/member-details/member-details.component';
+import { BookingDetailsComponent } from './report/booking-details/booking-details.component';
+
+
 import { SpecialvouchersComponent } from './pages/specialvouchers/specialvouchers.component';
 import { CouponGenerateComponent } from './components/popups/coupon-generate/coupon-generate.component';
+
 initializeApp(environment.firebase);
 
 // const config: SocketIoConfig = {
@@ -125,6 +132,9 @@ initializeApp(environment.firebase);
     AddUserComponent,
     AddUserRoleComponent,
     PermissionsPipe,
+    PointsSummary,
+    MemberDetailsComponent,
+    BookingDetailsComponent
     SpecialvouchersComponent,
     CouponGenerateComponent,
   ],

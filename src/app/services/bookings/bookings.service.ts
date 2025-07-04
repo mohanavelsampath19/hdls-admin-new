@@ -21,4 +21,8 @@ export class BookingsService {
       reason
     })
   }
+
+  getUserBookingHistory(user_id:any) {
+    return this._http.get(environment.baseUrl + `api/booking/getbookinghistory?userId=${user_id}`);
+  }
 }

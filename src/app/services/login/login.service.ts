@@ -34,6 +34,11 @@ export class LoginService {
       return this._http.get(environment.baseUrl + 'api/hoteluser/gethoteluserlist');
     }
   }
+
+  getCustomerDetails(customerid:any) {
+    return this._http.get(environment.baseUrl + 'api/customers/profiledetails?customerid='+customerid);
+  }
+
   validateRefferenceCode(refCode:any){
     return this._http.get(environment.baseUrl + 'api/customers/validatereferralcode?referral_code='+refCode);
   }
