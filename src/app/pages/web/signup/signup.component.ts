@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 import { LoginService } from 'src/app/services/login/login.service';
@@ -11,7 +12,10 @@ import { LoginService } from 'src/app/services/login/login.service';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-
+  isCouponCodeEntered:boolean = false;
+  isValidCode:boolean = true;
+  isValidated:boolean = false;
+  referenceId:number = 0;
   signupForm:FormGroup = new FormGroup({
     firstname:new FormControl('', Validators.required),
     lastname:new FormControl('', Validators.required),
@@ -19,13 +23,32 @@ export class SignupComponent implements OnInit {
     email:new FormControl(''),
     referenceCode:new FormControl('')
   });
-  constructor(private _router:ActivatedRoute, private _routing:Router, private _loginService:LoginService,private _dialog: MatDialog) {
+  isCouponCodeValid:boolean = false;
+  constructor(private _router:ActivatedRoute, private _routing:Router, private _loginService:LoginService,private _dialog: MatDialog, private _snackbar: MatSnackBar,) {
     this._router.queryParams.subscribe((queryParam:any)=>{
       this.signupForm.patchValue({referenceCode:queryParam.refid})
     });
    }
 
   ngOnInit(): void {
+    this.signupForm.get('referenceCode')?.valueChanges.subscribe(value => {
+      
+      const control = this.signupForm.get('referenceCode');
+      
+      if (value && value.trim() !== '') {
+        this.isCouponCodeEntered = true;
+        control?.setValidators([Validators.required]);
+        this.isValidCode = false;
+        this.isValidated = false;
+      } else {
+        // Clear validators if field is empty
+        this.isCouponCodeEntered = false;
+        control?.clearValidators();
+        this.isValidCode = true;
+      }
+  
+      control?.updateValueAndValidity({ emitEvent: false });
+    });
   }
   get first(): any {
     return this.signupForm.get('firstname');
@@ -44,7 +67,7 @@ export class SignupComponent implements OnInit {
   }
   submitForm(){
     console.log(this.signupForm.value);
-    this._loginService.signupUser({...this.signupForm.value}).subscribe((apiRes:any)=>{
+    this._loginService.signupUser({...this.signupForm.value},this.referenceId).subscribe((apiRes:any)=>{
       if(apiRes.status == 0){
         this._routing.navigate(['/success']);
       }else if(apiRes.status == 1){
@@ -63,5 +86,19 @@ export class SignupComponent implements OnInit {
       }
     });
     
+  }
+  validateCode(){
+    this.isValidated = false;
+    this._loginService.validateRefferenceCode(this.referenceCode.value).subscribe((apiRes:any)=>{
+      this.isValidated = true;
+      if(apiRes.status == 0){
+        this.isValidCode = true;
+        this.referenceId = apiRes.referenceId;
+        this._snackbar.open('Reference Code is valid', 'dismiss');
+      }else{
+        this.isValidCode = false;
+        this._snackbar.open('Invalid refferal code', 'dismiss');
+      }
+    });
   }
 }

@@ -16,8 +16,8 @@ export class LoginService {
   updateToken(userid:any,userToken:string){
     return this._http.post(environment.baseUrl + 'api/hoteluser/updatetoken', {userid,loginToken:userToken});
   }
-  signupUser(userdetails:any){
-    return this._http.post(environment.baseUrl + 'api/customers/signup',{...userdetails});
+  signupUser(userdetails:any,referenceId:any) {
+    return this._http.post(environment.baseUrl + 'api/customers/signup',{...userdetails,referenceId});
   }
 
   savenewuserrole(userdetails:any) {
@@ -34,5 +34,7 @@ export class LoginService {
       return this._http.get(environment.baseUrl + 'api/hoteluser/gethoteluserlist');
     }
   }
-
+  validateRefferenceCode(refCode:any){
+    return this._http.get(environment.baseUrl + 'api/customers/validatereferralcode?referral_code='+refCode);
+  }
 }

@@ -112,6 +112,13 @@
         <span class="nav-item-span">User Role Management</span>
       </div>
     </div>
+    <div class="nav-item" (click)="goToLink('/special-vouchers','special-vouchers')" *ngIf="isUserRolePermissionExist==true">
+      <div class="layout" [ngClass]="{active:myMenu.specialvouchers}">
+        <mat-icon class="icon">loyalty</mat-icon>
+        <span class="nav-item-span">Special Coupon generation</span>
+      </div>
+    </div>
+    
     <div class="nav-item" (click)="logout($event)">
         <div class="layout">
           <mat-icon class="icon">logout</mat-icon>

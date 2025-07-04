@@ -1,0 +1,110 @@
+<section id="hdls-membership-container">
+
+    <div class="hdls-header-search-section">
+      <div class="hdls-search-section">
+        <form (submit)="setSearchValue($event)" class="hdls-search-field">
+          <input
+            type="text"
+            (change)="getSearchDetails($event)"
+            matInput
+            placeholder="Search"
+          />
+          <span>
+            <a href="#" (click)="setSearchValue($event)">
+              <img src="../../../assets/images/search.png" alt="Search" />
+            </a>
+          </span>
+        </form>
+      </div>
+      <a class="add-button" (click)="createTribeCoupon()">
+        <span>Generate Coupons</span>
+        <img src="../../../assets/images/plus.png" alt="Add membership" />
+      </a>
+      <a class="add-button" (click)="exportAsExcel()">
+        <span>Download </span>
+        <mat-icon class="icon">download</mat-icon>
+      </a>
+    </div>
+  
+    <div id="hdls-membership-list">
+     
+      <div class="hdls-product-list-section" >
+        <!-- <app-search-field></app-search-field> -->
+        <table mat-table class="hdls-product-table" [dataSource]="dataSource"  matTableExporter *ngIf="!loading">
+          
+          <ng-container matColumnDef="voucher_code">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Coupon Code
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="!element.isLoading">
+                {{ element.voucher_key }}
+              </div>
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="membership_list">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Membership List
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="!element.isLoading">
+                <div *ngFor="let membership of element.membershipListRes">
+                  {{ membership.membershipname }}
+                </div>
+              </div>
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+  
+          
+  
+          
+          <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Generated At
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="!element.isLoading">
+                {{ element.created_at | date: 'medium' }}
+              </div>
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+  
+          
+          <ng-container matColumnDef="claimed_by">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Claimed By</th>
+            <td mat-cell *matCellDef="let element">
+              {{element?.claimed_user || '--'}}
+              <div *ngIf="element.isLoading" class="loading-data"></div>
+            </td>
+          </ng-container>
+         
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row  *matRowDef="let row; columns: displayedColumns" class="hdls-table-row"></tr>
+        </table>
+        <table>
+          <tr *ngIf="!dataSource.data.length && !loading">
+            <td class="hdls-no-records-detail">No Records Found!</td>
+          </tr>
+        </table>
+        <div class="loader-container" *ngIf="loading">
+          <div class="loader-text">Loading...</div>
+          <div class="loader">
+  
+          </div>
+      </div>
+        <ng-container>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"
+          (page)="changePage($event)" #paginator>
+        </mat-paginator>
+        </ng-container>
+
+      </div>
+      
+    </div>
+  
+  </section>
+  
