@@ -20,7 +20,8 @@ export class AddMembershipComponent implements OnInit {
     description: new FormControl('', Validators.required),
     evouchers:new FormControl(),
     amount: new FormControl('', Validators.required),
-    stocks: new FormControl('', Validators.required)
+    stocks: new FormControl('', Validators.required),
+    isOwnerVoucher: new FormControl('', Validators.required),
   });
   
   inventoryList:any;

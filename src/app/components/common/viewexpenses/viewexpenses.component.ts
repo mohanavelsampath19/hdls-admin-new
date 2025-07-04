@@ -16,7 +16,6 @@ export class ViewexpensesComponent implements OnInit {
   isErrorMsg:boolean = false;
   isLoading:boolean = false;
   displayedColumns: string[] = ['sno', 'desc', 'amount','date'];
-  readonly dialogRef = inject(MatDialogRef<PointsTableComponent>);
   paymentFormGroup = new FormGroup({
     paymentDesc: new FormControl(),
     amount: new FormControl(),
@@ -24,7 +23,7 @@ export class ViewexpensesComponent implements OnInit {
   })
   closePopup = new EventEmitter();
   viewExpenseList:Array<any> = [];
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _reportService:ReportsService) { 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _reportService:ReportsService, private dialogRef: MatDialogRef<ViewexpensesComponent>) { 
     console.log(this.data);
   }
 

@@ -217,7 +217,10 @@ export class InventoryComponent implements OnInit {
     //   console.log(currentInventory);
     // });
     let loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
-    let availableInventory = JSON.parse(loginResponseObj.loginRes.available_features).hotelId;
+    let availableInventory:any;
+    if(localStorage.getItem('logged-in-user')!='hdlsadmin'){
+        availableInventory = JSON.parse(loginResponseObj.loginRes.available_features).hotelId;
+    }
     this._inventoryService.getInventoryList().subscribe((inventoryListRes:any)=> {
       let inventoryList;
       if(localStorage.getItem('logged-in-user')=='hdlsadmin'){

@@ -48,7 +48,7 @@ import { EditMembershipComponent } from './pages/membership/edit-membership/edit
 
 import { EditVouchersComponent } from './pages/vouchers/edit-vouchers/edit-vouchers.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { environment } from '../environments/environment';
 import { initializeApp } from 'firebase/app';
@@ -79,18 +79,23 @@ import { AddUserRoleComponent } from './components/common/add-user-role/add-user
 import { CommonModule } from '@angular/common';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { PermissionsPipe } from './pipes/hotelusers/permissions.pipe';
+
 import { PointsSummary } from './report/points-summary/points-summary.component';
 import { MemberDetailsComponent } from './report/member-details/member-details.component';
 import { BookingDetailsComponent } from './report/booking-details/booking-details.component';
 
+
+import { SpecialvouchersComponent } from './pages/specialvouchers/specialvouchers.component';
+import { CouponGenerateComponent } from './components/popups/coupon-generate/coupon-generate.component';
+
 initializeApp(environment.firebase);
 
-const config: SocketIoConfig = {
-  url: environment.socketUrl, // socket server url;
-  options: {
-    transports: ['websocket'],
-  },
-};
+// const config: SocketIoConfig = {
+//   url: environment.socketUrl, // socket server url;
+//   options: {
+//     transports: ['websocket'],
+//   },
+// };
 
 @NgModule({
   declarations: [
@@ -130,6 +135,8 @@ const config: SocketIoConfig = {
     PointsSummary,
     MemberDetailsComponent,
     BookingDetailsComponent
+    SpecialvouchersComponent,
+    CouponGenerateComponent,
   ],
   imports: [
     CommonModule,
@@ -172,7 +179,7 @@ const config: SocketIoConfig = {
     // }),
     GooglePlaceModule,
     MatSlideToggleModule,
-    SocketIoModule.forRoot(config),
+    // SocketIoModule.forRoot(config),
     IvyCarouselModule,
     ImageCropperModule,
     MatExpansionModule,

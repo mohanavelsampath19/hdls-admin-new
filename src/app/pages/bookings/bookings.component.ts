@@ -99,12 +99,20 @@ export class BookingsComponent implements OnInit {
     }
 
     this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
-      const loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
-      const availableInventory = JSON.parse(loginResponseObj.loginRes.available_features || {}).hotelId ?? 0;
       const isSuperUser = localStorage.getItem('logged-in-user') === 'hdlsadmin'? true : false;
-      const getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
-      this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
-      this.dataSource.paginator = this.paginator;
+      const loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
+      if(isSuperUser){
+            let availableInventory = 0;
+            let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
+            this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
+            this.dataSource.paginator = this.paginator;
+      }else{
+        let availableInventory = JSON.parse(loginResponseObj.loginRes.available_features || {}).hotelId ?? 0;
+        let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
+        this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
+        this.dataSource.paginator = this.paginator;
+      }
+
     })
   }
 

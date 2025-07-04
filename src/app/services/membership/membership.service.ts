@@ -110,6 +110,15 @@ export class MembershipService {
       status
     });
   }
+  getTribeCouponList() {
+    return this._http.get(environment.baseUrl+'api/vouchers/gettribecoupons');
+  }
+  getTribeMembershipList() {
+    return this._http.get(environment.baseUrl+'api/vouchers/gettribememberships');
+  }
+  generateMembershipCoupon(couponGenerateFormValue:any) {
+    return this._http.post(environment.baseUrl+'api/vouchers/createownervouchers', {...couponGenerateFormValue});
+  }
 }
 
 export interface MemberShip {

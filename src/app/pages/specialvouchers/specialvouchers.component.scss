@@ -1,0 +1,102 @@
+@import "../../../theme/vars.scss";
+
+.category-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    margin-bottom: 20px;
+    a {
+      width: 120px;
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      // box-shadow: $primary-shadow;
+      background-color: #fff;
+      color: #818181;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .selected-item {
+      background-color: $primary-background-color;
+      color: $secondary-font-color;
+    }
+  }
+
+  .hdls-search-section {
+    width: 380px;
+    margin: 10px 0;
+    background-color: $secondary-font-color;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    .hdls-search-field {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 5px 10px;
+      input {
+        border: none;
+        height: 30px;
+        width: 100%;
+        padding-left: 5px;
+        font-size: 20px;
+        &:hover,
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .hdls-header-search-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    flex-basis: 50%;
+    .add-button {
+      height: 47px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: $primary-background-color;
+      color: #fff;
+      font-size: 18px;
+      margin: 0 10px;
+      padding: 1px 25px;
+      border-radius: 5px;
+      border: none;
+      text-decoration: none;
+      span {
+        margin-right: 10px;
+      }
+    }
+  }
+  .membership-image{
+    width: 100px;
+    img{
+      width: 100%;
+    }
+  }
+  .loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: 
+      radial-gradient(farthest-side,#1f1f1e 94%,#0000) top/8px 8px no-repeat,
+      conic-gradient(#0000 30%,#1f1f1e);
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
+    animation: l13 1s infinite linear;
+  }
+  @keyframes l13{ 
+    100%{transform: rotate(1turn)}
+  }
+  .loader-container {
+    margin-top: 20px;
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
