@@ -34,9 +34,18 @@
                         <label>Reference Code </label>
                         <input type="text" name="referenceCode" formControlName="referenceCode" />
                     </div>
+                    <div class="validate-btn-container">
+                        <button class="validate-btn" mat-raised-button color="primary" (click)="validateCode()" [disabled]="!isCouponCodeEntered">Validate</button>
+                    </div>
+                </div>
+
+                <div class="form-two-group" *ngIf="isCouponCodeEntered">
+                    <div class="form-group" *ngIf="isValidated">
+                        <label class="message-label"><mat-icon>{{isValidCode==true?"check_circle":"warning"}}</mat-icon>{{isValidCode==true ? 'Valid Coupon code':'Invalid coupon code'}}</label>
+                    </div>
                 </div>
                 <div class="form-two-group">
-                    <button class="signup-btn" (click)="submitForm()" [disabled]="signupForm.valid==false">Sign Up</button>
+                    <button class="signup-btn" (click)="submitForm()" [disabled]="signupForm.valid==false || isValidCode==false">Sign Up</button>
                     <!-- <div class="google-signup">
                         <div class="google-signup-button">
                             <div class="google-signup-icon">

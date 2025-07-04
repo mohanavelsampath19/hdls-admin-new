@@ -20,7 +20,8 @@ export class EditMembershipComponent implements OnInit {
     description: new FormControl('', Validators.required),
     evouchers:new FormControl(),
     amount: new FormControl('', Validators.required),
-    stocks: new FormControl('', Validators.required)
+    stocks: new FormControl('', Validators.required),
+    isOwnerVoucher: new FormControl(false, Validators.required),
   });
 
   inventoryList:any=[];
@@ -55,6 +56,7 @@ export class EditMembershipComponent implements OnInit {
           evouchers: JSON.parse(this.membershipDetail.evouchers),
           amount: this.membershipDetail.amount,
           stocks: this.membershipDetail.stocks,
+          isOwnerVoucher: this.membershipDetail.isOwnerVoucher,
         });
 
       })

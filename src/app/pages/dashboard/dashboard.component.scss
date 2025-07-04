@@ -1,0 +1,46 @@
+.gantt-container {
+    font-family: sans-serif;
+    overflow-x: auto;
+  }
+  
+  .gantt-header {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    background: #f3f4f6;
+  }
+  
+  .gantt-cell {
+    flex: 0 0 auto;
+    width: 80px;
+    text-align: center;
+    font-size: 12px;
+    padding: 4px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .gantt-rows {
+    position: relative;
+  }
+  
+  .gantt-row {
+    position: relative;
+    height: 40px;
+    border-bottom: 1px solid #eee;
+    width: 80px;
+  }
+  
+  .gantt-task {
+    position: absolute;
+    height: 28px;
+    top: 6px;
+    border-radius: 4px;
+    color: white;
+    padding-left: 6px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    overflow: hidden;
+  }
+  .week-separator {
+    border-left: 2px solid #4b5563;
+  }

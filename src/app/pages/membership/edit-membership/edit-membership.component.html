@@ -63,7 +63,14 @@
                     <input matInput formControlName="amount" type="number" name="amount" min="1"/>
                 </mat-form-field>
             </div>
-
+            <div>
+                <div class="hdls-form-group">
+                    <mat-label>Is Special Membership ? </mat-label>
+                    <mat-slide-toggle formControlName="isOwnerVoucher" [checked]="false">{{editMembership.get('isOwnerVoucher')!.value == true ? 'Yes I agree':'No'}}</mat-slide-toggle>
+                </div>
+                {{editMembership.value | json}}
+            </div>
+            
             <div>
                 <button mat-raised-button class="hdls-cancel-btn" (click)="backToMembership()">Cancel</button>
                 <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="savemembership()">Submit</button>

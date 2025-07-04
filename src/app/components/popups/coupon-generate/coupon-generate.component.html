@@ -1,0 +1,33 @@
+<section id="hdls-editmembership-container">
+    <h3 class="hdls-breadcrumb-title">Create Tribe coupons </h3>
+    <div class="new-membership-form-container">
+        <form [formGroup]="couponGenerateForm" class=" {{loading?'loading':''}}">
+            
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Stocks *</mat-label>
+                    <input matInput formControlName="count" type="number" name="count" min="1"/>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill" >
+                    <mat-label>Tribe membership</mat-label>
+                    <mat-select multiple formControlName="membershipList">
+                      <mat-option *ngFor="let membership of tribeMembershipList" [value]="membership">{{membership.membershipname}}</mat-option>
+                    </mat-select>
+                    <span *ngIf="tribeMembershipList?.length==0">No results found</span>
+                  </mat-form-field>
+            </div>
+            <div class="btn-container">
+                <button mat-raised-button color="primary" class="hdls-nxt-btn" (click)="generateCoupon()" [disabled]="couponGenerateForm.invalid">Submit</button>
+                <button mat-raised-button class="hdls-cancel-btn" (click)="closePopup()">Cancel</button>
+            </div>
+        </form>
+        <div class="loader-container" *ngIf="loading">
+            <div class="loader-text">Generating coupons...</div>
+            <div class="loader">
+
+            </div>
+        </div>
+    </div>
+</section>

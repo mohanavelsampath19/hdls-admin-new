@@ -24,7 +24,8 @@ export class SidenavComponent implements OnInit {
     pointsystem: true,
     bookings: false,
     inventory: false,
-    addUser: false
+    addUser: false,
+    specialvouchers:false
   };
   inventoryList: any = [];
   @Output() routeToLink: EventEmitter<any> = new EventEmitter();

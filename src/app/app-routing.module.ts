@@ -26,6 +26,7 @@ import { PointsTableComponent } from './components/common/points-table/points-ta
 import { TierpointsComponent } from './pages/tierpoints/tierpoints.component';
 import { PointsexplanationComponent } from './pages/pointsexplanation/pointsexplanation.component';
 import { AddUserComponent } from './pages/add-user/add-user.component';
+import { SpecialvouchersComponent } from './pages/specialvouchers/specialvouchers.component';
 
 
 const routes: Routes = [
@@ -143,6 +144,9 @@ const routes: Routes = [
       {
         path: 'add-user',
         component: AddUserComponent
+      },{
+        path:'special-vouchers',
+        component:SpecialvouchersComponent
       }
     ],
   }

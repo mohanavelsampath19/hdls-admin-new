@@ -1,6 +1,5 @@
 import { Component, EventEmitter, inject, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -12,9 +11,8 @@ export class PointsTableComponent implements OnInit {
   closePopup = new EventEmitter();
   myDaysList:any = [];
   isCheckAddValid:boolean = true;
-  readonly dialogRef = inject(MatDialogRef<PointsTableComponent>);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<PointsTableComponent>
 ) { }
 
   ngOnInit(): void {
