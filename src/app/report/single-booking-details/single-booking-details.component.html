@@ -41,7 +41,7 @@
             </th>
             <td mat-cell *matCellDef="let element">
               <p *ngIf="!element.isLoading">
-                {{ element.bookingId }}
+                {{ element.bookingid }}
               </p>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -65,7 +65,7 @@
             </th>
             <td mat-cell *matCellDef="let element">
               <p *ngIf="!element.isLoading">
-                {{ element.guestName }}
+                {{ element.customers?.firstname ? (element.customers.firstname+","+element.customers.lastname) : '--' }}
               </p>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -75,7 +75,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</th>
             <td mat-cell *matCellDef="let element">
               <div *ngIf="!element.isLoading">
-                {{ element?.contactNumber }}
+                {{ element?.mobilenumber }}
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -85,7 +85,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Hotel Name</th>
             <td mat-cell *matCellDef="let element">
               <div *ngIf="!element.isLoading">
-                {{ element?.hotelName }}
+                {{ element?.hotelmaster?.hotelname }}
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -94,7 +94,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Room</th>
             <td mat-cell *matCellDef="let element">
               <div *ngIf="!element.isLoading">
-                {{ element?.roomName }}
+                {{ element?.rooms.roomtitle }}
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -104,7 +104,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="check-in-column">Check-In</th>
             <td mat-cell *matCellDef="let element" class="check-in-column">
               <div *ngIf="!element.isLoading">
-                {{ element?.dateOfStay?.startDate | date:'Y-MM-dd' }} 
+                {{ element?.start_at | date:'Y-MM-dd' }} 
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -113,7 +113,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="check-in-column">Check-out</th>
             <td mat-cell *matCellDef="let element" class="check-in-column">
               <div *ngIf="!element.isLoading">
-                {{ element?.dateOfStay?.endDate | date:'Y-MM-dd' }} 
+                {{ element?.end_at | date:'Y-MM-dd' }} 
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -122,7 +122,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Booking Date</th>
             <td mat-cell *matCellDef="let element">
               <div *ngIf="!element.isLoading">
-                {{ element?.booked_date | date: 'Y-MM-dd' }}
+                {{ element?.created_at | date: 'Y-MM-dd' }}
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -132,7 +132,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
             <td mat-cell *matCellDef="let element">
               <div *ngIf="!element.isLoading">
-                {{ element?.offerPrice }}
+                {{ element?.amount }}
               </div>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
@@ -144,7 +144,7 @@
             </th>
             <td mat-cell *matCellDef="let element">
               <p *ngIf="!element.isLoading">
-                {{ element && element.pointsEarned && element.pointsEarned !== 'null' ? element.pointsEarned : '-' }}
+                {{ element && element.points && element.points !== 'null' ? element.points : '-' }}
               </p>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
