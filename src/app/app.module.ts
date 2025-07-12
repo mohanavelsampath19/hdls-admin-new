@@ -89,6 +89,7 @@ import { SpecialvouchersComponent } from './pages/specialvouchers/specialvoucher
 import { CouponGenerateComponent } from './components/popups/coupon-generate/coupon-generate.component';
 import { HotelOrderSummaryComponent } from './report/hotel-order-summary/hotel-order-summary.component';
 import { SingleBookingDetailsComponent } from './report/single-booking-details/single-booking-details.component';
+import { PointsFilterComponent } from './report/points-filter/points-filter.component';
 
 initializeApp(environment.firebase);
 
@@ -140,7 +141,8 @@ initializeApp(environment.firebase);
     SpecialvouchersComponent,
     CouponGenerateComponent,
     HotelOrderSummaryComponent,
-    SingleBookingDetailsComponent
+    SingleBookingDetailsComponent,
+    PointsFilterComponent
   ],
   imports: [
     CommonModule,

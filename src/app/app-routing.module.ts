@@ -34,6 +34,7 @@ import { BookingDetailsComponent } from './report/booking-details/booking-detail
 import { SpecialvouchersComponent } from './pages/specialvouchers/specialvouchers.component';
 import { HotelOrderSummaryComponent } from './report/hotel-order-summary/hotel-order-summary.component';
 import { SingleBookingDetailsComponent } from './report/single-booking-details/single-booking-details.component';
+import { PointsFilterComponent } from './report/points-filter/points-filter.component';
 
 const routes: Routes = [
   {
@@ -160,6 +161,10 @@ const routes: Routes = [
           {
             path: 'order-booking-detail/:id',
             component: SingleBookingDetailsComponent
+          },
+          {
+            path: 'points-filter',
+            component: PointsFilterComponent
           }
         ]
       },
