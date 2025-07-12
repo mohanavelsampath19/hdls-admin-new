@@ -17,7 +17,7 @@ export class MemberDetailsComponent implements OnInit {
 
    dataSource:any;
     userSearch:any;
-    displayedColumns:any = ['member_id', 'name', 'mobile','membershipname', 'email', 'address', 'city', 'state', 'dob', 'signed_up_date', 'tier', 'points', 'booking_history', 'booking_id', 'current_membership'];
+    displayedColumns:any = ['name', 'mobile','membershipname', 'email', 'address', 'city', 'state', 'dob', 'signed_up_date', 'tier', 'points', 'booking_history', 'current_membership'];
     resultsLength:number=0;
     @ViewChild(MatPaginator)
     paginator: MatPaginator | undefined;
