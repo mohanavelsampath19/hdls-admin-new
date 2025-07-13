@@ -5,21 +5,18 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-points-filter',
-  templateUrl: './points-filter.component.html',
-  styleUrls: ['./points-filter.component.scss']
+  selector: 'app-membership-purchase-report',
+  templateUrl: './membership-purchase-report.component.html',
+  styleUrls: ['./membership-purchase-report.component.scss']
 })
-export class PointsFilterComponent implements OnInit {
-   hotelGroup = new FormGroup({
-      hotelid: new FormControl(''),
-      from_date: new FormControl(''),
-      to_date: new FormControl('')
-    });
+export class MembershipPurchaseReportComponent implements OnInit {
   getSearchValue:string = '';
   selectedCategory: string = 'all';
   memberShipFilters: any = {
@@ -40,38 +37,70 @@ export class PointsFilterComponent implements OnInit {
   ];
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
-  // @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatSort) sort: MatSort
+
   displayedColumns: string[] = [
     'transaction_id',
-    'membership_id',
+    'membership_number',
     'member_name',
     'tier',
-    'status',
-    'points',
+    'membership_package_purchase',
+    'membership_package_id',
     'place',
-    'source',
     'date',
     'time',
-    'amount_paid',
-    'points_worth',
-    'points_expiry',
-    'points_balance',
-    'total_price'
+    'total_price',
+    'points_issued',
+    'status'
   ];
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
+  memberId: number = 0;
+  hotelDetails:any = [];
+  hotelid:any = 0;
 
-  constructor(private _bookingService: BookingsService, private _dialog: MatDialog) {}
+  hotelGroup = new FormGroup({
+    hotelid: new FormControl(''),
+    from_date: new FormControl(''),
+    to_date: new FormControl('')
+  });
+
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private route: ActivatedRoute, private _inventoryService: InventoryService) {
+    this.route.params.subscribe((param:any)=>{
+        this.memberId = param.id;
+    })
+  }
 
   ngOnInit(): void {
     this.getBookingHistory();
+    this.getHotelList();
   }
 
   getHotelBookings() {
-    // const {hotelid, from_date, to_date} = this.hotelGroup.value;
-    // this.getHotelBookingHistory(hotelid, from_date, to_date);
-   }
+   const {hotelid, from_date, to_date} = this.hotelGroup.value;
+   this.getHotelBookingHistory(hotelid, from_date, to_date);
+  }
+
+  getHotelList() {
+    const getCategory = 1;
+      this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
+          this.hotelDetails = res.response.map((hotelData:any) => {
+            return {
+              hotel_id: hotelData.hotel_id,
+              hotel_name: hotelData.hotelname
+            }
+          });
+        },(error:any)=>{
+          console.log(error);
+        })
+  }
+
+  getHotelBookingHistory(hotelid:any, from_date:any, to_date:any) {
+    this._bookingService.getHotelBookingHistory(hotelid, new Date(from_date), new Date(to_date)).subscribe((res:any) => {
+      this.dataSource = new MatTableDataSource(res.response);
+    })
+  }
 
   getSelectedFilter = (value: string) => {
     this.selectedCategory = value;
@@ -95,41 +124,11 @@ export class PointsFilterComponent implements OnInit {
   }
 
   getBookingHistory() {
-    this.onFirstLoad();
+    //this.onFirstLoad();
     let getCategory = 1;
-    switch (this.selectedCategory) {
-      case 'live':
-        getCategory = 1;
-        break;
-      case 'rejected':
-        getCategory = 2;
-        break;
-      case 'all':
-        getCategory = 3;
-        break;
-      case 'cancelled':
-        getCategory = 4;
-        break;
-      default:
-        getCategory = 3;
-        break;
-    }
-
-    this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
-      const isSuperUser = localStorage.getItem('logged-in-user') === 'hdlsadmin'? true : false;
-      const loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
-      if(isSuperUser){
-            let availableInventory = 0;
-            let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
-            this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
-            this.dataSource.paginator = this.paginator;
-      }else{
-        let availableInventory = JSON.parse(loginResponseObj.loginRes.available_features || {}).hotelId ?? 0;
-        let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
-        this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
-        this.dataSource.paginator = this.paginator;
-      }
-
+    this._bookingService.getBookingHistory(1).subscribe((res:any) => {
+      this.dataSource = new MatTableDataSource(res.response.bookingHistory);
+      this.dataSource.paginator = this.paginator;
     })
   }
 
@@ -184,38 +183,6 @@ export class PointsFilterComponent implements OnInit {
 
   openDeleteDialog(event: Event, deleteid: any,bookingStatus:number) {
     event.preventDefault();
-    const dialogRef = this._dialog.open(ConfirmationModalComponent, {data:{bookingStatus:bookingStatus}});
-    const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
-      (data) => {
-        this._dialog.closeAll();
-        if (data.status) {
-          let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 4;
-          this._bookingService.changeBookingStatus(deleteid, status, data.reason).subscribe((res:any)=> {
-            if(res && res.status === 1) {
-              const dialogRef = this._dialog.open(InfoPopupComponent, {
-                data: {
-                  popupText: 'Booking status updated successfully',
-                },
-              });
-              this.getBookingHistory();
-              dialogRef.afterClosed().subscribe(() => {
-              });
-            } else {
-              const dialogRef = this._dialog.open(InfoPopupComponent, {
-                data: {
-                  popupText: 'Please try again later',
-                },
-              });
-              dialogRef.afterClosed().subscribe(() => {
-              });
-            }
-          })
-        }
-      }
-    );
-    dialogRef.afterClosed().subscribe(() => {
-      getDialogRef.unsubscribe();
-    });
   }
 
   getSearchDetails = (event: Event) => {

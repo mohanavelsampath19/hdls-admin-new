@@ -8,13 +8,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 import { FormControl, FormGroup } from '@angular/forms';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
+
 
 @Component({
-  selector: 'app-points-filter',
-  templateUrl: './points-filter.component.html',
-  styleUrls: ['./points-filter.component.scss']
+  selector: 'app-commission-report',
+  templateUrl: './commission-report.component.html',
+  styleUrls: ['./commission-report.component.scss']
 })
-export class PointsFilterComponent implements OnInit {
+
+
+export class CommissionReportComponent implements OnInit {
    hotelGroup = new FormGroup({
       hotelid: new FormControl(''),
       from_date: new FormControl(''),
@@ -61,11 +65,27 @@ export class PointsFilterComponent implements OnInit {
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
+  hotelDetails:any = [];
 
-  constructor(private _bookingService: BookingsService, private _dialog: MatDialog) {}
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private _inventoryService: InventoryService) {}
 
   ngOnInit(): void {
     this.getBookingHistory();
+    this.getHotelList();
+  }
+
+  getHotelList() {
+    const getCategory = 1;
+      this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
+          this.hotelDetails = res.response.map((hotelData:any) => {
+            return {
+              hotel_id: hotelData.hotel_id,
+              hotel_name: hotelData.hotelname
+            }
+          });
+        },(error:any)=>{
+          console.log(error);
+        })
   }
 
   getHotelBookings() {
