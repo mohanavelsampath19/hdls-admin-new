@@ -47,20 +47,18 @@ export class CommissionReportComponent implements OnInit {
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
     'transaction_id',
-    'membership_id',
-    'member_name',
-    'tier',
-    'status',
-    'points',
+    'service_category',
     'place',
-    'source',
+    'member_id',
+    'member_name',
     'date',
     'time',
     'amount_paid',
-    'points_worth',
-    'points_expiry',
-    'points_balance',
-    'total_price'
+    'member_point_charges',
+    'points_issuance_charges',
+    'member_spend_commission',
+    'membership_package_commission',
+    'status'
   ];
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
