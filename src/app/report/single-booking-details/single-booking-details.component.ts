@@ -9,11 +9,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 @Component({
-  selector: 'app-booking-details',
-  templateUrl: './booking-details.component.html',
-  styleUrls: ['./booking-details.component.scss']
+  selector: 'app-single-booking-details',
+  templateUrl: './single-booking-details.component.html',
+  styleUrls: ['./single-booking-details.component.scss']
 })
-export class BookingDetailsComponent implements OnInit {
+export class SingleBookingDetailsComponent implements OnInit {
   getSearchValue:string = '';
   selectedCategory: string = 'all';
   memberShipFilters: any = {
@@ -51,11 +51,11 @@ export class BookingDetailsComponent implements OnInit {
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
-  memberId: number = 0;
+  bookingId: number = 0;
 
   constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private route: ActivatedRoute) {
     this.route.params.subscribe((param:any)=>{
-        this.memberId = param.id;
+        this.bookingId = param.id;
     })
   }
 
@@ -87,8 +87,9 @@ export class BookingDetailsComponent implements OnInit {
   getBookingHistory() {
     //this.onFirstLoad();
     let getCategory = 1;
-    this._bookingService.getUserBookingHistory(this.memberId).subscribe((res:any) => {
-      this.dataSource = new MatTableDataSource(res.bookingHistory);
+    this._bookingService.getBookingDetailsBasedOnId(this.bookingId).subscribe((res:any) => {
+      const tableData = [res];
+      this.dataSource = new MatTableDataSource(tableData);
       this.dataSource.paginator = this.paginator;
     })
   }
@@ -158,3 +159,4 @@ export class BookingDetailsComponent implements OnInit {
     // this.dataSource.filter = filterValue.trim().toLowerCase();
   };
 }
+

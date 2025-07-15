@@ -32,6 +32,11 @@ import { MemberDetailsComponent } from './report/member-details/member-details.c
 import { BookingDetailsComponent } from './report/booking-details/booking-details.component';
 
 import { SpecialvouchersComponent } from './pages/specialvouchers/specialvouchers.component';
+import { HotelOrderSummaryComponent } from './report/hotel-order-summary/hotel-order-summary.component';
+import { SingleBookingDetailsComponent } from './report/single-booking-details/single-booking-details.component';
+import { PointsFilterComponent } from './report/points-filter/points-filter.component';
+import { MembershipPurchaseReportComponent } from './report/membership-purchase-report/membership-purchase-report.component';
+import { CommissionReportComponent } from './report/commission-report/commission-report.component';
 
 const routes: Routes = [
   {
@@ -150,6 +155,26 @@ const routes: Routes = [
           {
             path: 'booking-details/:id',
             component: BookingDetailsComponent
+          },
+          {
+            path: 'hotel-order-summary',
+            component: HotelOrderSummaryComponent
+          },
+          {
+            path: 'order-booking-detail/:id',
+            component: SingleBookingDetailsComponent
+          },
+          {
+            path: 'points-filter',
+            component: PointsFilterComponent
+          },
+          {
+            path: 'membership-purchase-report',
+            component: MembershipPurchaseReportComponent
+          }, 
+          {
+            path: 'commission-report',
+            component: CommissionReportComponent
           }
         ]
       },

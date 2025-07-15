@@ -73,7 +73,7 @@
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
-        <ng-container matColumnDef="member_id">
+        <!-- <ng-container matColumnDef="member_id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 Membership Id
             </th>
@@ -83,7 +83,7 @@
               </p>
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
-          </ng-container>
+          </ng-container> -->
         <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                Email
@@ -177,23 +177,19 @@
              Booking History
             </th>
             <td mat-cell *matCellDef="let element; let i=index">
-              <!-- <p *ngIf="!element.isLoading">
-                {{ (element.created_at | date:'dd-MMM-yyyy')|| '--'}}
-              </p> -->
-              <div *ngIf="element.isLoading" class="loading-data"></div>
+              <!-- <div *ngIf="element.isLoading" class="loading-data"> -->
+                <a [routerLink]="['/report/booking-details', element.customerid]">View Bookings</a>
+              <!-- </div> -->
             </td>
           </ng-container>
-          <ng-container matColumnDef="booking_id">
+          <!-- <ng-container matColumnDef="booking_id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
              Booking ID
             </th>
             <td mat-cell *matCellDef="let element; let i=index">
-              <!-- <p *ngIf="!element.isLoading">
-                {{ (element.created_at | date:'dd-MMM-yyyy')|| '--'}}
-              </p> -->
               <div *ngIf="element.isLoading" class="loading-data"></div>
             </td>
-          </ng-container>
+          </ng-container> -->
           <ng-container matColumnDef="current_membership">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
              Current Membership

@@ -5,15 +5,25 @@ import { BookingsService } from 'src/app/services/bookings/bookings.service';
 import { MemberShip } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
 import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { FormControl, FormGroup } from '@angular/forms';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
+
+
 @Component({
-  selector: 'app-booking-details',
-  templateUrl: './booking-details.component.html',
-  styleUrls: ['./booking-details.component.scss']
+  selector: 'app-commission-report',
+  templateUrl: './commission-report.component.html',
+  styleUrls: ['./commission-report.component.scss']
 })
-export class BookingDetailsComponent implements OnInit {
+
+
+export class CommissionReportComponent implements OnInit {
+   hotelGroup = new FormGroup({
+      hotelid: new FormControl(''),
+      from_date: new FormControl(''),
+      to_date: new FormControl('')
+    });
   getSearchValue:string = '';
   selectedCategory: string = 'all';
   memberShipFilters: any = {
@@ -36,32 +46,50 @@ export class BookingDetailsComponent implements OnInit {
 
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
-    'booking_id',
-   // 'member_id',
+    'transaction_id',
+    'service_category',
+    'place',
+    'member_id',
     'member_name',
-    'mobile',
-    'hotel',
-    'room',
-    'checkin',
-    'checkout',
-    'booking_date',
-    'total_amount',
-    'points_earned',
+    'date',
+    'time',
+    'amount_paid',
+    'member_point_charges',
+    'points_issuance_charges',
+    'member_spend_commission',
+    'membership_package_commission',
+    'status'
   ];
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
-  memberId: number = 0;
+  hotelDetails:any = [];
 
-  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private route: ActivatedRoute) {
-    this.route.params.subscribe((param:any)=>{
-        this.memberId = param.id;
-    })
-  }
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private _inventoryService: InventoryService) {}
 
   ngOnInit(): void {
     this.getBookingHistory();
+    this.getHotelList();
   }
+
+  getHotelList() {
+    const getCategory = 1;
+      this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
+          this.hotelDetails = res.response.map((hotelData:any) => {
+            return {
+              hotel_id: hotelData.hotel_id,
+              hotel_name: hotelData.hotelname
+            }
+          });
+        },(error:any)=>{
+          console.log(error);
+        })
+  }
+
+  getHotelBookings() {
+    // const {hotelid, from_date, to_date} = this.hotelGroup.value;
+    // this.getHotelBookingHistory(hotelid, from_date, to_date);
+   }
 
   getSelectedFilter = (value: string) => {
     this.selectedCategory = value;
@@ -85,11 +113,41 @@ export class BookingDetailsComponent implements OnInit {
   }
 
   getBookingHistory() {
-    //this.onFirstLoad();
+    this.onFirstLoad();
     let getCategory = 1;
-    this._bookingService.getUserBookingHistory(this.memberId).subscribe((res:any) => {
-      this.dataSource = new MatTableDataSource(res.bookingHistory);
-      this.dataSource.paginator = this.paginator;
+    switch (this.selectedCategory) {
+      case 'live':
+        getCategory = 1;
+        break;
+      case 'rejected':
+        getCategory = 2;
+        break;
+      case 'all':
+        getCategory = 3;
+        break;
+      case 'cancelled':
+        getCategory = 4;
+        break;
+      default:
+        getCategory = 3;
+        break;
+    }
+
+    this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
+      const isSuperUser = localStorage.getItem('logged-in-user') === 'hdlsadmin'? true : false;
+      const loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
+      if(isSuperUser){
+            let availableInventory = 0;
+            let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
+            this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
+            this.dataSource.paginator = this.paginator;
+      }else{
+        let availableInventory = JSON.parse(loginResponseObj.loginRes.available_features || {}).hotelId ?? 0;
+        let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
+        this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
+        this.dataSource.paginator = this.paginator;
+      }
+
     })
   }
 
@@ -144,6 +202,38 @@ export class BookingDetailsComponent implements OnInit {
 
   openDeleteDialog(event: Event, deleteid: any,bookingStatus:number) {
     event.preventDefault();
+    const dialogRef = this._dialog.open(ConfirmationModalComponent, {data:{bookingStatus:bookingStatus}});
+    const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
+      (data) => {
+        this._dialog.closeAll();
+        if (data.status) {
+          let status = (data.status === 'accepted') ? 1 : data.status =='rejected'? 0: 4;
+          this._bookingService.changeBookingStatus(deleteid, status, data.reason).subscribe((res:any)=> {
+            if(res && res.status === 1) {
+              const dialogRef = this._dialog.open(InfoPopupComponent, {
+                data: {
+                  popupText: 'Booking status updated successfully',
+                },
+              });
+              this.getBookingHistory();
+              dialogRef.afterClosed().subscribe(() => {
+              });
+            } else {
+              const dialogRef = this._dialog.open(InfoPopupComponent, {
+                data: {
+                  popupText: 'Please try again later',
+                },
+              });
+              dialogRef.afterClosed().subscribe(() => {
+              });
+            }
+          })
+        }
+      }
+    );
+    dialogRef.afterClosed().subscribe(() => {
+      getDialogRef.unsubscribe();
+    });
   }
 
   getSearchDetails = (event: Event) => {

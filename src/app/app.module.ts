@@ -87,6 +87,11 @@ import { BookingDetailsComponent } from './report/booking-details/booking-detail
 
 import { SpecialvouchersComponent } from './pages/specialvouchers/specialvouchers.component';
 import { CouponGenerateComponent } from './components/popups/coupon-generate/coupon-generate.component';
+import { HotelOrderSummaryComponent } from './report/hotel-order-summary/hotel-order-summary.component';
+import { SingleBookingDetailsComponent } from './report/single-booking-details/single-booking-details.component';
+import { PointsFilterComponent } from './report/points-filter/points-filter.component';
+import { MembershipPurchaseReportComponent } from './report/membership-purchase-report/membership-purchase-report.component';
+import { CommissionReportComponent } from './report/commission-report/commission-report.component';
 
 initializeApp(environment.firebase);
 
@@ -134,9 +139,14 @@ initializeApp(environment.firebase);
     PermissionsPipe,
     PointsSummary,
     MemberDetailsComponent,
-    BookingDetailsComponent
+    BookingDetailsComponent,
     SpecialvouchersComponent,
     CouponGenerateComponent,
+    HotelOrderSummaryComponent,
+    SingleBookingDetailsComponent,
+    PointsFilterComponent,
+    MembershipPurchaseReportComponent,
+    CommissionReportComponent
   ],
   imports: [
     CommonModule,

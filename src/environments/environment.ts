@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'https://cloud.tribeloyalty.my/',
+  //baseUrl: 'http://localhost/',
   imageUrl: 'https://cloud.tribeloyalty.my/upload',
   socketUrl: '',
   // imageUrl: 'http://localhost:5000/upload'

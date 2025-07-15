@@ -8,12 +8,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
+import { FormControl, FormGroup } from '@angular/forms';
+
 @Component({
-  selector: 'app-booking-details',
-  templateUrl: './booking-details.component.html',
-  styleUrls: ['./booking-details.component.scss']
+  selector: 'app-membership-purchase-report',
+  templateUrl: './membership-purchase-report.component.html',
+  styleUrls: ['./membership-purchase-report.component.scss']
 })
-export class BookingDetailsComponent implements OnInit {
+export class MembershipPurchaseReportComponent implements OnInit {
   getSearchValue:string = '';
   selectedCategory: string = 'all';
   memberShipFilters: any = {
@@ -34,26 +37,36 @@ export class BookingDetailsComponent implements OnInit {
   ];
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
-  // @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatSort) sort: MatSort
+
   displayedColumns: string[] = [
-    'booking_id',
-   // 'member_id',
+    'transaction_id',
+    'membership_number',
     'member_name',
-    'mobile',
-    'hotel',
-    'room',
-    'checkin',
-    'checkout',
-    'booking_date',
-    'total_amount',
-    'points_earned',
+    'tier',
+    'membership_package_purchase',
+    'membership_package_id',
+    'place',
+    'date',
+    'time',
+    'total_price',
+    'points_issued',
+    'status'
   ];
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
   memberId: number = 0;
+  hotelDetails:any = [];
+  hotelid:any = 0;
 
-  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private route: ActivatedRoute) {
+  hotelGroup = new FormGroup({
+    hotelid: new FormControl(''),
+    from_date: new FormControl(''),
+    to_date: new FormControl('')
+  });
+
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private route: ActivatedRoute, private _inventoryService: InventoryService) {
     this.route.params.subscribe((param:any)=>{
         this.memberId = param.id;
     })
@@ -61,6 +74,32 @@ export class BookingDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBookingHistory();
+    this.getHotelList();
+  }
+
+  getHotelBookings() {
+   const {hotelid, from_date, to_date} = this.hotelGroup.value;
+   this.getHotelBookingHistory(hotelid, from_date, to_date);
+  }
+
+  getHotelList() {
+    const getCategory = 1;
+      this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
+          this.hotelDetails = res.response.map((hotelData:any) => {
+            return {
+              hotel_id: hotelData.hotel_id,
+              hotel_name: hotelData.hotelname
+            }
+          });
+        },(error:any)=>{
+          console.log(error);
+        })
+  }
+
+  getHotelBookingHistory(hotelid:any, from_date:any, to_date:any) {
+    this._bookingService.getHotelBookingHistory(hotelid, new Date(from_date), new Date(to_date)).subscribe((res:any) => {
+      this.dataSource = new MatTableDataSource(res.response);
+    })
   }
 
   getSelectedFilter = (value: string) => {
@@ -87,8 +126,8 @@ export class BookingDetailsComponent implements OnInit {
   getBookingHistory() {
     //this.onFirstLoad();
     let getCategory = 1;
-    this._bookingService.getUserBookingHistory(this.memberId).subscribe((res:any) => {
-      this.dataSource = new MatTableDataSource(res.bookingHistory);
+    this._bookingService.getBookingHistory(1).subscribe((res:any) => {
+      this.dataSource = new MatTableDataSource(res.response.bookingHistory);
       this.dataSource.paginator = this.paginator;
     })
   }
