@@ -18,19 +18,34 @@
         </span>
       </form>
     </div>
-    <!-- <div class="download-section">
-        <app-hdls-date-range
-          (getDateRange)="getDateRange($event)"
-        ></app-hdls-date-range>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+  <mat-button-toggle value="bold" mat-raised-button>Active</mat-button-toggle>
+  <mat-button-toggle value="italic" mat-raised-button>Inactive</mat-button-toggle>
+  <mat-button-toggle value="underline" mat-raised-button>
+    <button mat-button [matMenuTriggerFor]="menu">
+      Tier points
+    </button>
+    <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="changeTier('all')">All</button>
+      <button mat-menu-item (click)="changeTier('silver')">Silver</button>
+      <button mat-menu-item (click)="changeTier('gold')">Gold</button>
+      <button mat-menu-item (click)="changeTier('diamond')">Diamond</button>
+      <button mat-menu-item (click)="changeTier('platinum')">Platinum</button>
+    </mat-menu>
+  </mat-button-toggle>
+</mat-button-toggle-group>
+ 
+    <div class="download-section">
+        
         <div class="download-button">
-          <a href="#"
+          <button mat-raised-button
             ><img src="../../../assets/images/download.png" alt="download"
-          /></a>
+          /> View / Download</button>
         </div>
-      </div> -->
+      </div>
   </div>
   <div id="hdls-membership-list">
-    <div class="hdls-product-list-section">
+    <div class="hdls-product-list-section hdls-user-container">
       <!-- <app-search-field></app-search-field> -->
       <table
         mat-table
@@ -39,9 +54,9 @@
         matTableExporter
       >
         <ng-container matColumnDef="sno">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer ID</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Membership number</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <p *ngIf="!element.isLoading">
+            <p *ngIf="!element.isLoading" class="hdls-sno">
               <!-- {{ (paginator.pageIndex * paginator.pageSize)+(i+1)}} -->
               <a
                 [routerLink]="['/report/member-details', element.customerid]"
@@ -54,9 +69,9 @@
         </ng-container>
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Name</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <p *ngIf="!element.isLoading">
+            <p *ngIf="!element.isLoading" class="hdls-name">
               {{
                 element.firstname
                   ? element.firstname + "," + element.lastname
@@ -68,10 +83,19 @@
         </ng-container>
 
         <ng-container matColumnDef="mobile">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile number</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <p *ngIf="!element.isLoading">
+            <p *ngIf="!element.isLoading" class="hdls-mobile">
               {{ element.mobile || "--" }}
+            </p>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <p *ngIf="!element.isLoading" class="hdls-email">
+              {{ element.email || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -79,7 +103,7 @@
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <p *ngIf="!element.isLoading">
+            <p *ngIf="!element.isLoading" class="hdls-address">
               {{ (element.address | uppercase) || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
@@ -88,7 +112,7 @@
         <ng-container matColumnDef="city">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <p *ngIf="!element.isLoading">
+            <p *ngIf="!element.isLoading" class="hdls-city">
               {{ (element.city | uppercase) || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
@@ -97,7 +121,7 @@
         <ng-container matColumnDef="state">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <p *ngIf="!element.isLoading">
+            <p *ngIf="!element.isLoading" class="hdls-state">
               {{ (element.state | uppercase) || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
@@ -108,18 +132,50 @@
             Date of birth
           </th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <p *ngIf="!element.isLoading">
+            <p *ngIf="!element.isLoading" class="hdls-dob">
               {{ (element.birthday | date : "dd-MMM-yyyy") || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
-
-        <ng-container matColumnDef="created_at">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Status
+          </th>
           <td mat-cell *matCellDef="let element; let i = index">
-            <p *ngIf="!element.isLoading">
+            <p *ngIf="!element.isLoading" class="hdls-status">
+              {{ (element.inactive ? 'Inactive' : 'Active') || "--" }}
+            </p>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="created_at">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Signed-up date</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <p *ngIf="!element.isLoading" class="hdls-created-at">
               {{ (element.created_at | date : "dd-MMM-yyyy") || "--" }}
+            </p>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+         <ng-container matColumnDef="tier">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Tier Points
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <p *ngIf="!element.isLoading" class="hdls-tier">
+              {{ element.pointsTier | titlecase }}
+            </p>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="birthday">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Date of Birth
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <p *ngIf="!element.isLoading" class="hdls-birthday">
+              {{ (element.birthday | date : "dd-MMM-yyyy") || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>

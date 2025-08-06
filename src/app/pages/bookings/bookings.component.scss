@@ -114,3 +114,53 @@
 .booking-date-column{
   width: 100px !important;
 }
+.hdls-booking-container{
+  width: 100%;
+  overflow-x: auto;
+  table{
+    min-width: 100%;
+    margin-left: 5px;
+
+    .hdls-hotel-name{
+      width: 300px;
+    }
+    .hdls-check-in{
+      width: 150px;
+    }
+    .hdls-booking-date{
+      width: 100px;
+    }
+    .hdls-customer-name{
+      width: 200px;
+    }
+    .hdls-special-request{
+      width: 150px;
+    }
+    .hdls-amount{
+      width: 100px;
+    }
+    .hdls-remarks{
+      width: 100px;
+    }
+    .hdls-status{
+      width: 100px;
+      text-transform: capitalize;
+      &.cancelled{
+        color: red;
+      }
+      &.completed{
+        color: green;
+      }
+    }
+    .hdls-action{
+      width: 100px;
+    }
+  }
+}
+
+
+
+
+
+
+

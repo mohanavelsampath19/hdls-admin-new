@@ -173,5 +173,75 @@
         </mat-card-actions>
       </mat-card>
     </div>
+
+
+<div class="" *ngIf="pointDetails.length>0">
+      <mat-card class="hdls-points-earning-card card-container">
+        <mat-card-header>
+          <mat-card-title
+            ><h1>{{ pointDetails[10]?.pointstitle }}</h1></mat-card-title
+          >
+          <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
+        </mat-card-header>
+        <div class="card-image-detail">
+          <img src="../../../assets/images/room-commission.jpg" alt="logo" />
+        </div>
+        <mat-card-content class="card-content-container">
+          <form [formGroup]="editPointDetailsForm">
+            <div class="hdls-points-form-feilds">
+              <div *ngIf="!pointDetails[10].edit" class="point-desc"> Medianworks commission <strong> {{ pointDetails[10]?.point_multiplier }}</strong> %</div>
+              <input
+                *ngIf="pointDetails[10].edit"
+                type="text"
+                matInput
+                formControlName="point_multiplier"
+              />
+            </div>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>
+            <mat-icon (click)="editDetails($event, 10)">edit</mat-icon>
+          </button>
+          <button mat-button>
+            <mat-icon (click)="updateDetails($event, 10)">save</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="" *ngIf="pointDetails.length>0">
+      <mat-card class="hdls-points-earning-card card-container">
+        <mat-card-header>
+          <mat-card-title
+            ><h1>{{ pointDetails[11]?.pointstitle }}</h1></mat-card-title
+          >
+          <!-- <mat-card-subtitle>{{ point.pointsdesc }}</mat-card-subtitle> -->
+        </mat-card-header>
+        <div class="card-image-detail">
+          <img src="../../../assets/images/room-commission.jpg" alt="logo" />
+        </div>
+        <mat-card-content class="card-content-container">
+          <form [formGroup]="editPointDetailsForm">
+            <div class="hdls-points-form-feilds">
+              <div *ngIf="!pointDetails[11].edit" class="point-desc"> Medianworks commission <strong> {{ pointDetails[11]?.point_multiplier }}</strong> %</div>
+              <input
+                *ngIf="pointDetails[11].edit"
+                type="text"
+                matInput
+                formControlName="point_multiplier"
+              />
+            </div>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>
+            <mat-icon (click)="editDetails($event, 11)">edit</mat-icon>
+          </button>
+          <button mat-button>
+            <mat-icon (click)="updateDetails($event, 11)">save</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
 </section>

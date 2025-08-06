@@ -29,4 +29,7 @@ export class ReportsService {
   getPointsSummary() {
     return this._http.get(environment.baseUrl + 'api/report/getpointsummary');
   }
+  getBookingDetails(userId:any) {
+    return this._http.get(environment.baseUrl + 'api/report/getbookingdetails?userId='+userId);
+  }
 }

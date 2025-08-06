@@ -7,6 +7,7 @@ import { Loading } from 'src/app/services/utilities/helper_models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
@@ -35,22 +36,28 @@ export class BookingsComponent implements OnInit {
 
   // @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = [
-    'property_name',
-    'property_id',
-    'checkin',
-    'bookingdate',
-    'customername',
-    'specialrequest',
-    'amount',
-    'remarks',
+    'tribe_reference_id',
+    'booking_id',
+    'customer_id',
+    'customer_name',
+    'mobile',
+    'hotel',
+    'room',
+    'check_in',
+    'check_out',
+    'booking_date',
+    'time',
+    'total_amount',
+    'special_requests',
     'status',
-    'action',
+    'actions'
   ];
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
-
-  constructor(private _bookingService: BookingsService, private _dialog: MatDialog) {}
+  selectedHotel:number = 0;
+  currentHotelList:any = [];
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private _activatedRoute:ActivatedRoute) {}
 
   ngOnInit(): void {
     this.getBookingHistory();
@@ -104,23 +111,64 @@ export class BookingsComponent implements OnInit {
       if(isSuperUser){
             let availableInventory = 0;
             let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
+            this.currentHotelList = getFilteredHoteBookings;
             this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
             this.dataSource.paginator = this.paginator;
       }else{
         let availableInventory = JSON.parse(loginResponseObj.loginRes.available_features || {}).hotelId ?? 0;
         let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
+        this.currentHotelList = getFilteredHoteBookings;
         this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
         this.dataSource.paginator = this.paginator;
       }
-
+      this._activatedRoute.queryParams.subscribe((params:any) => {
+        console.log(params);
+        this.selectedHotel = params.hotelid ?? 0;
+        let bookingId = params.bookingid ?? 0;
+        let customerId = params.customerid ?? 0;
+        if(this.selectedHotel && this.selectedHotel != 0) {
+          this.dataSource = new MatTableDataSource(this.currentHotelList.filter((item:any) => item.hotelid == this.selectedHotel));
+          this.dataSource.paginator = this.paginator;
+        }else{
+          this.dataSource = new MatTableDataSource(this.currentHotelList);
+          this.dataSource.paginator = this.paginator;
+        }
+        if(bookingId && bookingId != 0) {
+          this.dataSource = new MatTableDataSource(this.currentHotelList.filter((item:any) => item.bookingid == bookingId));
+          this.dataSource.paginator = this.paginator;
+        }
+        if(customerId && customerId != 0) {
+          this.dataSource = new MatTableDataSource(this.currentHotelList.filter((item:any) => item.customerid == customerId));
+          this.dataSource.paginator = this.paginator;
+        }
+      });
     })
   }
 
   getHotelRelatedBookings(hotel_id:any, booking_data:any, userType:any) {
     if(userType) {
-      return booking_data;
+      return booking_data.map((bookingInfo:any) => {
+        bookingInfo.totalWithTax = parseFloat(bookingInfo.amount) + bookingInfo.tax;
+        return bookingInfo;
+      }).filter((bookingInfo:any)=>{
+        if(this.selectedHotel && this.selectedHotel != 0){
+          return bookingInfo.hotelid === this.selectedHotel;
+        }else{
+          return bookingInfo;
+        }
+      })
     }
-    const getFilteredBookings = booking_data.filter((booking_info:any) => booking_info.hotelid === hotel_id);
+    const getFilteredBookings = booking_data.filter((booking_info:any) => booking_info.hotelid === hotel_id)
+    .map((bookingInfo:any) => {
+      bookingInfo.totalWithTax = parseFloat(bookingInfo.amount) + bookingInfo.tax;
+      return bookingInfo;
+    }).filter((bookingInfo:any)=>{
+        if(this.selectedHotel && this.selectedHotel != 0){
+          return bookingInfo.hotelid === this.selectedHotel;
+        }else{
+          return bookingInfo;
+        }
+      })
     return getFilteredBookings;
   }
   // ngAfterViewInit() {

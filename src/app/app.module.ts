@@ -26,7 +26,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from './modules/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
-
+import {MatMenuModule} from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { AddMembershipComponent } from './pages/membership/add-membership/add-membership.component';
 //import { InventoryComponent } from './pages/inventory/inventory.component';
@@ -92,6 +92,8 @@ import { SingleBookingDetailsComponent } from './report/single-booking-details/s
 import { PointsFilterComponent } from './report/points-filter/points-filter.component';
 import { MembershipPurchaseReportComponent } from './report/membership-purchase-report/membership-purchase-report.component';
 import { CommissionReportComponent } from './report/commission-report/commission-report.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { BookingDetailsComponentPopup } from './components/popups/booking-details/booking-details.component';
 
 initializeApp(environment.firebase);
 
@@ -146,7 +148,8 @@ initializeApp(environment.firebase);
     SingleBookingDetailsComponent,
     PointsFilterComponent,
     MembershipPurchaseReportComponent,
-    CommissionReportComponent
+    CommissionReportComponent,
+    BookingDetailsComponentPopup
   ],
   imports: [
     CommonModule,
@@ -187,6 +190,7 @@ initializeApp(environment.firebase);
     //   apiKey: 'RE-6ToVhmGGrkPmQa-vYafYCWW_hgntf_7yLiERKuvo',
     //   libraries: ['places'],
     // }),
+    MatMenuModule,
     GooglePlaceModule,
     MatSlideToggleModule,
     // SocketIoModule.forRoot(config),
@@ -195,6 +199,7 @@ initializeApp(environment.firebase);
     MatExpansionModule,
     SharedModule,
     MatSnackBarModule,
+    MatButtonToggleModule
   ],
   
   providers: [],

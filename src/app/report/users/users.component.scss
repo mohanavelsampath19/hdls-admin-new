@@ -20,12 +20,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   .add-product {
     display: flex;
     flex-direction: row;
     align-items: center;
-    flex-grow: 1;
-    flex-basis: 50%;
+
     .hdls-search-field {
       display: flex;
       flex-direction: row;
@@ -88,3 +88,34 @@
     font-size: 14px;
     width: 100%;
   }
+
+  .hdls-user-container{
+  width: 100%;
+  overflow-x: auto;
+  table{
+    min-width: 100%;
+    margin-left: 5px;
+    .hdls-name-column{
+      width: 200px;
+    }
+    .hdls-created-at{
+      width: 150px;
+    }
+    .hdls-dob{
+      width: 150px;
+    }
+    .hdls-city,.hdls-state{
+      width: 100px;
+    }
+    .hdls-address{
+      width: 200px;
+    }
+    .hdls-email{
+      width: 200px;
+    }
+    .hdls-mobile{
+      width: 150px;
+    } 
+  }    
+  
+}

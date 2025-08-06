@@ -13,13 +13,16 @@ import { ReportsService } from 'src/app/services/reports/reports.service';
 export class UsersComponent implements OnInit {
   dataSource:any;
   userSearch:any;
-  displayedColumns:any = ['sno','name','mobile','address','city','state','dob','created_at','view_expenses'];
+  displayedColumns:any = ['sno','name','mobile','email','address','city','state','dob','created_at','status','tier','view_expenses'];
   resultsLength:number=0;
   @ViewChild(MatPaginator)
   paginator: MatPaginator | undefined;
+  selectedTier: string = 'all';
+  UserListRes:any = [];
   constructor(private _reportService:ReportsService, private _dialog:MatDialog) { 
     this._reportService.getUserList().subscribe((userList:any)=>{
       console.log(userList);
+      this.UserListRes = userList.response;
       this.dataSource = new MatTableDataSource( userList.response);
       this.dataSource.paginator = this.paginator;
       this.resultsLength = userList.response.length;
@@ -37,7 +40,14 @@ export class UsersComponent implements OnInit {
 
   }
   openExpenseDialog(userId:number) {
-
       const dialogRef = this._dialog.open(ViewexpensesComponent, {data:{user_id:userId}});
+  }
+  changeTier(tier:string) {
+    this.selectedTier = tier;
+    if (tier === 'all') {
+      this.dataSource.data = this.UserListRes;
+    }else{
+      this.dataSource.data = this.UserListRes.filter((user:any) => user.pointsTier === this.selectedTier);
+    }
   }
 }
