@@ -14,6 +14,14 @@
             </a>
           </span>
         </form>
+        <div class="category-button">
+          <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle value="bold" mat-raised-button (click)="getSelectedFilter('earned')">Earned</mat-button-toggle>
+            <mat-button-toggle value="italic" mat-raised-button (click)="getSelectedFilter('redeemed')">Redeemed</mat-button-toggle>
+            <mat-button-toggle value="bold" mat-raised-button (click)="getSelectedFilter('referral')">Referral</mat-button-toggle>
+            <mat-button-toggle value="italic" mat-raised-button (click)="getSelectedFilter('expired')">Expired</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
         <div class="hdls-filter">
             <form [formGroup]="hotelGroup" (ngSubmit)="getHotelBookings()" class="hdls-hotel-filter">
               <mat-form-field class="hdls-form-field" appearance="fill">
@@ -22,12 +30,12 @@
                   class="hdls-form-select"
                   formControlName="hotelid"
                 >
-                  <!-- <mat-option
+                  <mat-option
                     *ngFor="let hotels of hotelDetails"
                     [key]="hotels.hotel_id"
                     [value]="hotels.hotel_id"
                     >{{ hotels.hotel_name }}</mat-option
-                  > -->
+                  >
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="hdls-hotel-filter-date">
@@ -62,40 +70,6 @@
       </div> -->
     </div>
     <div id="hdls-membership-list">
-      <div class="category-button">
-        <a
-          id="basic"
-          class="add-button"
-          [ngClass]="{ 'selected-item': selectedCategory === 'all' }"
-          (click)="getSelectedFilter('all')"
-        >
-          Earned
-        </a>
-        <a
-          id="basic"
-          class="add-button"
-          [ngClass]="{ 'selected-item': selectedCategory === 'live' }"
-          (click)="getSelectedFilter('live')"
-        >
-        Redeemed<span><!-- TODO--></span>
-        </a>
-        <a
-          id="basic"
-          class="add-button"
-          [ngClass]="{ 'selected-item': selectedCategory === 'rejected' }"
-          (click)="getSelectedFilter('rejected')"
-        >
-          Referral<span><!-- TODO--></span>
-        </a>
-        <a
-          id="basic"
-          class="add-button"
-          [ngClass]="{ 'selected-item': selectedCategory === 'cancelled' }"
-          (click)="getSelectedFilter('cancelled')"
-        >
-          Expired<span><!-- TODO--></span>
-        </a>
-      </div>
       <div class="hdls-product-list-section">
         <!-- <app-search-field></app-search-field> -->
         <table

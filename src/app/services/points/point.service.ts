@@ -24,4 +24,8 @@ export class PointService {
       { id: _id, value: _value }
     );
   }
+
+  getPointSummaryDetails() {
+    return this._http.get(environment.baseUrl + 'api/report/getpointsummarydetails');
+  }
 }

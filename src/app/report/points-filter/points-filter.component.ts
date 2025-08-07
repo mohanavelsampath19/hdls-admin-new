@@ -8,6 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from 'src/app/components/common/confirmation-modal/confirmation-modal.component';
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 import { FormControl, FormGroup } from '@angular/forms';
+import { PointService } from 'src/app/services/points/point.service';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
+
 
 @Component({
   selector: 'app-points-filter',
@@ -38,6 +41,7 @@ export class PointsFilterComponent implements OnInit {
     { isLoading: true },
     { isLoading: true },
   ];
+  hotelDetails:any = [];
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
   // @ViewChild(MatSort) sort: MatSort;
@@ -62,10 +66,14 @@ export class PointsFilterComponent implements OnInit {
   pageSize: number = 5;
   pageOffset: number = 0;
 
-  constructor(private _bookingService: BookingsService, private _dialog: MatDialog) {}
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, 
+    private _pointService: PointService,
+    private _inventoryService: InventoryService
+  ) {}
 
   ngOnInit(): void {
     this.getBookingHistory();
+    this.getHotelList();
   }
 
   getHotelBookings() {
@@ -79,6 +87,20 @@ export class PointsFilterComponent implements OnInit {
     this.pageOffset = 0;
     this.getBookingHistory();
   };
+
+  getHotelList() {
+    const getCategory = 1;
+      this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
+          this.hotelDetails = res.response.map((hotelData:any) => {
+            return {
+              hotel_id: hotelData.hotel_id,
+              hotel_name: hotelData.hotelname
+            }
+          });
+        },(error:any)=>{
+          console.log(error);
+        })
+  }
 
   getSearchInput(searchValue: any) {
     let searchText = searchValue.toLowerCase();
@@ -114,23 +136,9 @@ export class PointsFilterComponent implements OnInit {
         getCategory = 3;
         break;
     }
-
-    this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
-      const isSuperUser = localStorage.getItem('logged-in-user') === 'hdlsadmin'? true : false;
-      const loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
-      if(isSuperUser){
-            let availableInventory = 0;
-            let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
-            this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
-            this.dataSource.paginator = this.paginator;
-      }else{
-        let availableInventory = JSON.parse(loginResponseObj.loginRes.available_features || {}).hotelId ?? 0;
-        let getFilteredHoteBookings = this.getHotelRelatedBookings(availableInventory, res.response.bookingHistory, isSuperUser);
-        this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
-        this.dataSource.paginator = this.paginator;
-      }
-
-    })
+    // this._pointService.getPointSummaryDetails().subscribe((res) => {
+    //   console.log(res);
+    // })
   }
 
   getHotelRelatedBookings(hotel_id:any, booking_data:any, userType:any) {

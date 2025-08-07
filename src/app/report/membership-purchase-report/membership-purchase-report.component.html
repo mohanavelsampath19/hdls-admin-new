@@ -25,10 +25,10 @@
           <mat-label>Membership Package</mat-label>
           <mat-select class="hdls-form-select" formControlName="hotelid">
             <mat-option
-              *ngFor="let hotels of hotelDetails"
-              [key]="hotels.hotel_id"
-              [value]="hotels.hotel_id"
-              >{{ hotels.hotel_name }}</mat-option
+              *ngFor="let membership of membershipCategoryList"
+              [key]="membership.membership_id"
+              [value]="membership.membership_id"
+              >{{ membership.membership_name }}</mat-option
             >
           </mat-select>
         </mat-form-field>
