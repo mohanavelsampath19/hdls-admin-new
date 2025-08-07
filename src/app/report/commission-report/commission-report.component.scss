@@ -156,3 +156,9 @@
 .hdls-date-picker {
     display: flex;
 }
+
+#hdls-membership-list {
+  .hdls-commission-section {
+    overflow-x: scroll;
+  }
+}
