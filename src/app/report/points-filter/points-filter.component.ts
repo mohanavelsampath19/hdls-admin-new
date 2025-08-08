@@ -10,7 +10,8 @@ import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-po
 import { FormControl, FormGroup } from '@angular/forms';
 import { PointService } from 'src/app/services/points/point.service';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
-
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-points-filter',
@@ -237,4 +238,28 @@ export class PointsFilterComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     // this.dataSource.filter = filterValue.trim().toLowerCase();
   };
+
+    exportAsExcel() {
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+        this.dataSource?.data
+      );
+      const workbook: XLSX.WorkBook = {
+        Sheets: { Coupons: worksheet },
+        SheetNames: ['Coupons'],
+      };
+  
+      const excelBuffer: any = XLSX.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+  
+      const data: Blob = new Blob([excelBuffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+  
+      FileSaver.saveAs(
+        data,
+        'store_summary_report_' + new Date().getTime() + '.xlsx'
+      );
+    }
 }

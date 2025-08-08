@@ -58,16 +58,13 @@
           </form>
         </div>
     </div>
-    <!-- <div class="download-section">
-      <app-hdls-date-range
-        (getDateRange)="getDateRange($event)"
-      ></app-hdls-date-range>
+    <div class="download-section"> 
       <div class="download-button">
-        <a href="#"
+        <button mat-raised-button (click)="exportAsExcel()"
           ><img src="../../../assets/images/download.png" alt="download"
-        /></a>
+        /> View / Download</button>
       </div>
-    </div> -->
+    </div>
   </div>
   <div id="hdls-membership-list">
     <div class="hdls-product-list-section hdls-membership-purchase-container">
