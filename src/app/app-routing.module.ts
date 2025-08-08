@@ -37,6 +37,7 @@ import { SingleBookingDetailsComponent } from './report/single-booking-details/s
 import { PointsFilterComponent } from './report/points-filter/points-filter.component';
 import { MembershipPurchaseReportComponent } from './report/membership-purchase-report/membership-purchase-report.component';
 import { CommissionReportComponent } from './report/commission-report/commission-report.component';
+import { TransactionReportComponent } from './pages/transaction-table/transaction-table.component';
 
 const routes: Routes = [
   {
@@ -139,6 +140,10 @@ const routes: Routes = [
           {
             path:'membership',
             component:MembershipComponent
+          },
+          {
+            path:'commission-report',
+            component: TransactionReportComponent
           },
           {
             path:'transaction',

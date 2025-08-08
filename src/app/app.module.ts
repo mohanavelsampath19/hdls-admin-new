@@ -94,6 +94,8 @@ import { MembershipPurchaseReportComponent } from './report/membership-purchase-
 import { CommissionReportComponent } from './report/commission-report/commission-report.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { BookingDetailsComponentPopup } from './components/popups/booking-details/booking-details.component';
+import { TransactionReportComponent } from './pages/transaction-table/transaction-table.component';
+import { SettlePopupComponent } from './components/common/popups/settle-popup/settle-popup.component';
 
 initializeApp(environment.firebase);
 
@@ -149,7 +151,9 @@ initializeApp(environment.firebase);
     PointsFilterComponent,
     MembershipPurchaseReportComponent,
     CommissionReportComponent,
-    BookingDetailsComponentPopup
+    BookingDetailsComponentPopup,
+    TransactionReportComponent,
+    SettlePopupComponent
   ],
   imports: [
     CommonModule,

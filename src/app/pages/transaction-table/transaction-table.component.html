@@ -1,0 +1,149 @@
+<section id="hdls-membership-container">
+  <div class="search-section">
+    <div class="add-product">
+      <form class="hdls-search-field">
+        <input
+          type="text"
+          [(ngModel)]="userSearch"
+          name="userSearch"
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Search by users"
+          #input
+        />
+        <span>
+          <a href="#">
+            <img src="../../../assets/images/search.png" alt="Search" />
+          </a>
+        </span>
+      </form>
+    </div>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+  <mat-button-toggle value="bold" mat-raised-button>Pending</mat-button-toggle>
+  <mat-button-toggle value="italic" mat-raised-button>Settled</mat-button-toggle>
+  
+</mat-button-toggle-group>
+ 
+    <div class="download-section">
+        
+        <div class="download-button">
+          <button mat-raised-button
+            ><img src="../../../assets/images/download.png" alt="download"
+          /> View / Download</button>
+        </div>
+      </div>
+  </div>
+  <div id="hdls-membership-list">
+    <div class="hdls-product-list-section hdls-transaction-container">
+      <!-- <app-search-field></app-search-field> -->
+      <table
+        mat-table
+        class="hdls-product-table"
+        [dataSource]="dataSource"
+        matTableExporter
+      >
+  <ng-container matColumnDef="transactionId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="transaction-id-column">Transaction ID</th>
+    <td mat-cell *matCellDef="let element" class="transaction-id-column">{{ element?.paymentSplit?.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="serviceCategory">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="service-category-column">Service Category</th>
+    <td mat-cell *matCellDef="let element" class="service-category-column">{{ element?.serviceCategory }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="place">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="place-column">Place</th>
+    <td mat-cell *matCellDef="let element" class="place-column">{{ element?.place }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="membershipNumber">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="membership-number-column">Membership Number</th>
+    <td mat-cell *matCellDef="let element" class="membership-number-column">{{ element.membershipNumber }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="memberName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="member-name-column">Member Name</th>
+    <td mat-cell *matCellDef="let element" class="member-name-column">{{ element.memberName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="date-column">Date</th>
+    <td mat-cell *matCellDef="let element" class="date-column">{{ element.paymentSplit.created_at | date: 'dd-MMM-yyyy' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="time">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="time-column">Time</th>
+    <td mat-cell *matCellDef="let element" class="time-column">{{ element.paymentSplit.created_at | date: 'shortTime' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalAmount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="total-amount-column">Total Amount (?)</th>
+    <td mat-cell *matCellDef="let element" class="total-amount-column">
+        {{ element.totalAmount | currency:'MYR ':'symbol':'1.2-2' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="memberPointsCharge">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="member-points-charge-column">Member Points Charge (5-12.5%)</th>
+    <td mat-cell *matCellDef="let element" class="member-points-charge-column">{{ element.memberPointsCharge }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="pointsIssuanceCharge">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="points-issuance-charge-column">Points Issuance Charge (4.5)</th>
+    <td mat-cell *matCellDef="let element" class="points-issuance-charge-column">{{ element?.pointsIssuanceCharge || '--'}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="memberSpendCommission">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="member-spend-commission-column">Member Spend Commission (10%)</th>
+    <td mat-cell *matCellDef="let element" class="member-spend-commission-column">{{ element?.memberSpendCommission || '--'}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="membershipPackageCommission">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="membership-package-commission-column">Membership Package Commission (15%)</th>
+    <td mat-cell *matCellDef="let element" class="membership-package-commission-column">{{ element.membershipPackageCommission || '--' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="status-column">Status</th>
+    <td mat-cell *matCellDef="let element" class="status-column">{{ element.paymentSplit?.settled == 0 ? 'Pending':'Settled' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="settledDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="settled-date-column">Settled Date</th>
+    <td mat-cell *matCellDef="let element" class="settled-date-column">{{ element.paymentSplit?.settled == 0 ? '--':(element.paymentSplit.updated_at | date: 'dd-MMM-yyyy HH:mm a') }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="settled-date-column"></th>
+    <td mat-cell *matCellDef="let element" class="settled-date-column">
+        <div *ngIf="!element.isLoading" class="hdls-action">
+            <ng-container *ngIf="element.paymentSplit?.settled == 0">
+                <a href="#" (click)="openActionDialog($event, element.paymentSplit.id, element.status)">Action</a>
+            </ng-container>
+            <ng-container *ngIf="element.paymentSplit?.settled == 1">
+                {{element.paymentSplit?.settlement_notes}}
+            </ng-container>
+        </div>
+        <div *ngIf="element.isLoading" class="loading-data"></div>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns" class="hdls-table-row"></tr>
+</table>
+      <table>
+        <tr *ngIf="!dataSource?.data">
+          <td class="hdls-no-records-detail">
+            {{ isLoading ? 'Loading...' : 'No Records Found!' }}
+          </td>
+        </tr>
+      </table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+        (page)="pageChanged($event)"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</section>

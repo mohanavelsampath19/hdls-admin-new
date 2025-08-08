@@ -29,18 +29,19 @@
               <span class="nav-item-span">Reports</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div class="layout" (click)="goToLink('/report/commission-report','')">
+          <!-- <div class="layout" (click)="goToLink('/report/commission-report','')">
             <span class="nav-item-span">Commission Details</span>
-          </div>
+          </div> -->
           <div class="layout" (click)="goToLink('/report/users','users')">
             <span class="nav-item-span">Users</span>
+          </div>
+          <div class="layout" (click)="goToLink('/report/commission-report','Commission-report')">
+            <span class="nav-item-span">Commission Report</span>
           </div>
           <div class="layout" (click)="goToLink('/report/membership','Membership')">
             <span class="nav-item-span">Membership Purchases</span>
           </div>
-          <div class="layout" (click)="goToLink('/report/transaction','Membership')">
-            <span class="nav-item-span">Transactions</span>
-          </div>
+          
           <div class="layout" (click)="goToLink('/report/points-summary','Membership')">
             <span class="nav-item-span">Store Summary</span>
           </div>

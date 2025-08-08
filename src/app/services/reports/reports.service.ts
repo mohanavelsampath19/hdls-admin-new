@@ -32,4 +32,7 @@ export class ReportsService {
   getBookingDetails(userId:any) {
     return this._http.get(environment.baseUrl + 'api/report/getbookingdetails?userId='+userId);
   }
+  updatePaymentSettlement(paymentInfo:any){
+    return this._http.post(environment.baseUrl +'api/report/updatepaymentsettlements',{...paymentInfo});
+  }
 }

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PointsTableComponent } from '../points-table/points-table.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReportsService } from 'src/app/services/reports/reports.service';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
 
 @Component({
   selector: 'app-viewexpenses',
@@ -15,20 +16,30 @@ export class ViewexpensesComponent implements OnInit {
   enableExpenseForm:boolean = false;
   isErrorMsg:boolean = false;
   isLoading:boolean = false;
-  displayedColumns: string[] = ['sno', 'desc', 'amount','date'];
+  displayedColumns: string[] = ['sno', 'desc', 'amount','property','date'];
   paymentFormGroup = new FormGroup({
     paymentDesc: new FormControl(),
     amount: new FormControl(),
-    paymentDate:new FormControl()
+    paymentDate:new FormControl(),
+    hotelId: new FormControl()
   })
   closePopup = new EventEmitter();
   viewExpenseList:Array<any> = [];
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _reportService:ReportsService, private dialogRef: MatDialogRef<ViewexpensesComponent>) { 
+  inventoryList:any = [];
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _reportService:ReportsService, private dialogRef: MatDialogRef<ViewexpensesComponent>, private _inventoryService: InventoryService) { 
     console.log(this.data);
   }
 
   ngOnInit(): void {
     this.refreshPaymentInfo();
+    this._inventoryService.getInventoryList().subscribe((inventoryList:any)=>{
+      console.log(inventoryList);
+      if(inventoryList.response.length > 0) {
+        this.inventoryList = inventoryList.response;
+      }else{
+        this.inventoryList = [];
+      }
+    });
   }
   closeModalPopup() {
     this.closePopup.emit();

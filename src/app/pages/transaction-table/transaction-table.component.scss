@@ -89,34 +89,49 @@
     width: 100%;
   }
 
-  .hdls-user-container{
-  width: 100%;
-  overflow-x: auto;
-  table{
-    min-width: 100%;
-    margin-left: 5px;
-    .hdls-name-column{
-      width: 200px;
-    }
-    .hdls-created-at{
-      width: 150px;
-    }
-    .hdls-dob{
-      width: 150px;
-    }
-    .hdls-city,.hdls-state{
-      width: 100px;
-    }
-    .hdls-address{
-      width: 200px;
-    }
-    .hdls-email{
-      width: 200px;
-    }
-    .hdls-mobile,.hdls-booking-history,.hdls-current-membership,.hdls-points-accumulated{
-      width: 150px;
-    } 
-  }    
-  
+  .hdls-transaction-container {
+    width: 100%;
+    overflow-x: auto;
+  .transaction-id-column {
+    min-width: 120px;
+  }
+  .service-category-column {
+    min-width: 180px;
+  }
+  .place-column {
+    min-width: 150px;
+  }
+  .membership-number-column {
+    min-width: 140px;
+  }
+  .member-name-column {
+    min-width: 200px;
+  }
+  .date-column {
+    min-width: 130px;
+  }
+  .time-column {
+    min-width: 110px;
+  }
+  .total-amount-column {
+    min-width: 140px;
+  }
+  .member-points-charge-column {
+    min-width: 170px;
+  }
+  .points-issuance-charge-column {
+    min-width: 170px;
+  }
+  .member-spend-commission-column {
+    min-width: 170px;
+  }
+  .membership-package-commission-column {
+    min-width: 200px;
+  }
+  .status-column {
+    min-width: 110px;
+  }
+  .settled-date-column {
+    min-width: 130px;
+  }
 }
-
