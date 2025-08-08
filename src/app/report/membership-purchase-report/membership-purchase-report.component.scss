@@ -154,3 +154,27 @@
 .hdls-date-picker {
   display: flex;
 }
+
+.hdls-membership-purchase-container {
+  width: 100%;
+  overflow-x: auto;
+  .mat-column-transaction_id, .mat-column-points_issued {
+    min-width: 120px;
+  }
+  .mat-column-membership_number, .mat-column-total_price {
+    min-width: 100px;
+  }
+  .mat-column-member_name, .mat-column-membership_package_id {
+    min-width: 140px;
+  }
+  .mat-column-tier {
+    min-width: 50px;
+  }
+  .mat-column-membership_package_purchase {
+    width: 210px;
+  }
+  .mat-column-place, .mat-column-date, .mat-column-time,  .mat-column-status {
+    width: 90px !important;
+  }
+
+}
