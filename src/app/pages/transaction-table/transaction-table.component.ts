@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SettlePopupComponent } from 'src/app/components/common/popups/settle-popup/settle-popup.component';
 import { ViewexpensesComponent } from 'src/app/components/common/viewexpenses/viewexpenses.component';
 import { ReportsService } from 'src/app/services/reports/reports.service';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-transaction-report',
@@ -112,6 +114,26 @@ export class TransactionReportComponent {
     ngOnInit(): void {
       this.refreshTable();
     }
+
+    exportAsExcel() {
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource?.data);
+      const workbook: XLSX.WorkBook = {
+        Sheets: { 'Coupons': worksheet },
+        SheetNames: ['Coupons']
+      };
+    
+      const excelBuffer: any = XLSX.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array'
+      });
+    
+      const data: Blob = new Blob([excelBuffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
+    
+      FileSaver.saveAs(data, 'commission_report_' + new Date().getTime() + '.xlsx');
+    }
+
     refreshTable() {
       this.isLoading = true;
       this._reportService.getTransactionDetails().subscribe((userList:any)=>{
