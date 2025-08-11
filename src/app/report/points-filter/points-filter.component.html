@@ -1,4 +1,5 @@
 <section id="hdls-membership-container">
+
     <div class="search-section">
       <div class="add-product">
         <form (submit)="setSearchValue($event)" class="hdls-search-field">
@@ -56,195 +57,166 @@
               </mat-form-field>
               <button type="button" (click)="getHotelBookings()" class="hdls-search-btn">Search</button>
             </form>
+
           </div>
-      </div>
-      <!-- <div class="download-section">
-        <app-hdls-date-range
-          (getDateRange)="getDateRange($event)"
-        ></app-hdls-date-range>
-        <div class="download-button">
-          <a href="#"
-            ><img src="../../../assets/images/download.png" alt="download"
-          /></a>
+            </mat-form-field>
+            <mat-form-field class="hdls-hotel-filter-date">
+              <mat-label>Choose To Date</mat-label>
+              <div class="hdls-date-picker">
+              <input matInput [matDatepicker]="topicker" formControlName="to_date">
+              <mat-datepicker-toggle matIconSuffix [for]="topicker"></mat-datepicker-toggle>
+              <mat-datepicker #topicker></mat-datepicker>
+          </div>
+            </mat-form-field>
+            <button type="button" (click)="getHotelBookings()" class="hdls-search-btn">Search</button>
+          </form>
         </div>
-      </div> -->
     </div>
-    <div id="hdls-membership-list">
-      <div class="hdls-product-list-section">
-        <!-- <app-search-field></app-search-field> -->
-        <table
-          mat-table
-          class="hdls-product-table"
-          [dataSource]="dataSource"
-          matTableExporter
-        >
-          <ng-container matColumnDef="transaction_id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-             Transaction Id
-            </th>
-            <td mat-cell *matCellDef="let element">
-              <p *ngIf="!element.isLoading">
-                {{ element.bookingid }}
-              </p>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="membership_id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Id</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
 
-          <ng-container matColumnDef="member_name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Name</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="member_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Name</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="tier">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tier</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="tier">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tier</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="points">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Points</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="place">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Place</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="points">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Points</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="place">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Place</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="source">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Source</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="source">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Source</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="time">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Time</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Time</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="amount_paid">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount Paid</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="amount_paid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount Paid</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="points_worth">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Points Worth</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="points_expiry">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Points Expiry</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="total_price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Price (Exclude VAT)</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="points_worth">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Points Worth</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="points_expiry">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Points Expiry</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="total_price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Price (Exclude VAT)</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="points_balance">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Points Balance</th>
-            <td mat-cell *matCellDef="let element">
-              <div *ngIf="!element.isLoading">
-                {{ element?.hotelmaster?.hotelname }}
-              </div>
-              <div *ngIf="element.isLoading" class="loading-data"></div>
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumns"
-            class="hdls-table-row"
-          ></tr>
-        </table>
-        <table>
-          <tr *ngIf="!dataSource.data.length">
-            <td class="hdls-no-records-detail">No Records Found!</td>
-          </tr>
-        </table>
-        <mat-paginator
-          [pageSizeOptions]="[5, 10, 20]"
-          showFirstLastButtons
-          aria-label="Select page of periodic elements"
-          (page)="changePage($event)"
-        >
-        </mat-paginator>
-      </div>
+        <ng-container matColumnDef="points_balance">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Points Balance</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="hdls-table-row"
+        ></tr>
+      </table>
+      <table>
+        <tr *ngIf="!dataSource.data.length">
+          <td class="hdls-no-records-detail">No Records Found!</td>
+        </tr>
+      </table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+        (page)="changePage($event)"
+      >
+      </mat-paginator>
     </div>
-  </section>
-  
+  </div>
+</section>

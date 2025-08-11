@@ -10,14 +10,16 @@ import { ConfirmationModalComponent } from 'src/app/components/common/confirmati
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-membership-purchase-report',
   templateUrl: './membership-purchase-report.component.html',
-  styleUrls: ['./membership-purchase-report.component.scss']
+  styleUrls: ['./membership-purchase-report.component.scss'],
 })
 export class MembershipPurchaseReportComponent implements OnInit {
-  getSearchValue:string = '';
+  getSearchValue: string = '';
   selectedCategory: string = 'all';
   memberShipFilters: any = {
     categoryCounts: {
@@ -51,12 +53,13 @@ export class MembershipPurchaseReportComponent implements OnInit {
     'time',
     'total_price',
     'points_issued',
-    'status'
+    'status',
   ];
   dataSource: any = new MatTableDataSource(this.totalMembershipList);
   pageSize: number = 5;
   pageOffset: number = 0;
   memberId: number = 0;
+
   hotelDetails:any = [];
   hotelid:any = 0;
   membershipCategoryList:any = [];
@@ -64,7 +67,7 @@ export class MembershipPurchaseReportComponent implements OnInit {
   hotelGroup = new FormGroup({
     hotelid: new FormControl(''),
     from_date: new FormControl(''),
-    to_date: new FormControl('')
+    to_date: new FormControl(''),
   });
 
   constructor(private _bookingService: BookingsService, private _dialog: MatDialog, 
@@ -94,28 +97,57 @@ export class MembershipPurchaseReportComponent implements OnInit {
   }
 
   getHotelBookings() {
-   const {hotelid, from_date, to_date} = this.hotelGroup.value;
-   this.getHotelBookingHistory(hotelid, from_date, to_date);
+    const { hotelid, from_date, to_date } = this.hotelGroup.value;
+    this.getHotelBookingHistory(hotelid, from_date, to_date);
+  }
+
+  exportAsExcel() {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+      this.dataSource?.data
+    );
+    const workbook: XLSX.WorkBook = {
+      Sheets: { Coupons: worksheet },
+      SheetNames: ['Coupons'],
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    const data: Blob = new Blob([excelBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+
+    FileSaver.saveAs(
+      data,
+      'membership_purchase_report_' + new Date().getTime() + '.xlsx'
+    );
   }
 
   getHotelList() {
     const getCategory = 1;
-      this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
-          this.hotelDetails = res.response.map((hotelData:any) => {
-            return {
-              hotel_id: hotelData.hotel_id,
-              hotel_name: hotelData.hotelname
-            }
-          });
-        },(error:any)=>{
-          console.log(error);
-        })
+    this._inventoryService.getInventoryList(getCategory).subscribe(
+      (res: any) => {
+        this.hotelDetails = res.response.map((hotelData: any) => {
+          return {
+            hotel_id: hotelData.hotel_id,
+            hotel_name: hotelData.hotelname,
+          };
+        });
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
-  getHotelBookingHistory(hotelid:any, from_date:any, to_date:any) {
-    this._bookingService.getHotelBookingHistory(hotelid, new Date(from_date), new Date(to_date)).subscribe((res:any) => {
-      this.dataSource = new MatTableDataSource(res.response);
-    })
+  getHotelBookingHistory(hotelid: any, from_date: any, to_date: any) {
+    this._bookingService
+      .getHotelBookingHistory(hotelid, new Date(from_date), new Date(to_date))
+      .subscribe((res: any) => {
+        this.dataSource = new MatTableDataSource(res.response);
+      });
   }
 
   getSelectedFilter = (value: string) => {
@@ -142,17 +174,19 @@ export class MembershipPurchaseReportComponent implements OnInit {
   getBookingHistory() {
     //this.onFirstLoad();
     let getCategory = 1;
-    this._bookingService.getBookingHistory(1).subscribe((res:any) => {
+    this._bookingService.getBookingHistory(1).subscribe((res: any) => {
       this.dataSource = new MatTableDataSource(res.response.bookingHistory);
       this.dataSource.paginator = this.paginator;
-    })
+    });
   }
 
-  getHotelRelatedBookings(hotel_id:any, booking_data:any, userType:any) {
-    if(userType) {
+  getHotelRelatedBookings(hotel_id: any, booking_data: any, userType: any) {
+    if (userType) {
       return booking_data;
     }
-    const getFilteredBookings = booking_data.filter((booking_info:any) => booking_info.hotelid === hotel_id);
+    const getFilteredBookings = booking_data.filter(
+      (booking_info: any) => booking_info.hotelid === hotel_id
+    );
     return getFilteredBookings;
   }
   // ngAfterViewInit() {
@@ -197,7 +231,7 @@ export class MembershipPurchaseReportComponent implements OnInit {
     }
   }
 
-  openDeleteDialog(event: Event, deleteid: any,bookingStatus:number) {
+  openDeleteDialog(event: Event, deleteid: any, bookingStatus: number) {
     event.preventDefault();
   }
 
