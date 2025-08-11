@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BookingsService } from 'src/app/services/bookings/bookings.service';
-import { MemberShip } from 'src/app/services/membership/membership.service';
+import { MemberShip, MembershipService } from 'src/app/services/membership/membership.service';
 import { Loading } from 'src/app/services/utilities/helper_models';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -59,8 +59,10 @@ export class MembershipPurchaseReportComponent implements OnInit {
   pageSize: number = 5;
   pageOffset: number = 0;
   memberId: number = 0;
-  hotelDetails: any = [];
-  hotelid: any = 0;
+
+  hotelDetails:any = [];
+  hotelid:any = 0;
+  membershipCategoryList:any = [];
 
   hotelGroup = new FormGroup({
     hotelid: new FormControl(''),
@@ -68,20 +70,30 @@ export class MembershipPurchaseReportComponent implements OnInit {
     to_date: new FormControl(''),
   });
 
-  constructor(
-    private _bookingService: BookingsService,
-    private _dialog: MatDialog,
-    private route: ActivatedRoute,
-    private _inventoryService: InventoryService
-  ) {
-    this.route.params.subscribe((param: any) => {
-      this.memberId = param.id;
-    });
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, 
+    private route: ActivatedRoute, 
+    private _inventoryService: InventoryService,
+    private _membershipService: MembershipService) {
+    this.route.params.subscribe((param:any)=>{
+        this.memberId = param.id;
+    })
   }
 
   ngOnInit(): void {
     this.getBookingHistory();
     this.getHotelList();
+    this.getMembershipList();
+  }
+
+  getMembershipList() {
+    this._membershipService.getAllMembersByCategory(3).subscribe((res:any) => {
+      this.membershipCategoryList = res.response.map((membershipDetails:any) => {
+        return {
+          membership_id: membershipDetails.membershipid,
+          membership_name: membershipDetails.membershipname
+        }
+      });
+    })
   }
 
   getHotelBookings() {
