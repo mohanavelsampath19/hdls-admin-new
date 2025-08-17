@@ -16,6 +16,7 @@ import * as FileSaver from 'file-saver';
 export class TransactionReportComponent {
   userSearch: string = '';
   selectedCategory: string = 'all';
+  filterStatus: 'pending' | 'settled' | 'all' = 'all';
   transactions = [
     {
       transactionId: 102,
@@ -176,5 +177,20 @@ export class TransactionReportComponent {
           this.refreshTable();
         }
       });
+}
+filteredData($event:any) {
+  if (this.filterStatus === 'pending') {
+    this.dataSource.data = [...this.UserListRes].filter(
+      (el: any) => el.paymentSplit?.settled === 0
+    );
+  }
+  else if (this.filterStatus === 'settled') {
+    this.dataSource.data = [...this.UserListRes].filter(
+      (el: any) => el.paymentSplit?.settled === 1
+    );
+  }
+  else if (this.filterStatus === 'all') {
+    this.dataSource.data = [...this.UserListRes];
+  }
 }
 }

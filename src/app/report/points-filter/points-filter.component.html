@@ -56,10 +56,7 @@
             </div>
               </mat-form-field>
               <button type="button" (click)="getHotelBookings()" class="hdls-search-btn">Search</button>
-            </form>
 
-          </div>
-            </mat-form-field>
             <mat-form-field class="hdls-hotel-filter-date">
               <mat-label>Choose To Date</mat-label>
               <div class="hdls-date-picker">
@@ -72,7 +69,16 @@
           </form>
         </div>
     </div>
-
+    </div>
+<div id="hdls-membership-list"> 
+      <div class="hdls-product-list-section">
+        <!-- <app-search-field></app-search-field> -->
+        <table
+          mat-table
+          class="hdls-product-table"
+          [dataSource]="dataSource"
+          matTableExporter
+        >
         <ng-container matColumnDef="member_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Name</th>
           <td mat-cell *matCellDef="let element">
