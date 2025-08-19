@@ -1,62 +1,51 @@
 <section id="hdls-membership-container">
-
-    <div class="search-section">
-      <div class="add-product">
-        <form (submit)="setSearchValue($event)" class="hdls-search-field">
-          <input
-            type="text"
-            (change)="getSearchDetails($event)"
-            matInput
-            placeholder="Search"
-          />
-          <span>
-            <a href="#" (click)="setSearchValue($event)">
-              <img src="../../../assets/images/search.png" alt="Search" />
-            </a>
-          </span>
-        </form>
-        <div class="category-button">
-          <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-            <mat-button-toggle value="bold" mat-raised-button (click)="getSelectedFilter('earned')">Earned</mat-button-toggle>
-            <mat-button-toggle value="italic" mat-raised-button (click)="getSelectedFilter('redeemed')">Redeemed</mat-button-toggle>
-            <mat-button-toggle value="bold" mat-raised-button (click)="getSelectedFilter('referral')">Referral</mat-button-toggle>
-            <mat-button-toggle value="italic" mat-raised-button (click)="getSelectedFilter('expired')">Expired</mat-button-toggle>
-          </mat-button-toggle-group>
-        </div>
-        <div class="hdls-filter">
-            <form [formGroup]="hotelGroup" (ngSubmit)="getHotelBookings()" class="hdls-hotel-filter">
-              <mat-form-field class="hdls-form-field" appearance="fill">
-                <mat-label>Hotel</mat-label>
-                <mat-select
-                  class="hdls-form-select"
-                  formControlName="hotelid"
+  <div class="search-section">
+    <div class="add-product">
+      <form (submit)="setSearchValue($event)" class="hdls-search-field">
+        <input
+          type="text"
+          (change)="getSearchDetails($event)"
+          matInput
+          placeholder="Search"
+        />
+        <span>
+          <a href="#" (click)="setSearchValue($event)">
+            <img src="../../../assets/images/search.png" alt="Search" />
+          </a>
+        </span>
+      </form>
+      <div class="category-button">
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle value="bold" mat-raised-button (click)="getSelectedFilter('earned')">Earned</mat-button-toggle>
+          <mat-button-toggle value="italic" mat-raised-button (click)="getSelectedFilter('redeemed')">Redeemed</mat-button-toggle>
+          <mat-button-toggle value="bold" mat-raised-button (click)="getSelectedFilter('referral')">Referral</mat-button-toggle>
+          <mat-button-toggle value="italic" mat-raised-button (click)="getSelectedFilter('expired')">Expired</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="hdls-filter">
+          <form [formGroup]="hotelGroup" (ngSubmit)="getHotelBookings()" class="hdls-hotel-filter">
+            <mat-form-field class="hdls-form-field" appearance="fill">
+              <mat-label>Hotel</mat-label>
+              <mat-select
+                class="hdls-form-select"
+                formControlName="hotelid"
+              >
+                <mat-option
+                  *ngFor="let hotels of hotelDetails"
+                  [key]="hotels.hotel_id"
+                  [value]="hotels.hotel_id"
+                  >{{ hotels.hotel_name }}</mat-option
                 >
-                  <mat-option
-                    *ngFor="let hotels of hotelDetails"
-                    [key]="hotels.hotel_id"
-                    [value]="hotels.hotel_id"
-                    >{{ hotels.hotel_name }}</mat-option
-                  >
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="hdls-hotel-filter-date">
-                <mat-label>Choose From Date</mat-label>
-                <div class="hdls-date-picker">
-                <input matInput [matDatepicker]="picker" formControlName="from_date">
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </div>
-              </mat-form-field>
-              <mat-form-field class="hdls-hotel-filter-date">
-                <mat-label>Choose To Date</mat-label>
-                <div class="hdls-date-picker">
-                <input matInput [matDatepicker]="topicker" formControlName="to_date">
-                <mat-datepicker-toggle matIconSuffix [for]="topicker"></mat-datepicker-toggle>
-                <mat-datepicker #topicker></mat-datepicker>
-            </div>
-              </mat-form-field>
-              <button type="button" (click)="getHotelBookings()" class="hdls-search-btn">Search</button>
-
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="hdls-hotel-filter-date">
+              <mat-label>Choose From Date</mat-label>
+              <div class="hdls-date-picker">
+              <input matInput [matDatepicker]="picker" formControlName="from_date">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </div>
+            </mat-form-field>
             <mat-form-field class="hdls-hotel-filter-date">
               <mat-label>Choose To Date</mat-label>
               <div class="hdls-date-picker">
@@ -69,16 +58,45 @@
           </form>
         </div>
     </div>
+    <div class="download-section"> 
+      <div class="download-button">
+        <button mat-raised-button (click)="exportAsExcel()"
+          ><img src="../../../assets/images/download.png" alt="download"
+        /> View / Download</button>
+      </div>
     </div>
-<div id="hdls-membership-list"> 
-      <div class="hdls-product-list-section">
-        <!-- <app-search-field></app-search-field> -->
-        <table
-          mat-table
-          class="hdls-product-table"
-          [dataSource]="dataSource"
-          matTableExporter
-        >
+  </div>
+  <div id="hdls-membership-list">
+    <div class="hdls-product-list-section hdls-membership-purchase-container">
+      <!-- <app-search-field></app-search-field> -->
+      <table
+        mat-table
+        class="hdls-product-table"
+        [dataSource]="dataSource"
+        matTableExporter
+      >
+        <ng-container matColumnDef="transaction_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+           Transaction Id
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <p *ngIf="!element.isLoading">
+              {{ element.bookingid }}
+            </p>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="membership_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Id</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isLoading">
+              {{ element?.hotelmaster?.hotelname }}
+            </div>
+            <div *ngIf="element.isLoading" class="loading-data"></div>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="member_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Name</th>
           <td mat-cell *matCellDef="let element">

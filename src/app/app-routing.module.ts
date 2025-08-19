@@ -38,6 +38,7 @@ import { PointsFilterComponent } from './report/points-filter/points-filter.comp
 import { MembershipPurchaseReportComponent } from './report/membership-purchase-report/membership-purchase-report.component';
 import { CommissionReportComponent } from './report/commission-report/commission-report.component';
 import { TransactionReportComponent } from './pages/transaction-table/transaction-table.component';
+import { MembershipDetailsListComponent } from './report/membership-details-list/membership-details-list.component';
 
 const routes: Routes = [
   {
@@ -180,6 +181,10 @@ const routes: Routes = [
           {
             path: 'commission-report',
             component: CommissionReportComponent
+          },
+          {
+            path: 'membership-details/:id',
+            component: MembershipDetailsListComponent
           }
         ]
       },

@@ -35,4 +35,19 @@ export class ReportsService {
   updatePaymentSettlement(paymentInfo:any){
     return this._http.post(environment.baseUrl +'api/report/updatepaymentsettlements',{...paymentInfo});
   }
+  getMemberItemList() {
+    return this._http.get(environment.baseUrl + 'api/customermembership/getmembersitemlist');
+  }
+  getMemberDetailsofId(membershipid:any) {
+    return this._http.post(environment.baseUrl + 'api/customermembership/getmemberdetailsonmemberid', {
+      membershipid
+    })
+  }
+  getFilteredMembership(member_details:any) {
+    return this._http.post(environment.baseUrl + 'api/customermembership/getFilteredMembership', {
+      member_details
+    })
+  }
+
 }
+
