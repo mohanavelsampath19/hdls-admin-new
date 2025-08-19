@@ -14,13 +14,14 @@ import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import { ReportsService } from 'src/app/services/reports/reports.service';
 
-
 @Component({
-  selector: 'app-membership-purchase-report',
-  templateUrl: './membership-purchase-report.component.html',
-  styleUrls: ['./membership-purchase-report.component.scss'],
+  selector: 'app-membership-details-list',
+  templateUrl: './membership-details-list.component.html',
+  styleUrls: ['./membership-details-list.component.scss']
 })
-export class MembershipPurchaseReportComponent implements OnInit {
+
+
+export class MembershipDetailsListComponent implements OnInit {
   getSearchValue: string = '';
   selectedCategory: string = 'all';
   memberShipFilters: any = {
@@ -80,7 +81,7 @@ export class MembershipPurchaseReportComponent implements OnInit {
   ) {
     this.route.params.subscribe((param:any)=>{
         this.memberId = param.id;
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -90,7 +91,7 @@ export class MembershipPurchaseReportComponent implements OnInit {
   }
 
   getMembershipList() {
-    this._reportService.getMemberItemList().subscribe((res:any) => {
+    this._reportService.getMemberDetailsofId(this.memberId).subscribe((res:any) => {
       this.dataSource = new MatTableDataSource(res.response);
       this.dataSource.paginator = this.paginator;
     })
@@ -106,18 +107,7 @@ export class MembershipPurchaseReportComponent implements OnInit {
 
   getHotelBookings() {
     const { hotelid, from_date, to_date } = this.hotelGroup.value;
-    this.getFilteredMemberDetails({
-      'membershipid': hotelid, 
-      'start_date' : from_date, 
-      'end_date': to_date
-    });
-  }
-
-  getFilteredMemberDetails(member_data:any) {
-    this._reportService.getFilteredMembership(member_data).subscribe((res:any) => {
-      this.dataSource = new MatTableDataSource(res.response);
-      this.dataSource.paginator = this.paginator;
-    })
+    this.getHotelBookingHistory(hotelid, from_date, to_date);
   }
 
   exportAsExcel() {
