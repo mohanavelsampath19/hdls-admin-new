@@ -1,5 +1,5 @@
 <section id="scan-modal-container">
-    <div class="scan-modal-container-title">F & B Voucher Redemption notification</div>
+    <div class="scan-modal-container-title">{{scanInfoList[0].facility_type=='tourist_places'?'Tourist Places':'F & B'}} Voucher Redemption notification</div>
     <div class="scan-modal-container-body">
         
         <div *ngIf="scanInfoList.length==1">

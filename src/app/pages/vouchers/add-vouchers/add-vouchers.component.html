@@ -30,6 +30,7 @@
                         <mat-option value="f&b">F&B</mat-option>
                         <mat-option value="facilities">Facilities</mat-option>
                         <mat-option value="marketplace">Market place/Deal</mat-option>
+                        <mat-option value="tourist_places">Tourist Places</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -57,6 +58,15 @@
                     <mat-label>Facilities</mat-label>
                     <mat-select formControlName="roomType" #myInputReffacilityList>
                         <mat-option [value]="fb.id" *ngFor="let fb of facilityList">{{fb.facility_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="isTouristPlaces">
+                <mat-form-field appearance="fill">
+                    <mat-label>Tourist Places</mat-label>
+                    <mat-select formControlName="roomType" #myInputReffacilityList>
+                        <mat-option [value]="fb.id" *ngFor="let fb of touristplacesList">{{fb.facility_name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
