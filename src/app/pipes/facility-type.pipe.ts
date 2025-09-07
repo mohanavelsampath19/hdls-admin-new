@@ -17,6 +17,9 @@ export class FacilityTypePipe implements PipeTransform {
       case 'marketplace':
         modifiedVal = 'Marketplace / Deal';
         break;
+      case 'tourist_places':
+        modifiedVal = 'Tourist Places';
+        break;
       default:
         modifiedVal='';
     }

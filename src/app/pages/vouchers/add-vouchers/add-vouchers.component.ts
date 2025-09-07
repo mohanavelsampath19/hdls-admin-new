@@ -52,7 +52,8 @@ export class AddVouchersComponent implements OnInit {
   fbList:any;
   facilityList:any;
   marketplaceList:any;
-
+  touristplacesList:any;
+  isTouristPlaces:boolean = false;
   editor:any;
   @ViewChild('myCoverImage', { static: false })
   myCoverImage!: ElementRef;
@@ -108,6 +109,9 @@ export class AddVouchersComponent implements OnInit {
       case 'marketplace':
         this.isMarketplace = true;
       break;
+      case 'tourist_places':
+        this.isTouristPlaces = true;
+      break;
     }
     this.newVoucherForm.patchValue({roomType:''});
   }
@@ -133,6 +137,7 @@ export class AddVouchersComponent implements OnInit {
       this.fbList = facilityList && facilityList.filter((inventory:any)=>inventory.facility_type=='f&b');
       this.facilityList = facilityList && facilityList.filter((inventory:any)=>inventory.facility_type=='facility');
       this.marketplaceList = facilityList && facilityList.filter((inventory:any)=>inventory.facility_type=='marketplace');
+      this.touristplacesList = facilityList && facilityList.filter((inventory:any)=>inventory.facility_type=='tourist_places');
     });
   }
   inventoryChange(e:any){
