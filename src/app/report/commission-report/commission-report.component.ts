@@ -72,6 +72,7 @@ export class CommissionReportComponent implements OnInit {
     this.getHotelList();
   }
 
+  
   getHotelList() {
     const getCategory = 1;
       this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {

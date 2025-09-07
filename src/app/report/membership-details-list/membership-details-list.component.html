@@ -242,10 +242,10 @@
             <p *ngIf="!element.isLoading">
               {{
                 element &&
-                element.isactive &&
-                element.isactive === 1
-                  ? 'Active'
-                  : 'In Active'
+                element.specialrequest &&
+                element.specialrequest !== "null"
+                  ? element.specialrequest
+                  : "-"
               }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
