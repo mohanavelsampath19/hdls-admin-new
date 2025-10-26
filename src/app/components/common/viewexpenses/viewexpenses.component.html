@@ -1,5 +1,5 @@
 <section id="hdls-membership-container">
-    <h3 class="room-header">External payment history</h3>
+    <h3 class="room-header">Add Points</h3>
     <div class="room-availability-container" *ngIf="isAvailable==false">
 
         <form [formGroup]="paymentFormGroup">
@@ -28,7 +28,12 @@
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
-
+                 <mat-slide-toggle
+          class="example-margin"
+          [color]="'primary'" [(ngModel)]="isGiftPoints" formControlName="isGiftPoints"
+          >
+            Gift points
+      </mat-slide-toggle>
 
                 <button mat-mini-fab color="primary" class="save-schedule" [disabled]="paymentFormGroup.invalid"
                     (click)="saveExpenses()">

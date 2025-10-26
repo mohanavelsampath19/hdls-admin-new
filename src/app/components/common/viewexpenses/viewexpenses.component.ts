@@ -21,6 +21,7 @@ export class ViewexpensesComponent implements OnInit {
     paymentDesc: new FormControl(),
     amount: new FormControl(),
     paymentDate:new FormControl(),
+    isGiftPoints: new FormControl(false),
     hotelId: new FormControl()
   })
   closePopup = new EventEmitter();
@@ -52,6 +53,7 @@ export class ViewexpensesComponent implements OnInit {
     this.dialogRef.close();
   }
   saveExpenses(){
+    console.log(this.paymentFormGroup.value);
     this._reportService.updateExternalPayment({...this.paymentFormGroup.value,user_id:this.data.user_id}).subscribe((paymentDesc:any)=>{
       console.log(paymentDesc);
       this.paymentFormGroup.reset();

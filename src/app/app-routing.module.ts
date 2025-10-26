@@ -122,10 +122,10 @@ const routes: Routes = [
         path: 'edit-room',
         component: EditRoomComponent,
       },
-      {
-        path: 'bookings',
-        component: BookingsComponent,
-      },
+      // {
+      //   path: 'bookings',
+      //   component: BookingsComponent,
+      // },
       {
         path: 'edit-vouchers/:id',
         component: EditVouchersComponent,
@@ -163,6 +163,10 @@ const routes: Routes = [
             component: BookingDetailsComponent
           },
           {
+            path: 'bookings',
+            component: BookingsComponent,
+          },
+          {
             path: 'hotel-order-summary',
             component: HotelOrderSummaryComponent
           },
@@ -171,7 +175,7 @@ const routes: Routes = [
             component: SingleBookingDetailsComponent
           },
           {
-            path: 'points-filter',
+            path: 'points-tracking-report',
             component: PointsFilterComponent
           },
           {

@@ -97,6 +97,7 @@ import { BookingDetailsComponentPopup } from './components/popups/booking-detail
 import { TransactionReportComponent } from './pages/transaction-table/transaction-table.component';
 import { SettlePopupComponent } from './components/common/popups/settle-popup/settle-popup.component';
 import { MembershipDetailsListComponent } from './report/membership-details-list/membership-details-list.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 initializeApp(environment.firebase);
 
@@ -205,7 +206,8 @@ initializeApp(environment.firebase);
     MatExpansionModule,
     SharedModule,
     MatSnackBarModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    DragDropModule
   ],
   
   providers: [],

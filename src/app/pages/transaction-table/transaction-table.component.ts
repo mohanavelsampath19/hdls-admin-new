@@ -7,6 +7,7 @@ import { ViewexpensesComponent } from 'src/app/components/common/viewexpenses/vi
 import { ReportsService } from 'src/app/services/reports/reports.service';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
+import { PointService } from 'src/app/services/points/point.service';
 
 @Component({
   selector: 'app-transaction-report',
@@ -108,7 +109,10 @@ export class TransactionReportComponent {
     selectedTier: string = 'all';
     UserListRes:any = [];
     isLoading: boolean = false;
-    constructor(private _reportService:ReportsService, private _dialog:MatDialog,) { 
+    pointIssuenceCommission:number = 0;
+    memberSpendCommission:number = 0;
+    memberPackageCommission:number = 0;
+    constructor(private _reportService:ReportsService, private _dialog:MatDialog, private _pointService:PointService) { 
       
     }
   
@@ -136,6 +140,16 @@ export class TransactionReportComponent {
     }
 
     refreshTable() {
+      this._pointService.getPointDetails(2, 2).subscribe((res: any) => {
+        console.log(res.response);
+        this.pointIssuenceCommission = res.response[8].point_multiplier;
+        this.memberSpendCommission = res.response[10].point_multiplier;
+        this.memberPackageCommission = res.response[11].point_multiplier;
+      },
+      (error) => {
+        console.log(error, ' API error');
+      }
+    );
       this.isLoading = true;
       this._reportService.getTransactionDetails().subscribe((userList:any)=>{
         console.log(userList);

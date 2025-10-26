@@ -33,29 +33,31 @@
             <span class="nav-item-span">Commission Details</span>
           </div> -->
           <div class="layout" (click)="goToLink('/report/users','users')">
-            <span class="nav-item-span">Users</span>
+            <span class="nav-item-span">Members</span>
           </div>
-
+          <div class="layout" (click)="goToLink('/report/bookings','Bookings')">
+            <span class="nav-item-span">Bookings</span>
+          </div>
+          <div class="layout" (click)="goToLink('/report/points-tracking-report','Points-filter')">
+            <span class="nav-item-span">Point Tracking report</span>
+          </div>
           <div class="layout" (click)="goToLink('/report/membership-purchase-report','Membership')">
             <span class="nav-item-span">Membership Purchases</span>
           </div>
           <div class="layout" (click)="goToLink('/report/commission-report','Commission-report')">
             <span class="nav-item-span">Commission Report</span>
           </div>
-          <div class="layout" (click)="goToLink('/report/points-filter','Membership')">
-            <span class="nav-item-span">Store Summary</span>
-          </div>
+          
         </mat-expansion-panel>
       </div>
     </div>
 
-    <div class="nav-item" (click)="goToLink('/bookings','bookings')" *ngIf="isBookingPermissionExist==true">
+    <!-- <div class="nav-item" (click)="goToLink('/bookings','bookings')" *ngIf="isBookingPermissionExist==true">
       <div class="layout" [ngClass]="{active:myMenu.bookings}">
-        <!-- Update icon -->
-        <mat-icon class="icon">event_available</mat-icon>
+         <mat-icon class="icon">event_available</mat-icon>
         <span class="nav-item-span">Bookings</span>
       </div>
-    </div>
+    </div> -->
     <div class="nav-item" *ngIf="isPointPermissionExist==true">
       <div class="expansionPanel">
         <mat-expansion-panel >

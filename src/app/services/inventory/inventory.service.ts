@@ -27,6 +27,9 @@ export class InventoryService {
     let type = category !== undefined ? category : 1;
     return this._http.get(environment.baseUrl + 'api/hotel/gethotellist?activetype='+type)
   }
+  getPointSummary(userId:number){
+    return this._http.post(environment.baseUrl + 'api/hotel/getpointsummary', { customer_id:userId });
+  }
   deleteHotel(hotelId:number){
     return this._http.post(environment.baseUrl + 'api/hotel/deletehotel',{hotelId:hotelId});
   }

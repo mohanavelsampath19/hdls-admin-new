@@ -13,6 +13,7 @@ import { InventoryService } from 'src/app/services/inventory/inventory.service';
 
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
+import { ReportsService } from 'src/app/services/reports/reports.service';
 
 
 @Component({
@@ -71,12 +72,14 @@ export class PointsFilterComponent implements OnInit {
 
   constructor(private _bookingService: BookingsService, private _dialog: MatDialog, 
     private _pointService: PointService,
-    private _inventoryService: InventoryService
+    private _inventoryService: InventoryService,
+    private _reportService: ReportsService
   ) {}
 
   ngOnInit(): void {
     this.getBookingHistory();
     this.getHotelList();
+    this.getPointsSummary();
   }
 
   getHotelBookings() {
@@ -142,6 +145,25 @@ export class PointsFilterComponent implements OnInit {
     // this._pointService.getPointSummaryDetails().subscribe((res) => {
     //   console.log(res);
     // })
+  }
+  getPointsSummary() {
+    
+    this._reportService.getPointsSummary().subscribe((res:any) => {
+      console.log(res);
+      let userList = this.groupByUser(res.response);
+      Object.values(userList).map((userObj:any,i:number)=>{
+        console.log({
+          userId: Object.keys(userList)[i],
+          pointSum:userObj.reduce((point:any)=>{ return point.credit - point.debit; },0)
+        })
+        return {
+          userId: Object.keys(userList)[i],
+          pointSum:userObj.reduce((point:any)=>{ return point.credit - point.debit; },{})
+        };
+        
+      })
+      this.dataSource = new MatTableDataSource(res.response);
+    });
   }
 
   getHotelRelatedBookings(hotel_id:any, booking_data:any, userType:any) {
@@ -263,5 +285,15 @@ export class PointsFilterComponent implements OnInit {
         data,
         'store_summary_report_' + new Date().getTime() + '.xlsx'
       );
+    }
+    groupByUser(data:any){
+      const groupedList = data.reduce((acc:any, obj:any) => {
+        if (!acc[obj.user_id]) {
+          acc[obj.user_id] = [];
+        }
+        acc[obj.user_id].push(obj);
+        return acc;
+      }, {});
+      return groupedList;
     }
 }

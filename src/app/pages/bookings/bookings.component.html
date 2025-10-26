@@ -85,7 +85,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Booking ID</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-hotel-name">
-              <a href="#/bookings?bookingid={{ element.bookingid }}">
+              <a href="#/report/booking-detail/{{ element.bookingid }}">
                 {{ element?.bookingid || '--' }}
               </a>
             </div>

@@ -9,6 +9,7 @@ import { ConfirmationModalComponent } from 'src/app/components/common/confirmati
 import { InfoPopupComponent } from 'src/app/components/common/info-popup/info-popup.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
+import { PointService } from 'src/app/services/points/point.service';
 
 
 @Component({
@@ -65,9 +66,10 @@ export class CommissionReportComponent implements OnInit {
   pageOffset: number = 0;
   hotelDetails:any = [];
 
-  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private _inventoryService: InventoryService) {}
+  constructor(private _bookingService: BookingsService, private _dialog: MatDialog, private _inventoryService: InventoryService, private _pointService:PointService) {}
 
   ngOnInit(): void {
+     
     this.getBookingHistory();
     this.getHotelList();
   }
@@ -114,6 +116,7 @@ export class CommissionReportComponent implements OnInit {
   }
 
   getBookingHistory() {
+   
     this.onFirstLoad();
     let getCategory = 1;
     switch (this.selectedCategory) {
@@ -133,7 +136,13 @@ export class CommissionReportComponent implements OnInit {
         getCategory = 3;
         break;
     }
-
+    this._pointService.getPointDetails(2, 2).subscribe((res: any) => {
+        console.log(res);
+      },
+      (error) => {
+        console.log(error, ' API error');
+      }
+    );
     this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
       const isSuperUser = localStorage.getItem('logged-in-user') === 'hdlsadmin'? true : false;
       const loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');

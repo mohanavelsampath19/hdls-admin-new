@@ -1,23 +1,5 @@
 <section id="hdls-dashboard">
   <h2>Dashboard</h2>
-  <div class="gantt-container">
-    <div class="gantt-header">
-      <div *ngFor="let day of daysInMonth" class="gantt-cell">
-        {{ day | date: 'E d' }}
-      </div>
-    </div>
   
-    <div class="gantt-rows">
-      <div *ngFor="let task of tasks" class="gantt-row">
-        <div
-          class="gantt-task"
-          [style.left.%]="task.leftCheck"
-          [style.width.%]="task.width"
-          [style.background]="task.color"
-        >
-          {{ task.name }}
-        </div>
-      </div>
-    </div>
-  </div>
+
 </section>
