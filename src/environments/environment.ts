@@ -4,10 +4,13 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://cloud.tribeloyalty.my/',
-  imageUrl: 'http://cloud.tribeloyalty.my/upload',
+  baseUrl: 'https://stage.tribeloyalty.my/',
+  imageUrl: 'https://stage.tribeloyalty.my/upload',
+  //baseUrl: 'http://cloud.tribeloyalty.my/',
+ //imageUrl: 'http://cloud.tribeloyalty.my/upload',
   socketUrl: '',
-  // imageUrl: 'http://localhost:5000/upload'
+  // baseUrl: 'http://localhost:80/',
+  // imageUrl: 'http://localhost:80/upload',
   firebase:{
     apiKey: "AIzaSyBL8_awaeTeqbw-SOJfQ_Xa3RG01NXJrvc",
   authDomain: "tribe-loyalty.firebaseapp.com",
