@@ -21,7 +21,6 @@ export class UsersComponent implements OnInit {
   UserListRes:any = [];
   constructor(private _reportService:ReportsService, private _dialog:MatDialog) { 
     this._reportService.getUserList().subscribe((userList:any)=>{
-      console.log(userList);
       this.UserListRes = userList.response;
       this.dataSource = new MatTableDataSource( userList.response);
       this.dataSource.paginator = this.paginator;
@@ -49,5 +48,13 @@ export class UsersComponent implements OnInit {
     }else{
       this.dataSource.data = this.UserListRes.filter((user:any) => user.pointsTier === this.selectedTier);
     }
+  }
+
+  filterStatus(status:string) {
+    if (status === 'active') {
+      this.dataSource.data = this.UserListRes.filter((user:any) => !user.inactive);
+      return;
+    }
+      this.dataSource.data = this.UserListRes.filter((user:any) => user.inactive);
   }
 }
