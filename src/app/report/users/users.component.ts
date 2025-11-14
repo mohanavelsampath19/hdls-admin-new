@@ -4,7 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ViewexpensesComponent } from 'src/app/components/common/viewexpenses/viewexpenses.component';
 import { ReportsService } from 'src/app/services/reports/reports.service';
-
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -56,5 +57,29 @@ export class UsersComponent implements OnInit {
       return;
     }
       this.dataSource.data = this.UserListRes.filter((user:any) => user.inactive);
+  }
+
+  exportAsExcel() {
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+          this.dataSource?.data
+        );
+        const workbook: XLSX.WorkBook = {
+          Sheets: { Coupons: worksheet },
+          SheetNames: ['Coupons'],
+        };
+    
+        const excelBuffer: any = XLSX.write(workbook, {
+          bookType: 'xlsx',
+          type: 'array',
+        });
+    
+        const data: Blob = new Blob([excelBuffer], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+    
+        FileSaver.saveAs(
+          data,
+          'user_summary_report_' + new Date().getTime() + '.xlsx'
+        );
   }
 }
