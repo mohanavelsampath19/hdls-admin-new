@@ -150,7 +150,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Source</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-               {{ element?.bookingDetails?.[0]?.hotelmaster?.hotelname }}
+               {{ element?.bookingDetails?.[0]?.hotelmaster?.hotelname ?? '' }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
