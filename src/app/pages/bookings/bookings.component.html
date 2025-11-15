@@ -4,15 +4,75 @@
       <form (submit)="setSearchValue($event)" class="hdls-search-field">
         <input
           type="text"
-          (change)="getSearchDetails($event)"
-          matInput
+          [(ngModel)]="userSearch"
           placeholder="Search"
+          matInput
+          (keyup)="getSearchDetails($event)"
+          placeholder="Search by users"
+          #input
+          name="userSearch"
         />
         <span>
           <a href="#" (click)="setSearchValue($event)">
             <img src="../../../assets/images/search.png" alt="Search" />
           </a>
         </span>
+      </form>
+    </div>
+    <div class="hdls-filter">
+      <form
+        [formGroup]="hotelGroup"
+        (ngSubmit)="getHotelBookings()"
+        class="hdls-hotel-filter"
+      >
+        <mat-form-field class="hdls-form-field" appearance="fill">
+          <mat-label>Hotel</mat-label>
+          <mat-select class="hdls-form-select" formControlName="hotelid">
+            <mat-option
+              *ngFor="let hotels of hotelDetails"
+              [key]="hotels.hotel_id"
+              [value]="hotels.hotel_id"
+              >{{ hotels.hotel_name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="hdls-hotel-filter-date">
+          <mat-label>Choose From Date</mat-label>
+          <div class="hdls-date-picker">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="from_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </mat-form-field>
+        <mat-form-field class="hdls-hotel-filter-date">
+          <mat-label>Choose To Date</mat-label>
+          <div class="hdls-date-picker">
+            <input
+              matInput
+              [matDatepicker]="topicker"
+              formControlName="to_date"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="topicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #topicker></mat-datepicker>
+          </div>
+        </mat-form-field>
+        <button
+          type="button"
+          (click)="getHotelBookings()"
+          class="hdls-search-btn"
+        >
+          Search
+        </button>
       </form>
     </div>
     <!-- <div class="download-section">
@@ -85,21 +145,27 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Booking ID</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-hotel-name">
-              <a href="#/report/booking-detail/{{ element.bookingid }}">
-                {{ element?.bookingid || '--' }}
+              <a href="#/report/booking-details/{{ element.bookingid }}">
+                {{ element?.bookingid || "--" }}
               </a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
 
-        
         <ng-container matColumnDef="customer_id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="check-in-column">Membership ID</th>
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="check-in-column"
+          >
+            Membership ID
+          </th>
           <td mat-cell *matCellDef="let element" class="check-in-column">
             <div *ngIf="!element.isLoading" class="hdls-check-in">
               <a href="#/bookings?customerid={{ element.customerid }}">
-                {{ element?.customerid || '--' }}
+                {{ element?.customerid || "--" }}
               </a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
@@ -129,30 +195,33 @@
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-amount">
               <a href="#/bookings?hotelid={{ element.hotelid }}">
-                {{ element?.hotelmaster?.hotelname || '--' }}
+                {{ element?.hotelmaster?.hotelname || "--" }}
               </a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="booking_date">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="booking-date-column">
-            Booking Date 
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="booking-date-column"
+          >
+            Booking Date
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element.created_at | date:'Y-MM-dd' }}
+              {{ element.created_at | date : "Y-MM-dd" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="room">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Rooms
-          </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Rooms</th>
           <td mat-cell *matCellDef="let element">
             <p *ngIf="!element.isLoading" class="hdls-remarks">
-              {{ element?.rooms?.roomtitle || '-' }}
+              {{ element?.rooms?.roomtitle || "-" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -170,69 +239,104 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-action">
-              <a href="#" (click)="openDeleteDialog($event, element.bookingid,element.status)" *ngIf="element.status!=4">Action</a>
-              <div *ngIf="element.status==4"><strong>{{element.updated_at | date:'medium'}}</strong></div>
+              <a
+                href="#"
+                (click)="
+                  openDeleteDialog($event, element.bookingid, element.status)
+                "
+                *ngIf="element.status != 4"
+                >Action</a
+              >
+              <div *ngIf="element.status == 4">
+                <strong>{{ element.updated_at | date : "medium" }}</strong>
+              </div>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
-
           </td>
         </ng-container>
-         <ng-container matColumnDef="check_in">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="booking-date-column">
-            Checkin-Date 
+        <ng-container matColumnDef="check_in">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="booking-date-column"
+          >
+            Checkin-Date
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element?.start_at | date:'Y-MM-dd' }}
+              {{ element?.start_at | date : "Y-MM-dd" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="check_out">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="booking-date-column">
-            Check-out Date 
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="booking-date-column"
+          >
+            Check-out Date
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element?.end_at | date:'Y-MM-dd' }}
+              {{ element?.end_at | date : "Y-MM-dd" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="booking-date-column">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="booking-date-column"
+          >
             Time
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element.created_at | date:'HH:mm a' }}
+              {{ element.created_at | date : "HH:mm a" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="total_amount">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="booking-date-column">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="booking-date-column"
+          >
             Total Amount (Including VAT)
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element.totalWithTax | currency:'MYR ':'symbol':'1.2-2' }}
+              {{
+                element.totalWithTax | currency : "MYR " : "symbol" : "1.2-2"
+              }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="special_requests">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="booking-date-column">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="booking-date-column"
+          >
             Special Requests
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element.specialrequest || '--' }}
+              {{ element.specialrequest || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
         </ng-container>
-        
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr
           mat-row
@@ -255,4 +359,3 @@
     </div>
   </div>
 </section>
-

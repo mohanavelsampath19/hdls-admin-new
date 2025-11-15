@@ -8,6 +8,8 @@
           (change)="getSearchDetails($event)"
           matInput
           placeholder="Search"
+          [(ngModel)]="searchValue"
+          name="searchValue"
         />
         <span>
           <a href="#" (click)="setSearchValue($event)">

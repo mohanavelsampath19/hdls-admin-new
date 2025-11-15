@@ -19,8 +19,8 @@
       </form>
     </div>
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-  <mat-button-toggle value="bold" mat-raised-button>Active</mat-button-toggle>
-  <mat-button-toggle value="italic" mat-raised-button>Inactive</mat-button-toggle>
+  <mat-button-toggle value="bold" mat-raised-button (click)="filterStatus('active')">Active</mat-button-toggle>
+  <mat-button-toggle value="italic" mat-raised-button (click)="filterStatus('Inactive')">Inactive</mat-button-toggle>
   <mat-button-toggle value="underline" mat-raised-button>
     <button mat-button [matMenuTriggerFor]="menu">
       Tier points
@@ -38,9 +38,9 @@
     <div class="download-section">
         
         <div class="download-button">
-          <button mat-raised-button
-            ><img src="../../../assets/images/download.png" alt="download"
-          /> View / Download</button>
+          <button mat-raised-button (click)="exportAsExcel()"
+          ><img src="../../../assets/images/download.png" alt="download"
+        /> View / Download</button>
         </div>
       </div>
   </div>
