@@ -37,4 +37,8 @@ export class BookingsService {
   getBookingDetailsBasedOnId(bookingid:any) {
     return this._http.get(environment.baseUrl + `api/booking/bookingInfo?bookingId=${bookingid}`);
   }
+
+  getBookingHistoryById(booking_id:any) {
+    return this._http.get(environment.baseUrl + `api/booking/getbookinghistorybyId?userId=${booking_id}`);
+  }
 }

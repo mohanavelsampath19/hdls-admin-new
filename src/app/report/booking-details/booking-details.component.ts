@@ -87,7 +87,7 @@ export class BookingDetailsComponent implements OnInit {
   getBookingHistory() {
     //this.onFirstLoad();
     let getCategory = 1;
-    this._bookingService.getUserBookingHistory(this.memberId).subscribe((res:any) => {
+    this._bookingService.getBookingHistoryById(this.memberId).subscribe((res:any) => {
       this.dataSource = new MatTableDataSource(res.bookingHistory);
       this.dataSource.paginator = this.paginator;
     })
