@@ -27,6 +27,57 @@
   <mat-button-toggle value="all" mat-raised-button>All</mat-button-toggle>
 </mat-button-toggle-group>
  
+      <div class="hdls-filter">
+        <form
+          [formGroup]="hotelGroup"
+          (ngSubmit)="getHotelBookings()"
+          class="hdls-hotel-filter"
+        >
+          <mat-form-field class="hdls-form-field" appearance="fill">
+            <mat-label>Place</mat-label>
+            <mat-select class="hdls-form-select" formControlName="hotelid">
+              <mat-option
+                *ngFor="let hotels of hotelDetails"
+                [key]="hotels.hotel_id"
+                [value]="hotels.hotel_id"
+                >{{ hotels.hotel_name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="hdls-hotel-filter-date">
+            <mat-label>Choose From Date</mat-label>
+            <div class="hdls-date-picker">
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="from_date"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </mat-form-field>
+          <mat-form-field class="hdls-hotel-filter-date">
+            <mat-label>Choose To Date</mat-label>
+            <div class="hdls-date-picker">
+              <input
+                matInput
+                [matDatepicker]="topicker"
+                formControlName="to_date"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="topicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #topicker></mat-datepicker>
+            </div>
+          </mat-form-field>
+          <button type="button" (click)="getHotelBookings()" class="hdls-search-btn">Search</button>
+        </form>
+      </div>
+
     <div class="download-section">
         
         <div class="download-button">

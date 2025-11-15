@@ -8,6 +8,10 @@ import { ReportsService } from 'src/app/services/reports/reports.service';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import { PointService } from 'src/app/services/points/point.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
+
+
 
 @Component({
   selector: 'app-transaction-report',
@@ -15,6 +19,11 @@ import { PointService } from 'src/app/services/points/point.service';
   styleUrls: ['./transaction-table.component.scss']
 })
 export class TransactionReportComponent {
+     hotelGroup = new FormGroup({
+        hotelid: new FormControl(''),
+        from_date: new FormControl(''),
+        to_date: new FormControl('')
+      });
   userSearch: string = '';
   selectedCategory: string = 'all';
   filterStatus: 'pending' | 'settled' | 'all' = 'all';
@@ -112,12 +121,16 @@ export class TransactionReportComponent {
     pointIssuenceCommission:number = 0;
     memberSpendCommission:number = 0;
     memberPackageCommission:number = 0;
-    constructor(private _reportService:ReportsService, private _dialog:MatDialog, private _pointService:PointService) { 
+    hotelDetails:any = [];
+
+    constructor(private _reportService:ReportsService, private _dialog:MatDialog, 
+      private _pointService:PointService, private _inventoryService: InventoryService) { 
       
     }
   
     ngOnInit(): void {
       this.refreshTable();
+      this.getHotelList();
     }
 
     exportAsExcel() {
@@ -207,4 +220,24 @@ filteredData($event:any) {
     this.dataSource.data = [...this.UserListRes];
   }
 }
+
+ getHotelBookings() {
+    // const {hotelid, from_date, to_date} = this.hotelGroup.value;
+    // this.getHotelBookingHistory(hotelid, from_date, to_date);
+  }
+
+  getHotelList() {
+    const getCategory = 1;
+    this._inventoryService.getInventoryList(getCategory).subscribe((res:any) => {
+        this.hotelDetails = res.response.map((hotelData:any) => {
+          return {
+            hotel_id: hotelData.hotel_id,
+            hotel_name: hotelData.hotelname
+          }
+        });
+      },(error:any)=>{
+        console.log(error);
+      })
+}
+
 }
