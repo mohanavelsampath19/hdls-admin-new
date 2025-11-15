@@ -222,8 +222,15 @@ filteredData($event:any) {
 }
 
  getHotelBookings() {
-    // const {hotelid, from_date, to_date} = this.hotelGroup.value;
-    // this.getHotelBookingHistory(hotelid, from_date, to_date);
+    const {hotelid, from_date, to_date} = this.hotelGroup.value;
+    this._reportService.getTransactionDetailsByHotelId(hotelid).subscribe((userList:any)=>{
+      console.log(userList);
+      this.isLoading = false;
+      this.UserListRes = userList.response;
+      this.dataSource = new MatTableDataSource( userList.response);
+      this.dataSource.paginator = this.paginator;
+      this.resultsLength = userList.response.length;
+    });
   }
 
   getHotelList() {
