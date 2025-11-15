@@ -160,9 +160,20 @@ export class PointsFilterComponent implements OnInit {
           userId: Object.keys(userList)[i],
           pointSum:userObj.reduce((point:any)=>{ return point.credit - point.debit; },{})
         };
-        
-      })
+      });
+      res.response.forEach((pointData:any) => {
+        if(pointData.bookingDetails && pointData.bookingDetails.length > 0){
+          pointData.place = pointData.bookingDetails[0]?.hotelmaster?.city;
+          pointData.source = pointData.bookingDetails[0]?.hotelmaster?.hotelname;
+          pointData.amount = pointData.bookingDetails[0]?.amount;
+        }else{
+          pointData.place =  pointData?.external_payment_master.hotelmaster?.city;
+          pointData.source =  pointData?.external_payment_master.hotelmaster?.hotelname;
+          pointData.amount = pointData?.external_payment_master.amount;
+        }
+      });
       this.dataSource = new MatTableDataSource(res.response);
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -186,12 +197,12 @@ export class PointsFilterComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.totalMembershipList);
   }
 
-  changePage(e: any) {
-    console.log(e);
-    this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
-    this.pageSize = e.pageSize;
-    this.getBookingHistory();
-  }
+  // changePage(e: any) {
+  //   console.log(e);
+  //   this.pageOffset = e.pageIndex === 0 ? 0 : e.pageIndex * e.pageSize;
+  //   this.pageSize = e.pageSize;
+  //   this.getBookingHistory();
+  // }
 
   getDateRange(daterange: any) {
     if (

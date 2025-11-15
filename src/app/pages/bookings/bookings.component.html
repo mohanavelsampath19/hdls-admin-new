@@ -185,7 +185,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-special-request">
-              {{ element?.customer?.mobile || "-" }}
+              {{ element?.customers?.mobile || '-'}}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
