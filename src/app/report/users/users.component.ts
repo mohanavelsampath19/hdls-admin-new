@@ -34,6 +34,11 @@ export class UsersComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      const search = filter.trim().toLowerCase();
+      return data.firstname.toLowerCase().includes(search) || data.lastname.toLowerCase().includes(search)
+            || data.customerid==search || data?.email?.toLowerCase().includes(search);
+    };
   }
   pageChanged(event:any){
     console.log(event);

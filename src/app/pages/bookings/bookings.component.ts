@@ -378,10 +378,10 @@ export class BookingsComponent implements OnInit {
     }
   }
 
-  openDeleteDialog(event: Event, deleteid: any, bookingStatus: number) {
+  openBookingStatusChangePopup(event: Event, deleteid: any, bookingStatus: number, bookingInfo: any) {
     event.preventDefault();
     const dialogRef = this._dialog.open(ConfirmationModalComponent, {
-      data: { bookingStatus: bookingStatus },
+      data: { bookingStatus: bookingStatus, bookingInfo: bookingInfo },
     });
     const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
       (data) => {

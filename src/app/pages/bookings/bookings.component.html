@@ -242,7 +242,7 @@
               <a
                 href="#"
                 (click)="
-                  openDeleteDialog($event, element.bookingid, element.status)
+                  openBookingStatusChangePopup($event, element.bookingid, element.status, element)
                 "
                 *ngIf="element.status != 4"
                 >Action</a

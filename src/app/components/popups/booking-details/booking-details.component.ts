@@ -91,23 +91,7 @@ export class BookingDetailsComponentPopup implements OnInit {
         getBookingHistory() {
           this.onFirstLoad();
           let getCategory = 1;
-          switch (this.selectedCategory) {
-            case 'live':
-              getCategory = 1;
-              break;
-            case 'rejected':
-              getCategory = 2;
-              break;
-            case 'all':
-              getCategory = 3;
-              break;
-            case 'cancelled':
-              getCategory = 4;
-              break;
-            default:
-              getCategory = 3;
-              break;
-          }
+          
       
           this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
             const isSuperUser = localStorage.getItem('logged-in-user') === 'hdlsadmin'? true : false;
@@ -125,35 +109,33 @@ export class BookingDetailsComponentPopup implements OnInit {
               this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
               this.dataSource.paginator = this.paginator;
             }
-            
           })
         }
       
         getHotelRelatedBookings(hotel_id:any, booking_data:any, userType:any) {
           if(userType) {
-            return booking_data.map((bookingInfo:any) => {
+            let getFilteredBookings = booking_data.map((bookingInfo:any) => {
               bookingInfo.totalWithTax = parseFloat(bookingInfo.amount) + bookingInfo.tax;
               return bookingInfo;
             }).filter((bookingInfo:any)=>{
-              if(this.data.userId && this.data.userId  != 0){
-                return bookingInfo.customerid === this.data.userId;
-              }else{
-                return bookingInfo;
-              }
-            })
+                return bookingInfo.customerid == this.data.userId;
+            });
+            return getFilteredBookings;
+          }else{
+            let getFilteredBookings = booking_data.filter((booking_info:any) => booking_info.hotelid === hotel_id)
+            .map((bookingInfo:any) => {
+              bookingInfo.totalWithTax = parseFloat(bookingInfo.amount) + bookingInfo.tax;
+              return bookingInfo;
+            }).filter((bookingInfo:any)=>{
+                if(this.selectedHotel && this.selectedHotel != 0){
+                  return bookingInfo.hotelid === this.selectedHotel;
+                }else{
+                  return bookingInfo;
+                }
+              })
+            return getFilteredBookings;
           }
-          const getFilteredBookings = booking_data.filter((booking_info:any) => booking_info.hotelid === hotel_id)
-          .map((bookingInfo:any) => {
-            bookingInfo.totalWithTax = parseFloat(bookingInfo.amount) + bookingInfo.tax;
-            return bookingInfo;
-          }).filter((bookingInfo:any)=>{
-              if(this.selectedHotel && this.selectedHotel != 0){
-                return bookingInfo.hotelid === this.selectedHotel;
-              }else{
-                return bookingInfo;
-              }
-            })
-          return getFilteredBookings;
+          
         }
         // ngAfterViewInit() {
         //   this.dataSource.paginator = this.paginator;
@@ -197,9 +179,9 @@ export class BookingDetailsComponentPopup implements OnInit {
           }
         }
       
-        openDeleteDialog(event: Event, deleteid: any,bookingStatus:number) {
+        openBookingStatusChangePopup(event: Event, deleteid: any,bookingStatus:number,bookingInfo:any) {
           event.preventDefault();
-          const dialogRef = this._dialog.open(ConfirmationModalComponent, {data:{bookingStatus:bookingStatus}});
+          const dialogRef = this._dialog.open(ConfirmationModalComponent, {data:{bookingStatus:bookingStatus,bookingInfo:bookingInfo}});
           const getDialogRef = dialogRef.componentInstance.onDelete.subscribe(
             (data) => {
               this._dialog.closeAll();

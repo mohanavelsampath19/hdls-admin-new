@@ -66,11 +66,11 @@ export class MemberDetailsComponent implements OnInit {
           this.dataSource.data = this.UserListRes.filter((user:any) => user.pointsTier === this.selectedTier);
         }
       }
-    openBookingDetails(){
+    openBookingDetails(customerId:number){
 
           const dialogRef = this._dialog.open(BookingDetailsComponentPopup, {
             data: {
-              userId: this.UserListRes[0].customerid
+              userId: customerId
             },
             width:'1200px'
           });

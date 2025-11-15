@@ -125,7 +125,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-action">
-              <a href="#" (click)="openDeleteDialog($event, element.bookingid,element.status)" *ngIf="element.status!=4">Action</a>
+              <a href="#" (click)="openBookingStatusChangePopup($event, element.bookingid,element.status,element)" *ngIf="element.status!=4">Action</a>
               <div *ngIf="element.status==4"><strong>{{element.updated_at | date:'medium'}}</strong></div>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
