@@ -74,7 +74,14 @@ export class BookingsComponent implements OnInit {
     private _dialog: MatDialog,
     private _activatedRoute: ActivatedRoute,
     private _inventoryService: InventoryService
-  ) {}
+  ) {
+
+    this.dataSource.filterPredicate = (data:any, filter:any) => {
+      const dataStr = data.customers.firstname + data.customers.lastname + data.customers.mobile + data.rooms.roomtitle + data.hotels.hotelname + data.bookingid + data.tribe_reference_id;
+      return dataStr.indexOf(filter) != -1; 
+    }
+
+  }
 
   ngOnInit(): void {
     this.getBookingHistory();
@@ -309,42 +316,6 @@ export class BookingsComponent implements OnInit {
     // this.dataSource.paginator = this.paginator;
   }
 
-  private flattenForFilter(obj: any): string {
-    const parts: string[] = [];
-
-    const recurse = (value: any) => {
-      if (value == null) return;
-      if (
-        typeof value === 'string' ||
-        typeof value === 'number' ||
-        typeof value === 'boolean'
-      ) {
-        parts.push(String(value));
-        return;
-      }
-      if (value instanceof Date) {
-        parts.push(value.toISOString());
-        return;
-      }
-      if (Array.isArray(value)) {
-        for (const v of value) recurse(v);
-        return;
-      }
-      if (typeof value === 'object') {
-        // If object has toString that is meaningful (rare), avoid calling it to prevent [object Object]
-        for (const k of Object.keys(value)) {
-          recurse(value[k]);
-        }
-        return;
-      }
-      // fall back
-      parts.push(String(value));
-    };
-
-    recurse(obj);
-    return parts.join(' ');
-  }
-
   updateImage() {
     this.dataSource = new MatTableDataSource(this.totalMembershipList);
   }
@@ -425,12 +396,8 @@ export class BookingsComponent implements OnInit {
 
   getSearchDetails = (event: Event) => {
     const value = (event.target as HTMLInputElement).value || '';
-    // this.currentFilter = value.trim().toLowerCase();
-    // this.dataSource.filter = this.currentFilter;
-    this.dataSource.filter = value.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.currentFilter = value.trim().toLowerCase();
+    this.dataSource.filter = this.currentFilter;
   };
 
   setSearchValue = (event: Event) => {
@@ -438,4 +405,17 @@ export class BookingsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     // this.dataSource.filter = filterValue.trim().toLowerCase();
   };
+
+  applyFilter(filterValue: string) {
+      const testing = filterValue.trim().toLowerCase();
+    this.dataSource.filter = testing;
+  }
+
+  getBookingBasedOnHotelId(event: any, hotelId: number) {
+    event.preventDefault();
+    this._bookingService.getHotelBookingHistory(hotelId).subscribe((res: any) => {
+      this.dataSource = new MatTableDataSource(res.response);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
 }

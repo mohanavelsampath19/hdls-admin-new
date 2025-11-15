@@ -26,7 +26,7 @@ export class BookingsService {
     return this._http.get(environment.baseUrl + `api/booking/getbookinghistory?userId=${user_id}`);
   }
 
-  getHotelBookingHistory(hotelid:any, from_date:any, to_date:any) {
+  getHotelBookingHistory(hotelid:any, from_date?:any, to_date?:any) {
     return this._http.post(environment.baseUrl + 'api/booking/gethotelbookinghistory',{
       hotelid,
       from_date,

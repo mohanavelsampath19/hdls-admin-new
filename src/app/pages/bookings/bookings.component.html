@@ -7,7 +7,7 @@
           [(ngModel)]="userSearch"
           placeholder="Search"
           matInput
-          (keyup)="getSearchDetails($event)"
+        (keyup)="applyFilter($event.target.value)" 
           placeholder="Search by users"
           #input
           name="userSearch"
@@ -194,7 +194,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Hotel</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-amount">
-              <a href="#/bookings?hotelid={{ element.hotelid }}">
+              <a href="#" (click)="getBookingBasedOnHotelId($event, element.hotelmaster.hotel_id)">
                 {{ element?.hotelmaster?.hotelname || "--" }}
               </a>
             </div>
