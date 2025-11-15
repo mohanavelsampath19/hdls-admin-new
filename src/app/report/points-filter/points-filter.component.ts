@@ -46,6 +46,7 @@ export class PointsFilterComponent implements OnInit {
     { isLoading: true },
   ];
   hotelDetails:any = [];
+  totalPointsList: any = [];
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
   // @ViewChild(MatSort) sort: MatSort;
@@ -89,9 +90,14 @@ export class PointsFilterComponent implements OnInit {
 
   getSelectedFilter = (value: string) => {
     this.selectedCategory = value;
-    this.pageSize = 5;
-    this.pageOffset = 0;
-    this.getBookingHistory();
+        if (value === 'earned') {
+          this.dataSource.data = this.totalPointsList.filter((points:any) => points.credit > 0);
+          return;
+        } else if (value === 'redeemed') {
+          this.dataSource.data = this.totalPointsList.filter((points:any) => points.credit === 0);
+          return;
+        }
+    this.dataSource.data = [];
   };
 
   getHotelList() {
@@ -172,6 +178,7 @@ export class PointsFilterComponent implements OnInit {
           pointData.amount = pointData?.external_payment_master.amount;
         }
       });
+      this.totalPointsList = res.response;
       this.dataSource = new MatTableDataSource(res.response);
       this.dataSource.paginator = this.paginator;
     });
