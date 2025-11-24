@@ -6,6 +6,8 @@ import { ViewexpensesComponent } from 'src/app/components/common/viewexpenses/vi
 import { ReportsService } from 'src/app/services/reports/reports.service';
 import { ActivatedRoute } from '@angular/router';
 import { BookingDetailsComponentPopup } from 'src/app/components/popups/booking-details/booking-details.component';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-member-details',
@@ -78,8 +80,30 @@ export class MemberDetailsComponent implements OnInit {
             if(desc === true){
               
             }
-          });
-       
-        
+          });      
       }
+
+      exportAsExcel() {
+          const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+            this.dataSource?.data
+          );
+          const workbook: XLSX.WorkBook = {
+            Sheets: { Coupons: worksheet },
+            SheetNames: ['Coupons'],
+          };
+      
+          const excelBuffer: any = XLSX.write(workbook, {
+            bookType: 'xlsx',
+            type: 'array',
+          });
+      
+          const data: Blob = new Blob([excelBuffer], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+      
+          FileSaver.saveAs(
+            data,
+            'membership_details_report_' + new Date().getTime() + '.xlsx'
+          );
+        }
 }
