@@ -91,8 +91,6 @@ export class BookingDetailsComponentPopup implements OnInit {
         getBookingHistory() {
           this.onFirstLoad();
           let getCategory = 1;
-          
-      
           this._bookingService.getBookingHistory(getCategory).subscribe((res:any) => {
             const isSuperUser = localStorage.getItem('logged-in-user') === 'hdlsadmin'? true : false;
             const loginResponseObj:any = JSON.parse(localStorage.getItem('loginRes') || '{}');
@@ -113,6 +111,14 @@ export class BookingDetailsComponentPopup implements OnInit {
         }
       
         getHotelRelatedBookings(hotel_id:any, booking_data:any, userType:any) {
+          const parseTime = (val: any) => {
+            if (val == null) return 0;
+            if (typeof val === 'number') return val;
+            const t = Date.parse(val);
+            return isNaN(t) ? 0 : t;
+          };
+          const sortByStartAtDesc = (a: any, b: any) => parseTime(b.start_at) - parseTime(a.start_at);
+
           if(userType) {
             let getFilteredBookings = booking_data.map((bookingInfo:any) => {
               bookingInfo.totalWithTax = parseFloat(bookingInfo.amount) + bookingInfo.tax;
@@ -120,6 +126,8 @@ export class BookingDetailsComponentPopup implements OnInit {
             }).filter((bookingInfo:any)=>{
                 return bookingInfo.customerid == this.data.userId;
             });
+
+            getFilteredBookings.sort(sortByStartAtDesc);
             return getFilteredBookings;
           }else{
             let getFilteredBookings = booking_data.filter((booking_info:any) => booking_info.hotelid === hotel_id)
@@ -132,10 +140,11 @@ export class BookingDetailsComponentPopup implements OnInit {
                 }else{
                   return bookingInfo;
                 }
-              })
+              });
+
+            getFilteredBookings.sort(sortByStartAtDesc);
             return getFilteredBookings;
           }
-          
         }
         // ngAfterViewInit() {
         //   this.dataSource.paginator = this.paginator;
