@@ -49,5 +49,19 @@ export class ReportsService {
     })
   }
 
+  getPointsSummaryFiltered(hotelid:any, from_date:any, to_date:any) {
+    return this._http.post(environment.baseUrl + 'api/points/getpointsummaryfilter', {
+      hotelid,
+      from_date,
+      to_date
+    })
+  }
+
+   getTransactionDetailsByHotelId(hotelid:any) {
+    return this._http.post(environment.baseUrl + 'api/report/gettransactionsbyhotelid', {
+      hotelid
+    });
+  }
+
 }
 

@@ -84,8 +84,13 @@ export class PointsFilterComponent implements OnInit {
   }
 
   getHotelBookings() {
-    // const {hotelid, from_date, to_date} = this.hotelGroup.value;
-    // this.getHotelBookingHistory(hotelid, from_date, to_date);
+     const {hotelid, from_date, to_date} = this.hotelGroup.value;
+      this._reportService.getPointsSummaryFiltered(hotelid, from_date, to_date).subscribe((res:any) => {
+        console.log(res);
+        this.totalPointsList = res.response;
+        this.dataSource = new MatTableDataSource(res.response);
+        this.dataSource.paginator = this.paginator;
+      });
    }
 
   getSelectedFilter = (value: string) => {
