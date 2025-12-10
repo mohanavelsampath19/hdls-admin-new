@@ -22,27 +22,57 @@ export class UsersComponent implements OnInit {
   UserListRes:any = [];
   constructor(private _reportService:ReportsService, private _dialog:MatDialog) { 
     this._reportService.getUserList().subscribe((userList:any)=>{
-      this.UserListRes = userList.response;
-      this.dataSource = new MatTableDataSource( userList.response);
+      const userFilteredTableData = this.getUserTableData(userList.response)
+      this.UserListRes = this.getUserTableData(userList.response);
+      this.dataSource = new MatTableDataSource(userFilteredTableData);
       this.dataSource.paginator = this.paginator;
-      this.resultsLength = userList.response.length;
+      this.resultsLength = userFilteredTableData?.length;
     })
+  }
+
+  getUserTableData(response:any) {
+    const data:any = [];
+    response.forEach((user:any, index:number) => {
+      data.push({
+        customerid: user.customerid,
+        name: user.firstname + ' ' + user.lastname,
+        mobile: user.mobile,
+        email: user.email,
+        address: user.address,
+        city: user.city,
+        state: user.state,
+        dob: user.dob,
+        created_at: user.created_at,
+        status: user.inactive ? 'Inactive' : 'Active',
+        tier: user.pointsTier,
+      });
+    });
+    return data;
   }
 
   ngOnInit(): void {
   }
+
   applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+
+      // If you want to handle pagination reset on filter change
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
+
+  setSearchValue = (event: Event) => {
+    event.preventDefault();
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      const search = filter.trim().toLowerCase();
-      return data.firstname.toLowerCase().includes(search) || data.lastname.toLowerCase().includes(search)
-            || data.customerid==search || data?.email?.toLowerCase().includes(search);
-    };
-  }
+    this.dataSource.filter = filterValue?.trim().toLowerCase();
+  };
+
+
+  
   pageChanged(event:any){
     console.log(event);
-
   }
   openExpenseDialog(userId:number) {
       const dialogRef = this._dialog.open(ViewexpensesComponent, {data:{user_id:userId}});

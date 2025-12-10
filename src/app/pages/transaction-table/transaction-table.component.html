@@ -1,19 +1,16 @@
 <section id="hdls-membership-container">
   <div class="search-section">
     <div class="add-product">
-      <form class="hdls-search-field">
+      <form (submit)="setSearchValue($event)" class="hdls-search-field">
         <input
           type="text"
-          [(ngModel)]="userSearch"
-          name="userSearch"
           matInput
+          placeholder="Search"
           (keyup)="applyFilter($event)"
-          placeholder="Search by users"
-          #input
         />
         <span>
-          <a href="#">
-            <img src="../../../assets/images/search.png" alt="Search" />
+          <a href="#" (click)="setSearchValue($event)">
+            <img src="../../../assets/images/search.png" alt="search" />
           </a>
         </span>
       </form>

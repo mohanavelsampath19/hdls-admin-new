@@ -177,6 +177,13 @@ export class TransactionReportComponent {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
     }
+
+    setSearchValue = (event: Event) => {
+    event.preventDefault();
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue?.trim().toLowerCase();
+  };
+
     pageChanged(event:any){
       console.log(event);
   

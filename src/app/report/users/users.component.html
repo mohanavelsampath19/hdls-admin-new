@@ -1,19 +1,16 @@
 <section id="hdls-membership-container">
   <div class="search-section">
     <div class="add-product">
-      <form class="hdls-search-field">
+      <form (submit)="setSearchValue($event)" class="hdls-search-field">
         <input
           type="text"
-          [(ngModel)]="userSearch"
-          name="userSearch"
           matInput
+          placeholder="Search"
           (keyup)="applyFilter($event)"
-          placeholder="Search by users"
-          #input
         />
         <span>
-          <a href="#">
-            <img src="../../../assets/images/search.png" alt="Search" />
+          <a href="#" (click)="setSearchValue($event)">
+            <img src="../../../assets/images/search.png" alt="search" />
           </a>
         </span>
       </form>
@@ -73,8 +70,8 @@
           <td mat-cell *matCellDef="let element; let i = index">
             <p *ngIf="!element.isLoading" class="hdls-name">
               {{
-                element.firstname
-                  ? element.firstname + "," + element.lastname
+                element.name
+                  ? element.name
                   : "--"
               }}
             </p>
@@ -133,7 +130,7 @@
           </th>
           <td mat-cell *matCellDef="let element; let i = index">
             <p *ngIf="!element.isLoading" class="hdls-dob">
-              {{ (element.birthday | date : "dd-MMM-yyyy") || "--" }}
+              {{ (element.dob | date : "dd-MMM-yyyy") || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -144,7 +141,7 @@
           </th>
           <td mat-cell *matCellDef="let element; let i = index">
             <p *ngIf="!element.isLoading" class="hdls-status">
-              {{ (element.inactive ? 'Inactive' : 'Active') || "--" }}
+              {{ (element.status ? 'Inactive' : 'Active') || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
