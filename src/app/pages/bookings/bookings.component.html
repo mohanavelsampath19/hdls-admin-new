@@ -122,6 +122,7 @@
       </a>
     </div> -->
     <div class="hdls-product-list-section hdls-booking-container">
+
       <!-- <app-search-field></app-search-field> -->
       <table
         mat-table
@@ -175,8 +176,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Name</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-customer-name">
-              {{ element?.customers?.lastname }}
-              {{ element?.customers?.firstname }}
+              {{ element?.customer_name }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -185,7 +185,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-special-request">
-              {{ element?.customers?.mobile || '-'}}
+              {{ element?.mobile || '-'}}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -195,7 +195,7 @@
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-amount">
               <a href="#" (click)="getBookingBasedOnHotelId($event, element.hotelmaster.hotel_id)">
-                {{ element?.hotelmaster?.hotelname || "--" }}
+                {{ element?.hotelname || "--" }}
               </a>
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
@@ -212,7 +212,7 @@
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element.created_at | date : "Y-MM-dd" }}
+              {{ element.created_at }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -221,7 +221,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Rooms</th>
           <td mat-cell *matCellDef="let element">
             <p *ngIf="!element.isLoading" class="hdls-remarks">
-              {{ element?.rooms?.roomtitle || "-" }}
+              {{ element?.roomtitle || "-" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -230,7 +230,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading" class="hdls-status">
-              {{ element?.status | bookingstatus }}
+              {{ element?.status }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -265,7 +265,7 @@
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element?.start_at | date : "Y-MM-dd" }}
+              {{ element?.created_at }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -281,7 +281,7 @@
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element?.end_at | date : "Y-MM-dd" }}
+              {{ element?.updated_at }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -297,7 +297,7 @@
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element.created_at | date : "HH:mm a" }}
+              {{ element.time }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -314,7 +314,7 @@
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
               {{
-                element.totalWithTax | currency : "MYR " : "symbol" : "1.2-2"
+                element.tax | currency : "MYR " : "symbol" : "1.2-2"
               }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
@@ -331,7 +331,7 @@
           </th>
           <td mat-cell *matCellDef="let element" class="booking-date-column">
             <p *ngIf="!element.isLoading" class="hdls-booking-date">
-              {{ element.specialrequest || "--" }}
+              {{ element.specialRequest || "--" }}
             </p>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>

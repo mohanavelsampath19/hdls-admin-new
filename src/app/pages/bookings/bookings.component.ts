@@ -87,23 +87,6 @@ export class BookingsComponent implements OnInit {
     this.getBookingHistory();
     this.getHotelList();
     this.dataSource = new MatTableDataSource(this.skeletonList);
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-        const transformedFilter = filter.trim().toLowerCase();
-
-        // Combine all searchable properties into a single string for comparison
-        const dataStr = (
-          data.customers.firstname +
-          data.customers.lastname +
-          data.customers.mobile +
-          data.bookingid +
-          data.tribe_reference_id +
-          data.rooms.roomtitle + 
-          data.hotels.hotelname 
-        ).toLowerCase();
-
-        return dataStr.includes(transformedFilter);
-      };
-
   }
 
   getSelectedFilter = (value: string) => {
@@ -121,7 +104,7 @@ export class BookingsComponent implements OnInit {
       end_date: to_date,
     });
     this._bookingService.getHotelBookingHistory(hotelid, from_date, to_date).subscribe((res: any) => {
-      this.dataSource = new MatTableDataSource(res.response);
+      this.dataSource = new MatTableDataSource(this.getTableData(res.response));
       this.dataSource.paginator = this.paginator;
     });
   }
@@ -148,20 +131,6 @@ export class BookingsComponent implements OnInit {
     //   this.dataSource = new MatTableDataSource(res.response);
     //   this.dataSource.paginator = this.paginator;
     // })
-  }
-
-  getSearchInput(searchValue: any) {
-    let searchText = searchValue.toLowerCase();
-    if (searchText === '') {
-      this.dataSource = new MatTableDataSource(this.totalMembershipList);
-    } else {
-      let filteredResults;
-      filteredResults = this.totalMembershipList.filter((list) => {
-        let getValues = Object.values(list).toString().toLowerCase();
-        return getValues.includes(searchText);
-      });
-      this.dataSource = new MatTableDataSource(filteredResults);
-    }
   }
 
   getBookingHistory() {
@@ -201,8 +170,9 @@ export class BookingsComponent implements OnInit {
             isSuperUser
           );
           this.currentHotelList = getFilteredHoteBookings;
-          this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
+          this.dataSource = new MatTableDataSource(this.getTableData(getFilteredHoteBookings));
           this.dataSource.paginator = this.paginator;
+                console.log(this.getTableData(getFilteredHoteBookings))
         } else {
           let availableInventory =
             JSON.parse(loginResponseObj.loginRes.available_features || {})
@@ -213,38 +183,38 @@ export class BookingsComponent implements OnInit {
             isSuperUser
           );
           this.currentHotelList = getFilteredHoteBookings;
-          this.dataSource = new MatTableDataSource(getFilteredHoteBookings);
+          this.dataSource = new MatTableDataSource(this.getTableData(getFilteredHoteBookings));
           this.dataSource.paginator = this.paginator;
+          console.log(this.dataSource);
         }
         this._activatedRoute.queryParams.subscribe((params: any) => {
-          console.log(params);
           this.selectedHotel = params.hotelid ?? 0;
           let bookingId = params.bookingid ?? 0;
           let customerId = params.customerid ?? 0;
           if (this.selectedHotel && this.selectedHotel != 0) {
             this.dataSource = new MatTableDataSource(
-              this.currentHotelList.filter(
+              this.getTableData(this.currentHotelList.filter(
                 (item: any) => item.hotelid == this.selectedHotel
-              )
+              ))
             );
             this.dataSource.paginator = this.paginator;
           } else {
-            this.dataSource = new MatTableDataSource(this.currentHotelList);
+            this.dataSource = new MatTableDataSource(this.getTableData(this.currentHotelList));
             this.dataSource.paginator = this.paginator;
           }
           if (bookingId && bookingId != 0) {
             this.dataSource = new MatTableDataSource(
-              this.currentHotelList.filter(
+              this.getTableData(this.currentHotelList.filter(
                 (item: any) => item.bookingid == bookingId
-              )
+              ))
             );
             this.dataSource.paginator = this.paginator;
           }
           if (customerId && customerId != 0) {
             this.dataSource = new MatTableDataSource(
-              this.currentHotelList.filter(
+              this.getTableData(this.currentHotelList.filter(
                 (item: any) => item.customerid == customerId
-              )
+              ))
             );
             this.dataSource.paginator = this.paginator;
           }
@@ -316,9 +286,6 @@ export class BookingsComponent implements OnInit {
     // this.dataSource.paginator = this.paginator;
   }
 
-  updateImage() {
-    this.dataSource = new MatTableDataSource(this.totalMembershipList);
-  }
 
   changePage(e: any) {
     console.log(e);
@@ -414,8 +381,57 @@ export class BookingsComponent implements OnInit {
   getBookingBasedOnHotelId(event: any, hotelId: number) {
     event.preventDefault();
     this._bookingService.getHotelBookingHistory(hotelId).subscribe((res: any) => {
-      this.dataSource = new MatTableDataSource(res.response);
+      this.dataSource = new MatTableDataSource(this.getTableData(res.response));
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  getTableData(tableData:any) {
+    const formattedTableData:any = [];
+    tableData.forEach((data:any) => {
+      const formattedData = {
+        bookingid: data.bookingid,
+        customerid: data.customerid,
+        customer_name: data.customers.firstname + ' ' + data.customers.lastname,
+        mobile: data.customers.mobile,
+        hotelname: data.hotelmaster.hotelname,
+        roomtitle: data.rooms.roomtitle,
+        created_at: new Date(data.created_at).toLocaleDateString(),
+        updated_at: new Date(data.end_at).toLocaleDateString(),
+        booking_date: new Date(data.booking_date).toLocaleDateString(),
+        tax: parseFloat(data.amount) + data.tax,
+        specialRequest: data.special_requests,
+        status: this.getBookingStatus(data.status),
+        time: new Date(data.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      formattedTableData.push(formattedData);
+    });
+
+    return formattedTableData;
+  }
+
+    getBookingStatus(value: unknown) {
+    let result = '';
+    switch(value){
+      case 0:
+        result = 'Pending';
+        break;
+      case 1:
+        result = 'Approved';
+        break;
+      case 2:
+        result = 'Rejected';
+        break;
+      case 3:
+        result = 'Cheked-In';
+        break;
+      case 4:
+        result = 'Completed';
+        break;
+      case 4:
+        result = 'Cancelled';
+        break;
+    }
+    return result;
   }
 }
