@@ -91,7 +91,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Id</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element.user_id }}
+              {{ element.membership_id }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -101,7 +101,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Member Name</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element?.user.firstname }} {{ element?.user.lastname }}
+              {{ element?.member_name }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -111,7 +111,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Tier</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element?.user.pointsTier }}
+              {{ element?.tier }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -179,7 +179,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount Paid</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element?.amount }}
+              {{ element?.amount_paid }}
 
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
@@ -190,7 +190,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Points Worth</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element.credit ? element?.amount * 0.05 : element.debit*0.05}}
+              {{ element.points_worth}}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>
@@ -208,7 +208,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Price (Exclude VAT)</th>
           <td mat-cell *matCellDef="let element">
             <div *ngIf="!element.isLoading">
-              {{ element?.amount }}
+              {{ element?.amount_paid }}
             </div>
             <div *ngIf="element.isLoading" class="loading-data"></div>
           </td>

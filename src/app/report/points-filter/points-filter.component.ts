@@ -178,17 +178,45 @@ export class PointsFilterComponent implements OnInit {
           pointData.source = pointData.bookingDetails[0]?.hotelmaster?.hotelname;
           pointData.amount = pointData.bookingDetails[0]?.amount;
         }else{
-          pointData.place =  pointData?.external_payment_master.hotelmaster?.city;
-          pointData.source =  pointData?.external_payment_master.hotelmaster?.hotelname;
-          pointData.amount = pointData?.external_payment_master.amount;
+          pointData.place =  pointData?.external_payment_master?.hotelmaster?.city;
+          pointData.source =  pointData?.external_payment_master?.hotelmaster?.hotelname;
+          pointData.amount = pointData?.external_payment_master?.amount;
         }
       });
       this.totalPointsList = res.response;
-      this.dataSource = new MatTableDataSource(res.response);
+      this.dataSource = new MatTableDataSource(this.getFilteredPoints(res.response));
       this.dataSource.paginator = this.paginator;
     });
   }
 
+
+  getFilteredPoints(point_data:any) {
+    const filteredPoints:any = [];
+    point_data.forEach((point_info:any) => {
+      filteredPoints.push({
+        transaction_id: point_info.transaction_id,
+        membership_id: point_info.user_id,
+        member_name: point_info.firstname + ' ' + point_info.lastname,
+        tier: point_info.user.pointsTier,
+        status: point_info.status,
+        points: point_info.credit,
+        place: point_info.place,
+        source: point_info.source,
+        amount_paid: point_info.amount,
+        points_worth: point_info.amount * 0.05 || point_info.debit * 0.05,
+        points_expiry: point_info.points_expiry,
+        points_balance: point_info.points_balance,
+        total_price: point_info.amount_paid + point_info.points_worth,
+        credit: point_info.credit,
+        debit: point_info.debit,
+        created_at: new Date(point_info.created_at).toLocaleDateString(),
+        time: new Date(point_info.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        expiry_date: new Date(point_info.expiry_date).toLocaleDateString(),
+      })
+    });
+    return filteredPoints
+
+  }
   getHotelRelatedBookings(hotel_id:any, booking_data:any, userType:any) {
     if(userType) {
       return booking_data;
